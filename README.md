@@ -61,15 +61,17 @@ ex) feat: add login screen
 - 작업 완료 조건
 
 ## PR 컨벤션
+
 - PR 제목: [타입]: 작업 내용  
 ex) [feat]: 로그인 화면 구현
 ### PR 템플릿
-1.	작업 내용 요약
-2.	테스트 결과
-3.	관련 이슈 링크
+- 작업 요약
+- 변경 사항
+- 테스트 결과
+- 리뷰 요청 사항
+
 ### Merge 조건
 - 리뷰어 지정: 최소 1명 코드 리뷰 필요.
 
 ## 프로젝트 초기 세팅 방법
-1. $ git clone
-2.	SwiftLint 설치 및 설정.
+- $ git clone https://github.com/UMCWegg/iOS_Wegg
