@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: Feature Template
-    url: https://github.com/UMCWegg/iOS_Wegg/blob/main/.github/ISSUE_TEMPLATE/feature-template.md
+    url: https://github.com/UMCWegg/iOS_Wegg/issues/new?template=feature-template.md
     about: 기능 추가시 사용할 템플릿
