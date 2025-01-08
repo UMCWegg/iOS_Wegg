@@ -71,5 +71,4 @@ ex) [feat]: 로그인 화면 구현
 - 리뷰어 지정: 최소 1명 코드 리뷰 필요.
 
 ## 프로젝트 초기 세팅 방법
-1. $ git clone
-2.	SwiftLint 설치 및 설정.
+- $ git clone https://github.com/UMCWegg/iOS_Wegg
