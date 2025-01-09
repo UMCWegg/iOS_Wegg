@@ -74,6 +74,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0E98E9E82D2D009E006F25EF /* Build configuration list for PBXNativeTarget "iOS_Wegg" */;
 			buildPhases = (
+				0E98EA042D2E5C14006F25EF /* SwiftLint */,
 				0E98E9D12D2D009D006F25EF /* Sources */,
 				0E98E9D22D2D009D006F25EF /* Frameworks */,
 				0E98E9D32D2D009D006F25EF /* Resources */,
@@ -81,6 +82,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0E98EA062D2E5FDB006F25EF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				0E98E9D72D2D009D006F25EF /* iOS_Wegg */,
@@ -145,6 +147,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0E98EA042D2E5C14006F25EF /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/swiftlint.result",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n    swiftlint > $DERIVED_FILES_DIR/swiftlint.result\nelse\n    echo \"SwiftLint is not installed. Please install it using 'brew install swiftlint'.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0E98E9D12D2D009D006F25EF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -154,6 +178,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0E98EA062D2E5FDB006F25EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 0E98EA052D2E5FDB006F25EF /* SwiftLintBuildToolPlugin */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		0E98E9E92D2D009E006F25EF /* Debug */ = {
@@ -406,6 +437,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0E98E9F32D2E336F006F25EF /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
+		};
+		0E98EA052D2E5FDB006F25EF /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E98E9F92D2E3712006F25EF /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
