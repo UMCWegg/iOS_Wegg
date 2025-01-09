@@ -10,29 +10,92 @@
 		0E98E9EF2D2E3265006F25EF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9EE2D2E3265006F25EF /* SnapKit */; };
 		0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9F12D2E331D006F25EF /* Alamofire */; };
 		0E98E9F52D2E336F006F25EF /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9F42D2E336F006F25EF /* Moya */; };
+		0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EA272D2F8AE8006F25EF /* AppDelegate.swift */; };
+		0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EA2A2D2F8AE8006F25EF /* SceneDelegate.swift */; };
+		0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EA282D2F8AE8006F25EF /* Assets.xcassets */; };
+		0E98EA472D2F9F77006F25EF /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98EA462D2F9F77006F25EF /* Then */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Wegg.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E98EA272D2F8AE8006F25EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0E98EA282D2F8AE8006F25EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0E98EA292D2F8AE8006F25EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E98EA2A2D2F8AE8006F25EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0E98E9E72D2D009E006F25EF /* Exceptions for "iOS_Wegg" folder in "iOS_Wegg" target */ = {
+		0E98EAA42D2FB567006F25EF /* Exceptions for "Services" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				API/.gitkeep,
+			);
+			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
+		};
+		0E98EAA52D2FB568006F25EF /* Exceptions for "Protocol" folder in "iOS_Wegg" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				.gitkeep,
+			);
+			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
+		};
+		0E98EAA62D2FB56A006F25EF /* Exceptions for "ResponseModel" folder in "iOS_Wegg" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				.gitkeep,
+			);
+			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
+		};
+		0E98EAA72D2FB56C006F25EF /* Exceptions for "Secrets" folder in "iOS_Wegg" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				.gitkeep,
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0E98E9D72D2D009D006F25EF /* iOS_Wegg */ = {
+		0E98EA322D2F8F8F006F25EF /* Services */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				0E98E9E72D2D009E006F25EF /* Exceptions for "iOS_Wegg" folder in "iOS_Wegg" target */,
+				0E98EAA42D2FB567006F25EF /* Exceptions for "Services" folder in "iOS_Wegg" target */,
 			);
-			path = iOS_Wegg;
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0E98EA392D2F94AE006F25EF /* Protocol */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0E98EAA52D2FB568006F25EF /* Exceptions for "Protocol" folder in "iOS_Wegg" target */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		0E98EA3A2D2F9630006F25EF /* ResponseModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0E98EAA62D2FB56A006F25EF /* Exceptions for "ResponseModel" folder in "iOS_Wegg" target */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
+		0E98EA3C2D2F976E006F25EF /* Secrets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0E98EAA72D2FB56C006F25EF /* Exceptions for "Secrets" folder in "iOS_Wegg" target */,
+			);
+			path = Secrets;
+			sourceTree = "<group>";
+		};
+		0E98EA3F2D2F979A006F25EF /* Utilities */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		0E98EAC62D2FB789006F25EF /* Login */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -45,6 +108,7 @@
 				0E98E9EF2D2E3265006F25EF /* SnapKit in Frameworks */,
 				0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */,
 				0E98E9F52D2E336F006F25EF /* Moya in Frameworks */,
+				0E98EA472D2F9F77006F25EF /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,7 +118,7 @@
 		0E98E9CC2D2D009D006F25EF = {
 			isa = PBXGroup;
 			children = (
-				0E98E9D72D2D009D006F25EF /* iOS_Wegg */,
+				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
 				0E98E9D62D2D009D006F25EF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,6 +129,71 @@
 				0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		0E98EA212D2F8AE8006F25EF /* App */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EA272D2F8AE8006F25EF /* AppDelegate.swift */,
+				0E98EA2A2D2F8AE8006F25EF /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		0E98EA222D2F8AE8006F25EF /* Component */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		0E98EA232D2F8AE8006F25EF /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EA322D2F8F8F006F25EF /* Services */,
+				0E98EA3C2D2F976E006F25EF /* Secrets */,
+				0E98EA3F2D2F979A006F25EF /* Utilities */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		0E98EA242D2F8AE8006F25EF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
+				0E98EA392D2F94AE006F25EF /* Protocol */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0E98EA252D2F8AE8006F25EF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EA282D2F8AE8006F25EF /* Assets.xcassets */,
+				0E98EA292D2F8AE8006F25EF /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0E98EA262D2F8AE8006F25EF /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EAC62D2FB789006F25EF /* Login */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EA212D2F8AE8006F25EF /* App */,
+				0E98EA222D2F8AE8006F25EF /* Component */,
+				0E98EA232D2F8AE8006F25EF /* Core */,
+				0E98EA262D2F8AE8006F25EF /* Screen */,
+				0E98EA242D2F8AE8006F25EF /* Models */,
+				0E98EA252D2F8AE8006F25EF /* Resources */,
+			);
+			path = iOS_Wegg;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,13 +214,18 @@
 				0E98EA062D2E5FDB006F25EF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0E98E9D72D2D009D006F25EF /* iOS_Wegg */,
+				0E98EA322D2F8F8F006F25EF /* Services */,
+				0E98EA392D2F94AE006F25EF /* Protocol */,
+				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
+				0E98EA3C2D2F976E006F25EF /* Secrets */,
+				0E98EAC62D2FB789006F25EF /* Login */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
 				0E98E9EE2D2E3265006F25EF /* SnapKit */,
 				0E98E9F12D2E331D006F25EF /* Alamofire */,
 				0E98E9F42D2E336F006F25EF /* Moya */,
+				0E98EA462D2F9F77006F25EF /* Then */,
 			);
 			productName = iOS_Wegg;
 			productReference = 0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */;
@@ -126,6 +260,7 @@
 				0E98E9F02D2E331D006F25EF /* XCRemoteSwiftPackageReference "Alamofire" */,
 				0E98E9F32D2E336F006F25EF /* XCRemoteSwiftPackageReference "Moya" */,
 				0E98E9F92D2E3712006F25EF /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				0E98EA452D2F9F77006F25EF /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0E98E9D62D2D009D006F25EF /* Products */;
@@ -142,6 +277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +310,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
+				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +327,8 @@
 /* Begin XCBuildConfiguration section */
 		0E98E9E92D2D009E006F25EF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 0E98EA322D2F8F8F006F25EF /* Services */;
+			baseConfigurationReferenceRelativePath = Secrets/Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -196,13 +336,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6H8Y6F23HB;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = iOS_Wegg/Info.plist;
+				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -218,6 +358,8 @@
 		};
 		0E98E9EA2D2D009E006F25EF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 0E98EA322D2F8F8F006F25EF /* Services */;
+			baseConfigurationReferenceRelativePath = Secrets/Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -225,13 +367,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6H8Y6F23HB;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = iOS_Wegg/Info.plist;
+				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -420,6 +562,14 @@
 				minimumVersion = 0.43.1;
 			};
 		};
+		0E98EA452D2F9F77006F25EF /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -442,6 +592,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0E98E9F92D2E3712006F25EF /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		0E98EA462D2F9F77006F25EF /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E98EA452D2F9F77006F25EF /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

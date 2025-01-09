@@ -2,6 +2,7 @@
 - UIKit: iOS UI 구성에 사용.
 - Code-Base: 스토리보드 대신 코드로 UI 구현.
 - Snapkit: AutoLayout을 코드로 간결하게 작성.
+- Then: 객체 초기화를 간결하게 작성
 - Alamofire: 네트워크 요청 및 데이터 처리.
 - Moya: RESTful API 네트워크 계층 관리
 - SwiftLint: 코드 스타일 검사 도구.
@@ -13,6 +14,7 @@
 - feature/기능명: 각 기능 개발 시 main에서 분기.
 - Pull Request를 통해 main 브랜치에 병합.
 - 병합 후 feature/기능명 브랜치 삭제
+- 참고자료: [Branch 전략 적용 후기(Git Flow, Github Flow)](https://sjevie.tistory.com/entry/%EC%A0%81%EC%9A%A9%EA%B8%B0-%EC%84%9C%EB%A1%9C-%EB%8B%A4%EB%A5%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90-%EB%8B%A4%EB%A5%B8-Branch-%EC%A0%84%EB%9E%B5-%EC%A0%81%EC%9A%A9-%ED%9B%84%EA%B8%B0Git-Flow-Github-Flow?utm_source=chatgpt.com)
 
 ## 코드 컨벤션
 ### 네이밍 규칙
@@ -23,6 +25,7 @@
 
 ### 코드 스타일
 - SwiftLint를 적용하여 코드 일관성 유지.
+- 코드 들여쓰기(4칸) 통일.
 - 불필요한 force unwrapping 금지(! 사용 최소화).
 - 최대 줄 길이: 100자 초과 금지.
 - self는 클로저 내부에서만 사용.
@@ -37,9 +40,9 @@
 
 ## 커밋 컨벤션
 - 커밋 메시지 형식: [타입]: 작업 내용  
-ex) feat: add login screen
+ex) feat: 로그인 화면 구현
 - 하나의 티켓에는 하나의 커밋만  
-→ 🔗 우린 Git-flow를 사용하고 있어요
+→ [🔗 우린 Git-flow를 사용하고 있어요](https://techblog.woowahan.com/2553/)
 ### 타입:
 - feat: 새로운 기능
 - fix: 버그 수정
@@ -73,5 +76,8 @@ ex) [feat]: 로그인 화면 구현
 ### Merge 조건
 - 리뷰어 지정: 최소 1명 코드 리뷰 필요.
 
-## 프로젝트 초기 세팅 방법
-- $ git clone https://github.com/UMCWegg/iOS_Wegg
+## 프로젝트 버전
+### Xcode 버전
+- 16.2
+### Swift 버전
+- 6.0.3
