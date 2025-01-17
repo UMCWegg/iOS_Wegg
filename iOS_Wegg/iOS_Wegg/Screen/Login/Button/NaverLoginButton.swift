@@ -16,7 +16,7 @@ class NaverLoginButton: UIButton {
     private let naverTitleLabel = UILabel().then {
         $0.text = "네이버 로그인"
         $0.textColor = .white
-        $0.font = .systemFont(ofSize: 14, weight: .medium)
+        $0.font = UIFont(name: "NanumGothic", size: 13)
     }
     
     override init(frame: CGRect) {
@@ -39,14 +39,14 @@ class NaverLoginButton: UIButton {
         [iconImageView, naverTitleLabel].forEach { addSubview($0) }
         
         iconImageView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(6)
+            make.leading.equalToSuperview().offset(5)
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(32)
+            make.width.height.equalTo(35)
         }
         
         naverTitleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-88)
+            make.trailing.equalToSuperview().offset(-90)
         }
     }
 }

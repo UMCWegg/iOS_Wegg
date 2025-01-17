@@ -9,6 +9,8 @@
 		<string>GmarketSansTTFBold.ttf</string>
 		<string>GmarketSansTTFLight.ttf</string>
 		<string>GmarketSansTTFMedium.ttf</string>
+		<string>NanumGothic.ttf</string>
+		<string>NanumGothicLight.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
