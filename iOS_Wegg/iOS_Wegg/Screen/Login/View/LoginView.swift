@@ -62,8 +62,8 @@ class LoginView: UIView {
         naverLoginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(kakaoLoginButton.snp.top).offset(-24)
-            make.leading.trailing.equalToSuperview().inset(64)
-            make.height.equalTo(44)
+            make.leading.trailing.equalTo(kakaoLoginButton)
+            make.height.equalTo(kakaoLoginButton)
         }
         
         kakaoLoginButton.snp.makeConstraints { make in

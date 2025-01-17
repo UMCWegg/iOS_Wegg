@@ -20,6 +20,7 @@
 		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
 		DE5B0BCA2D3A87DC00B2A5CB /* NanumGothicLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE5B0BC82D3A87DC00B2A5CB /* NanumGothicLight.ttf */; };
 		DE5B0BCC2D3A87DC00B2A5CB /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE5B0BC52D3A87DC00B2A5CB /* NanumGothic.ttf */; };
+		DE5B0BFA2D3A9B1E00B2A5CB /* NanumGothicBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE5B0BF92D3A9B1E00B2A5CB /* NanumGothicBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 		DE5B0BC52D3A87DC00B2A5CB /* NanumGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumGothic.ttf; sourceTree = "<group>"; };
 		DE5B0BC82D3A87DC00B2A5CB /* NanumGothicLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumGothicLight.ttf; sourceTree = "<group>"; };
+		DE5B0BF92D3A9B1E00B2A5CB /* NanumGothicBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumGothicBold.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -216,6 +218,7 @@
 				0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */,
 				0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */,
 				DE5B0BC52D3A87DC00B2A5CB /* NanumGothic.ttf */,
+				DE5B0BF92D3A9B1E00B2A5CB /* NanumGothicBold.ttf */,
 				DE5B0BC82D3A87DC00B2A5CB /* NanumGothicLight.ttf */,
 			);
 			path = Fonts;
@@ -306,6 +309,7 @@
 			files = (
 				0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */,
 				0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */,
+				DE5B0BFA2D3A9B1E00B2A5CB /* NanumGothicBold.ttf in Resources */,
 				DE5B0BCA2D3A87DC00B2A5CB /* NanumGothicLight.ttf in Resources */,
 				DE5B0BCC2D3A87DC00B2A5CB /* NanumGothic.ttf in Resources */,
 				0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */,

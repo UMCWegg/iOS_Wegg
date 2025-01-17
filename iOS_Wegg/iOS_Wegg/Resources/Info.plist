@@ -11,6 +11,7 @@
 		<string>GmarketSansTTFMedium.ttf</string>
 		<string>NanumGothic.ttf</string>
 		<string>NanumGothicLight.ttf</string>
+		<string>NanumGothicBold.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
