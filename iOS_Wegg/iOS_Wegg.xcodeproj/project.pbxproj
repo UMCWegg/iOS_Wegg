@@ -14,6 +14,10 @@
 		0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EA2A2D2F8AE8006F25EF /* SceneDelegate.swift */; };
 		0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EA282D2F8AE8006F25EF /* Assets.xcassets */; };
 		0E98EA472D2F9F77006F25EF /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98EA462D2F9F77006F25EF /* Then */; };
+		0E98EB802D38E554006F25EF /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */; };
+		0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */; };
+		0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */; };
+		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,9 @@
 		0E98EA282D2F8AE8006F25EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E98EA292D2F8AE8006F25EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E98EA2A2D2F8AE8006F25EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFBold.ttf; sourceTree = "<group>"; };
+		0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFLight.ttf; sourceTree = "<group>"; };
+		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -107,6 +114,7 @@
 			files = (
 				0E98E9EF2D2E3265006F25EF /* SnapKit in Frameworks */,
 				0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */,
+				0E98EB802D38E554006F25EF /* KakaoMapsSDK-SPM in Frameworks */,
 				0E98E9F52D2E336F006F25EF /* Moya in Frameworks */,
 				0E98EA472D2F9F77006F25EF /* Then in Frameworks */,
 			);
@@ -169,6 +177,7 @@
 		0E98EA252D2F8AE8006F25EF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0E98EB842D3A2603006F25EF /* Fonts */,
 				0E98EA282D2F8AE8006F25EF /* Assets.xcassets */,
 				0E98EA292D2F8AE8006F25EF /* Info.plist */,
 			);
@@ -194,6 +203,16 @@
 				0E98EA252D2F8AE8006F25EF /* Resources */,
 			);
 			path = iOS_Wegg;
+			sourceTree = "<group>";
+		};
+		0E98EB842D3A2603006F25EF /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */,
+				0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */,
+				0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +245,7 @@
 				0E98E9F12D2E331D006F25EF /* Alamofire */,
 				0E98E9F42D2E336F006F25EF /* Moya */,
 				0E98EA462D2F9F77006F25EF /* Then */,
+				0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */,
 			);
 			productName = iOS_Wegg;
 			productReference = 0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */;
@@ -261,6 +281,7 @@
 				0E98E9F32D2E336F006F25EF /* XCRemoteSwiftPackageReference "Moya" */,
 				0E98E9F92D2E3712006F25EF /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				0E98EA452D2F9F77006F25EF /* XCRemoteSwiftPackageReference "Then" */,
+				0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0E98E9D62D2D009D006F25EF /* Products */;
@@ -277,6 +298,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */,
+				0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */,
+				0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */,
 				0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,8 +351,8 @@
 /* Begin XCBuildConfiguration section */
 		0E98E9E92D2D009E006F25EF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 0E98EA322D2F8F8F006F25EF /* Services */;
-			baseConfigurationReferenceRelativePath = Secrets/Secrets.xcconfig;
+			baseConfigurationReferenceAnchor = 0E98EA3C2D2F976E006F25EF /* Secrets */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -358,8 +382,8 @@
 		};
 		0E98E9EA2D2D009E006F25EF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 0E98EA322D2F8F8F006F25EF /* Services */;
-			baseConfigurationReferenceRelativePath = Secrets/Secrets.xcconfig;
+			baseConfigurationReferenceAnchor = 0E98EA3C2D2F976E006F25EF /* Secrets */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -570,6 +594,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -597,6 +629,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0E98EA452D2F9F77006F25EF /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
+		};
+		0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
+			productName = "KakaoMapsSDK-SPM";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
