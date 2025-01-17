@@ -4,6 +4,12 @@
 <dict>
 	<key>KAKAO_NATIVE_APP_KEY</key>
 	<string>${KAKAO_NATIVE_APP_KEY}</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>GmarketSansTTFBold.ttf</string>
+		<string>GmarketSansTTFLight.ttf</string>
+		<string>GmarketSansTTFMedium.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

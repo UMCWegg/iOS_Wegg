@@ -15,6 +15,9 @@
 		0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EA282D2F8AE8006F25EF /* Assets.xcassets */; };
 		0E98EA472D2F9F77006F25EF /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98EA462D2F9F77006F25EF /* Then */; };
 		0E98EB802D38E554006F25EF /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */; };
+		0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */; };
+		0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */; };
+		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +26,9 @@
 		0E98EA282D2F8AE8006F25EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E98EA292D2F8AE8006F25EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E98EA2A2D2F8AE8006F25EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFBold.ttf; sourceTree = "<group>"; };
+		0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFLight.ttf; sourceTree = "<group>"; };
+		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -171,6 +177,7 @@
 		0E98EA252D2F8AE8006F25EF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0E98EB842D3A2603006F25EF /* Fonts */,
 				0E98EA282D2F8AE8006F25EF /* Assets.xcassets */,
 				0E98EA292D2F8AE8006F25EF /* Info.plist */,
 			);
@@ -196,6 +203,16 @@
 				0E98EA252D2F8AE8006F25EF /* Resources */,
 			);
 			path = iOS_Wegg;
+			sourceTree = "<group>";
+		};
+		0E98EB842D3A2603006F25EF /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */,
+				0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */,
+				0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +298,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */,
+				0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */,
+				0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */,
 				0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
