@@ -6,6 +6,7 @@
 - Alamofire: 네트워크 요청 및 데이터 처리.
 - Moya: RESTful API 네트워크 계층 관리
 - SwiftLint: 코드 스타일 검사 도구.
+- KakaoMapsSDK: 카카오 지도 SDK
 - SPM: 패키지 의존성 관리.
 
 ## 브랜치 컨벤션
