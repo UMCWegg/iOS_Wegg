@@ -26,14 +26,11 @@ class LoginView: UIView {
     
     // MARK: - Properties
     
-    private let naverLoginButton = UIButton().then {
-        $0.setImage(UIImage(named: "Login/Naver/btnG_완성형"), for: .normal)
-        $0.imageView?.contentMode = .scaleAspectFill
-        $0.contentHorizontalAlignment = .center
-    }
+    private let naverLoginButton = NaverLoginButton()
     
     private let kakaoLoginButton = UIButton().then {
         $0.setImage(UIImage(named: "Login/Kakao/kakao_login_large_wide"), for: .normal)
+        $0.setImage(UIImage(named: "Login/Kakao/kakao_login_large_wide"), for: .highlighted)
         $0.imageView?.contentMode = .scaleAspectFit
         $0.contentHorizontalAlignment = .center
     }
