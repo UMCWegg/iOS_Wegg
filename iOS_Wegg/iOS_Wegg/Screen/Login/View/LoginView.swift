@@ -28,7 +28,7 @@ class LoginView: UIView {
     
     private let naverLoginButton = UIButton().then {
         $0.setImage(UIImage(named: "Login/Naver/btnG_완성형"), for: .normal)
-        $0.imageView?.contentMode = .scaleAspectFit
+        $0.imageView?.contentMode = .scaleAspectFill
         $0.contentHorizontalAlignment = .center
     }
     
@@ -64,26 +64,26 @@ class LoginView: UIView {
     private func setupConstraints() {
         naverLoginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(363)
+            make.bottom.equalTo(kakaoLoginButton.snp.top).offset(-24)
+            make.leading.trailing.equalToSuperview().inset(64)
             make.height.equalTo(44)
         }
         
         kakaoLoginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(naverLoginButton.snp.bottom).offset(24)
+            make.centerY.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(64)
             make.height.equalTo(44)
         }
         
         signUpButton.snp.makeConstraints { make in
             make.leading.equalTo(kakaoLoginButton.snp.leading).offset(18)
             make.top.equalTo(kakaoLoginButton.snp.bottom).offset(24)
-            make.height.equalTo(44)
         }
         
         emailLoginButton.snp.makeConstraints { make in
             make.trailing.equalTo(kakaoLoginButton.snp.trailing).offset(-15)
             make.top.equalTo(kakaoLoginButton.snp.bottom).offset(24)
-            make.height.equalTo(44)
         }
     }
 
