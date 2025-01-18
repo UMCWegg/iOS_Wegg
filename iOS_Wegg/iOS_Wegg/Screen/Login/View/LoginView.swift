@@ -26,61 +26,77 @@ class LoginView: UIView {
     
     // MARK: - Properties
     
-    private let naverLoginButton = NaverLoginButton()
-    
-    private let kakaoLoginButton = UIButton().then {
-        $0.setImage(UIImage(named: "Login/Kakao/kakao_login_large_wide"), for: .normal)
-        $0.setImage(UIImage(named: "Login/Kakao/kakao_login_large_wide"), for: .highlighted)
-        $0.imageView?.contentMode = .scaleAspectFit
-        $0.contentHorizontalAlignment = .center
+    private let appIcon = UIImageView().then {
+        $0.image = UIImage(named: "Login/wegg_icon")
     }
     
+    private let naverLoginButton = LoginButton(
+        title: "Naver로 로그인",
+        backgroundColor: UIColor(hex: "03C75A") ?? .systemGreen
+    )
+        
+    private let kakaoLoginButton = LoginButton(
+        title: "카카오로 로그인",
+        backgroundColor: UIColor(hex: "FEE500") ?? .systemYellow
+    )
+        
+    private let emailLoginButton = LoginButton(
+        title: "다른 방법으로 로그인",
+        backgroundColor: UIColor(hex: "C7C7C7") ?? .systemGray
+    )
+
     private let signUpButton = UIButton().then {
-        $0.setTitle("회원가입", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 13)
-        $0.backgroundColor = .clear
-    }
-    
-    private let emailLoginButton = UIButton().then {
-        $0.setTitle("다른 방법으로 로그인", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 13)
-        $0.backgroundColor = .clear
+        let attributedString = NSAttributedString(
+            string: "회원가입",
+            attributes: [
+                .underlineStyle: NSUnderlineStyle.single.rawValue,
+                .baselineOffset: 6,
+                .font: UIFont(name: "NotoSansKR-Regular", size: 16) ?? .systemFont(ofSize: 16)
+            ]
+        )
+        $0.setAttributedTitle(attributedString, for: .normal)
     }
     
     // MARK: - Setup
     
     private func setupViews() {
-        [naverLoginButton,
-         kakaoLoginButton,
-         signUpButton,
-         emailLoginButton].forEach { addSubview($0) }
+        [
+            appIcon,
+            naverLoginButton,
+            kakaoLoginButton,
+            emailLoginButton,
+            signUpButton
+        ].forEach { addSubview($0) }
     }
     
     private func setupConstraints() {
-        naverLoginButton.snp.makeConstraints { make in
+        
+        appIcon.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(kakaoLoginButton.snp.top).offset(-24)
-            make.leading.trailing.equalTo(kakaoLoginButton)
-            make.height.equalTo(kakaoLoginButton)
+            make.top.equalToSuperview().offset(322)
+        }
+        
+        signUpButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(54)
+        }
+        
+        emailLoginButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(17)
+            make.bottom.equalTo(signUpButton.snp.top).offset(-16)
         }
         
         kakaoLoginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(64)
-            make.height.equalTo(44)
+            make.leading.trailing.equalTo(emailLoginButton)
+            make.bottom.equalTo(emailLoginButton.snp.top).offset(-15)
         }
         
-        signUpButton.snp.makeConstraints { make in
-            make.leading.equalTo(kakaoLoginButton.snp.leading).offset(18)
-            make.top.equalTo(kakaoLoginButton.snp.bottom).offset(24)
-        }
-        
-        emailLoginButton.snp.makeConstraints { make in
-            make.trailing.equalTo(kakaoLoginButton.snp.trailing).offset(-15)
-            make.top.equalTo(kakaoLoginButton.snp.bottom).offset(24)
+        naverLoginButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.leading.trailing.equalTo(emailLoginButton)
+            make.bottom.equalTo(kakaoLoginButton.snp.top).offset(-15)
         }
     }
 
