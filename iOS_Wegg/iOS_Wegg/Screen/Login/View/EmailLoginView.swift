@@ -11,8 +11,8 @@ class EmailLoginView: UIView {
 
     // MARK: - Color
     
-    private static let textFieldColor = UIColor(named: "textfield")
-    private static let buttonColor = UIColor(named: "wegg_blue")
+    private let textFieldColor = UIColor(named: "textfield")
+    private let buttonColor = UIColor(named: "wegg_blue")
     
     // MARK: - Init
     
@@ -28,25 +28,41 @@ class EmailLoginView: UIView {
     
     // MARK: - Properties
     
-    internal let emailTextField = UITextField().then {
+    private lazy var emailTextField = UITextField().then {
         $0.placeholder = " 이메일"
         $0.font = UIFont(name: "NotoSansKR-Regular", size: 13)
         $0.backgroundColor = textFieldColor
+        $0.autocapitalizationType = .none
+        $0.keyboardType = .emailAddress
+        $0.autocorrectionType = .no
     }
-    
-    internal let passwordTextField = UITextField().then {
+        
+    private lazy var passwordTextField = UITextField().then {
         $0.placeholder = " 비밀번호"
         $0.font = UIFont(name: "NotoSansKR-Regular", size: 13)
         $0.backgroundColor = textFieldColor
         $0.isSecureTextEntry = true
+        $0.autocapitalizationType = .none
+        $0.autocorrectionType = .no
+    }
+    
+    var email: String? {
+        get { emailTextField.text }
+        set { emailTextField.text = newValue }
+    }
+    
+    var password: String? {
+        get { passwordTextField.text }
+        set { passwordTextField.text = newValue }
     }
     
     internal let findPasswordButton = UIButton().then {
         $0.setTitle("비밀번호를 잊으셨나요?", for: .normal)
         $0.setTitleColor(UIColor(hex: "C7C7C7"), for: .normal)
+        $0.titleLabel?.font = UIFont(name: "NotoSansKR-Regular", size: 13)
     }
     
-    internal let loginButton = LoginButton(
+    private lazy var loginButton = LoginButton(
         title: "로그인",
         backgroundColor: buttonColor ?? .systemPurple
     )
@@ -86,7 +102,7 @@ class EmailLoginView: UIView {
         loginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview().inset(17)
-            make.bottom.equalToSuperview().offset(40)
+            make.bottom.equalToSuperview().offset(-40)
         }
     }
     
