@@ -109,6 +109,11 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		DE001E912D3BDF71003A273F /* Button */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Button;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +160,7 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				DE001E912D3BDF71003A273F /* Button */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -224,8 +230,6 @@
 				0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */,
 				0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */,
 				0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */,
-				DE6239902D3B5FDC007CCDD2 /* NotoSansKR-Medium.ttf */,
-				DE6239912D3B5FDC007CCDD2 /* NotoSansKR-Regular.ttf */,
 			);
 			path = GmarketSans;
 			sourceTree = "<group>";
@@ -262,6 +266,7 @@
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
+				DE001E912D3BDF71003A273F /* Button */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
@@ -326,8 +331,6 @@
 				0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */,
 				0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */,
 				0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */,
-				DE6239922D3B5FDC007CCDD2 /* NotoSansKR-Medium.ttf in Resources */,
-				DE6239932D3B5FDC007CCDD2 /* NotoSansKR-Regular.ttf in Resources */,
 				0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */,
 				0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */,
 			);
