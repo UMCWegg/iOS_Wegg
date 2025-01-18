@@ -28,23 +28,15 @@ class EmailLoginView: UIView {
     
     // MARK: - Properties
     
-    private lazy var emailTextField = UITextField().then {
-        $0.placeholder = " 이메일"
-        $0.font = UIFont(name: "NotoSansKR-Regular", size: 13)
-        $0.backgroundColor = textFieldColor
-        $0.autocapitalizationType = .none
-        $0.keyboardType = .emailAddress
-        $0.autocorrectionType = .no
-    }
+    private lazy var emailTextField = LoginTextField(
+        placeholder: "  이메일",
+        type: .email
+    )
         
-    private lazy var passwordTextField = UITextField().then {
-        $0.placeholder = " 비밀번호"
-        $0.font = UIFont(name: "NotoSansKR-Regular", size: 13)
-        $0.backgroundColor = textFieldColor
-        $0.isSecureTextEntry = true
-        $0.autocapitalizationType = .none
-        $0.autocorrectionType = .no
-    }
+    private lazy var passwordTextField = LoginTextField(
+        placeholder: "  비밀번호",
+        type: .password
+    )
     
     var email: String? {
         get { emailTextField.text }
