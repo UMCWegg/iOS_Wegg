@@ -11,23 +11,6 @@ import Then
 
 class LoginViewController: UIViewController {
     
-    // MARK: - Properties
-    
-    private var loginView = LoginView().then {
-        $0.emailLoginButton.addTarget(
-            self,
-            action: #selector(emailLoginButtonTapped),
-            for: .touchUpInside
-        )
-    }
-    
-    // MARK: - Functions
-    
-    @objc private func emailLoginButtonTapped() {
-        let emailLoginViewController = EmailLoginViewController()
-        navigationController?.pushViewController(emailLoginViewController, animated: true)
-    }
-    
     // MARK: - Lifecycle
     
     override func loadView() {
@@ -37,6 +20,17 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+    }
+    
+    // MARK: - Properties
+    
+    private let loginView = LoginView()
+    
+    // MARK: - Functions
+    
+    @objc private func emailLoginButtonTapped() {
+        let emailLoginViewController = EmailLoginViewController()
+        navigationController?.pushViewController(emailLoginViewController, animated: true)
     }
     
 }
