@@ -18,6 +18,8 @@
 		0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */; };
 		0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */; };
 		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
+		0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */; };
+		0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFBold.ttf; sourceTree = "<group>"; };
 		0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFLight.ttf; sourceTree = "<group>"; };
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
+		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
+		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -208,11 +212,29 @@
 		0E98EB842D3A2603006F25EF /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				0E98EC8D2D3BCF64006F25EF /* NotoSans */,
+				0E98EC8C2D3BCF4A006F25EF /* GmarketSans */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		0E98EC8C2D3BCF4A006F25EF /* GmarketSans */ = {
+			isa = PBXGroup;
+			children = (
 				0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */,
 				0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */,
 				0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */,
 			);
-			path = Fonts;
+			path = GmarketSans;
+			sourceTree = "<group>";
+		};
+		0E98EC8D2D3BCF64006F25EF /* NotoSans */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */,
+				0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */,
+			);
+			path = NotoSans;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +320,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */,
+				0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */,
 				0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */,
 				0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */,
 				0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */,
