@@ -30,17 +30,17 @@ class LoginView: UIView {
         $0.image = UIImage(named: "Login/wegg_icon")
     }
     
-    private let naverLoginButton = LoginButton(
+    internal let naverLoginButton = LoginButton(
         title: "네이버로 로그인",
         backgroundColor: UIColor(hex: "03C75A") ?? .systemGreen
     )
         
-    private let kakaoLoginButton = LoginButton(
+    internal let kakaoLoginButton = LoginButton(
         title: "카카오로 로그인",
         backgroundColor: UIColor(hex: "FEE500") ?? .systemYellow
     )
         
-    private let emailLoginButton = LoginButton(
+    internal let emailLoginButton = LoginButton(
         title: "다른 방법으로 로그인",
         backgroundColor: UIColor(hex: "C7C7C7") ?? .systemGray
     )

@@ -7,11 +7,26 @@
 
 import UIKit
 
+import Then
+
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let loginView = LoginView()
+    private var loginView = LoginView().then {
+        $0.emailLoginButton.addTarget(
+            self,
+            action: #selector(emailLoginButtonTapped),
+            for: .touchUpInside
+        )
+    }
+    
+    // MARK: - Functions
+    
+    @objc private func emailLoginButtonTapped() {
+        let emailLoginViewController = EmailLoginViewController()
+        navigationController?.pushViewController(emailLoginViewController, animated: true)
+    }
     
     // MARK: - Lifecycle
     
@@ -22,7 +37,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
     }
     
 }
