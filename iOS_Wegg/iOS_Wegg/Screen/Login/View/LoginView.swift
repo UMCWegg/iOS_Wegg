@@ -31,7 +31,7 @@ class LoginView: UIView {
     }
     
     private let naverLoginButton = LoginButton(
-        title: "Naver로 로그인",
+        title: "네이버로 로그인",
         backgroundColor: UIColor(hex: "03C75A") ?? .systemGreen
     )
         
