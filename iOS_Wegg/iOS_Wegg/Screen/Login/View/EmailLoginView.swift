@@ -11,8 +11,8 @@ class EmailLoginView: UIView {
 
     // MARK: - Color
     
-    private let textFieldColor = UIColor(named: "textfield")
-    private let buttonColor = UIColor(named: "wegg_blue")
+    private let textFieldColor = UIColor(named: "Login/TextField")
+    private let buttonColor = UIColor(named: "BluePrimary")
     
     // MARK: - Init
     

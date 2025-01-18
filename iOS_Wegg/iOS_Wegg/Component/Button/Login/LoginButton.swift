@@ -23,8 +23,9 @@ class LoginButton: UIButton {
         layer.cornerRadius = 32
         titleLabel?.font = UIFont(name: "NotoSansKR-Medium", size: 20)
         
-        setTitleColor((backgroundColor == .black || backgroundColor == UIColor(named: "wegg_blue"))
-                      ? .white : .black, for: .normal)
+        setTitleColor((backgroundColor == .black ||
+                       backgroundColor == UIColor(named: "BluePrimary"))
+                       ? .white : .black, for: .normal)
         
         heightAnchor.constraint(equalToConstant: 61).isActive = true
     }
