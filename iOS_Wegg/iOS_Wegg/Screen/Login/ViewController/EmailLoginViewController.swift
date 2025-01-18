@@ -9,6 +9,10 @@ import UIKit
 
 class EmailLoginViewController: UIViewController {
 
+    // MARK: - Properties
+    
+    private let emailLoginView = EmailLoginView()
+    
     // MARK: - Lifecycle
     
     override func loadView() {
@@ -20,10 +24,4 @@ class EmailLoginViewController: UIViewController {
         view.backgroundColor = .white
     }
     
-    // MARK: - Properties
-    
-    private let emailLoginView = EmailLoginView()
-    
-    
-
 }
