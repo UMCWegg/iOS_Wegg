@@ -11,16 +11,17 @@ class FindPasswordViewController: UIViewController {
 
     // MARK: - Properties
     
-    
+    private let findPasswordView = FindPasswordView()
     
     // MARK: - Lifecycle
     
     override func loadView() {
-        
+        view = findPasswordView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
     }
 
 }

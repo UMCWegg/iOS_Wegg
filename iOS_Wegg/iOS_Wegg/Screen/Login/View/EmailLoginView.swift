@@ -91,7 +91,7 @@ class EmailLoginView: UIView {
         
         loginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().inset(17)
+            make.leading.trailing.equalToSuperview().inset(17)
             make.bottom.equalToSuperview().offset(-40)
         }
     }

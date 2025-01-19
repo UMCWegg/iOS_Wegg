@@ -8,7 +8,7 @@
 import UIKit
 
 class FindPasswordView: UIView {
-
+    
     // MARK: - Color
     
     private let buttonColor = UIColor(named: "SubButton")
@@ -21,8 +21,8 @@ class FindPasswordView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //setupViews()
-        //setupConstraints()
+        setupViews()
+        setupConstraints()
     }
     
     required init(coder: NSCoder) {
@@ -67,7 +67,7 @@ class FindPasswordView: UIView {
     
     private lazy var loginButton = LoginButton(
         title: "로그인",
-        backgroundColor: buttonColor ?? .systemPurple
+        backgroundColor: UIColor(named: "BluePrimary") ?? .systemPurple
     )
     
     // MARK: - Setup
@@ -85,6 +85,39 @@ class FindPasswordView: UIView {
     
     private func setupConstraints() {
         emailTextField.snp.makeConstraints { make in
-            make.
+            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(64)
+            make.top.equalToSuperview().offset(332)
         }
+        
+        requestAuthNumberButton.snp.makeConstraints { make in
+            make.leading.equalTo(emailTextField.snp.leading)
+            make.top.equalTo(emailTextField.snp.bottom).offset(17)
+            make.height.equalTo(30)
+        }
+        
+        resendButton.snp.makeConstraints { make in
+            make.trailing.equalTo(emailTextField.snp.trailing)
+            make.top.equalTo(requestAuthNumberButton.snp.top)
+            make.height.equalTo(requestAuthNumberButton)
+        }
+        
+        authTextField.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(64)
+            make.top.equalTo(requestAuthNumberButton.snp.bottom).offset(56)
+        }
+        
+        confirmButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(authTextField.snp.bottom).offset(21)
+            make.width.equalTo(151)
+        }
+        
+        loginButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(17)
+            make.bottom.equalToSuperview().offset(-40)
+        }
+    }
 }
