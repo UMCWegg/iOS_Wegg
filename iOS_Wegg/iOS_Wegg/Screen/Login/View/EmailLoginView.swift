@@ -12,7 +12,6 @@ class EmailLoginView: UIView {
     // MARK: - Color
     
     private let textFieldColor = UIColor(named: "Login/TextField")
-    private let buttonColor = UIColor(named: "BluePrimary")
     
     // MARK: - Init
     
@@ -56,7 +55,7 @@ class EmailLoginView: UIView {
     
     private lazy var loginButton = LoginButton(
         title: "로그인",
-        backgroundColor: buttonColor ?? .systemPurple
+        backgroundColor: UIColor(named: "BluePrimary") ?? .systemBlue
     )
     
     // MARK: - Setup

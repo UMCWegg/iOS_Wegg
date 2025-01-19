@@ -67,7 +67,7 @@ class FindPasswordView: UIView {
     
     private lazy var loginButton = LoginButton(
         title: "로그인",
-        backgroundColor: UIColor(named: "BluePrimary") ?? .systemPurple
+        backgroundColor: UIColor(named: "BluePrimary") ?? .systemBlue
     )
     
     // MARK: - Setup
