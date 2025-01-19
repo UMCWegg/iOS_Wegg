@@ -11,7 +11,7 @@ class FindPasswordView: UIView {
     
     // MARK: - Color
     
-    private let buttonColor = UIColor(named: "SubButton")
+    private let buttonColor = UIColor(named: "Login/SubButton")
     
     // MARK: - Font
     
@@ -38,18 +38,18 @@ class FindPasswordView: UIView {
     
     private lazy var requestAuthNumberButton = UIButton().then {
         $0.setTitle("인증번호 보내기", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
         $0.backgroundColor = buttonColor
         $0.titleLabel?.font = buttonFont
         $0.titleLabel?.textAlignment = .center
-        $0.titleLabel?.textColor = .white
     }
     
     private lazy var resendButton = UIButton().then {
-        $0.setTitle("다시 보내기", for: .normal)
+        $0.setTitle("재발송", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
         $0.backgroundColor = UIColor(hex: "ECECEC")
         $0.titleLabel?.font = buttonFont
         $0.titleLabel?.textAlignment = .center
-        $0.titleLabel?.textColor = .black
     }
     
     private lazy var authTextField = LoginTextField(
@@ -94,12 +94,15 @@ class FindPasswordView: UIView {
             make.leading.equalTo(emailTextField.snp.leading)
             make.top.equalTo(emailTextField.snp.bottom).offset(17)
             make.height.equalTo(30)
+            make.width.equalTo(151)
+            make.trailing.equalTo(resendButton.snp.leading).offset(-18)
         }
         
         resendButton.snp.makeConstraints { make in
             make.trailing.equalTo(emailTextField.snp.trailing)
             make.top.equalTo(requestAuthNumberButton.snp.top)
             make.height.equalTo(requestAuthNumberButton)
+            make.width.equalTo(94)
         }
         
         authTextField.snp.makeConstraints { make in
