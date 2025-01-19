@@ -18,6 +18,7 @@
 		0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */; };
 		0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */; };
 		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
+		FF3CBB942D3A687000006955 /* BrowseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3CBB932D3A687000006955 /* BrowseItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFBold.ttf; sourceTree = "<group>"; };
 		0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFLight.ttf; sourceTree = "<group>"; };
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
+		FF3CBB932D3A687000006955 /* BrowseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -105,6 +107,11 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		FF3CBB902D3A5F8D00006955 /* Browse */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Browse;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +177,7 @@
 			children = (
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
+				FF3CBB932D3A687000006955 /* BrowseItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -187,6 +195,7 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				FF3CBB902D3A5F8D00006955 /* Browse */,
 				0E98EAC62D2FB789006F25EF /* Login */,
 			);
 			path = Screen;
@@ -238,6 +247,7 @@
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
+				FF3CBB902D3A5F8D00006955 /* Browse */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
@@ -334,6 +344,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF3CBB942D3A687000006955 /* BrowseItem.swift in Sources */,
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
 			);
