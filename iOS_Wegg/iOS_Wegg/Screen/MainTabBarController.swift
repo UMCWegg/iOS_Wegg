@@ -27,16 +27,16 @@ class MainTabBarController: UITabBarController {
         let browseVC = UINavigationController(rootViewController: BrowseViewController())
         browseVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Search"), tag: 2)
         
-        let bookVC = UINavigationController(rootViewController: BookViewController())
-        bookVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Book"), tag: 3)
-        
         let mapVC = UINavigationController(rootViewController: MapViewController())
-        mapVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Map"), tag: 4)
+        mapVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Map"), tag: 3)
+        
+        let timeVC = UINavigationController(rootViewController: TimeViewController())
+        timeVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Time"), tag: 4)
         
         let myVC = UINavigationController(rootViewController: MyPageViewController())
         myVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "My"), tag: 5)
         
-        self.viewControllers = [homeVC, browseVC, bookVC, mapVC, myVC]
+        self.viewControllers = [homeVC, browseVC, mapVC, timeVC, myVC]
     }
     
     /// 클릭 시, 디자이너 지정 컬러로 칠해지도록 하는 함수
