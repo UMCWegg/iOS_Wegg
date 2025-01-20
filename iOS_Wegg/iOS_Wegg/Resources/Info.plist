@@ -9,6 +9,8 @@
 		<string>GmarketSansTTFBold.ttf</string>
 		<string>GmarketSansTTFLight.ttf</string>
 		<string>GmarketSansTTFMedium.ttf</string>
+        <string>NotoSansKR-Medium.ttf</string>
+        <string>NotoSansKR-Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
