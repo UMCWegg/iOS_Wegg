@@ -67,6 +67,7 @@
 		0E98ED352D3E6CDE006F25EF /* Exceptions for "Utilities" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Extensions/UIColor+extensions.swift",
 				"Extensions/UIFont+extensions.swift",
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
