@@ -14,7 +14,7 @@ class BrowseView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        addcomponents()
         setupConstraints()
         self.backgroundColor = .white
     }
@@ -35,19 +35,26 @@ class BrowseView: UIView {
         return collectionView
     }()
     
+    /// 검색바 헤더 뷰 추가
+    public lazy var searchView: SearchView = SearchView()
+    
     // MARK: - Methods
     
     /// UI 구성 요소 추가
-    private func setupView() {
-        addSubview(browseCollectionView)
+    private func addcomponents() {
+        [browseCollectionView, searchView].forEach{ self.addSubview($0)}
     }
     
     /// UI 제약 조건 설정
     private func setupConstraints() {
-        browseCollectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(
+        browseCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(
                 UIEdgeInsets(top: 120, left: 0, bottom: 50, right: 0)
             )
+        }
+        
+        searchView.snp.makeConstraints{
+            $0.top.left.right.equalToSuperview()
         }
     }
     

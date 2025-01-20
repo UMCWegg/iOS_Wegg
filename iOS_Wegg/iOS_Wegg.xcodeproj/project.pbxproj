@@ -109,14 +109,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		FF3CBB902D3A5F8D00006955 /* Browse */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Browse;
-			sourceTree = "<group>";
-		};
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BrowseItem;
+			sourceTree = "<group>";
+		};
+		FF3CBCA42D3E43F800006955 /* Browse */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Browse;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -202,8 +202,8 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
-				FF3CBB902D3A5F8D00006955 /* Browse */,
 				0E98EAC62D2FB789006F25EF /* Login */,
+				FF3CBCA42D3E43F800006955 /* Browse */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -272,8 +272,8 @@
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
-				FF3CBB902D3A5F8D00006955 /* Browse */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				FF3CBCA42D3E43F800006955 /* Browse */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
