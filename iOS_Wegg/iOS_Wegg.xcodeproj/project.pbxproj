@@ -119,6 +119,11 @@
 			path = TextField;
 			sourceTree = "<group>";
 		};
+		DE001F742D3E378C003A273F /* SignUp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +208,7 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				DE001F742D3E378C003A273F /* SignUp */,
 				0E98EAC62D2FB789006F25EF /* Login */,
 			);
 			path = Screen;
@@ -274,6 +280,7 @@
 				0E98EAC62D2FB789006F25EF /* Login */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
+				DE001F742D3E378C003A273F /* SignUp */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
