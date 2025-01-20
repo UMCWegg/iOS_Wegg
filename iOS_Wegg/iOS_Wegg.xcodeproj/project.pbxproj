@@ -114,6 +114,11 @@
 			path = Browse;
 			sourceTree = "<group>";
 		};
+		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BrowseItem;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,9 +182,9 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
-				FF3CBB932D3A687000006955 /* BrowseItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -268,6 +273,7 @@
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
 				FF3CBB902D3A5F8D00006955 /* Browse */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
@@ -366,7 +372,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF3CBB942D3A687000006955 /* BrowseItem.swift in Sources */,
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
 			);
