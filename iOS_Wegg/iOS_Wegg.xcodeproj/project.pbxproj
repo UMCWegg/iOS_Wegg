@@ -64,6 +64,13 @@
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
+		0E98ED352D3E6CDE006F25EF /* Exceptions for "Utilities" folder in "iOS_Wegg" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Extensions/UIFont+extensions.swift",
+			);
+			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -101,6 +108,9 @@
 		};
 		0E98EA3F2D2F979A006F25EF /* Utilities */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0E98ED352D3E6CDE006F25EF /* Exceptions for "Utilities" folder in "iOS_Wegg" target */,
+			);
 			path = Utilities;
 			sourceTree = "<group>";
 		};
