@@ -15,7 +15,10 @@ final class LoginManager {
     private let kakaoLoginManager = KakaoLoginManager.shared
     private let emailLoginManager = EmailLoginManager.shared
     
-    func login(type: SocialType, from viewController: UIViewController? = nil, email: String? = nil, password: String? = nil) {
+    func login(type: SocialType,
+               from viewController: UIViewController? = nil,
+               email: String? = nil,
+               password: String? = nil) {
         switch type {
         case .google:
             guard let viewController else { return }

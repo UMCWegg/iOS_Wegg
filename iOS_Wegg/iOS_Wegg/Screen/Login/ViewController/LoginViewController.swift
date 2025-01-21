@@ -66,5 +66,4 @@ class LoginViewController: UIViewController {
         navigationController?.pushViewController(emailLoginVC, animated: true)
     }
     
-        
 }
