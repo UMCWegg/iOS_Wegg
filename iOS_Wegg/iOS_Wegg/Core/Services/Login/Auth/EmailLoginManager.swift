@@ -10,14 +10,21 @@ final class EmailLoginManager {
    
    private init() {}
    
-   func login(email: String, password: String) {
-       let request = LoginRequest(
-           type: .email,
-           accessToken: nil,
-           email: email,
-           password: password
-       )
-       
-       AuthService.shared.login(with: request)
-   }
+    func login(email: String, password: String) {
+        let request = LoginRequest(
+            type: .email,
+            accessToken: nil,
+            email: email,
+            password: password
+        )
+        
+        AuthService.shared.login(with: request) { result in
+            switch result {
+            case .success(let response):
+                print("Login success: \(response)")
+            case .failure(let error):
+                print("Login failed: \(error)")
+            }
+        }
+    }
 }

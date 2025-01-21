@@ -36,9 +36,17 @@ class LoginViewController: UIViewController {
             action: #selector(emailLoginButtonTapped),
             for: .touchUpInside)
         
-        loginView.naverLoginButton.addTarget(self, action: #selector(naverLoginButtonTapped), for: .touchUpInside)
-        loginView.kakaoLoginButton.addTarget(self, action: #selector(kakaoLoginButtonTapped), for: .touchUpInside)
-        loginView.emailLoginButton.addTarget(self, action: #selector(emailLoginButtonTapped), for: .touchUpInside)
+        loginView.naverLoginButton.addTarget(self,
+                                             action: #selector(naverLoginButtonTapped),
+                                             for: .touchUpInside)
+        
+        loginView.kakaoLoginButton.addTarget(self,
+                                             action: #selector(kakaoLoginButtonTapped),
+                                             for: .touchUpInside)
+        
+        loginView.emailLoginButton.addTarget(self,
+                                             action: #selector(emailLoginButtonTapped),
+                                             for: .touchUpInside)
     }
     
     // Navigation 추후 구현

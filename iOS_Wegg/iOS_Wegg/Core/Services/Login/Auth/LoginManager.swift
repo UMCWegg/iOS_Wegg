@@ -8,7 +8,7 @@
 final class LoginManager {
     static let shared = LoginManager()
     
-    private let naverLoginManager = NaverrLoginManager.shared
+    private let naverLoginManager = NaverLoginManager.shared
     private let kakaoLoginManager = KakaoLoginManager.shared
     private let emailLoginManager = EmailLoginManager.shared
     

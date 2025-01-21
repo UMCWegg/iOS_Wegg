@@ -31,21 +31,28 @@ final class NaverLoginManager {
 }
 
 extension NaverLoginManager: NaverThirdPartyLoginConnectionDelegate {
-   func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
-       guard let accessToken = loginInstance?.accessToken else { return }
-       
-       let request = LoginRequest(
-           type: .naver,
-           accessToken: accessToken,
-           email: nil,
-           password: nil
-       )
-       
-       // AuthService로 요청 전달
-       AuthService.shared.login(with: request)
-   }
+    func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
+            guard let accessToken = loginInstance?.accessToken else { return }
+            
+            let request = LoginRequest(
+                type: .naver,
+                accessToken: accessToken,
+                email: nil,
+                password: nil
+            )
+            
+            AuthService.shared.login(with: request) { result in
+                switch result {
+                case .success(let response):
+                    print("Login success: \(response)")
+                case .failure(let error):
+                    print("Login failed: \(error)")
+                }
+            }
+        }
    
    func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {}
    func oauth20ConnectionDidFinishDeleteToken() {}
-   func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {}
+   func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!,
+                          didFailWithError error: Error!) {}
 }

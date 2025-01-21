@@ -21,7 +21,8 @@ final class AuthService {
     
     // MARK: - Functions
     
-    func login(with request: LoginRequest, completion: @escaping (Result<LoginResponse, Error>) -> Void) {
+    func login(with request: LoginRequest,
+               completion: @escaping (Result<LoginResponse, Error>) -> Void) {
         let endpoint = "\(baseURL)/auth/login"
         
         AF.request(
