@@ -36,7 +36,7 @@ class LoginTextField: UITextField {
         font = UIFont(name: "NotoSansKR-Regular", size: 13)
         autocapitalizationType = .none
         autocorrectionType = .no
-        
+        heightAnchor.constraint(equalToConstant: 43).isActive = true
         switch type {
         case .normal:
             break
