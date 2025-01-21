@@ -56,11 +56,7 @@ class EmailLoginView: UIView {
     
     private lazy var loginButton = LoginButton(
         title: "로그인",
-<<<<<<< HEAD
-        backgroundColor: UIColor(named: "BluePrimary") ?? .systemBlue
-=======
         backgroundColor: buttonColor ?? .systemPurple
->>>>>>> 6742aa161baa45d5e0dd9592fe116742c5a319d4
     )
     
     // MARK: - Setup
@@ -80,20 +76,14 @@ class EmailLoginView: UIView {
             make.centerX.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(64)
             make.top.equalToSuperview().offset(332)
-<<<<<<< HEAD
-=======
             make.height.equalTo(43)
->>>>>>> 6742aa161baa45d5e0dd9592fe116742c5a319d4
         }
         
         passwordTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(64)
             make.top.equalTo(emailTextField.snp.bottom).offset(24)
-<<<<<<< HEAD
-=======
             make.height.equalTo(43)
->>>>>>> 6742aa161baa45d5e0dd9592fe116742c5a319d4
         }
         
         findPasswordButton.snp.makeConstraints { make in
