@@ -20,10 +20,10 @@
 		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
 		0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */; };
 		0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */; };
-		DE0020542D3F6079003A273F /* NaverThirdPartyLogin in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020532D3F6079003A273F /* NaverThirdPartyLogin */; };
 		DE0020B92D3F75E6003A273F /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020B82D3F75E6003A273F /* KakaoSDK */; };
 		DE0020BB2D3F75E6003A273F /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020BA2D3F75E6003A273F /* KakaoSDKAuth */; };
 		DE0020BD2D3F75E6003A273F /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020BC2D3F75E6003A273F /* KakaoSDKCommon */; };
+		DE0020C62D3F942B003A273F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020C52D3F942B003A273F /* GoogleSignIn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -135,10 +135,10 @@
 				0E98EB802D38E554006F25EF /* KakaoMapsSDK-SPM in Frameworks */,
 				0E98E9F52D2E336F006F25EF /* Moya in Frameworks */,
 				DE0020BD2D3F75E6003A273F /* KakaoSDKCommon in Frameworks */,
-				DE0020542D3F6079003A273F /* NaverThirdPartyLogin in Frameworks */,
 				0E98EA472D2F9F77006F25EF /* Then in Frameworks */,
 				DE0020B92D3F75E6003A273F /* KakaoSDK in Frameworks */,
 				DE0020BB2D3F75E6003A273F /* KakaoSDKAuth in Frameworks */,
+				DE0020C62D3F942B003A273F /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,10 +290,10 @@
 				0E98E9F42D2E336F006F25EF /* Moya */,
 				0E98EA462D2F9F77006F25EF /* Then */,
 				0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */,
-				DE0020532D3F6079003A273F /* NaverThirdPartyLogin */,
 				DE0020B82D3F75E6003A273F /* KakaoSDK */,
 				DE0020BA2D3F75E6003A273F /* KakaoSDKAuth */,
 				DE0020BC2D3F75E6003A273F /* KakaoSDKCommon */,
+				DE0020C52D3F942B003A273F /* GoogleSignIn */,
 			);
 			productName = iOS_Wegg;
 			productReference = 0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */;
@@ -330,8 +330,8 @@
 				0E98E9F92D2E3712006F25EF /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				0E98EA452D2F9F77006F25EF /* XCRemoteSwiftPackageReference "Then" */,
 				0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
-				DE0020522D3F6079003A273F /* XCRemoteSwiftPackageReference "naveridlogin-sdk-ios" */,
 				DE0020B72D3F75E6003A273F /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				DE0020C42D3F942B003A273F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0E98E9D62D2D009D006F25EF /* Products */;
@@ -654,20 +654,20 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		DE0020522D3F6079003A273F /* XCRemoteSwiftPackageReference "naveridlogin-sdk-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/naver/naveridlogin-sdk-ios.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		DE0020B72D3F75E6003A273F /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.23.0;
+			};
+		};
+		DE0020C42D3F942B003A273F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -703,11 +703,6 @@
 			package = 0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
 			productName = "KakaoMapsSDK-SPM";
 		};
-		DE0020532D3F6079003A273F /* NaverThirdPartyLogin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DE0020522D3F6079003A273F /* XCRemoteSwiftPackageReference "naveridlogin-sdk-ios" */;
-			productName = NaverThirdPartyLogin;
-		};
 		DE0020B82D3F75E6003A273F /* KakaoSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DE0020B72D3F75E6003A273F /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
@@ -722,6 +717,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DE0020B72D3F75E6003A273F /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKCommon;
+		};
+		DE0020C52D3F942B003A273F /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE0020C42D3F942B003A273F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
