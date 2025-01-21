@@ -7,6 +7,8 @@
 
 import UIKit
 
+import KakaoSDKCommon
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -14,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        // Override point for customization after application launch.
+        KakaoSDK.initSDK(appKey: "YOUR_NATIVE_APP_KEY")
         return true
     }
     

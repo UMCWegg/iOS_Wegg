@@ -17,7 +17,7 @@ final class SignUpToggleButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        //setupGesture()
+        setupGesture()
     }
     
     required init?(coder: NSCoder) {
