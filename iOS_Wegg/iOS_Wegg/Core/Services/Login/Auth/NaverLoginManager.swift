@@ -35,7 +35,7 @@ final class NaverLoginManager {
 extension NaverLoginManager: NaverThirdPartyLoginConnectionDelegate {
     func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
         guard let accessToken = loginInstance?.accessToken,
-              let socialId = loginInstance?.tokenType else { return }
+              let socialId = loginInstance?.tokenType else { return } 
               
         // 여기서 토큰과 ID 저장
         UserDefaultsManager.shared.saveNaverToken(token: accessToken, id: socialId)
