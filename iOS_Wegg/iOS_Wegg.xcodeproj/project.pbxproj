@@ -19,9 +19,11 @@
 		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
 		0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */; };
 		0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */; };
+		FF3CBCB62D3E44A200006955 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3CBCB52D3E44A200006955 /* MainTabBarController.swift */; };
 		0E98ED082D3E60E7006F25EF /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98ED072D3E60E7006F25EF /* NMapsMap */; };
 		0E98EFF62D3F69EB006F25EF /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EFF32D3F69EB006F25EF /* LoginTextField.swift */; };
 		0E98EFF72D3F69EB006F25EF /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EFF02D3F69EB006F25EF /* LoginButton.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,8 +37,10 @@
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
+		FF3CBCB52D3E44A200006955 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		0E98EFF02D3F69EB006F25EF /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		0E98EFF32D3F69EB006F25EF /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -124,11 +128,38 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		FF3CBB902D3A5F8D00006955 /* Browse */ = {
+
+		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BrowseItem;
+			sourceTree = "<group>";
+		};
+		FF3CBC922D3E43AF00006955 /* Time */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Time;
+			sourceTree = "<group>";
+		};
+		FF3CBC932D3E43B100006955 /* Home */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Home;
+			sourceTree = "<group>";
+		};
+		FF3CBCA42D3E43F800006955 /* Browse */ = {
+
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Browse;
 			sourceTree = "<group>";
 		};
+
+		FF3CBCB32D3E444000006955 /* Map */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Map;
+			sourceTree = "<group>";
+		};
+		FF3CBCB42D3E447800006955 /* My */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = My;
+
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BrowseItem;
@@ -219,8 +250,13 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
-				FF3CBB902D3A5F8D00006955 /* Browse */,
+				FF3CBC922D3E43AF00006955 /* Time */,
+				FF3CBC932D3E43B100006955 /* Home */,
 				0E98EAC62D2FB789006F25EF /* Login */,
+				FF3CBCA42D3E43F800006955 /* Browse */,
+				FF3CBCB32D3E444000006955 /* Map */,
+				FF3CBCB42D3E447800006955 /* My */,
+				FF3CBCB52D3E44A200006955 /* MainTabBarController.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -321,8 +357,12 @@
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
-				FF3CBB902D3A5F8D00006955 /* Browse */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				FF3CBC922D3E43AF00006955 /* Time */,
+				FF3CBC932D3E43B100006955 /* Home */,
+				FF3CBCA42D3E43F800006955 /* Browse */,
+				FF3CBCB32D3E444000006955 /* Map */,
+				FF3CBCB42D3E447800006955 /* My */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
@@ -421,6 +461,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF3CBCB62D3E44A200006955 /* MainTabBarController.swift in Sources */,
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
 				0E98EFF62D3F69EB006F25EF /* LoginTextField.swift in Sources */,
