@@ -15,6 +15,16 @@ struct BaseUser: Codable {
     let reason: String?
     let contacts: [Contact]
     let alarm: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case marketingAgree = "marketing_agree"
+        case accountID = "account_id"
+        case job
+        case reason
+        case contacts = "contact"
+        case alarm
+    }
 }
 
 enum SocialType: String, Codable {

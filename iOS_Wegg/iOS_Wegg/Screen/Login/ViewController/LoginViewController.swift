@@ -35,6 +35,10 @@ class LoginViewController: UIViewController {
             self,
             action: #selector(emailLoginButtonTapped),
             for: .touchUpInside)
+        
+        loginView.naverLoginButton.addTarget(self, action: #selector(naverLoginButtonTapped), for: .touchUpInside)
+        loginView.kakaoLoginButton.addTarget(self, action: #selector(kakaoLoginButtonTapped), for: .touchUpInside)
+        loginView.emailLoginButton.addTarget(self, action: #selector(emailLoginButtonTapped), for: .touchUpInside)
     }
     
     // Navigation 추후 구현
@@ -44,6 +48,14 @@ class LoginViewController: UIViewController {
     @objc private func emailLoginButtonTapped() {
         let emailLoginVC = EmailLoginViewController()
         navigationController?.pushViewController(emailLoginVC, animated: true)
+    }
+    
+    @objc private func naverLoginButtonTapped() {
+        LoginManager.shared.login(type: .naver)
+    }
+    
+    @objc private func kakaoLoginButtonTapped() {
+        LoginManager.shared.login(type: .kakao)
     }
     
 }
