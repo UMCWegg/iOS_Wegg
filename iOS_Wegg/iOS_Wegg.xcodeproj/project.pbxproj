@@ -14,12 +14,12 @@
 		0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EA2A2D2F8AE8006F25EF /* SceneDelegate.swift */; };
 		0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EA282D2F8AE8006F25EF /* Assets.xcassets */; };
 		0E98EA472D2F9F77006F25EF /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98EA462D2F9F77006F25EF /* Then */; };
-		0E98EB802D38E554006F25EF /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */; };
 		0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */; };
 		0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */; };
 		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
 		0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */; };
 		0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */; };
+		0E98ED082D3E60E7006F25EF /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98ED072D3E60E7006F25EF /* NMapsMap */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +64,14 @@
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
+		0E98ED352D3E6CDE006F25EF /* Exceptions for "Utilities" folder in "iOS_Wegg" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Extensions/UIColor+extensions.swift",
+				"Extensions/UIFont+extensions.swift",
+			);
+			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -101,6 +109,9 @@
 		};
 		0E98EA3F2D2F979A006F25EF /* Utilities */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0E98ED352D3E6CDE006F25EF /* Exceptions for "Utilities" folder in "iOS_Wegg" target */,
+			);
 			path = Utilities;
 			sourceTree = "<group>";
 		};
@@ -128,7 +139,7 @@
 			files = (
 				0E98E9EF2D2E3265006F25EF /* SnapKit in Frameworks */,
 				0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */,
-				0E98EB802D38E554006F25EF /* KakaoMapsSDK-SPM in Frameworks */,
+				0E98ED082D3E60E7006F25EF /* NMapsMap in Frameworks */,
 				0E98E9F52D2E336F006F25EF /* Moya in Frameworks */,
 				0E98EA472D2F9F77006F25EF /* Then in Frameworks */,
 			);
@@ -281,7 +292,7 @@
 				0E98E9F12D2E331D006F25EF /* Alamofire */,
 				0E98E9F42D2E336F006F25EF /* Moya */,
 				0E98EA462D2F9F77006F25EF /* Then */,
-				0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */,
+				0E98ED072D3E60E7006F25EF /* NMapsMap */,
 			);
 			productName = iOS_Wegg;
 			productReference = 0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */;
@@ -317,7 +328,7 @@
 				0E98E9F32D2E336F006F25EF /* XCRemoteSwiftPackageReference "Moya" */,
 				0E98E9F92D2E3712006F25EF /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				0E98EA452D2F9F77006F25EF /* XCRemoteSwiftPackageReference "Then" */,
-				0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
+				0E98ED062D3E60E7006F25EF /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0E98E9D62D2D009D006F25EF /* Products */;
@@ -632,12 +643,12 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
+		0E98ED062D3E60E7006F25EF /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
+			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 3.20.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -668,10 +679,10 @@
 			package = 0E98EA452D2F9F77006F25EF /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
 		};
-		0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */ = {
+		0E98ED072D3E60E7006F25EF /* NMapsMap */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
-			productName = "KakaoMapsSDK-SPM";
+			package = 0E98ED062D3E60E7006F25EF /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
+			productName = NMapsMap;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
