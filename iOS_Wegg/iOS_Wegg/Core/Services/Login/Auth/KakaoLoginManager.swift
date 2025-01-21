@@ -22,7 +22,7 @@ final class KakaoLoginManager {
    }
    
     private func loginWithApp() {
-        UserApi.shared.loginWithKakaoTalk { oauthToken, error in  // [weak self] 제거
+        UserApi.shared.loginWithKakaoTalk { oauthToken, error in
             if let error = error {
                 print(error)
                 return
@@ -40,10 +40,8 @@ final class KakaoLoginManager {
             AuthService.shared.login(with: request) { result in
                 switch result {
                 case .success(let response):
-                    // TODO: 토큰 저장 및 성공 처리
                     print("Login success: \(response)")
                 case .failure(let error):
-                    // TODO: 에러 처리
                     print("Login failed: \(error)")
                 }
             }
@@ -51,8 +49,29 @@ final class KakaoLoginManager {
     }
    
    private func loginWithWeb() {
-       UserApi.shared.loginWithKakaoAccount { [weak self] oauthToken, error in
-           // App 로그인과 동일한 처리
+       UserApi.shared.loginWithKakaoAccount { oauthToken, error in
+           if let error = error {
+               print(error)
+               return
+           }
+           
+           guard let token = oauthToken?.accessToken else { return }
+           
+           let request = LoginRequest(
+               type: .kakao,
+               accessToken: token,
+               email: nil,
+               password: nil
+           )
+           
+           AuthService.shared.login(with: request) { result in
+               switch result {
+               case .success(let response):
+                   print("Login success: \(response)")
+               case .failure(let error):
+                   print("Login failed: \(error)")
+               }
+           }
        }
    }
 }

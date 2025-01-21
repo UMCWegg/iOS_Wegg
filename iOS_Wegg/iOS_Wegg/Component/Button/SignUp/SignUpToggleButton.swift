@@ -12,7 +12,6 @@ import Then
 
 final class SignUpToggleButton: UIButton {
     
-    
     // MARK: - Init
     
     override init(frame: CGRect) {

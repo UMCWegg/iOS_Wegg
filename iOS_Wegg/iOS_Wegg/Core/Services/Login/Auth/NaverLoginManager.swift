@@ -7,11 +7,12 @@
 
 import NaverThirdPartyLogin
 
-final class NaverLoginManager {
+final class NaverLoginManager: NSObject {
    static let shared = NaverLoginManager()
    private let loginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
    
-   private init() {
+   private override init() {
+       super.init()
        setupNaverLogin()
    }
    

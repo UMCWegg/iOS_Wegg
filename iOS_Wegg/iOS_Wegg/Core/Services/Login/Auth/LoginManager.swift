@@ -12,7 +12,6 @@ final class LoginManager {
     private let kakaoLoginManager = KakaoLoginManager.shared
     private let emailLoginManager = EmailLoginManager.shared
     
-    
     func login(type: SocialType, email: String? = nil, password: String? = nil) {
         switch type {
         case .naver:
