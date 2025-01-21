@@ -5,17 +5,21 @@
 //  Created by 이건수 on 2025.01.21.
 //
 
+import Foundation
+import UIKit
+
 final class LoginManager {
     static let shared = LoginManager()
     
-    private let naverLoginManager = NaverLoginManager.shared
+    private let googleLoginManager = GoogleLoginManager.shared
     private let kakaoLoginManager = KakaoLoginManager.shared
     private let emailLoginManager = EmailLoginManager.shared
     
-    func login(type: SocialType, email: String? = nil, password: String? = nil) {
+    func login(type: SocialType, from viewController: UIViewController? = nil, email: String? = nil, password: String? = nil) {
         switch type {
-        case .naver:
-            naverLoginManager.requestLogin()
+        case .google:
+            guard let viewController else { return }
+            googleLoginManager.requestLogin(from: viewController)
         case .kakao:
             kakaoLoginManager.requestLogin()
         case .email:

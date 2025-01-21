@@ -36,8 +36,8 @@ class LoginViewController: UIViewController {
             action: #selector(emailLoginButtonTapped),
             for: .touchUpInside)
         
-        loginView.naverLoginButton.addTarget(self,
-                                             action: #selector(naverLoginButtonTapped),
+        loginView.googleLoginButton.addTarget(self,
+                                             action: #selector(googleLoginButtonTapped),
                                              for: .touchUpInside)
         
         loginView.kakaoLoginButton.addTarget(self,
@@ -53,17 +53,18 @@ class LoginViewController: UIViewController {
     
     // MARK: - Actions
     
-    @objc private func emailLoginButtonTapped() {
-        let emailLoginVC = EmailLoginViewController()
-        navigationController?.pushViewController(emailLoginVC, animated: true)
-    }
-    
-    @objc private func naverLoginButtonTapped() {
-        LoginManager.shared.login(type: .naver)
+    @objc private func googleLoginButtonTapped() {
+        LoginManager.shared.login(type: .google, from: self)
     }
     
     @objc private func kakaoLoginButtonTapped() {
         LoginManager.shared.login(type: .kakao)
     }
     
+    @objc private func emailLoginButtonTapped() {
+        let emailLoginVC = EmailLoginViewController()
+        navigationController?.pushViewController(emailLoginVC, animated: true)
+    }
+    
+        
 }

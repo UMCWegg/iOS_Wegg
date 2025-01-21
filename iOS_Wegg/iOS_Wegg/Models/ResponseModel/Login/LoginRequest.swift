@@ -10,4 +10,12 @@ struct LoginRequest: Codable {
     let accessToken: String?
     let email: String?
     let password: String?
+    
+    var identifier: String? {
+        switch type {
+        case .google: return email
+        case .kakao: return accessToken
+        case .email: return email
+        }
+    }
 }

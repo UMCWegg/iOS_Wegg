@@ -5,41 +5,36 @@
 //  Created by 이건수 on 2025.01.21.
 //
 
-import Foundation
+import UIKit
 
-import GoogleSignIn
-
-final class GoogleService {
-    static let shared = GoogleService()
-    private let clientID = "YOUR_CLIENT_ID"
+final class GoogleLoginManager {
+    static let shared = GoogleLoginManager()
+    private let googleService = GoogleService.shared
     
-    private init() {
-        setupGoogleSignIn()
-    }
+    private init() {}
     
-    private func setupGoogleSignIn() {
-        GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
-    }
-    
-    func signIn(presenting viewController: UIViewController,
-                completion: @escaping (Result<(String, String), Error>) -> Void) {
-        GIDSignIn.sharedInstance.signIn(withPresenting: viewController) { signInResult, error in
-            if let error = error {
-                completion(.failure(error))
-                return
+    func requestLogin(from viewController: UIViewController) {
+        googleService.signIn(presenting: viewController) { result in
+            switch result {
+            case .success((let email, let token)):
+                let request = LoginRequest(
+                    type: .google,
+                    accessToken: token,
+                    email: email,
+                    password: nil
+                )
+                
+                AuthService.shared.login(with: request) { result in
+                    switch result {
+                    case .success(let response):
+                        print("Login success: \(response)")
+                    case .failure(let error):
+                        print("Login failed: \(error)")
+                    }
+                }
+            case .failure(let error):
+                print("Google sign in failed: \(error)")
             }
-            
-            guard let email = signInResult?.user.profile?.email,
-                  let token = signInResult?.user.accessToken.tokenString else {
-                completion(.failure(NSError(domain: "", code: -1)))
-                return
-            }
-            
-            completion(.success((email, token)))
         }
-    }
-    
-    func signOut() {
-        GIDSignIn.sharedInstance.signOut()
     }
 }
