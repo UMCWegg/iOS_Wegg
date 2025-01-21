@@ -134,6 +134,7 @@
 			path = BrowseItem;
 			sourceTree = "<group>";
 		};
+		FF3CBCA42D3E43F800006955 /* Browse */ = {
 		FF3CBC922D3E43AF00006955 /* Time */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Time;
@@ -145,7 +146,6 @@
 			sourceTree = "<group>";
 		};
 		FF3CBCA42D3E43F800006955 /* Browse */ = {
-
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Browse;
 			sourceTree = "<group>";
