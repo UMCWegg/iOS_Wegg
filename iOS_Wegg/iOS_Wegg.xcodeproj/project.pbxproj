@@ -20,6 +20,8 @@
 		0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */; };
 		0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */; };
 		0E98ED082D3E60E7006F25EF /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98ED072D3E60E7006F25EF /* NMapsMap */; };
+		0E98EFF62D3F69EB006F25EF /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EFF32D3F69EB006F25EF /* LoginTextField.swift */; };
+		0E98EFF72D3F69EB006F25EF /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EFF02D3F69EB006F25EF /* LoginButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,8 @@
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
+		0E98EFF02D3F69EB006F25EF /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
+		0E98EFF32D3F69EB006F25EF /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -120,7 +124,6 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-
 		FF3CBB902D3A5F8D00006955 /* Browse */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Browse;
@@ -177,8 +180,8 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				DE001EC22D3BF1B5003A273F /* TextField */,
-				DE001E912D3BDF71003A273F /* Button */,
+				0E98EFF22D3F69EB006F25EF /* Button */,
+				0E98EFF52D3F69EB006F25EF /* TextField */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -261,6 +264,38 @@
 				0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */,
 			);
 			path = NotoSans;
+			sourceTree = "<group>";
+		};
+		0E98EFF12D3F69EB006F25EF /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EFF02D3F69EB006F25EF /* LoginButton.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		0E98EFF22D3F69EB006F25EF /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EFF12D3F69EB006F25EF /* Login */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		0E98EFF42D3F69EB006F25EF /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EFF32D3F69EB006F25EF /* LoginTextField.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		0E98EFF52D3F69EB006F25EF /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EFF42D3F69EB006F25EF /* Login */,
+			);
+			path = TextField;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -388,6 +423,8 @@
 			files = (
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
+				0E98EFF62D3F69EB006F25EF /* LoginTextField.swift in Sources */,
+				0E98EFF72D3F69EB006F25EF /* LoginButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
