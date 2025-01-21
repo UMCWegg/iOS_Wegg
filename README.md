@@ -9,6 +9,7 @@
 - NMapsMap: 네이버 지도 SDK.
 - SPM: 패키지 의존성 관리.
 - NaverLoginSDK: 네이버 로그인 SDK.
+- KakaoOpenSDK: 카카오 로그인 SDK.
 
 ## 브랜치 컨벤션
 - 브랜치 전략: GitHub Flow
