@@ -20,6 +20,7 @@ struct BaseUser: Codable {
 enum SocialType: String, Codable {
     case naver
     case kakao
+    case email
 }
 
 struct Contact: Codable {
