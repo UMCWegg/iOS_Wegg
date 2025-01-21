@@ -9,7 +9,7 @@ import UIKit
 
 class SearchView: UIView, UISearchBarDelegate {
     
-    //MARK: - Init
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,7 +23,7 @@ class SearchView: UIView, UISearchBarDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Property
+    // MARK: - Property
     
     /// 검색바 UI
     public lazy var searchBar: UISearchBar = {
@@ -41,7 +41,7 @@ class SearchView: UIView, UISearchBarDelegate {
         return searchBar
     }()
     
-    //MARK: - Methods
+    // MARK: - Methods
     
     /// 기본적으로 검색바를 만들면 취소 버튼이 아닌, cancel이라고 영어로 칭해져서 등장한다. 이를 취소 버튼으로 재생성
     private func changeCancelKorean() {
@@ -52,11 +52,11 @@ class SearchView: UIView, UISearchBarDelegate {
  
     /// 제약조건 및 컴포넌트 추가
     private func addComponents() {
-        [searchBar].forEach{self.addSubview($0)}
+        [searchBar].forEach { self.addSubview($0) }
     }
     
     private func constraints() {
-        searchBar.snp.makeConstraints{
+        searchBar.snp.makeConstraints {
             $0.top.equalToSuperview().offset(60)
             $0.left.equalToSuperview().offset(16)
             $0.right.equalToSuperview().offset(-16)

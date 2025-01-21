@@ -17,10 +17,4 @@ struct BrowseItem: Codable {
     
     /// 게시물 이미지 리스트 (URL 또는 이름)
     let postImage: [String]
-    
-    /// 좋아요 개수
-//    let likes: Int
-    
-    /// 댓글 개수
-//    let comments: Int
 }
