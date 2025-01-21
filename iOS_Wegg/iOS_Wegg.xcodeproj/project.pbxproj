@@ -120,14 +120,15 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		DE001E912D3BDF71003A273F /* Button */ = {
+
+		FF3CBB902D3A5F8D00006955 /* Browse */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Button;
+			path = Browse;
 			sourceTree = "<group>";
 		};
-		DE001EC22D3BF1B5003A273F /* TextField */ = {
+		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TextField;
+			path = BrowseItem;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -195,6 +196,7 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
 			);
@@ -214,6 +216,7 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				FF3CBB902D3A5F8D00006955 /* Browse */,
 				0E98EAC62D2FB789006F25EF /* Login */,
 			);
 			path = Screen;
@@ -283,8 +286,8 @@
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
-				DE001E912D3BDF71003A273F /* Button */,
-				DE001EC22D3BF1B5003A273F /* TextField */,
+				FF3CBB902D3A5F8D00006955 /* Browse */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
