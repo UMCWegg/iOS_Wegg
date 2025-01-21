@@ -31,6 +31,6 @@ class ServiceAggrementView: UIView {
         $0.font = UIFont(name: "NotoSansKR-Regular", size: 20)
     }
     
-    private 
+    private let agreeAllButton = SignUp
 
 }
