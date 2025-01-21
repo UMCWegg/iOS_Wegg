@@ -14,12 +14,16 @@
 		0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EA2A2D2F8AE8006F25EF /* SceneDelegate.swift */; };
 		0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EA282D2F8AE8006F25EF /* Assets.xcassets */; };
 		0E98EA472D2F9F77006F25EF /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98EA462D2F9F77006F25EF /* Then */; };
-		0E98EB802D38E554006F25EF /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */; };
 		0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */; };
 		0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */; };
 		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
 		0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */; };
 		0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */; };
+		FF3CBCB62D3E44A200006955 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3CBCB52D3E44A200006955 /* MainTabBarController.swift */; };
+		0E98ED082D3E60E7006F25EF /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98ED072D3E60E7006F25EF /* NMapsMap */; };
+		0E98EFF62D3F69EB006F25EF /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EFF32D3F69EB006F25EF /* LoginTextField.swift */; };
+		0E98EFF72D3F69EB006F25EF /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EFF02D3F69EB006F25EF /* LoginButton.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +37,10 @@
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
+		FF3CBCB52D3E44A200006955 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		0E98EFF02D3F69EB006F25EF /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
+		0E98EFF32D3F69EB006F25EF /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -61,6 +69,14 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				.gitkeep,
+			);
+			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
+		};
+		0E98ED352D3E6CDE006F25EF /* Exceptions for "Utilities" folder in "iOS_Wegg" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Extensions/UIColor+extensions.swift",
+				"Extensions/UIFont+extensions.swift",
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
@@ -101,6 +117,9 @@
 		};
 		0E98EA3F2D2F979A006F25EF /* Utilities */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0E98ED352D3E6CDE006F25EF /* Exceptions for "Utilities" folder in "iOS_Wegg" target */,
+			);
 			path = Utilities;
 			sourceTree = "<group>";
 		};
@@ -109,14 +128,41 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BrowseItem;
 			sourceTree = "<group>";
 		};
 		FF3CBCA42D3E43F800006955 /* Browse */ = {
+		FF3CBC922D3E43AF00006955 /* Time */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Time;
+			sourceTree = "<group>";
+		};
+		FF3CBC932D3E43B100006955 /* Home */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Home;
+			sourceTree = "<group>";
+		};
+		FF3CBCA42D3E43F800006955 /* Browse */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Browse;
+			sourceTree = "<group>";
+		};
+
+		FF3CBCB32D3E444000006955 /* Map */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Map;
+			sourceTree = "<group>";
+		};
+		FF3CBCB42D3E447800006955 /* My */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = My;
+
+		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BrowseItem;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -128,7 +174,7 @@
 			files = (
 				0E98E9EF2D2E3265006F25EF /* SnapKit in Frameworks */,
 				0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */,
-				0E98EB802D38E554006F25EF /* KakaoMapsSDK-SPM in Frameworks */,
+				0E98ED082D3E60E7006F25EF /* NMapsMap in Frameworks */,
 				0E98E9F52D2E336F006F25EF /* Moya in Frameworks */,
 				0E98EA472D2F9F77006F25EF /* Then in Frameworks */,
 			);
@@ -165,6 +211,8 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				0E98EFF22D3F69EB006F25EF /* Button */,
+				0E98EFF52D3F69EB006F25EF /* TextField */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -202,8 +250,13 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				FF3CBC922D3E43AF00006955 /* Time */,
+				FF3CBC932D3E43B100006955 /* Home */,
 				0E98EAC62D2FB789006F25EF /* Login */,
 				FF3CBCA42D3E43F800006955 /* Browse */,
+				FF3CBCB32D3E444000006955 /* Map */,
+				FF3CBCB42D3E447800006955 /* My */,
+				FF3CBCB52D3E44A200006955 /* MainTabBarController.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -249,6 +302,38 @@
 			path = NotoSans;
 			sourceTree = "<group>";
 		};
+		0E98EFF12D3F69EB006F25EF /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EFF02D3F69EB006F25EF /* LoginButton.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		0E98EFF22D3F69EB006F25EF /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EFF12D3F69EB006F25EF /* Login */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		0E98EFF42D3F69EB006F25EF /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EFF32D3F69EB006F25EF /* LoginTextField.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		0E98EFF52D3F69EB006F25EF /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EFF42D3F69EB006F25EF /* Login */,
+			);
+			path = TextField;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -273,7 +358,11 @@
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				FF3CBC922D3E43AF00006955 /* Time */,
+				FF3CBC932D3E43B100006955 /* Home */,
 				FF3CBCA42D3E43F800006955 /* Browse */,
+				FF3CBCB32D3E444000006955 /* Map */,
+				FF3CBCB42D3E447800006955 /* My */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
@@ -281,7 +370,7 @@
 				0E98E9F12D2E331D006F25EF /* Alamofire */,
 				0E98E9F42D2E336F006F25EF /* Moya */,
 				0E98EA462D2F9F77006F25EF /* Then */,
-				0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */,
+				0E98ED072D3E60E7006F25EF /* NMapsMap */,
 			);
 			productName = iOS_Wegg;
 			productReference = 0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */;
@@ -317,7 +406,7 @@
 				0E98E9F32D2E336F006F25EF /* XCRemoteSwiftPackageReference "Moya" */,
 				0E98E9F92D2E3712006F25EF /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				0E98EA452D2F9F77006F25EF /* XCRemoteSwiftPackageReference "Then" */,
-				0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
+				0E98ED062D3E60E7006F25EF /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0E98E9D62D2D009D006F25EF /* Products */;
@@ -372,8 +461,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF3CBCB62D3E44A200006955 /* MainTabBarController.swift in Sources */,
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
+				0E98EFF62D3F69EB006F25EF /* LoginTextField.swift in Sources */,
+				0E98EFF72D3F69EB006F25EF /* LoginButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,12 +724,12 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
+		0E98ED062D3E60E7006F25EF /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
+			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 3.20.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -668,10 +760,10 @@
 			package = 0E98EA452D2F9F77006F25EF /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
 		};
-		0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */ = {
+		0E98ED072D3E60E7006F25EF /* NMapsMap */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
-			productName = "KakaoMapsSDK-SPM";
+			package = 0E98ED062D3E60E7006F25EF /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
+			productName = NMapsMap;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

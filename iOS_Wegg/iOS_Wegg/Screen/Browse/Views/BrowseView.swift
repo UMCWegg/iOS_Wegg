@@ -15,6 +15,7 @@ class BrowseView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addcomponents()
+        setupView()
         setupConstraints()
         self.backgroundColor = .white
     }
@@ -43,6 +44,11 @@ class BrowseView: UIView {
     /// UI 구성 요소 추가
     private func addcomponents() {
         [browseCollectionView, searchView].forEach{ self.addSubview($0)}
+    // MARK: - Methods
+    
+    /// UI 구성 요소 추가
+    private func setupView() {
+        addSubview(browseCollectionView)
     }
     
     /// UI 제약 조건 설정
