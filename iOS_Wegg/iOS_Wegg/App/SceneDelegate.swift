@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         // 원하는 뷰 컨트롤러 파일의 이름을 작성
         window?.rootViewController = MainTabBarController()
+      
         window?.makeKeyAndVisible()
     }
     
