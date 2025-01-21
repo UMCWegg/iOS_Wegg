@@ -44,4 +44,72 @@ class MapViewController:
         
         mapView.positionMode = .direction
     }
+    
+    // MARK: - 위치
+    
+    /// 디바이스 현재 위치 추적
+    private func setupLocationManager() {
+        locationManager = CLLocationManager()
+        guard let locationManager = locationManager else {
+            print("현재 위치 추적 실패")
+            return
+        }
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    /// 디바이스 현재 위치 업데이트
+    func locationManager(
+        _ manager: CLLocationManager,
+        didUpdateLocations locations: [CLLocation]
+    ) {
+        guard let location = locations.first else { return }
+        let currentLat = location.coordinate.latitude
+        let currentLng = location.coordinate.longitude
+        print(currentLat, currentLng)
+    }
+}
+
+// MARK: - Extensions
+extension MapViewController {
+    func locationManager(
+        _ manager: CLLocationManager,
+        didFailWithError error: any Error
+    ) {
+        print("위치 정보 업데이트 실패: \(error.localizedDescription)")
+    }
+    
+    /// 탭 제스처
+    func mapView(
+        _ mapView: NMFMapView,
+        didTapMap latlng: NMGLatLng,
+        point: CGPoint
+    ) {
+        print("탭: \(latlng.lat), \(latlng.lng)")
+    }
+    
+    // 롱 탭 제스처
+    func mapView(
+        _ mapView: NMFMapView,
+        didLongTapMap latlng: NMGLatLng,
+        point: CGPoint
+    ) {
+        print("롱 탭: \(latlng.lat), \(latlng.lng)")
+    }
+    
+    /// 심벌 탭 이벤트
+    func mapView(
+        _ mapView: NMFMapView,
+        didTap symbol: NMFSymbol
+    ) -> Bool {
+        if symbol.caption == "한성대학교" {
+            print("한성대학교 탭")
+            return true
+            
+        } else {
+            print("symbol 탭")
+            return false
+        }
+    }
 }
