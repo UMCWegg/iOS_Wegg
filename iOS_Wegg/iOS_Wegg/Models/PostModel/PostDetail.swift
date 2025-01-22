@@ -9,10 +9,9 @@ import Foundation
 
 /// 게시물 상세 정보 모델
 struct PostDetail {
-    let nickname: String
+    let nickName: String
     let profileImage: String
+    let postImages: [String]
     let postTime: Date
-    let postImage: String
-    let emoge: String
     let comments: [String]
 }

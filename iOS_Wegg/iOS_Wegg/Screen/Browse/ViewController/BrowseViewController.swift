@@ -133,5 +133,18 @@ extension BrowseViewController: UICollectionViewDelegate {
         let selectedItems = browseItems[indexPath.row]
         print(selectedItems)
         
+        // Mock 데이터로 PostDetail 생성
+        let detail = PostDetail(
+            nickName: selectedItems.nickName,
+            profileImage: selectedItems.profileImage,
+            postImages: selectedItems.postImage,
+            postTime: Date(), // 예시: 현재 시간
+            comments: ["좋아요!", "멋진 사진이에요!", "환상적이네요!"]
+        )
+        
+        // 모달 방식으로 상세 페이지 표시
+        let detailVC = PostDetailViewController(postDetail: detail)
+        detailVC.modalPresentationStyle = .formSheet
+        present(detailVC, animated: true, completion: nil)
     }
 }
