@@ -24,6 +24,15 @@ class NaverMapManager:
     private var tapGestureHandler: ((Coordinate) -> Void)?
     private var longTapGestureHandler: ((Coordinate) -> Void)?
     
+    /// 지도 뷰를 특정 UIView에 초기화
+    ///
+    /// - Parameters:
+    ///   - view: 지도를 표시할 UIView
+    ///
+    /// 호출 예시:
+    /// ```swift
+    /// mapManager.setupMap(in: view)
+    /// ```
     func setupMap(in view: UIView) {
         mapView = NMFMapView(frame: view.bounds)
         
@@ -45,6 +54,10 @@ class NaverMapManager:
         locationManager?.startUpdatingLocation()
     }
     
+    /// 지도 중심을 특정 위치로 업데이트
+    ///
+    /// - Parameters:
+    ///   - location: 업데이트할 `CLLocation` 객체
     func updateLocation(_ location: CLLocation) {
         guard let mapView = mapView else { return }
         let cameraUpdate = NMFCameraUpdate(
@@ -59,10 +72,24 @@ class NaverMapManager:
         )
     }
     
+    /// 탭 제스처 핸들러 설정
+    ///
+    /// - Parameters:
+    ///   - handler: 탭한 위치 좌표를 전달하는 클로저
+    ///
+    /// 호출 예시:
+    /// ```swift
+    /// mapManager.setTapGestureHandler { coordinate in
+    ///     print("탭한 위치: \(coordinate.latitude), \(coordinate.longitude)")
+    /// }
+    /// ```
     func setTapGestureHandler(_ handler: @escaping (Coordinate) -> Void) {
         tapGestureHandler = handler
     }
     
+    /// 롱 탭 제스처 설정
+    ///
+    /// 호출 예시: 탭 제스처 핸들러와 동일
     func setLongTapGestureHandler(_ handler: @escaping (Coordinate) -> Void) {
         longTapGestureHandler = handler
     }
