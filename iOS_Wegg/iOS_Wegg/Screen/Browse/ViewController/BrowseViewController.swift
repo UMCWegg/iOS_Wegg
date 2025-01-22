@@ -133,6 +133,5 @@ extension BrowseViewController: UICollectionViewDelegate {
         let selectedItems = browseItems[indexPath.row]
         print(selectedItems)
         
-        // 게시물 상세 화면으로 이동하는 네비게이션 컨트롤러 구현 예정
     }
 }
