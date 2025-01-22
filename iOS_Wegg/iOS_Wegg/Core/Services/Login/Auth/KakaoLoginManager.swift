@@ -27,7 +27,7 @@ final class KakaoLoginManager {
                 return
             }
             
-            guard let token = oauthToken?.accessToken else { return }
+            guard (oauthToken?.accessToken) != nil else { return }
             
             UserApi.shared.me { user, error in
                 if let error = error {
