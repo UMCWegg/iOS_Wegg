@@ -10,6 +10,7 @@
 - SPM: 패키지 의존성 관리.
 - KakaoOpenSDK: 카카오 로그인 SDK.
 - GoogleSignIn: 구글 로그인 SDK.
+- Firebase: Firebase SDK. 구글 로그인에 사용.
 
 ## 브랜치 컨벤션
 - 브랜치 전략: GitHub Flow
