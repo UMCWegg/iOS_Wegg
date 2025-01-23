@@ -183,15 +183,6 @@ class PostDetailView: UIView {
     /// 시간 설정
     private func formattedDate(_ date: Date) -> String {
         // DateFormatter 초기화
-        let formatter = DateFormatter()
-        
-        // 날짜 스타일 설정 (예: "Jan 20, 2025")
-        formatter.dateStyle = .medium
-        
-        // 시간 스타일 설정 (예: "2:34 PM")
-        formatter.timeStyle = .short
-        
-        // Date 객체를 문자열로 변환
-        return formatter.string(from: date)
+        return DateFormatterUtility.formattedDate(date)
     }
 }
