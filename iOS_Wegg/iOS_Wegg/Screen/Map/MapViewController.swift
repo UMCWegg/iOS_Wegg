@@ -33,6 +33,11 @@ class MapViewController: UIViewController {
         mapManager.setupLocationManager()
     }
     
+    @objc private func didTabLocationButton() {
+        mapManager.requestCurrentLocation()
+        print("didTabLocationButton")
+    }
+    
     private func setupGestures() {
         mapManager.setTapGestureHandler { latlng in
             print("탭한 위치: \(latlng.latitude), \(latlng.longitude)")

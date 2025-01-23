@@ -51,7 +51,6 @@ class NaverMapManager:
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.requestWhenInUseAuthorization()
-        locationManager?.startUpdatingLocation()
     }
     
     /// 지도 중심을 특정 위치로 업데이트
@@ -106,6 +105,10 @@ class NaverMapManager:
     func setIndoorMapEnabled(_ isEnabled: Bool) {
         mapView?.isIndoorMapEnabled = isEnabled
     }
+    
+    func requestCurrentLocation() {
+        locationManager?.requestLocation()
+    }
 }
 
 // MARK: - Extension
@@ -141,6 +144,8 @@ extension NaverMapManager:
     }
     
     // MARK: - CLLocationManagerDelegate
+    
+    // CLLocationManager에서 수집된 위치 정보를 처리하는 메서드
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else { return }
         updateLocation(location)

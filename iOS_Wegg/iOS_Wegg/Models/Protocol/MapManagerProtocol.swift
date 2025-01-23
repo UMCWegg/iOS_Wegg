@@ -21,4 +21,5 @@ protocol MapManagerProtocol {
     func updateLocation(_ location: CLLocation)
     func setTapGestureHandler(_ handler: @escaping (Coordinate) -> Void)
     func setLongTapGestureHandler(_ handler: @escaping (Coordinate) -> Void)
+    func requestCurrentLocation()
 }
