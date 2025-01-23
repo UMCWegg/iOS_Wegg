@@ -7,7 +7,9 @@
 
 import UIKit
 
-import FirebaseCor
+import FirebaseAuth
+import FirebaseCore
+import FirebaseFirestore
 import GoogleSignIn
 import KakaoSDKCommon
 import KakaoSDKAuth
@@ -19,10 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        
         KakaoSDK.initSDK(appKey: "YOUR_NATIVE_APP_KEY")
         
-        let clientID = "498161093152-ajp8av7ktm4gcakp3fqjkbutbehjuebl.apps.googleusercontent.com"
-        GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
+        FirebaseApp.configure()
+        let config = GIDConfiguration(
+            clientID: "498161093152-ajp8av7ktm4gcakp3fqjkbutbehjuebl.apps.googleusercontent.com")
+        GIDSignIn.sharedInstance.configuration = config
         
         return true
     }

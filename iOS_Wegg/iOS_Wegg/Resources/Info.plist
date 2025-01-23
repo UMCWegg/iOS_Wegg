@@ -3,12 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>com.googleusercontent.apps.498161093152-ajp8av7ktm4gcakp3fqjkbutbehjuebl</string>
-		</dict>
-	</array>
+	<array/>
 	<key>KAKAO_NATIVE_APP_KEY</key>
 	<string>${KAKAO_NATIVE_APP_KEY}</string>
 	<key>UIAppFonts</key>
