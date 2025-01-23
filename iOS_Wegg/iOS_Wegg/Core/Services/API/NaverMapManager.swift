@@ -106,8 +106,28 @@ class NaverMapManager:
         mapView?.isIndoorMapEnabled = isEnabled
     }
     
+    /// 현재 위치 업데이트
     func requestCurrentLocation() {
         locationManager?.requestLocation()
+    }
+    
+    /// Wegg 아이콘 마커 생성
+    ///
+    /// - Parameters:
+    ///     - coordinate: 좌표값
+    func addMarker(at coordinate: Coordinate) {
+        guard let mapView = mapView else { return }
+        // 마커 위치 설정
+        let markerPosition = NMGLatLng(
+            lat: coordinate.latitude,
+            lng: coordinate.longitude
+        )
+        // 마커 생성
+        let marker = NMFMarker(position: markerPosition)
+        marker.iconImage = NMFOverlayImage(name: "wegg_icon")
+        marker.width = 28
+        marker.height = 40
+        marker.mapView = mapView // 마커 지도에 추가
     }
 }
 

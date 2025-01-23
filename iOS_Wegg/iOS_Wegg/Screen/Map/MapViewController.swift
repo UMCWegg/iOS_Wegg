@@ -40,7 +40,8 @@ class MapViewController: UIViewController {
     
     private func setupGestures() {
         mapManager.setTapGestureHandler { latlng in
-            print("탭한 위치: \(latlng.latitude), \(latlng.longitude)")
+            // 지도 탭하면 Wegg 아이콘 마커 생성(추후 변경될 예정)
+            self.mapManager.addMarker(at: latlng)
         }
         
         mapManager.setLongTapGestureHandler { latlng in
