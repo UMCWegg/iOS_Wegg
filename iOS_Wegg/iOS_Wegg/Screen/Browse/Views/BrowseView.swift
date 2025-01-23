@@ -71,7 +71,7 @@ class BrowseView: UIView {
         let horizontalSpacing: CGFloat = 12 // 열 간격
         let sectionInsets = UIEdgeInsets(top: 10, left: 21, bottom: 10, right: 21) // 섹션 여백
         
-        layout.itemSize = CGSize(width: 168, height: 264) // 고정된 크기
+        layout.itemSize = CGSize(width: 160, height: 264) // 고정된 크기
         layout.minimumLineSpacing = 13 // 행 간격
         layout.minimumInteritemSpacing = horizontalSpacing // 열 간격
         layout.sectionInset = sectionInsets
