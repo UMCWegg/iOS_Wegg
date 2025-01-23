@@ -24,4 +24,17 @@ class EmailLoginViewController: UIViewController {
         view.backgroundColor = .white
     }
     
+    // MARK: - Setup
+    
+    private func setupActions() {
+        emailLoginView.loginButton.addTarget(self,
+                                             action: #selector(emailLoginButtonTapped),
+                                             for: .touchUpInside)
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func emailLoginButtonTapped() {
+        LoginManager.shared.login(type: .email)
+    }
 }

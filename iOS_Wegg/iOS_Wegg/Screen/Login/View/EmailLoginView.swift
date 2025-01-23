@@ -71,7 +71,7 @@ class EmailLoginView: UIView {
         $0.titleLabel?.font = UIFont(name: "NotoSansKR-Regular", size: 13)
     }
     
-    private lazy var loginButton = LoginButton(
+    lazy var loginButton = LoginButton(
         title: "로그인",
         backgroundColor: UIColor(named: "YellowSecondary") ?? .systemYellow
     )

@@ -7,8 +7,6 @@
 
 import UIKit
 
-import Then
-
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
@@ -23,7 +21,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "YellowSecondary")
         setupActions()
         
     }
@@ -31,11 +29,6 @@ class LoginViewController: UIViewController {
     // MARK: - Setup
     
     private func setupActions() {
-        loginView.emailLoginButton.addTarget(
-            self,
-            action: #selector(emailLoginButtonTapped),
-            for: .touchUpInside)
-        
         loginView.googleLoginButton.addTarget(self,
                                              action: #selector(googleLoginButtonTapped),
                                              for: .touchUpInside)
