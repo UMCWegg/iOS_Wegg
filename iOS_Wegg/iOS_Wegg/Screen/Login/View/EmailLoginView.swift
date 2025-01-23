@@ -50,7 +50,6 @@ class EmailLoginView: UIView {
     
     internal let findPasswordButton = UIButton().then {
         $0.setTitle("비밀번호를 잊으셨나요?", for: .normal)
-        $0.setTitleColor(UIColor(hex: "C7C7C7"), for: .normal)
         $0.titleLabel?.font = UIFont(name: "NotoSansKR-Regular", size: 13)
     }
     
