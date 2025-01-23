@@ -124,7 +124,7 @@ extension BrowseViewController: UICollectionViewDataSource {
     }
 }
 
-/// UICollectionViewDelegate: 사용자 반응 처리하기 위한 프로토콜
+/// UICollectionViewDelegate: 사용자 반응 처리(아이템 클릭시 처리)하기 위한 프로토콜
 extension BrowseViewController: UICollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
@@ -142,9 +142,10 @@ extension BrowseViewController: UICollectionViewDelegate {
             comments: ["좋아요!", "멋진 사진이에요!", "환상적이네요!"]
         )
         
-        // 모달 방식으로 상세 페이지 표시
+        // 네비게이션 방식으로 게시물 상세 페이지 표시
         let detailVC = PostDetailViewController(postDetail: detail)
-        detailVC.modalPresentationStyle = .formSheet
-        present(detailVC, animated: true, completion: nil)
+        // 탭바 숨겨서 컨트롤러 push하기
+        detailVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
