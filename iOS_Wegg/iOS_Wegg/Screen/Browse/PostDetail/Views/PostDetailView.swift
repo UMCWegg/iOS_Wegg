@@ -107,18 +107,16 @@ class PostDetailView: UIView {
     
     /// 프로필, 닉네임, 시간을 묶을 사용자 정보 StackView
     private lazy var userInfoStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews:
-                                        [
-                                            profileImageView,
-                                            nicknameLabel,
-                                            postTimeLabel
-                                        ])
+        let stackView = UIStackView(arrangedSubviews: [
+            profileImageView,
+            nicknameLabel,
+            postTimeLabel
+        ])
         stackView.axis = .horizontal
         stackView.spacing = 10
         stackView.alignment = .center
         return stackView
     }()
-    
     // MARK: - Methods
     
     /// UI 구성 요소 추가
@@ -152,7 +150,7 @@ class PostDetailView: UIView {
         postImageView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(650)
+            $0.height.equalToSuperview().multipliedBy(0.7) // 상대적인 크기 설정 화면 비율의 70%
         }
         
         buttonStackView.snp.makeConstraints {
@@ -163,7 +161,7 @@ class PostDetailView: UIView {
         }
         
         emojiButton.snp.makeConstraints {
-            $0.width.equalTo(44) // 이모티콘 버튼의 정사각형 크기 맞추기
+            $0.width.equalTo(buttonStackView.snp.height) // 버튼 크기 비례 설정
         }
     }
     
