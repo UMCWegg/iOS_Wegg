@@ -20,13 +20,14 @@ class LoginButton: UIButton {
     private func setupButton(title: String, backgroundColor: UIColor) {
         self.backgroundColor = backgroundColor
         setTitle(title, for: .normal)
-        layer.cornerRadius = 32
+        layer.cornerRadius = 26.5
         titleLabel?.font = UIFont(name: "NotoSansKR-Medium", size: 20)
         
         setTitleColor((backgroundColor == .black ||
-                       backgroundColor == UIColor(named: "BluePrimary"))
+                       backgroundColor == UIColor(named: "YellowSecondary"))
                        ? .white : .black, for: .normal)
         
-        heightAnchor.constraint(equalToConstant: 61).isActive = true
+        heightAnchor.constraint(equalToConstant: 53).isActive = true
+        widthAnchor.constraint(equalToConstant: 348).isActive = true
     }
 }
