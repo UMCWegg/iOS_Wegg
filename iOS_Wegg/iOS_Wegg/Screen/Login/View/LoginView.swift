@@ -32,17 +32,17 @@ class LoginView: UIView {
     
     internal let googleLoginButton = LoginButton(
         title: "구글로 로그인",
-        backgroundColor: UIColor(red: 66/255, green: 133/255, blue: 244/255, alpha: 1.0)
+        backgroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 1)
     )
         
     internal let kakaoLoginButton = LoginButton(
         title: "카카오로 로그인",
-        backgroundColor: UIColor(red: 255/255, green: 232/255, blue: 18/255, alpha: 1.0)
+        backgroundColor: UIColor(red: 0.98, green: 0.886, blue: 0.012, alpha: 1)
     )
         
     internal let emailLoginButton = LoginButton(
         title: "다른 방법으로 로그인",
-        backgroundColor: UIColor(red: 255/255, green: 232/255, blue: 18/255, alpha: 1.0)
+        backgroundColor: UIColor(red: 0.78, green: 0.78, blue: 0.78, alpha: 1)
     )
 
     private let signUpButton = UIButton().then {

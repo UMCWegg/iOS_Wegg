@@ -13,7 +13,7 @@ struct BaseUser: Codable {
     let accountID: String
     let job: String?
     let reason: String?
-    let contacts: [Contact]
+    let contact: [Contact]
     let alarm: Bool
     
     enum CodingKeys: String, CodingKey {
@@ -22,7 +22,7 @@ struct BaseUser: Codable {
         case accountID = "account_id"
         case job
         case reason
-        case contacts = "contact"
+        case contact = "contact"
         case alarm
     }
 }
@@ -35,7 +35,7 @@ enum SocialType: String, Codable {
 
 struct Contact: Codable {
     let name: String
-    let phoneNumber: String
+    let phone: String
 }
 
 // Divided with Cases

@@ -36,6 +36,9 @@ final class KakaoLoginManager {
                 }
                 
                 guard let id = user?.id else { return }
+                UserDefaultsManager.shared.saveKakaoData(
+                    token: oauthToken?.accessToken ?? "",
+                    id: String(id))
                 
                 let request = LoginRequest(
                     type: .kakao,
@@ -72,6 +75,9 @@ final class KakaoLoginManager {
                 }
                 
                 guard let id = user?.id else { return }
+                UserDefaultsManager.shared.saveKakaoData(
+                    token: oauthToken?.accessToken ?? "",
+                    id: String(id))
                 
                 let request = LoginRequest(
                     type: .kakao,

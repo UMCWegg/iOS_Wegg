@@ -11,11 +11,10 @@ struct LoginRequest: Codable {
     let email: String?
     let password: String?
     
-    var identifier: String? {
-        switch type {
-        case .google: return email
-        case .kakao: return accessToken
-        case .email: return email
-        }
+    enum CodingKeys: String, CodingKey {
+        case type = "social_type"
+        case accessToken = "access_token"
+        case email
+        case password
     }
 }

@@ -20,6 +20,7 @@ final class GoogleLoginManager {
         googleService.signIn(presenting: viewController) { result in
             switch result {
             case .success((let email, let token)):
+                UserDefaultsManager.shared.saveGoogleData(token: token, email: email)
                 let request = LoginRequest(
                     type: .google,
                     accessToken: token,
