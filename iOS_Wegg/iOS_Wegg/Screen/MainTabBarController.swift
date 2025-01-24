@@ -9,6 +9,8 @@ import UIKit
 
 /// Wegg 탭바컨트롤러
 class MainTabBarController: UITabBarController {
+    // 의존성 주입을 위한 지도 관리 매니저 인스턴스 생성
+    private let mapManager = NaverMapManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,9 @@ class MainTabBarController: UITabBarController {
         let browseVC = UINavigationController(rootViewController: BrowseViewController())
         browseVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Search"), tag: 2)
         
-        let mapVC = UINavigationController(rootViewController: MapViewController())
+        let mapVC = UINavigationController(
+            rootViewController: MapViewController(mapManager: mapManager)
+        )
         mapVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Map"), tag: 3)
         
         let timeVC = UINavigationController(rootViewController: TimeViewController())

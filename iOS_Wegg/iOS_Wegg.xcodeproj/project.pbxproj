@@ -19,11 +19,10 @@
 		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
 		0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */; };
 		0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */; };
-		FF3CBCB62D3E44A200006955 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3CBCB52D3E44A200006955 /* MainTabBarController.swift */; };
 		0E98ED082D3E60E7006F25EF /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98ED072D3E60E7006F25EF /* NMapsMap */; };
 		0E98EFF62D3F69EB006F25EF /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EFF32D3F69EB006F25EF /* LoginTextField.swift */; };
 		0E98EFF72D3F69EB006F25EF /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EFF02D3F69EB006F25EF /* LoginButton.swift */; };
-
+		FF3CBCB62D3E44A200006955 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3CBCB52D3E44A200006955 /* MainTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,20 +36,12 @@
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
-		FF3CBCB52D3E44A200006955 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		0E98EFF02D3F69EB006F25EF /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		0E98EFF32D3F69EB006F25EF /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
-
+		FF3CBCB52D3E44A200006955 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0E98EAA42D2FB567006F25EF /* Exceptions for "Services" folder in "iOS_Wegg" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				API/.gitkeep,
-			);
-			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
-		};
 		0E98EAA52D2FB568006F25EF /* Exceptions for "Protocol" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -85,9 +76,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0E98EA322D2F8F8F006F25EF /* Services */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0E98EAA42D2FB567006F25EF /* Exceptions for "Services" folder in "iOS_Wegg" target */,
-			);
 			path = Services;
 			sourceTree = "<group>";
 		};
@@ -128,13 +116,11 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BrowseItem;
 			sourceTree = "<group>";
 		};
-
 		FF3CBC922D3E43AF00006955 /* Time */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Time;
@@ -150,7 +136,6 @@
 			path = Browse;
 			sourceTree = "<group>";
 		};
-
 		FF3CBCB32D3E444000006955 /* Map */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Map;
@@ -159,12 +144,6 @@
 		FF3CBCB42D3E447800006955 /* My */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = My;
-			sourceTree = "<group>";
-		};
-
-		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BrowseItem;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
