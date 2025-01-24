@@ -26,9 +26,11 @@ class MapViewController: UIViewController {
         view.backgroundColor = .white
         
         setupMap()
-        setupGestures()
+        setupMapManagerGestures()
         setupOverlayView()
     }
+    
+    // MARK: - Set Up
     
     private func setupMap() {
         mapManager.setupMap(in: view)
@@ -36,10 +38,16 @@ class MapViewController: UIViewController {
     }
     
     private func setupOverlayView() {
+        // MARK: - MapOverlayView setup
         overlayView.setupOverlayConstraints(in: view)
+        
+        // MARK: - MapOverlayView Gesture
+        overlayView.onLocationImageButtonTap = { [weak self] in
+            self?.didTabLocationButton()
+        }
     }
     
-    private func setupGestures() {
+    private func setupMapManagerGestures() {
         mapManager.setTapGestureHandler { latlng in
             // 지도 탭하면 Wegg 아이콘 마커 생성(추후 변경될 예정)
             self.mapManager.addMarker(at: latlng)
@@ -50,7 +58,9 @@ class MapViewController: UIViewController {
         }
     }
     
-    @objc private func didTabLocationButton() {
+    // MARK: - MapOverlayView에서 실행될 함수들
+    
+    private func didTabLocationButton() {
         mapManager.requestCurrentLocation()
         print("didTabLocationButton")
     }
