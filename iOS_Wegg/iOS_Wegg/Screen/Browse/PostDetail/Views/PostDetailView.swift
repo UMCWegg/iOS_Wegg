@@ -150,7 +150,7 @@ class PostDetailView: UIView {
     }
     
     /// 상세 페이지 데이터 설정
-    func configure(with detail: PostDetail) {
+    func configure(with detail: PostDetailModel) {
         // 프로필 이미지 설정
         profileImageView.image = UIImage(named: detail.profileImage)
         

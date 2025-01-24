@@ -84,20 +84,15 @@ extension BrowseViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
+        // 선택된 BrowseItem 가져오기
         let selectedItems = browseItems[indexPath.row]
         print(selectedItems)
         
-        // Mock 데이터로 PostDetail 생성
-        let detail = PostDetail(
-            nickName: selectedItems.nickName,
-            profileImage: selectedItems.profileImage,
-            postImages: selectedItems.postImage,
-            postTime: Date(), // 예시: 현재 시간
-            comments: ["좋아요!", "멋진 사진이에요!", "환상적이네요!"]
-        )
+        // 선택된 아이템 셀을 MockData 메서드를 활용해 Model에 전달
+        let detail = PostDetailModel.mockData(for: selectedItems)
         
-        // 네비게이션 방식으로 게시물 상세 페이지 표시
-        let detailVC = PostDetailViewController(postDetail: detail)
+        // 네비게이션 방식으로 게시물 상세 페이지 표시, 의존성 주입
+        let detailVC = PostDetailViewController(postDetailModel: detail)
         // 탭바 숨겨서 컨트롤러 push하기
         detailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailVC, animated: true)

@@ -25,48 +25,39 @@ struct BrowseItem: Codable {
             BrowseItem(
                 nickName: "증윤",
                 profileImage: "profile1",
-                postImage: ["post1-1", "post1-2"]
-            ),
+                postImage: ["post1-1", "post1-2"]),
             BrowseItem(
                 nickName: "리버",
                 profileImage: "profile1",
-                postImage: ["post2-1", "post2-2"]
-            ),
+                postImage: ["post2-1", "post2-2"]),
             BrowseItem(
                 nickName: "하키",
                 profileImage: "profile1",
-                postImage: ["post1-1", "post3-2"]
-            ),
+                postImage: ["post1-1", "post3-2"]),
             BrowseItem(
                 nickName: "베텔",
                 profileImage: "profile1",
-                postImage: ["post2-1", "post1-2"]
-            ),
+                postImage: ["post2-1", "post1-2"]),
             BrowseItem(
                 nickName: "소피",
                 profileImage: "profile1",
-                postImage: ["post1-1", "post2-2"]
-            ),
+                postImage: ["post1-1", "post2-2"]),
             BrowseItem(
                 nickName: "증윤",
                 profileImage: "profile1",
-                postImage: ["post1-1", "post1-2"]
-            ),
+                postImage: ["post1-1", "post1-2"]),
             BrowseItem(
                 nickName: "리버",
                 profileImage: "profile1",
-                postImage: ["post1-1", "post2-2"]
-            ),
+                postImage: ["post1-1", "post2-2"]),
             BrowseItem(
                 nickName: "증윤",
                 profileImage: "profile1",
-                postImage: ["post1-1", "post1-2"]
-            ),
+                postImage: ["post1-1", "post1-2"]),
             BrowseItem(
                 nickName: "리버",
                 profileImage: "profile1",
-                postImage: ["post1-1", "post2-2"]
-            )
+                postImage: ["post1-1", "post2-2"])
         ]
     }
 }

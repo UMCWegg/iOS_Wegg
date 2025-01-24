@@ -10,14 +10,14 @@ import UIKit
 class PostDetailViewController: UIViewController {
     
     // MARK: - Property
-    private let postDetail: PostDetail
+    private let postDetailModel: PostDetailModel
     private let postDetailView = PostDetailView()
     
     // MARK: - Init
     
     /// 둘러보기 뷰의 사용자 데이터 의존성 주입
-    init(postDetail: PostDetail) {
-        self.postDetail = postDetail
+    init(postDetailModel: PostDetailModel) {
+        self.postDetailModel = postDetailModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -41,7 +41,7 @@ class PostDetailViewController: UIViewController {
     /// UI를 구성하고 데이터를 뷰에 반영
     private func configureUI() {
         /// PostDetailView에 데이터를 전달하여 화면을 업데이트
-        postDetailView.configure(with: postDetail)
+        postDetailView.configure(with: postDetailModel)
     }
     
     /// 네비게이션 상단 바 타이틀 지정 및 나가기 버튼 커스텀
