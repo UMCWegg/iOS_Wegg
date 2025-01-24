@@ -12,11 +12,21 @@ final class UserDefaultsManager {
    private let defaults = UserDefaults.standard
    
    private enum Keys {
+       static let accessToken = "accessToken"
+       static let refreshToken = "refreshToken"
        static let googleToken = "googleToken"
        static let googleEmail = "googleEmail"
        static let kakaoToken = "kakaoToken"
        static let kakaoId = "kakaoId"
-   }
+    }
+    
+    func saveToken(_ token: String) {
+        defaults.setValue(token, forKey: Keys.accessToken)
+    }
+    
+    func getToken() -> String? {
+        return defaults.string(forKey: Keys.accessToken)
+    }
    
     func saveGoogleData(token: String, email: String) {
         defaults.setValue(token, forKey: Keys.googleToken)

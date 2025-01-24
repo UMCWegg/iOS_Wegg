@@ -35,6 +35,7 @@ final class AuthService {
         .responseDecodable(of: LoginResponse.self) { response in
             switch response.result {
             case .success(let loginResponse):
+                UserDefaultsManager.shared.saveToken(loginResponse.accessToken)
                 completion(.success(loginResponse))
             case .failure(let error):
                 completion(.failure(error))

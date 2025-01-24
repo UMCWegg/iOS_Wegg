@@ -36,6 +36,8 @@ class EmailLoginViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func emailLoginButtonTapped() {
-        LoginManager.shared.login(type: .email)
+        guard let email = emailLoginView.email,
+              let password = emailLoginView.password else { return }
+        LoginManager.shared.login(type: .email, email: email, password: password)
     }
 }

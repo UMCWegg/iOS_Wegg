@@ -33,6 +33,7 @@
 		DE0020D92D420F0E003A273F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020D82D420F0E003A273F /* FirebaseAuth */; };
 		DE0020DB2D420F0E003A273F /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020DA2D420F0E003A273F /* FirebaseCore */; };
 		DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020DC2D420F3B003A273F /* FirebaseFirestore */; };
+		DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = DE00212C2D433D7F003A273F /* NMapsMap */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,6 +144,7 @@
 				DE0020D32D414BD9003A273F /* FirebaseAppDistribution-Beta in Frameworks */,
 				0E98EA472D2F9F77006F25EF /* Then in Frameworks */,
 				DE0020CF2D414BD9003A273F /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */,
 				DE0020B92D3F75E6003A273F /* KakaoSDK in Frameworks */,
 				DE0020BB2D3F75E6003A273F /* KakaoSDKAuth in Frameworks */,
 				DE0020CB2D414BD9003A273F /* FirebaseAnalytics in Frameworks */,
@@ -311,6 +313,7 @@
 				DE0020D82D420F0E003A273F /* FirebaseAuth */,
 				DE0020DA2D420F0E003A273F /* FirebaseCore */,
 				DE0020DC2D420F3B003A273F /* FirebaseFirestore */,
+				DE00212C2D433D7F003A273F /* NMapsMap */,
 			);
 			productName = iOS_Wegg;
 			productReference = 0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */;
@@ -350,6 +353,7 @@
 				DE0020B72D3F75E6003A273F /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				DE0020C42D3F942B003A273F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				DE0020C92D414BD9003A273F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				DE00212B2D433D7F003A273F /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0E98E9D62D2D009D006F25EF /* Products */;
@@ -697,6 +701,14 @@
 				minimumVersion = 11.7.0;
 			};
 		};
+		DE00212B2D433D7F003A273F /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.20.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -789,6 +801,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DE0020C92D414BD9003A273F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		DE00212C2D433D7F003A273F /* NMapsMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE00212B2D433D7F003A273F /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
+			productName = NMapsMap;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

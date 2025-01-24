@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         
-        KakaoSDK.initSDK(appKey: "YOUR_NATIVE_APP_KEY")
+        KakaoSDK.initSDK(appKey: "234a311c28b6da40b7d4d6f1084510b1")
         
         FirebaseApp.configure()
         let config = GIDConfiguration(
