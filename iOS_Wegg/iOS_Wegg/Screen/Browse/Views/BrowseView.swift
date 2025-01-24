@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Then
 
 class BrowseView: UIView {
     
@@ -26,14 +27,12 @@ class BrowseView: UIView {
     // MARK: - Properties
     
     /// 게시물과 사용자 정보를 보여주는 둘러보기 CollectionView
-    public lazy var browseCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: createLayout()
-        )
-        collectionView.backgroundColor = .white
-        return collectionView
-    }()
+    public lazy var browseCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: createLayout()
+    ).then {
+        $0.backgroundColor = .white
+    }
     
     /// 검색바 헤더 뷰 추가
     public lazy var searchView: SearchView = SearchView()
