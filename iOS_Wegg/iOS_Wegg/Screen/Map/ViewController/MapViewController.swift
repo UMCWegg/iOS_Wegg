@@ -9,6 +9,7 @@ import UIKit
 
 class MapViewController: UIViewController {
     private let mapManager: MapManagerProtocol
+    private let overlayView = MapOverlayView()
     
     /// 의존성 주입
     init(mapManager: MapManagerProtocol) {
@@ -26,6 +27,7 @@ class MapViewController: UIViewController {
         
         setupMap()
         setupGestures()
+        setupOverlayView()
     }
     
     private func setupMap() {
@@ -33,9 +35,8 @@ class MapViewController: UIViewController {
         mapManager.setupLocationManager()
     }
     
-    @objc private func didTabLocationButton() {
-        mapManager.requestCurrentLocation()
-        print("didTabLocationButton")
+    private func setupOverlayView() {
+        overlayView.setupOverlayConstraints(in: view)
     }
     
     private func setupGestures() {
@@ -47,5 +48,10 @@ class MapViewController: UIViewController {
         mapManager.setLongTapGestureHandler { latlng in
             print("롱탭한 위치: \(latlng.latitude), \(latlng.longitude)")
         }
+    }
+    
+    @objc private func didTabLocationButton() {
+        mapManager.requestCurrentLocation()
+        print("didTabLocationButton")
     }
 }
