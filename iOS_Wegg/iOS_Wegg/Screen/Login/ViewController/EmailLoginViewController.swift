@@ -22,6 +22,7 @@ class EmailLoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setupActions()
     }
     
     // MARK: - Setup
