@@ -23,7 +23,7 @@ class PostDetailView: UIView {
     }
     
     // MARK: - Properties
-    
+    private lazy var emojiPopupView = EmojiPopupView()
     private let postImageSize: CGFloat = 43 // 유지보수를 위한 상수 정의
     private let space: CGFloat = 23 // 레이아웃 기본 여백
     
@@ -75,7 +75,7 @@ class PostDetailView: UIView {
     }
     
     /// 이모티콘 버튼
-    private let emojiButton = UIButton().then {
+    lazy var emojiButton = UIButton().then {
         $0.setImage(UIImage(named: "emoji"), for: .normal)
         $0.tintColor = .white
         $0.contentMode = .scaleAspectFit
@@ -102,6 +102,46 @@ class PostDetailView: UIView {
     }
     
     // MARK: - Methods
+    
+    /// 이모지 팝업을 화면에 표시하는 메서드
+    func showEmojiPopup() {
+        // 팝업이 이미 추가되지 않은 경우에만 추가
+        if emojiPopupView.superview == nil {
+            addSubview(emojiPopupView) // 이모지 팝업을 현재 뷰에 추가
+
+            // SnapKit으로 팝업의 제약 조건 설정
+            emojiPopupView.snp.makeConstraints { make in
+                make.centerX.equalTo(emojiButton) // 이모지 버튼과 수평으로 정렬
+                make.bottom.equalTo(emojiButton.snp.top).offset(-10) // 버튼 위로 약간 띄움
+                make.width.equalTo(80) // 팝업의 너비 설정
+                make.height.equalTo(200) // 팝업의 높이 설정
+            }
+
+            // 이모지 선택 시 호출되는 클로저 정의
+            emojiPopupView.emojiSelected = { [weak self] selectedEmoji in
+                print("Selected Emoji: \(selectedEmoji)") // 선택된 이모지 출력
+                self?.hideEmojiPopup() // 선택 후 팝업 숨기기
+            }
+        }
+
+        // 팝업이 부드럽게 나타나는 애니메이션
+        UIView.animate(withDuration: 0.3) {
+            self.emojiPopupView.alpha = 1 // 팝업의 투명도를 1로 설정하여 표시
+        }
+    }
+
+    /// 이모지 팝업을 화면에서 숨기는 메서드
+    func hideEmojiPopup() {
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.emojiPopupView.alpha = 0 // 팝업의 투명도를 0으로 설정하여 숨김
+            },
+            completion: { _ in
+                self.emojiPopupView.removeFromSuperview() // 애니메이션 완료 후 팝업 제거
+            }
+        )
+    }
     
     /// UI 구성 요소 추가
     private func setupView() {

@@ -12,6 +12,7 @@ class PostDetailViewController: UIViewController {
     // MARK: - Property
     private let postDetailModel: PostDetailModel
     private let postDetailView = PostDetailView()
+    private var isEmojiPopupVisible = false
     
     // MARK: - Init
     
@@ -34,6 +35,7 @@ class PostDetailViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         setNavigation()
+        addEmojiButtonAction()
     }
     
     // MARK: - Methods
@@ -61,5 +63,28 @@ class PostDetailViewController: UIViewController {
     /// 네비게이션 왼쪽 상단 버튼을 통해 이전 화면으로 돌아감
     @objc func didTap() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    /// 이모지 버튼에 액션을 추가하는 메서드
+    private func addEmojiButtonAction() {
+        // 이모지 버튼에 터치 이벤트(.touchUpInside)를 연결
+        postDetailView.emojiButton.addTarget(
+            self, // 이벤트를 처리할 대상 (self: 현재 ViewController)
+            action: #selector(handleEmojiButtonTap), // 버튼 클릭 시 호출될 메서드
+            for: .touchUpInside // 버튼을 눌렀다가 뗐을 때 이벤트가 발생
+        )
+    }
+
+    /// 이모지 버튼이 클릭되었을 때 호출되는 메서드
+    @objc private func handleEmojiButtonTap() {
+        // 현재 이모지 팝업이 표시된 상태인지 확인
+        
+        if isEmojiPopupVisible {
+            postDetailView.hideEmojiPopup() // 팝업이 표시 중인 상태에서 다른 동작시 숨기기
+        } else {
+            postDetailView.showEmojiPopup() // 팝업이 숨겨져 있다면 이모지 클릭시 표시
+        }
+        // 팝업 상태를 반대로 토글
+        isEmojiPopupVisible.toggle()
     }
 }
