@@ -8,6 +8,7 @@
 import UIKit
 
 class PostDetailView: UIView {
+    
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,42 +27,31 @@ class PostDetailView: UIView {
     private let postImageSize: CGFloat = 43 // 유지보수를 위한 상수 정의
     private let space: CGFloat = 23 // 레이아웃 기본 여백
     
-    private let profileImageView: UIImageView = {
-        let profile = UIImageView()
-        profile.contentMode = .scaleAspectFit
-        profile.clipsToBounds = true
-        profile.layer.cornerRadius = 15
-        
-        return profile
-    }()
+    private let profileImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 15
+    }
     
-    private let nicknameLabel: UILabel = {
-        let nickname = UILabel()
-        nickname.font = UIFont.notoSans(.medium, size: 14)
-        nickname.textColor = .white
-        return nickname
-    }()
+    private let nicknameLabel = UILabel().then {
+        $0.font = UIFont.notoSans(.medium, size: 14)
+        $0.textColor = .white
+    }
     
-    private let postTimeLabel: UILabel = {
-        let timeLabel = UILabel()
-        timeLabel.font = UIFont.notoSans(.medium, size: 14)
-        timeLabel.textColor = .lightGray
-        return timeLabel
-    }()
+    private let postTimeLabel = UILabel().then {
+        $0.font = UIFont.notoSans(.medium, size: 14)
+        $0.textColor = .lightGray
+    }
     
     // 게시물 상세 화면 뒷배경
-    private let postImageView: UIImageView = {
-        let postImage = UIImageView()
-        postImage.contentMode = .scaleAspectFill
-        postImage.clipsToBounds = true
-        postImage.layer.cornerRadius = 15
-        return postImage
-    }()
+    private let postImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 15
+    }
     
     /// 댓글이 게시된 뷰도 따로있기에 댓글 입력창을 텍스트 필드가 아닌 버튼으로 설정함
-    private let commentButton: UIButton = {
-        let button = UIButton()
-
+    private let commentButton = UIButton().then {
         // 버튼 구성
         var config = UIButton.Configuration.plain()
         config.title = "댓글을 입력하세요..."
@@ -70,53 +60,47 @@ class PostDetailView: UIView {
         config.contentInsets = NSDirectionalEdgeInsets(
             top: 10, leading: 16, bottom: 10, trailing: 16
         ) // 내부 여백
-
+        
         // 텍스트 왼쪽 정렬
-        button.contentHorizontalAlignment = .left
-
+        $0.contentHorizontalAlignment = .left
+        
         // 텍스트 폰트 설정
-        button.titleLabel?.font = UIFont.notoSans(.regular, size: 15)
-        button.configuration = config
-
+        $0.titleLabel?.font = UIFont.notoSans(.regular, size: 15)
+        $0.configuration = config
+        
         // 테두리 설정
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 2
-        button.layer.cornerRadius = 15
-
-        return button
-    }()
+        $0.layer.borderColor = UIColor.white.cgColor
+        $0.layer.borderWidth = 2
+        $0.layer.cornerRadius = 15
+    }
     
     /// 이모티콘 버튼
-    private let emojiButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "emoji"), for: .normal)
-        button.tintColor = .white
-        button.contentMode = .scaleAspectFit
-        return button
-    }()
+    private let emojiButton = UIButton().then {
+        $0.setImage(UIImage(named: "emoji"), for: .normal)
+        $0.tintColor = .white
+        $0.contentMode = .scaleAspectFit
+    }
     
     /// 댓글 입력과 이모티콘 버튼을 묶는 StackView
-    private lazy var buttonStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [commentButton, emojiButton])
-        stackView.axis = .horizontal
-        stackView.spacing = 8
-        stackView.distribution = .fill // 내부 뷰가 채워지도록 설정
-        stackView.alignment = .fill // 높이를 스택뷰에 맞게 설정
-        return stackView
-    }()
+    private lazy var buttonStackView = UIStackView(
+        arrangedSubviews: [commentButton, emojiButton]).then {
+        $0.axis = .horizontal
+        $0.spacing = 8
+        $0.distribution = .fill // 내부 뷰가 채워지도록 설정
+        $0.alignment = .fill // 높이를 스택뷰에 맞게 설정
+    }
     
     /// 프로필, 닉네임, 시간을 묶을 사용자 정보 StackView
-    private lazy var userInfoStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [
-            profileImageView,
-            nicknameLabel,
-            postTimeLabel
-        ])
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.alignment = .center
-        return stackView
-    }()
+    private lazy var userInfoStackView = UIStackView(arrangedSubviews: [
+        profileImageView,
+        nicknameLabel,
+        postTimeLabel
+    ]).then {
+        $0.axis = .horizontal
+        $0.spacing = 10
+        $0.alignment = .center
+    }
+    
     // MARK: - Methods
     
     /// UI 구성 요소 추가
@@ -139,8 +123,8 @@ class PostDetailView: UIView {
         
         // 스택뷰 내부 제약조건 추가 설정
         postTimeLabel.snp.makeConstraints {
-               $0.trailing.lessThanOrEqualTo(userInfoStackView.snp.trailing)
-           }
+            $0.trailing.lessThanOrEqualTo(userInfoStackView.snp.trailing)
+        }
         
         // 프로필 이미지 크기 설정
         profileImageView.snp.makeConstraints {
