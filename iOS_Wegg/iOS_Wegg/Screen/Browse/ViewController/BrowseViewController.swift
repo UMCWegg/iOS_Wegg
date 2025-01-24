@@ -26,7 +26,7 @@ class BrowseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        loadMockData()
+        fetchMockData()
     }
     
     // MARK: - Methods
@@ -43,55 +43,9 @@ class BrowseViewController: UIViewController {
     
     // MARK: - Data Methods
     
-    /// Mock 데이터(임시로 설정한 데이터입니다.)를 로드
-    private func loadMockData() {
-        browseItems = [
-            BrowseItem(
-                nickName: "증윤",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post1-2"]
-            ),
-            BrowseItem(
-                nickName: "리버",
-                profileImage: "profile1",
-                postImage: ["post2-1", "post2-2"]
-            ),
-            BrowseItem(
-                nickName: "하키",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post3-2"]
-            ),
-            BrowseItem(
-                nickName: "베텔",
-                profileImage: "profile1",
-                postImage: ["post2-1", "post1-2"]
-            ),
-            BrowseItem(
-                nickName: "소피",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post2-2"]
-            ),
-            BrowseItem(
-                nickName: "증윤",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post1-2"]
-            ),
-            BrowseItem(
-                nickName: "리버",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post2-2"]
-            ),
-            BrowseItem(
-                nickName: "증윤",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post1-2"]
-            ),
-            BrowseItem(
-                nickName: "리버",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post2-2"]
-            )
-        ]
+    /// Mock데이터 호출하는 메서드
+    private func fetchMockData() {
+        browseItems = BrowseItem.mockData()
         browseView.browseCollectionView.reloadData()
     }
 }
