@@ -9,6 +9,19 @@ import UIKit
 import SnapKit
 import Then
 
+private struct OverlayLayout {
+    struct CurrentLocation {
+        static let leadingOffset: CGFloat = 327
+        static let trailingOffset: CGFloat = -21
+        static let bottomOffset: CGFloat = -21
+    }
+    struct PlaceSearch {
+        static let leadingOffset: CGFloat = 327
+        static let trailingOffset: CGFloat = -21
+        static let topOffset: CGFloat = 60
+    }
+}
+
 class MapOverlayView: UIView {
     weak var gestureDelegate: MapOverlayGestureDelegate?
     
@@ -52,12 +65,32 @@ class MapOverlayView: UIView {
     
     // MARK: - Property
     
-    private let currentLocationImageButton = UIImageView().then {
-        $0.image = UIImage(named: "current_position")
-        $0.contentMode = .scaleAspectFit
-        $0.isUserInteractionEnabled = true
-    }
+    private lazy var currentLocationImageButton = createImageView(
+        imageName: "current_position_icon"
+    )
     
+    private lazy var placeSearchView = createImageView(imageName: "map_search_icon")
+    
+    // MARK: UI 제작하는 함수
+    
+    /// UIImageView를 제작하는 함수
+    ///
+    /// - Parameters:
+    ///     - imageName: 사용할 이미지 이름
+    ///     - contentMode: 이미지의 ContentMode. 기본값은 `scaleAspectFit`
+    ///     - isUserInteractionEnabled: 제스처 활성화 여부. 기본값은 `true`
+    /// - Returns: 설정된 `UIImageView` 인스턴스 반환
+    private func createImageView(
+        imageName: String,
+        contentMode: UIView.ContentMode = .scaleAspectFit,
+        isUserInteractionEnabled: Bool = true
+    ) -> UIImageView {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: imageName)
+        imageView.contentMode = contentMode
+        imageView.isUserInteractionEnabled = isUserInteractionEnabled
+        return imageView
+    }
 }
 
 // MARK: - 초기 설정 함수
@@ -78,16 +111,37 @@ private extension MapOverlayView {
     }
     
     func addComponents() {
-        [currentLocationImageButton].forEach {
+        [
+            currentLocationImageButton,
+            placeSearchView
+        ].forEach {
             addSubview($0)
         }
     }
     
     func constraints() {
         currentLocationImageButton.snp.makeConstraints { make in
-            make.leading.equalTo(327)
-            make.trailing.equalTo(-21)
-            make.bottom.equalTo(-21)
+            make.leading.equalTo(
+                OverlayLayout.CurrentLocation.leadingOffset
+            )
+            make.trailing.equalTo(
+                OverlayLayout.CurrentLocation.trailingOffset
+            )
+            make.bottom.equalTo(
+                OverlayLayout.CurrentLocation.bottomOffset
+            )
+        }
+        
+        placeSearchView.snp.makeConstraints { make in
+            make.leading.equalTo(
+                OverlayLayout.PlaceSearch.leadingOffset
+            )
+            make.trailing.equalTo(
+                OverlayLayout.PlaceSearch.trailingOffset
+            )
+            make.top.equalTo(
+                OverlayLayout.PlaceSearch.topOffset
+            )
         }
     }
 }
