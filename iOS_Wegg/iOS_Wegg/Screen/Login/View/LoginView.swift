@@ -45,7 +45,7 @@ class LoginView: UIView {
         backgroundColor: UIColor(red: 0.78, green: 0.78, blue: 0.78, alpha: 1)
     )
 
-    private let signUpButton = UIButton().then {
+    let signUpButton = UIButton().then {
         let attributedString = NSAttributedString(
             string: "회원가입",
             attributes: [
@@ -70,7 +70,6 @@ class LoginView: UIView {
     }
     
     private func setupConstraints() {
-        
         appIcon.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(322)
@@ -99,5 +98,4 @@ class LoginView: UIView {
             make.bottom.equalTo(kakaoLoginButton.snp.top).offset(-15)
         }
     }
-
 }
