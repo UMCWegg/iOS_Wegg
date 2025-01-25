@@ -57,17 +57,19 @@ class LoginButton: UIButton {
     }
     
     private func setupTextOnly(title: String) {
-        titleSetup(title: title)
+        let label = titleSetup(title: title)
+        setTitle(label.text, for: .normal)
+        titleLabel?.font = label.font
+        titleLabel?.textColor = label.textColor
     }
     
     private func setupIconText(title: String, image: UIImage) {
-        guard let titleLabel = titleLabel else { return }
-        
+        let textLabel = titleSetup(title: title)
         iconImageView.image = image
-        addSubview(contentStack)
         
+        addSubview(contentStack)
         contentStack.addArrangedSubview(iconImageView)
-        contentStack.addArrangedSubview(titleLabel)
+        contentStack.addArrangedSubview(textLabel)
         
         contentStack.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -76,16 +78,15 @@ class LoginButton: UIButton {
         iconImageView.snp.makeConstraints { make in
             make.width.height.equalTo(20)
         }
-        
-        titleSetup(title: title)
     }
     
-    private func titleSetup(title: String) {
-        setTitle(title, for: .normal)
-        titleLabel?.font = UIFont.notoSans(.medium, size: 17)
-        
-        setTitleColor((backgroundColor == .black ||
-                       backgroundColor == UIColor.customColor(.secondary))
-                       ? .white : .black, for: .normal)
+    private func titleSetup(title: String) -> UILabel {
+        return UILabel().then {
+            $0.text = title
+            $0.font = UIFont.notoSans(.medium, size: 17)
+            $0.textColor = (backgroundColor == .black ||
+                           backgroundColor == UIColor.customColor(.secondary))
+                           ? .white : .black
+        }
     }
 }
