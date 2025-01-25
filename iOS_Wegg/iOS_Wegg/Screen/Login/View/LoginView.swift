@@ -26,21 +26,35 @@ class LoginView: UIView {
     
     // MARK: - Properties
     
-    private let appIcon = UIImageView().then {
-        $0.image = UIImage(named: "Login/wegg_icon")
+    private let appLogo = UIImageView().then {
+        $0.image = UIImage(named: "wegg_text")
     }
     
-    internal let googleLoginButton = LoginButton(
+    private let appIcon = UIImageView().then {
+        $0.image = UIImage(named: "wegg_icon")
+    }
+    
+    private let contentStack = UIStackView().then {
+        $0.spacing = 7
+        $0.alignment = .center
+    }
+    
+    let googleLoginButton = LoginButton(
+        style: .iconText,
         title: "구글로 로그인",
-        backgroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+        backgroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 1),
+        image: UIImage(named: "Login/google_icon")
     )
         
-    internal let kakaoLoginButton = LoginButton(
+    let kakaoLoginButton = LoginButton(
+        style: .iconText,
         title: "카카오로 로그인",
-        backgroundColor: UIColor(red: 0.98, green: 0.886, blue: 0.012, alpha: 1)
+        backgroundColor: UIColor(red: 0.98, green: 0.886, blue: 0.012, alpha: 1),
+        image: UIImage(named: "Login/kakao_icon")
     )
         
-    internal let emailLoginButton = LoginButton(
+    let emailLoginButton = LoginButton(
+        style: .textOnly,
         title: "다른 방법으로 로그인",
         backgroundColor: UIColor(red: 0.78, green: 0.78, blue: 0.78, alpha: 1)
     )
@@ -61,40 +75,54 @@ class LoginView: UIView {
     
     private func setupViews() {
         [
-            appIcon,
+            contentStack,
             googleLoginButton,
             kakaoLoginButton,
             emailLoginButton,
             signUpButton
         ].forEach { addSubview($0) }
+        
+        [
+            appLogo,
+            appIcon
+        ].forEach { contentStack.addArrangedSubview($0) }
     }
     
     private func setupConstraints() {
+        appLogo.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.width.equalTo(130)
+            make.height.equalTo(50)
+        }
+        
         appIcon.snp.makeConstraints { make in
+            make.trailing.equalToSuperview()
+            make.width.equalTo(35)
+            make.height.equalTo(52)
+        }
+        
+        contentStack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(322)
+            make.bottom.equalTo(googleLoginButton.snp.top).offset(-141)
         }
         
         signUpButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(54)
+            make.bottom.equalToSuperview().offset(-54)
         }
         
         emailLoginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(17)
             make.bottom.equalTo(signUpButton.snp.top).offset(-16)
         }
         
         kakaoLoginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.trailing.equalTo(emailLoginButton)
             make.bottom.equalTo(emailLoginButton.snp.top).offset(-15)
         }
         
         googleLoginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.trailing.equalTo(emailLoginButton)
             make.bottom.equalTo(kakaoLoginButton.snp.top).offset(-15)
         }
     }

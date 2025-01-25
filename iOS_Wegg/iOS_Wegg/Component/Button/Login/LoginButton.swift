@@ -9,13 +9,25 @@ import UIKit
 
 class LoginButton: UIButton {
     
+    // MARK: - Style
+    
+    enum Style {
+        case textOnly
+        case iconText
+    }
+    
     // MARK: - Init
     
-    init(title: String, backgroundColor: UIColor, image: UIImage? = nil) {
+    init(style: Style, title: String, backgroundColor: UIColor, image: UIImage? = nil) {
         super.init(frame: .zero)
-        setupButton(title: title, backgroundColor: backgroundColor)
-        if let image = image {
-            setupImageView(image: image)
+        setupCommon(backgroundColor: backgroundColor)
+        
+        switch style {
+        case .textOnly:
+            setupTextOnly(title: title)
+        case .iconText:
+            guard let image = image else { return }
+            setupIconText(title: title, image: image)
         }
     }
     
@@ -30,34 +42,50 @@ class LoginButton: UIButton {
     }
     
     private let contentStack = UIStackView().then {
+        $0.axis = .horizontal
         $0.spacing = 10
-        $0.alignment = .center
+        $0.alignment = .fill
     }
     
     // MARK: - Setup
     
-    private func setupButton(title: String, backgroundColor: UIColor) {
+    private func setupCommon(backgroundColor: UIColor) {
         self.backgroundColor = backgroundColor
-        setTitle(title, for: .normal)
         layer.cornerRadius = 26.5
-        titleLabel?.font = UIFont(name: "NotoSansKR-Medium", size: 20)
-        
-        setTitleColor((backgroundColor == .black ||
-                       backgroundColor == UIColor(named: "YellowSecondary"))
-                       ? .white : .black, for: .normal)
-        
         heightAnchor.constraint(equalToConstant: 53).isActive = true
         widthAnchor.constraint(equalToConstant: 348).isActive = true
     }
     
-    private func setupImageView(image: UIImage) {
-        addSubview(iconImageView)
-        iconImageView.image = image
+    private func setupTextOnly(title: String) {
+        titleSetup(title: title)
+    }
+    
+    private func setupIconText(title: String, image: UIImage) {
+        guard let titleLabel = titleLabel else { return }
         
-        if let titleLabel = titleLabel {
-            [iconImageView, titleLabel].forEach {
-                contentStack.addArrangedSubview($0)
-            }
+        iconImageView.image = image
+        addSubview(contentStack)
+        
+        contentStack.addArrangedSubview(iconImageView)
+        contentStack.addArrangedSubview(titleLabel)
+        
+        contentStack.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
+        
+        iconImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(20)
+        }
+        
+        titleSetup(title: title)
+    }
+    
+    private func titleSetup(title: String) {
+        setTitle(title, for: .normal)
+        titleLabel?.font = UIFont.notoSans(.medium, size: 17)
+        
+        setTitleColor((backgroundColor == .black ||
+                       backgroundColor == UIColor.customColor(.secondary))
+                       ? .white : .black, for: .normal)
     }
 }

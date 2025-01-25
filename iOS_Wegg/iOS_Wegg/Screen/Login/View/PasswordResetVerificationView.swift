@@ -57,6 +57,7 @@ class PasswordResetVerificationView: UIView {
     }
     
     let loginButton = LoginButton(
+        style: .textOnly,
         title: "확인",
         backgroundColor: UIColor.customColor(.secondary)
     )
@@ -78,6 +79,7 @@ class PasswordResetVerificationView: UIView {
         backButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(70)
             make.leading.equalToSuperview().offset(17)
+            make.width.equalTo(8)
         }
         
         mainLabel.snp.makeConstraints { make in

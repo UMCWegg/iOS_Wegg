@@ -63,6 +63,7 @@ class EmailLoginView: UIView {
     }
     
     let loginButton = LoginButton(
+        style: .textOnly,
         title: "로그인",
         backgroundColor: UIColor.customColor(.secondary)
     )
@@ -96,6 +97,7 @@ class EmailLoginView: UIView {
         backButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(70)
             make.leading.equalToSuperview().offset(17)
+            make.width.equalTo(8)
         }
         
         mainLabel.snp.makeConstraints { make in
