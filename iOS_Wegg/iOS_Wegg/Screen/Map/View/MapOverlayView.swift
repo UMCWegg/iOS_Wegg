@@ -18,7 +18,7 @@ private struct OverlayLayout {
     struct PlaceSearch {
         static let leadingOffset: CGFloat = 327
         static let trailingOffset: CGFloat = -21
-        static let topOffset: CGFloat = 60
+        static let topOffset: CGFloat = 10
     }
 }
 
@@ -120,27 +120,27 @@ private extension MapOverlayView {
     }
     
     func constraints() {
-        currentLocationImageButton.snp.makeConstraints { make in
-            make.leading.equalTo(
-                OverlayLayout.CurrentLocation.leadingOffset
+        placeSearchView.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(
+                OverlayLayout.PlaceSearch.topOffset
             )
-            make.trailing.equalTo(
-                OverlayLayout.CurrentLocation.trailingOffset
+            make.leading.equalToSuperview().offset(
+                OverlayLayout.PlaceSearch.leadingOffset
             )
-            make.bottom.equalTo(
-                OverlayLayout.CurrentLocation.bottomOffset
+            make.trailing.equalToSuperview().offset(
+                OverlayLayout.PlaceSearch.trailingOffset
             )
         }
         
-        placeSearchView.snp.makeConstraints { make in
-            make.leading.equalTo(
-                OverlayLayout.PlaceSearch.leadingOffset
+        currentLocationImageButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(
+                OverlayLayout.CurrentLocation.leadingOffset
             )
-            make.trailing.equalTo(
-                OverlayLayout.PlaceSearch.trailingOffset
+            make.trailing.equalToSuperview().offset(
+                OverlayLayout.CurrentLocation.trailingOffset
             )
-            make.top.equalTo(
-                OverlayLayout.PlaceSearch.topOffset
+            make.bottom.equalToSuperview().offset(
+                OverlayLayout.CurrentLocation.bottomOffset
             )
         }
     }
