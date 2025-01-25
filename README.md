@@ -82,3 +82,5 @@ ex) [feat]: 로그인 화면 구현
 - 16.2
 ### Swift 버전
 - 6.0.3
+### Minimum iOS Deployment Target
+- 16.0
