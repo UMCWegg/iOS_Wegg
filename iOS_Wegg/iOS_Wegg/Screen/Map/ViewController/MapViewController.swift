@@ -38,13 +38,8 @@ class MapViewController: UIViewController {
     }
     
     private func setupOverlayView() {
-        // MARK: - MapOverlayView setup
         overlayView.setupOverlayConstraints(in: view)
-        
-        // MARK: - MapOverlayView Gesture
-        overlayView.onLocationImageButtonTap = { [weak self] in
-            self?.didTabLocationButton()
-        }
+        overlayView.gestureDelegate = self
     }
     
     private func setupMapManagerGestures() {
@@ -57,10 +52,12 @@ class MapViewController: UIViewController {
             print("롱탭한 위치: \(latlng.latitude), \(latlng.longitude)")
         }
     }
-    
-    // MARK: - MapOverlayView에서 실행될 함수들
-    
-    private func didTabLocationButton() {
+}
+
+// MARK: MapOverlayGestureDelegate
+
+extension MapViewController: MapOverlayGestureDelegate {
+    func didDetectTapGestureOnLocationButton() {
         mapManager.requestCurrentLocation()
         print("didTabLocationButton")
     }

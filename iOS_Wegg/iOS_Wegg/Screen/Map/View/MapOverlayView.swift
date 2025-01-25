@@ -10,8 +10,7 @@ import SnapKit
 import Then
 
 class MapOverlayView: UIView {
-    
-    var onLocationImageButtonTap: (() -> Void)?
+    weak var gestureDelegate: MapOverlayGestureDelegate?
     
     // MARK: - init
     
@@ -34,9 +33,6 @@ class MapOverlayView: UIView {
     }
     
     /// hitTest(_:with:) - 터치 이벤트를 처리할 최종 뷰 결정
-    /// - Parameters:
-    ///     - porint: 이벤트가 발생한 지점(뷰 좌표계 기준)
-    ///     - event: 현재 발생한 UIEvent(예: 터치 이벤트)
     /// - Returns: 터치 이벤트를 처리할 UIView(없을 경우 nil 반한)
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         // 지도 영역에서는 터치 이벤트를 처리
@@ -51,11 +47,7 @@ class MapOverlayView: UIView {
     }
     
     @objc private func handleLocationImageButton() {
-        guard let onLocationImageButtonTap else {
-            print("onLocationImageButtonTap is nil")
-            return
-        }
-        onLocationImageButtonTap()
+        gestureDelegate?.didDetectTapGestureOnLocationButton()
     }
     
     // MARK: - Property
