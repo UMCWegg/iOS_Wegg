@@ -35,7 +35,7 @@ class PostDetailViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         setNavigation()
-        addEmojiButtonAction()
+        emojiButtonAction()
     }
     
     // MARK: - Methods
@@ -66,7 +66,7 @@ class PostDetailViewController: UIViewController {
     }
     
     /// 이모지 버튼에 액션을 추가하는 메서드
-    private func addEmojiButtonAction() {
+    private func emojiButtonAction() {
         // 이모지 버튼에 터치 이벤트(.touchUpInside)를 연결
         postDetailView.emojiButton.addTarget(
             self, // 이벤트를 처리할 대상 (self: 현재 ViewController)

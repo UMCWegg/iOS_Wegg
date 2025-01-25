@@ -110,11 +110,11 @@ class PostDetailView: UIView {
             addSubview(emojiPopupView) // 이모지 팝업을 현재 뷰에 추가
 
             // SnapKit으로 팝업의 제약 조건 설정
-            emojiPopupView.snp.makeConstraints { make in
-                make.centerX.equalTo(emojiButton) // 이모지 버튼과 수평으로 정렬
-                make.bottom.equalTo(emojiButton.snp.top).offset(-10) // 버튼 위로 약간 띄움
-                make.width.equalTo(80) // 팝업의 너비 설정
-                make.height.equalTo(200) // 팝업의 높이 설정
+            emojiPopupView.snp.makeConstraints {
+                $0.centerX.equalTo(emojiButton) // 이모지 버튼과 수평으로 정렬
+                $0.bottom.equalTo(emojiButton.snp.top).offset(-34) // 버튼 위로 약간 띄움
+                $0.width.equalTo(80) // 팝업의 너비 설정
+                $0.height.equalTo(250) // 팝업의 높이 설정
             }
 
             // 이모지 선택 시 호출되는 클로저 정의
@@ -174,7 +174,7 @@ class PostDetailView: UIView {
         postImageView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalToSuperview().multipliedBy(0.7) // 상대적인 크기 설정 화면 비율의 70%
+            $0.height.equalToSuperview().multipliedBy(0.75) // 상대적인 크기 설정 화면 비율의 75%
         }
         
         buttonStackView.snp.makeConstraints {

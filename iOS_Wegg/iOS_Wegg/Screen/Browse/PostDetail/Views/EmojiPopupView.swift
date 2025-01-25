@@ -27,45 +27,60 @@ class EmojiPopupView: UIView {
     
     /// 뷰를 설정하는 메서드
     private func setupView() {
-        // 뷰의 배경 색상 및 스타일 설정
-        backgroundColor = .white
-        layer.cornerRadius = 16 // 둥근 모서리
-        layer.shadowColor = UIColor.black.cgColor // 그림자 색상
-        layer.shadowOpacity = 0.1 // 그림자 투명도
-        layer.shadowOffset = CGSize(width: 0, height: 4) // 그림자 위치
-        layer.shadowRadius = 8 // 그림자 퍼짐 정도
+        // 팝업 뷰의 배경 투명 처리
+        backgroundColor = .clear
         
         // 이모지 이미지 배열
         let emojiImages = ["smile.png", "thumbs_up.png", "heart.png", "plus.png"]
         
-        // 스택 뷰 생성 및 설정 (이모지 버튼을 세로로 배치)
+        // 스택 뷰 생성 및 설정
         let stackView = UIStackView()
-        stackView.axis = .vertical // 세로 방향 정렬
-        stackView.spacing = 8 // 버튼 간의 간격
-        stackView.alignment = .center // 버튼 정렬: 중앙
-        stackView.distribution = .fillEqually // 버튼 크기를 동일하게 분배
+        stackView.axis = .vertical
+        stackView.spacing = 10 // 버튼 간의 간격
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
         
-        // 이모지 버튼 생성 및 스택 뷰에 추가
+        // 각 이모지 버튼에 배경 뷰 추가
         for imageName in emojiImages {
-            let button = UIButton(type: .system) // 시스템 타입 버튼 생성
-            button.setImage(UIImage(
-                named: imageName)?.withRenderingMode(.alwaysOriginal), for: .normal) // 원본 이미지 렌더링
-            button.imageView?.contentMode = .scaleAspectFill // 이미지 크기 설정
-            button.addTarget(
-                self,
-                action: #selector(emojiTapped(_:)),
-                for: .touchUpInside) // 클릭 이벤트 연결
-            stackView.addArrangedSubview(button) // 스택 뷰에 버튼 추가
+            // 동그란 배경 뷰 생성
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = UIColor.white.withAlphaComponent(0.7) // 투명한 배경
+            backgroundView.layer.cornerRadius = 24 // 동그란 모서리 (너비/2)
+            backgroundView.clipsToBounds = true
+            backgroundView.translatesAutoresizingMaskIntoConstraints = false
+            
+            // 버튼 생성
+            let button = UIButton(type: .system)
+            button.setImage(
+                UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal),
+                for: .normal
+            )
+            button.imageView?.contentMode = .scaleAspectFit
+            button.addTarget(self, action: #selector(emojiTapped(_:)), for: .touchUpInside)
+            
+            // 배경 뷰에 버튼 추가
+            backgroundView.addSubview(button)
+            button.snp.makeConstraints {
+                $0.center.equalToSuperview()
+                $0.width.height.equalTo(32) // 버튼 크기
+            }
+            
+            // 배경 뷰 크기 설정
+            backgroundView.snp.makeConstraints {
+                $0.width.height.equalTo(48) // 배경 크기
+            }
+            
+            // 스택 뷰에 배경 뷰 추가
+            stackView.addArrangedSubview(backgroundView)
         }
         
-        // 스택 뷰를 현재 뷰에 추가
+        // 스택 뷰를 팝업 뷰에 추가
         addSubview(stackView)
-        
         stackView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(8) // 스택 뷰의 여백 설정
+            $0.edges.equalToSuperview().inset(4)
         }
     }
-
+    
     /// 이모지 버튼 클릭 시 호출되는 메서드
     @objc private func emojiTapped(_ sender: UIButton) {
         // 클릭된 버튼의 이미지를 가져오기
