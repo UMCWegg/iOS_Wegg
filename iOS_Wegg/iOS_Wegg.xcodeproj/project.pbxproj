@@ -35,6 +35,7 @@
 		DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020DC2D420F3B003A273F /* FirebaseFirestore */; };
 		DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = DE00212C2D433D7F003A273F /* NMapsMap */; };
 		DE00217A2D439F3F003A273F /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */; };
+		DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85E2772D4623BB0055C78C /* MainTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
+		DE85E2772D4623BB0055C78C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -135,6 +137,36 @@
 		DE001EC22D3BF1B5003A273F /* TextField */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TextField;
+			sourceTree = "<group>";
+		};
+		DE85E2742D4623BB0055C78C /* Browse */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Browse;
+			sourceTree = "<group>";
+		};
+		DE85E2762D4623BB0055C78C /* Home */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Home;
+			sourceTree = "<group>";
+		};
+		DE85E2792D4623BB0055C78C /* Map */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Map;
+			sourceTree = "<group>";
+		};
+		DE85E27B2D4623BB0055C78C /* My */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = My;
+			sourceTree = "<group>";
+		};
+		DE85E2802D4623BB0055C78C /* SignUp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		DE85E2822D4623BB0055C78C /* Time */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Time;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -235,6 +267,13 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				DE85E2742D4623BB0055C78C /* Browse */,
+				DE85E2762D4623BB0055C78C /* Home */,
+				DE85E2772D4623BB0055C78C /* MainTabBarController.swift */,
+				DE85E2792D4623BB0055C78C /* Map */,
+				DE85E27B2D4623BB0055C78C /* My */,
+				DE85E2802D4623BB0055C78C /* SignUp */,
+				DE85E2822D4623BB0055C78C /* Time */,
 				0E98EAC62D2FB789006F25EF /* Login */,
 			);
 			path = Screen;
@@ -307,6 +346,12 @@
 				0E98EAC62D2FB789006F25EF /* Login */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
+				DE85E2742D4623BB0055C78C /* Browse */,
+				DE85E2762D4623BB0055C78C /* Home */,
+				DE85E2792D4623BB0055C78C /* Map */,
+				DE85E27B2D4623BB0055C78C /* My */,
+				DE85E2802D4623BB0055C78C /* SignUp */,
+				DE85E2822D4623BB0055C78C /* Time */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
@@ -426,6 +471,7 @@
 			files = (
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
+				DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
