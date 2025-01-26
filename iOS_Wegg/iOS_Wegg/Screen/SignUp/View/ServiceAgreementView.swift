@@ -32,7 +32,7 @@ class ServiceAggrementView: UIView {
     }
     
     private let mainLabel = UILabel().then {
-        $0.text = "서비스 이용 동의"
+        $0.text = "서비스 이용 동의를 진행해주세요"
         $0.textColor = .black
         $0.font = UIFont.LoginFont.title
     }
