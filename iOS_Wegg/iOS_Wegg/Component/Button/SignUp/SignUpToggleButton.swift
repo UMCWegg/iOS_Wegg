@@ -14,10 +14,11 @@ final class SignUpToggleButton: UIButton {
     
     // MARK: - Init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(text: String, isChecked: Bool = false) {
+        super.init(frame: .zero)
         setupUI()
         setupGesture()
+        configure(with: text, isChecked: isChecked)
     }
     
     required init?(coder: NSCoder) {
@@ -35,12 +36,12 @@ final class SignUpToggleButton: UIButton {
     private var buttonTapped: ((Bool) -> Void)?
     
     private let checkButton = UIButton().then {
-        $0.tintColor = .black
+        $0.tintColor = UIColor.customColor(.secondary)
         $0.setImage(UIImage(systemName: "circle"), for: .normal)
     }
     
     private let checkTitleLabel = UILabel().then {
-        $0.font = UIFont(name: "NotoSansKR-Regular", size: 15)
+        $0.font = UIFont.notoSans(.regular, size: 15)
         $0.textColor = .black
     }
     
@@ -90,5 +91,9 @@ final class SignUpToggleButton: UIButton {
     
     func getChecked() -> Bool {
         return isChecked
+    }
+    
+    func setOnToggleListener(completion: @escaping (Bool) -> Void) {
+        buttonTapped = completion
     }
 }
