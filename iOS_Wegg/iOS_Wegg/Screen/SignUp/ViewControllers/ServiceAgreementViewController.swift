@@ -37,17 +37,16 @@ class ServiceAgreementViewController: UIViewController {
     private func setupButtons() {
         serviceAgreementView.agreeAllToggleButton.setOnToggleListener { [weak self] isChecked in
             self?.handleAllAgreementToggle(isChecked)
+            
         }
         
         toggleButtons.forEach { button in
             button.setOnToggleListener { [weak self] _ in
-                self?.checkAllAgreement()
-                self?.updateNextButtonState()
+                self?.updateAgreementState()
+                if button == self?.serviceAgreementView.marketingToggleButton {
+                    self?.isMarketingAgreed = button.getChecked()
+                }
             }
-        }
-        
-        serviceAgreementView.marketingToggleButton.setOnToggleListener { [weak self] isChecked in
-            self?.isMarketingAgreed = isChecked
         }
         
         serviceAgreementView.nextButton.addTarget(
@@ -70,6 +69,12 @@ class ServiceAgreementViewController: UIViewController {
         updateNextButtonState()
     }
     
+    private func updateAgreementState() {
+        let allChecked = toggleButtons.allSatisfy { $0.getChecked() }
+        serviceAgreementView.agreeAllToggleButton.setChecked(allChecked)
+        updateNextButtonState()
+    }
+    
     private func checkAllAgreement() {
         let allChecked = toggleButtons.allSatisfy { $0.getChecked() }
         serviceAgreementView.agreeAllToggleButton.setChecked(allChecked)
@@ -81,6 +86,8 @@ class ServiceAgreementViewController: UIViewController {
         
         serviceAgreementView.nextButton.alpha = isEnabled ? 1.0 : 0.3
         serviceAgreementView.nextButton.isEnabled = isEnabled
+        
+        checkAllAgreement()
     }
     
     @objc private func nextButtonTapped() {
