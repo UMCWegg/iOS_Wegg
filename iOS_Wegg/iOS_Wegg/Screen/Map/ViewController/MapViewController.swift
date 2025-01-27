@@ -69,8 +69,17 @@ class MapViewController: UIViewController {
 // MARK: MapOverlayGestureDelegate
 
 extension MapViewController: MapOverlayGestureDelegate {
-    func didDetectTapGestureOnLocationButton() {
+    func didDetectOnLocationButtonTapped() {
         mapManager.requestCurrentLocation()
         print("didTabLocationButton")
     }
+    
+    func didPlaceSearchButtonTapped() {
+        print("Search Button Tapped")
+    }
+    
+    func didHotPlaceListTapped() {
+        print("HotPlaceList Tapped")
+    }
+    
 }

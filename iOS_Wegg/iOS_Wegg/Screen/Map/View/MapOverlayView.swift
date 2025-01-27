@@ -45,22 +45,39 @@ class MapOverlayView: UIView {
         }
     }
     
-    /// hitTest(_:with:) - 터치 이벤트를 처리할 최종 뷰 결정
+    // MARK: - Tap Gesture
+    
+    /// hitTest(_:with:)
+    /// - 터치 이벤트를 처리할 최종 뷰 결정
+    /// - 지도 위에서 제스처 필요한 버튼 추가
     /// - Returns: 터치 이벤트를 처리할 UIView(없을 경우 nil 반한)
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        // 지도 영역에서는 터치 이벤트를 처리
-        if let map = currentLocationImageButton.hitTest(
+        // 현재 위치 버튼 터치 이벤트 처리
+        if let currentLocation = currentLocationImageButton.hitTest(
             convert(point, to: currentLocationImageButton),
             with: event
         ) {
-            return map
+            return currentLocation
         }
+        
+        // 장소 검색 버튼 터치 이벤트를 처리
+        if let search = placeSearchButton.hitTest(
+            convert(point, to: placeSearchButton),
+            with: event
+        ) {
+            return search
+        }
+        
         // 지도 외의 터치 이벤트는 nil을 반환
         return nil
     }
     
     @objc private func handleLocationImageButton() {
-        gestureDelegate?.didDetectTapGestureOnLocationButton()
+        gestureDelegate?.didDetectOnLocationButtonTapped()
+    }
+    
+    @objc private func handlePlaceSearchButton() {
+        gestureDelegate?.didPlaceSearchButtonTapped()
     }
     
     // MARK: - Property
@@ -69,7 +86,7 @@ class MapOverlayView: UIView {
         imageName: "current_position_icon"
     )
     
-    private lazy var placeSearchView = createImageView(imageName: "map_search_icon")
+    private lazy var placeSearchButton = createImageView(imageName: "map_search_icon")
     
     // MARK: UI 제작하는 함수
     
@@ -103,24 +120,30 @@ private extension MapOverlayView {
     }
     
     func setupGestures() {
-        let tapGesture = UITapGestureRecognizer(
+        let locationButtonTapGesture = UITapGestureRecognizer(
             target: self,
             action: #selector(handleLocationImageButton)
         )
-        currentLocationImageButton.addGestureRecognizer(tapGesture)
+        currentLocationImageButton.addGestureRecognizer(locationButtonTapGesture)
+        
+        let placeSearchButtonTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handlePlaceSearchButton)
+        )
+        placeSearchButton.addGestureRecognizer(placeSearchButtonTapGesture)
     }
     
     func addComponents() {
         [
             currentLocationImageButton,
-            placeSearchView
+            placeSearchButton
         ].forEach {
             addSubview($0)
         }
     }
     
     func constraints() {
-        placeSearchView.snp.makeConstraints { make in
+        placeSearchButton.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(
                 OverlayLayout.PlaceSearch.topOffset
             )
