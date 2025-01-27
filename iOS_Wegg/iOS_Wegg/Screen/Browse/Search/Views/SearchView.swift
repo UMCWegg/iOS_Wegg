@@ -26,24 +26,21 @@ class SearchView: UIView, UISearchBarDelegate {
     // MARK: - Property
     
     /// 검색바 UI
-    public lazy var searchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.placeholder = "계정 검색"
-        searchBar.barTintColor = .white
-        searchBar.backgroundColor = .clear
-        searchBar.showsCancelButton = true
-        searchBar.backgroundImage = UIImage()
-        searchBar.delegate = self
+    public lazy var searchBar = UISearchBar().then {
+        $0.placeholder = "계정 검색"
+        $0.barTintColor = .white
+        $0.backgroundColor = .clear
+        $0.showsCancelButton = true
+        $0.backgroundImage = UIImage()
+        $0.delegate = self
         
         /* 돋보기 아이콘 및 여백 제거 */
-        searchBar.searchTextField.leftView = nil
-        
-        return searchBar
-    }()
+        $0.searchTextField.leftView = nil
+    }
     
     // MARK: - Methods
     
-    /// 기본적으로 검색바를 만들면 취소 버튼이 아닌, cancel이라고 영어로 칭해져서 등장한다. 이를 취소 버튼으로 재생성
+    /// 검색바  cancel이라고 영어로 칭해져서 등장한다. 이를 취소 버튼으로 재생성
     private func changeCancelKorean() {
         if let cancelButton = searchBar.value(forKey: "cancelButton") as? UIButton {
             cancelButton.setTitle("취소", for: .normal)

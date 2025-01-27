@@ -72,6 +72,15 @@
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
+		0E98ED352D3E6CDE006F25EF /* Exceptions for "Utilities" folder in "iOS_Wegg" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Extensions/UIColor+extensions.swift",
+				"Extensions/UIFont+extensions.swift",
+				Formatters/DateFormatterUtility.swift,
+			);
+			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -114,9 +123,29 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BrowseItem;
+			sourceTree = "<group>";
+		};
+		FF3CBC922D3E43AF00006955 /* Time */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Time;
+			sourceTree = "<group>";
+		};
+		FF3CBC932D3E43B100006955 /* Home */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Home;
+			sourceTree = "<group>";
+		};
 		DE001E912D3BDF71003A273F /* Button */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Button;
+			sourceTree = "<group>";
+		};
+		FF3CBCA42D3E43F800006955 /* Browse */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Browse;
 			sourceTree = "<group>";
 		};
 		DE001EC22D3BF1B5003A273F /* TextField */ = {
@@ -124,6 +153,22 @@
 			path = TextField;
 			sourceTree = "<group>";
 		};
+		FF3CBCB32D3E444000006955 /* Map */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Map;
+			sourceTree = "<group>";
+		};
+		FF3CBCB42D3E447800006955 /* My */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = My;
+			sourceTree = "<group>";
+		};
+		FF3CBFAF2D41070000006955 /* PostModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PostModel;
+			sourceTree = "<group>";
+		};
+
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +247,8 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
 			);
@@ -293,6 +340,7 @@
 				0E98EAC62D2FB789006F25EF /* Login */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
@@ -441,7 +489,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -472,7 +520,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

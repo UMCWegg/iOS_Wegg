@@ -26,7 +26,7 @@ class BrowseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        loadMockData()
+        fetchMockData()
     }
     
     // MARK: - Methods
@@ -43,55 +43,9 @@ class BrowseViewController: UIViewController {
     
     // MARK: - Data Methods
     
-    /// Mock 데이터(임시로 설정한 데이터입니다.)를 로드
-    private func loadMockData() {
-        browseItems = [
-            BrowseItem(
-                nickName: "증윤",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post1-2"]
-            ),
-            BrowseItem(
-                nickName: "리버",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post2-2"]
-            ),
-            BrowseItem(
-                nickName: "하키",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post3-2"]
-            ),
-            BrowseItem(
-                nickName: "베텔",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post1-2"]
-            ),
-            BrowseItem(
-                nickName: "소피",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post2-2"]
-            ),
-            BrowseItem(
-                nickName: "증윤",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post1-2"]
-            ),
-            BrowseItem(
-                nickName: "리버",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post2-2"]
-            ),
-            BrowseItem(
-                nickName: "증윤",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post1-2"]
-            ),
-            BrowseItem(
-                nickName: "리버",
-                profileImage: "profile1",
-                postImage: ["post1-1", "post2-2"]
-            )
-        ]
+    /// Mock데이터 호출하는 메서드
+    private func fetchMockData() {
+        browseItems = BrowseItem.mockData()
         browseView.browseCollectionView.reloadData()
     }
 }
@@ -124,15 +78,23 @@ extension BrowseViewController: UICollectionViewDataSource {
     }
 }
 
-/// UICollectionViewDelegate: 사용자 반응 처리하기 위한 프로토콜
+/// UICollectionViewDelegate: 사용자 반응 처리(아이템 클릭시 처리)하기 위한 프로토콜
 extension BrowseViewController: UICollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
+        // 선택된 BrowseItem 가져오기
         let selectedItems = browseItems[indexPath.row]
         print(selectedItems)
         
-        // 게시물 상세 화면으로 이동하는 네비게이션 컨트롤러 구현 예정
+        // 선택된 아이템 셀을 MockData 메서드를 활용해 Model에 전달
+        let detail = PostDetailModel.mockData(for: selectedItems)
+        
+        // 네비게이션 방식으로 게시물 상세 페이지 표시, 의존성 주입
+        let detailVC = PostDetailViewController(postDetailModel: detail)
+        // 탭바 숨겨서 컨트롤러 push하기
+        detailVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
