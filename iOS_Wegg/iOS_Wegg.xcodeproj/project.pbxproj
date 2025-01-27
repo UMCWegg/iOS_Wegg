@@ -68,6 +68,7 @@
 			membershipExceptions = (
 				"Extensions/UIColor+extensions.swift",
 				"Extensions/UIFont+extensions.swift",
+				Formatters/DateFormatterUtility.swift,
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
@@ -146,6 +147,11 @@
 			path = My;
 			sourceTree = "<group>";
 		};
+		FF3CBFAF2D41070000006955 /* PostModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PostModel;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +217,7 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
@@ -344,6 +351,7 @@
 				FF3CBCA42D3E43F800006955 /* Browse */,
 				FF3CBCB32D3E444000006955 /* Map */,
 				FF3CBCB42D3E447800006955 /* My */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
