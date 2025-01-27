@@ -1,50 +1,43 @@
 //
-//  ViewController.swift
+//  SignUpViewController.swift
 //  iOS_Wegg
 //
-//  Created by jaewon Lee on 1/7/25.
+//  Created by 이건수 on 2025.01.27.
 //
 
 import UIKit
 
-class LoginViewController: UIViewController {
-    
+class SignUpViewController: UIViewController {
+
     // MARK: - Properties
     
-    private let loginView = LoginView()
+    private let signUpView = SignUpView()
     
     // MARK: - Lifecycle
     
     override func loadView() {
-        view = loginView
+        view = signUpView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.customColor(.secondary)
         setupActions()
-        
     }
     
-    // MARK: - Setup
-    
     private func setupActions() {
-        loginView.googleLoginButton.addTarget(self,
+        signUpView.googleLoginButton.addTarget(self,
                                              action: #selector(googleLoginButtonTapped),
                                              for: .touchUpInside)
         
-        loginView.kakaoLoginButton.addTarget(self,
+        signUpView.kakaoLoginButton.addTarget(self,
                                              action: #selector(kakaoLoginButtonTapped),
                                              for: .touchUpInside)
         
-        loginView.emailLoginButton.addTarget(self,
+        signUpView.emailLoginButton.addTarget(self,
                                              action: #selector(emailLoginButtonTapped),
                                              for: .touchUpInside)
     }
-    
-    // Navigation 추후 구현
-    
-    // MARK: - Actions
     
     @objc private func googleLoginButtonTapped() {
         LoginManager.shared.login(type: .google, from: self)
@@ -55,8 +48,8 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func emailLoginButtonTapped() {
-        let emailLoginVC = EmailLoginViewController()
-        navigationController?.pushViewController(emailLoginVC, animated: true)
+        // let emailLoginVC = EmailLoginViewController()
+        // navigationController?.pushViewController(emailLoginVC, animated: true)
     }
-    
+
 }

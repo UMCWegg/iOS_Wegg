@@ -39,6 +39,7 @@ class LoginButton: UIButton {
     
     private let iconImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
+        $0.clipsToBounds = false
     }
     
     private let contentStack = UIStackView().then {
@@ -77,6 +78,10 @@ class LoginButton: UIButton {
         
         iconImageView.snp.makeConstraints { make in
             make.width.height.equalTo(20)
+        }
+        
+        textLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
         }
     }
     
