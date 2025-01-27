@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Then
 
 class BrowseView: UIView {
     
@@ -26,14 +27,12 @@ class BrowseView: UIView {
     // MARK: - Properties
     
     /// 게시물과 사용자 정보를 보여주는 둘러보기 CollectionView
-    public lazy var browseCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: createLayout()
-        )
-        collectionView.backgroundColor = .white
-        return collectionView
-    }()
+    public lazy var browseCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: createLayout()
+    ).then {
+        $0.backgroundColor = .white
+    }
     
     /// 검색바 헤더 뷰 추가
     public lazy var searchView: SearchView = SearchView()
@@ -55,7 +54,7 @@ class BrowseView: UIView {
     private func setupConstraints() {
         browseCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(
-                UIEdgeInsets(top: 120, left: 0, bottom: 50, right: 0)
+                UIEdgeInsets(top: 120, left: 0, bottom: 20, right: 0)
             )
         }
         searchView.snp.makeConstraints {
@@ -68,20 +67,11 @@ class BrowseView: UIView {
         let layout = UICollectionViewFlowLayout()
         
         // 열 개수 및 여백 설정
-        let numberOfColumns: CGFloat = 2 // 표시할 열의 개수
-        let horizontalSpacing: CGFloat = 30 // 열 간격
-        let sectionInsets = UIEdgeInsets(top: 10, left: 30, bottom: 10, right: 30) // 섹션 여백
+        let horizontalSpacing: CGFloat = 12 // 열 간격
+        let sectionInsets = UIEdgeInsets(top: 10, left: 21, bottom: 10, right: 21) // 섹션 여백
         
-        // 아이템 크기를 설정하기 위한 화면 너비에서 여백과 간격 계산
-        let totalHorizontalSpacing = sectionInsets.left // 10
-        + sectionInsets.right // 10
-        + (horizontalSpacing * (numberOfColumns - 1)) // 10 + 10 + 10
-        
-        // 아이템 크기 설정하기. 전체화면에서 여백을 뺀 나머지 크기 열로 나누기
-        let itemWidth = (UIScreen.main.bounds.width - totalHorizontalSpacing) / numberOfColumns
-        
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.5)
-        layout.minimumLineSpacing = 30 // 행 간격
+        layout.itemSize = CGSize(width: 160, height: 264) // 고정된 크기
+        layout.minimumLineSpacing = 13 // 행 간격
         layout.minimumInteritemSpacing = horizontalSpacing // 열 간격
         layout.sectionInset = sectionInsets
         
