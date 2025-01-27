@@ -37,6 +37,7 @@ class FindPasswordView: UIView {
     )
     
     private lazy var loginButton = LoginButton(
+        style: .textOnly,
         title: "인증 번호 보내기",
         backgroundColor: UIColor(named: "BluePrimary") ?? .systemBlue
     )

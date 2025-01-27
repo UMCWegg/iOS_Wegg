@@ -3,11 +3,17 @@
 - Code-Base: 스토리보드 대신 코드로 UI 구현.
 - Snapkit: AutoLayout을 코드로 간결하게 작성.
 - Then: 객체 초기화를 간결하게 작성.
+- Then: 객체 초기화를 간결하게 작성.
 - Alamofire: 네트워크 요청 및 데이터 처리.
+- Moya: RESTful API 네트워크 계층 관리.
 - Moya: RESTful API 네트워크 계층 관리.
 - SwiftLint: 코드 스타일 검사 도구.
 - NMapsMap: 네이버 지도 SDK.
+- NMapsMap: 네이버 지도 SDK.
 - SPM: 패키지 의존성 관리.
+- KakaoOpenSDK: 카카오 로그인 SDK.
+- GoogleSignIn: 구글 로그인 SDK.
+- Firebase: Firebase SDK. 구글 로그인에 사용.
 - KakaoOpenSDK: 카카오 로그인 SDK.
 - GoogleSignIn: 구글 로그인 SDK.
 - Firebase: Firebase SDK. 구글 로그인에 사용.

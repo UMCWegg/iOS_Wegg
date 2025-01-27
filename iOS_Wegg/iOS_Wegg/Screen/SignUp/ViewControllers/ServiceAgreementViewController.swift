@@ -9,10 +9,14 @@ import UIKit
 
 class ServiceAggrementViewController: UIViewController {
 
+    // MARK: - Properties
+    
+    private let serviceAgreementView = ServiceAggrementView()
+    
     // MARK: - Lifecycle
     
     override func loadView() {
-        <#code#>
+        view = serviceAgreementView
     }
     
     override func viewDidLoad() {

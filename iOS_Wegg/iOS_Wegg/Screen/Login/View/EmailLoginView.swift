@@ -8,15 +8,6 @@
 import UIKit
 
 class EmailLoginView: UIView {
-
-    // MARK: - Color
-    
-    private let textFieldColor = UIColor(named: "Login/TextField")
-    
-    // MARK: - Font
-    
-    private let labelFont = UIFont(name: "NotoSansKR-Regular", size: 13)
-    private let textFieldFont = UIFont(name: "NotoSansKR-Regular", size: 15)
     
     // MARK: - Init
     
@@ -72,6 +63,7 @@ class EmailLoginView: UIView {
     }
     
     let loginButton = LoginButton(
+        style: .textOnly,
         title: "로그인",
         backgroundColor: UIColor.customColor(.secondary)
     )
@@ -105,22 +97,7 @@ class EmailLoginView: UIView {
         backButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(70)
             make.leading.equalToSuperview().offset(17)
-        }
-        
-        mainLabel.snp.makeConstraints { make in
-            make.top.equalTo(backButton.snp.bottom).offset(22)
-            make.leading.equalTo(backButton)
-            make.width.equalTo(188)
-        }
-        
-        emailLabel.snp.makeConstraints { make in
-            make.top.equalTo(mainLabel.snp.bottom).offset(55)
-            make.leading.equalTo(backButton)
-        }
-        
-        backButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(70)
-            make.leading.equalToSuperview().offset(17)
+            make.width.equalTo(8)
         }
         
         mainLabel.snp.makeConstraints { make in
