@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Then
 
 /// 둘러보기 탭 커스텀셀 클래스
 class BrowseCell: UICollectionViewCell {
@@ -26,30 +27,24 @@ class BrowseCell: UICollectionViewCell {
     // MARK: - Properties
     
     /// 셀 프로필 이미지
-    public lazy var userProfile: UIImageView = {
-        let imageView = UIImageView()
-        imageView.layer.cornerRadius = 15
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
+    public lazy var userProfile = UIImageView().then {
+        $0.layer.cornerRadius = 15
+        $0.clipsToBounds = true
+        $0.contentMode = .scaleAspectFill
+    }
     
     /// 셀 닉네임 라벨
-    public lazy var nickNameLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .bold)
-        label.textColor = .black
-        return label
-    }()
+    public lazy var nickNameLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 14, weight: .bold)
+        $0.textColor = .black
+    }
     
     /// 셀 게시물 이미지
-    public lazy var postImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 15
-        return imageView
-    }()
+    public lazy var postImage = UIImageView().then {
+        $0.clipsToBounds = true
+        $0.contentMode = .scaleAspectFill
+        $0.layer.cornerRadius = 15
+    }
     
     // MARK: - Methods
     
@@ -62,23 +57,23 @@ class BrowseCell: UICollectionViewCell {
     
     /// 사용자 프로필, 닉네임, 게시물 제약 조건 설정
     private func setupConstraints() {
-        userProfile.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(1)
-            make.trailing.equalTo(nickNameLabel.snp.leading).offset(-10)
-            make.width.height.equalTo(30)
+        userProfile.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().offset(1)
+            $0.trailing.equalTo(nickNameLabel.snp.leading).offset(-10)
+            $0.width.height.equalTo(30)
         }
         
-        nickNameLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(userProfile)
-            make.leading.equalTo(userProfile.snp.trailing).offset(10)
-            make.trailing.equalToSuperview().offset(-8)
+        nickNameLabel.snp.makeConstraints {
+            $0.centerY.equalTo(userProfile)
+            $0.leading.equalTo(userProfile.snp.trailing).offset(10)
+            $0.trailing.equalToSuperview().offset(-8)
         }
         
-        postImage.snp.makeConstraints { make in
-            make.top.equalTo(userProfile.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+        postImage.snp.makeConstraints {
+            $0.top.equalTo(userProfile.snp.bottom).offset(8)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
     
