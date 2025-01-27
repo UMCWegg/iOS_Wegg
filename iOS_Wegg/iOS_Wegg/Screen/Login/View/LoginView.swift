@@ -27,7 +27,7 @@ class LoginView: UIView {
     // MARK: - Properties
     
     private let appIcon = UIImageView().then {
-        $0.image = UIImage(named: "Login/wegg_icon")
+        $0.image = UIImage(named: "wegg_icon")
     }
     
     internal let googleLoginButton = LoginButton(

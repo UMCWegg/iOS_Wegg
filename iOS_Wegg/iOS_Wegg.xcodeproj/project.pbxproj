@@ -34,6 +34,7 @@
 		DE0020DB2D420F0E003A273F /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020DA2D420F0E003A273F /* FirebaseCore */; };
 		DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020DC2D420F3B003A273F /* FirebaseFirestore */; };
 		DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = DE00212C2D433D7F003A273F /* NMapsMap */; };
+		DE85E38A2D47D8430055C78C /* BrowseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85E3892D47D8430055C78C /* BrowseItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DE85E3892D47D8430055C78C /* BrowseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -69,15 +71,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				.gitkeep,
-			);
-			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
-		};
-		0E98ED352D3E6CDE006F25EF /* Exceptions for "Utilities" folder in "iOS_Wegg" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Extensions/UIColor+extensions.swift",
-				"Extensions/UIFont+extensions.swift",
-				Formatters/DateFormatterUtility.swift,
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
@@ -123,29 +116,9 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BrowseItem;
-			sourceTree = "<group>";
-		};
-		FF3CBC922D3E43AF00006955 /* Time */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Time;
-			sourceTree = "<group>";
-		};
-		FF3CBC932D3E43B100006955 /* Home */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Home;
-			sourceTree = "<group>";
-		};
 		DE001E912D3BDF71003A273F /* Button */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Button;
-			sourceTree = "<group>";
-		};
-		FF3CBCA42D3E43F800006955 /* Browse */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Browse;
 			sourceTree = "<group>";
 		};
 		DE001EC22D3BF1B5003A273F /* TextField */ = {
@@ -153,14 +126,9 @@
 			path = TextField;
 			sourceTree = "<group>";
 		};
-		FF3CBCB32D3E444000006955 /* Map */ = {
+		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Map;
-			sourceTree = "<group>";
-		};
-		FF3CBCB42D3E447800006955 /* My */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = My;
+			path = BrowseItem;
 			sourceTree = "<group>";
 		};
 		FF3CBFAF2D41070000006955 /* PostModel */ = {
@@ -168,7 +136,6 @@
 			path = PostModel;
 			sourceTree = "<group>";
 		};
-
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +214,7 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DE85E3892D47D8430055C78C /* BrowseItem.swift */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
@@ -457,6 +425,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE85E38A2D47D8430055C78C /* BrowseItem.swift in Sources */,
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
 			);
