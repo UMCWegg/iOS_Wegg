@@ -69,6 +69,13 @@ class MapOverlayView: UIView {
             return search
         }
         
+        if let hotPlaceList = hotPlaceListButton.hitTest(
+            convert(point, to: hotPlaceListButton),
+            with: event
+        ) {
+            return hotPlaceList
+        }
+        
         // 지도 외의 터치 이벤트는 nil을 반환
         return nil
     }
@@ -79,6 +86,10 @@ class MapOverlayView: UIView {
     
     @objc private func handlePlaceSearchButton() {
         gestureDelegate?.didPlaceSearchButtonTapped()
+    }
+    
+    @objc private func handleHotPlaceListButton() {
+        gestureDelegate?.didHotPlaceListTapped()
     }
     
     // MARK: - Property
@@ -155,6 +166,13 @@ private extension MapOverlayView {
             action: #selector(handlePlaceSearchButton)
         )
         placeSearchButton.addGestureRecognizer(placeSearchButtonTapGesture)
+        
+        // UIButton의 addTarget으로 탭 제스처 설정
+        hotPlaceListButton.addTarget(
+            self,
+            action: #selector(handleHotPlaceListButton),
+            for: .touchUpInside
+        )
     }
     
     func addComponents() {
