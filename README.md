@@ -3,11 +3,17 @@
 - Code-Base: 스토리보드 대신 코드로 UI 구현.
 - Snapkit: AutoLayout을 코드로 간결하게 작성.
 - Then: 객체 초기화를 간결하게 작성.
+- Then: 객체 초기화를 간결하게 작성.
 - Alamofire: 네트워크 요청 및 데이터 처리.
+- Moya: RESTful API 네트워크 계층 관리.
 - Moya: RESTful API 네트워크 계층 관리.
 - SwiftLint: 코드 스타일 검사 도구.
 - NMapsMap: 네이버 지도 SDK.
+- NMapsMap: 네이버 지도 SDK.
 - SPM: 패키지 의존성 관리.
+- KakaoOpenSDK: 카카오 로그인 SDK.
+- GoogleSignIn: 구글 로그인 SDK.
+- Firebase: Firebase SDK. 구글 로그인에 사용.
 - KakaoOpenSDK: 카카오 로그인 SDK.
 - GoogleSignIn: 구글 로그인 SDK.
 - Firebase: Firebase SDK. 구글 로그인에 사용.
@@ -52,8 +58,8 @@ ex) feat: 로그인 화면 구현
 - fix: 버그 수정
 - refactor: 코드 개선
 - style: 스타일 변경 (기능 변화 없음)
-- test: 테스트 추가
 - docs: 문서 추가/수정
+- chore: 비기능적 변경 사항(빌드 설정 변경 등)
 
 ## 이슈 컨벤션
 ### 이슈 네이밍
@@ -62,6 +68,7 @@ ex) feat: 로그인 화면 구현
 - docs: 문서 작업
 - duplicate: PR 중복
 - refactor: 코드 리팩토링
+- chore: 비기능적 변경 사항(빌드 설정 변경 등)
 ### 이슈 템플릿
 - 작업 내용
 - 예상 소요 시간
@@ -85,3 +92,5 @@ ex) [feat]: 로그인 화면 구현
 - 16.2
 ### Swift 버전
 - 6.0.3
+### Minimum iOS Deployment Target
+- 16.0
