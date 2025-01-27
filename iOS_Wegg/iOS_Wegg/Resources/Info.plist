@@ -2,6 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>CFBundleURLTypes</key>
+	<array>
+    	<dict>
+        	<key>CFBundleURLSchemes</key>
+        	<array>
+            	<string>com.googleusercontent.apps.498161093152-ajp8av7ktm4gcakp3fqjkbutbehjuebl</string>
+        	</array>
+    	</dict>
+	</array>
+	<key>KAKAO_NATIVE_APP_KEY</key>
+	<string>${KAKAO_NATIVE_APP_KEY}</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>앱 사용 중에 위치를 활용합니다.</string>
     <key>NSLocationAlwaysUsageDescription</key>
@@ -13,8 +24,8 @@
 		<string>GmarketSansTTFBold.ttf</string>
 		<string>GmarketSansTTFLight.ttf</string>
 		<string>GmarketSansTTFMedium.ttf</string>
-        <string>NotoSansKR-Medium.ttf</string>
-        <string>NotoSansKR-Regular.ttf</string>
+		<string>NotoSansKR-Medium.ttf</string>
+		<string>NotoSansKR-Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

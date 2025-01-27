@@ -7,8 +7,6 @@
 
 import UIKit
 
-import Then
-
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
@@ -23,7 +21,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .primary
         setupActions()
         
     }
@@ -31,15 +29,30 @@ class LoginViewController: UIViewController {
     // MARK: - Setup
     
     private func setupActions() {
-        loginView.emailLoginButton.addTarget(
-            self,
-            action: #selector(emailLoginButtonTapped),
-            for: .touchUpInside)
+        loginView.googleLoginButton.addTarget(self,
+                                             action: #selector(googleLoginButtonTapped),
+                                             for: .touchUpInside)
+        
+        loginView.kakaoLoginButton.addTarget(self,
+                                             action: #selector(kakaoLoginButtonTapped),
+                                             for: .touchUpInside)
+        
+        loginView.emailLoginButton.addTarget(self,
+                                             action: #selector(emailLoginButtonTapped),
+                                             for: .touchUpInside)
     }
     
     // Navigation 추후 구현
     
     // MARK: - Actions
+    
+    @objc private func googleLoginButtonTapped() {
+        LoginManager.shared.login(type: .google, from: self)
+    }
+    
+    @objc private func kakaoLoginButtonTapped() {
+        LoginManager.shared.login(type: .kakao)
+    }
     
     @objc private func emailLoginButtonTapped() {
         let emailLoginVC = EmailLoginViewController()

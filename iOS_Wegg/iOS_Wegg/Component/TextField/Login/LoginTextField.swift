@@ -32,11 +32,16 @@ class LoginTextField: UITextField {
     // MARK: - Setup
     
     private func setupTextField(type: TextFieldType) {
-        backgroundColor = UIColor(named: "Login/TextField")
+        backgroundColor = .white
         font = UIFont(name: "NotoSansKR-Regular", size: 13)
+        layer.cornerRadius = 22
+        layer.borderWidth = 1
+        layer.borderColor = UIColor(red: 0.71, green: 0.71, blue: 0.71, alpha: 1).cgColor
+        
         autocapitalizationType = .none
         autocorrectionType = .no
-        heightAnchor.constraint(equalToConstant: 43).isActive = true
+        heightAnchor.constraint(equalToConstant: 44).isActive = true
+
         switch type {
         case .normal:
             break

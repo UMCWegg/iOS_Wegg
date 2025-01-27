@@ -27,22 +27,22 @@ class LoginView: UIView {
     // MARK: - Properties
     
     private let appIcon = UIImageView().then {
-        $0.image = UIImage(named: "Login/wegg_icon")
+        $0.image = UIImage(named: "wegg_icon")
     }
     
-    internal let naverLoginButton = LoginButton(
-        title: "네이버로 로그인",
-        backgroundColor: UIColor(hex: "03C75A") ?? .systemGreen
+    internal let googleLoginButton = LoginButton(
+        title: "구글로 로그인",
+        backgroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 1)
     )
         
     internal let kakaoLoginButton = LoginButton(
         title: "카카오로 로그인",
-        backgroundColor: UIColor(hex: "FEE500") ?? .systemYellow
+        backgroundColor: UIColor(red: 0.98, green: 0.886, blue: 0.012, alpha: 1)
     )
         
     internal let emailLoginButton = LoginButton(
         title: "다른 방법으로 로그인",
-        backgroundColor: UIColor(hex: "C7C7C7") ?? .systemGray
+        backgroundColor: UIColor(red: 0.78, green: 0.78, blue: 0.78, alpha: 1)
     )
 
     private let signUpButton = UIButton().then {
@@ -62,7 +62,7 @@ class LoginView: UIView {
     private func setupViews() {
         [
             appIcon,
-            naverLoginButton,
+            googleLoginButton,
             kakaoLoginButton,
             emailLoginButton,
             signUpButton
@@ -93,7 +93,7 @@ class LoginView: UIView {
             make.bottom.equalTo(emailLoginButton.snp.top).offset(-15)
         }
         
-        naverLoginButton.snp.makeConstraints { make in
+        googleLoginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.trailing.equalTo(emailLoginButton)
             make.bottom.equalTo(kakaoLoginButton.snp.top).offset(-15)

@@ -12,7 +12,11 @@ class EmailLoginView: UIView {
     // MARK: - Color
     
     private let textFieldColor = UIColor(named: "Login/TextField")
-    private let buttonColor = UIColor(named: "BluePrimary")
+    
+    // MARK: - Font
+    
+    private let labelFont = UIFont(name: "NotoSansKR-Regular", size: 13)
+    private let textFieldFont = UIFont(name: "NotoSansKR-Regular", size: 15)
     
     // MARK: - Init
     
@@ -28,14 +32,48 @@ class EmailLoginView: UIView {
     
     // MARK: - Properties
     
-    private lazy var emailTextField = LoginTextField(
-        placeholder: "  이메일",
+    private let backButton = UIButton().then {
+        $0.setImage(UIImage(named: "Login/BackButton"), for: .normal)
+    }
+    
+    private let mainLabel = UILabel().then {
+        $0.text = "이메일과 비밀번호를 입력해주세요"
+        $0.font = UIFont(name: "NotoSansKR-Medium", size: 22)
+        $0.textColor = .black
+        $0.textAlignment = .left
+        $0.numberOfLines = 0
+    }
+    
+    private lazy var emailLabel = UILabel().then {
+        $0.text = "이메일"
+        $0.font = labelFont
+        $0.textColor = textFieldColor
+    }
+    
+    private let emailTextField = LoginTextField(
+        placeholder: "  wegg@email.com",
         type: .email
     )
+    
+    private lazy var passwordLabel = UILabel().then {
+        $0.text = "비밀번호"
+        $0.font = labelFont
+        $0.textColor = textFieldColor
+    }
         
-    private lazy var passwordTextField = LoginTextField(
+    private let passwordTextField = LoginTextField(
         placeholder: "  비밀번호",
         type: .password
+    )
+    
+    let findPasswordButton = UIButton().then {
+        $0.setTitle("비밀번호를 잊으셨나요?", for: .normal)
+        $0.titleLabel?.font = UIFont(name: "NotoSansKR-Regular", size: 13)
+    }
+    
+    lazy var loginButton = LoginButton(
+        title: "로그인",
+        backgroundColor: UIColor(named: "YellowSecondary") ?? .systemYellow
     )
     
     var email: String? {
@@ -48,22 +86,15 @@ class EmailLoginView: UIView {
         set { passwordTextField.text = newValue }
     }
     
-    internal let findPasswordButton = UIButton().then {
-        $0.setTitle("비밀번호를 잊으셨나요?", for: .normal)
-        $0.setTitleColor(UIColor(hex: "C7C7C7"), for: .normal)
-        $0.titleLabel?.font = UIFont(name: "NotoSansKR-Regular", size: 13)
-    }
-    
-    private lazy var loginButton = LoginButton(
-        title: "로그인",
-        backgroundColor: buttonColor ?? .systemPurple
-    )
-    
     // MARK: - Setup
     
     private func setupViews() {
         [
+            backButton,
+            mainLabel,
+            emailLabel,
             emailTextField,
+            passwordLabel,
             passwordTextField,
             findPasswordButton,
             loginButton
@@ -72,23 +103,42 @@ class EmailLoginView: UIView {
     
     private func setupConstraints() {
         
+        backButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(70)
+            make.leading.equalToSuperview().offset(17)
+        }
+        
+        mainLabel.snp.makeConstraints { make in
+            make.top.equalTo(backButton.snp.bottom).offset(22)
+            make.leading.equalTo(backButton)
+            make.width.equalTo(188)
+        }
+        
+        emailLabel.snp.makeConstraints { make in
+            make.top.equalTo(mainLabel.snp.bottom).offset(55)
+            make.leading.equalTo(backButton)
+        }
+        
         emailTextField.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(64)
-            make.top.equalToSuperview().offset(332)
-            make.height.equalTo(43)
+            make.top.equalTo(emailLabel.snp.bottom).offset(9)
+            make.leading.equalTo(backButton)
+            make.trailing.equalToSuperview().offset(-17)
+        }
+        
+        passwordLabel.snp.makeConstraints { make in
+            make.top.equalTo(emailTextField.snp.bottom).offset(22)
+            make.leading.equalTo(backButton)
         }
         
         passwordTextField.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(64)
-            make.top.equalTo(emailTextField.snp.bottom).offset(24)
-            make.height.equalTo(43)
+            make.top.equalTo(passwordLabel.snp.bottom).offset(9)
+            make.leading.equalTo(backButton)
+            make.trailing.equalTo(emailTextField)
         }
         
         findPasswordButton.snp.makeConstraints { make in
-            make.trailing.equalTo(passwordTextField.snp.trailing)
-            make.top.equalTo(passwordTextField.snp.bottom).offset(8)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(10)
+            make.trailing.equalTo(emailTextField)
         }
         
         loginButton.snp.makeConstraints { make in
