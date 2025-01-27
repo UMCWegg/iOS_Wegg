@@ -20,12 +20,12 @@ extension UIColor {
         func color() -> UIColor {
             switch self {
             case .primary:
-                guard let color = UIColor(named: "BluePrimary") else {
+                guard let color = UIColor(named: "Primary") else {
                     return UIColor(red: 0.0, green: 0.6, blue: 1.0, alpha: 1.0) // 기본 파랑
                 }
                 return color
             case .secondary:
-                guard let color = UIColor(named: "YellowSecondary") else {
+                guard let color = UIColor(named: "Secondary") else {
                     return UIColor(red: 1.0, green: 0.8, blue: 0.0, alpha: 1.0) // 기본 노랑
                 }
                 return color
