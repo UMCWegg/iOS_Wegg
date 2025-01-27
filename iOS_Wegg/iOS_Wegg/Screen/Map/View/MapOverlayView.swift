@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
+/// MapOverlayViewLayout
 private struct OverlayLayout {
     struct CurrentLocation {
         static let leadingOffset: CGFloat = 327
@@ -88,6 +89,29 @@ class MapOverlayView: UIView {
     
     private lazy var placeSearchButton = createImageView(imageName: "map_search_icon")
     
+    private lazy var hotPlaceListButton = UIButton().then {
+        var config = UIButton.Configuration.filled() // 기본 스타일 설정
+        config.title = "목록 보기" // 텍스트 설정
+        var textTransformer = UIConfigurationTextAttributesTransformer { incoming in
+            var updated = incoming
+            updated.font = .gmarketSans(.medium, size: 15) // 커스텀 폰트 설정
+            updated.foregroundColor = .secondary // 텍스트 색상 설정
+            return updated
+        }
+        config.titleTextAttributesTransformer = textTransformer
+        config.image = UIImage(named: "map_list_icon")
+        config.imagePadding = 8
+        config.imagePlacement = .leading
+        config.baseBackgroundColor = .white
+        config.baseForegroundColor = .secondary
+        
+        // 버튼의 레이아웃 및 외곽선 스타일 설정
+        $0.configuration = config
+        $0.layer.cornerRadius = 24
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.secondary.cgColor
+    }
+    
     // MARK: UI 제작하는 함수
     
     /// UIImageView를 제작하는 함수
@@ -136,7 +160,8 @@ private extension MapOverlayView {
     func addComponents() {
         [
             currentLocationImageButton,
-            placeSearchButton
+            placeSearchButton,
+            hotPlaceListButton
         ].forEach {
             addSubview($0)
         }
@@ -165,6 +190,14 @@ private extension MapOverlayView {
             make.bottom.equalToSuperview().offset(
                 OverlayLayout.CurrentLocation.bottomOffset
             )
+        }
+        
+        hotPlaceListButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(140)
+            make.trailing.equalToSuperview().offset(-140)
+            make.bottom.equalToSuperview().offset(-21)
+            make.width.equalTo(100)
+            make.height.equalTo(43)
         }
     }
 }
