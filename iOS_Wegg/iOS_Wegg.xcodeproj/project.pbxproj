@@ -34,6 +34,7 @@
 		DE0020DB2D420F0E003A273F /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020DA2D420F0E003A273F /* FirebaseCore */; };
 		DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020DC2D420F3B003A273F /* FirebaseFirestore */; };
 		DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = DE00212C2D433D7F003A273F /* NMapsMap */; };
+		DE00217A2D439F3F003A273F /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */; };
 		DE85E38A2D47D8430055C78C /* BrowseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85E3892D47D8430055C78C /* BrowseItem.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
 		DE85E3892D47D8430055C78C /* BrowseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +73,14 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				.gitkeep,
+			);
+			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
+		};
+		DE0021782D4398A7003A273F /* Exceptions for "Utilities" folder in "iOS_Wegg" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Extensions/UIColor+extensions.swift",
+				"Extensions/UIFont+extensions.swift",
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
@@ -108,6 +118,9 @@
 		};
 		0E98EA3F2D2F979A006F25EF /* Utilities */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DE0021782D4398A7003A273F /* Exceptions for "Utilities" folder in "iOS_Wegg" target */,
+			);
 			path = Utilities;
 			sourceTree = "<group>";
 		};
@@ -128,7 +141,7 @@
 		};
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BrowseItem;
+			path = Button;
 			sourceTree = "<group>";
 		};
 		FF3CBFAF2D41070000006955 /* PostModel */ = {
@@ -279,6 +292,7 @@
 			children = (
 				0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */,
 				0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */,
+				DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */,
 			);
 			path = NotoSans;
 			sourceTree = "<group>";
@@ -393,6 +407,7 @@
 				0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */,
 				0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */,
 				DE0020D52D41EC0E003A273F /* GoogleService-Info.plist in Resources */,
+				DE00217A2D439F3F003A273F /* NotoSansKR-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

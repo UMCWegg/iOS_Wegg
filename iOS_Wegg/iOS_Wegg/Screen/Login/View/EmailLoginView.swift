@@ -38,16 +38,16 @@ class EmailLoginView: UIView {
     
     private let mainLabel = UILabel().then {
         $0.text = "이메일과 비밀번호를 입력해주세요"
-        $0.font = UIFont(name: "NotoSansKR-Medium", size: 22)
+        $0.font = UIFont.LoginFont.title
         $0.textColor = .black
         $0.textAlignment = .left
         $0.numberOfLines = 0
     }
     
-    private lazy var emailLabel = UILabel().then {
+    private let emailLabel = UILabel().then {
         $0.text = "이메일"
-        $0.font = labelFont
-        $0.textColor = textFieldColor
+        $0.font = UIFont.LoginFont.label
+        $0.textColor = UIColor.LoginColor.labelColor
     }
     
     private let emailTextField = LoginTextField(
@@ -55,10 +55,10 @@ class EmailLoginView: UIView {
         type: .email
     )
     
-    private lazy var passwordLabel = UILabel().then {
+    private let passwordLabel = UILabel().then {
         $0.text = "비밀번호"
-        $0.font = labelFont
-        $0.textColor = textFieldColor
+        $0.font = UIFont.LoginFont.label
+        $0.textColor = UIColor.LoginColor.labelColor
     }
         
     private let passwordTextField = LoginTextField(
@@ -68,12 +68,12 @@ class EmailLoginView: UIView {
     
     let findPasswordButton = UIButton().then {
         $0.setTitle("비밀번호를 잊으셨나요?", for: .normal)
-        $0.titleLabel?.font = UIFont(name: "NotoSansKR-Regular", size: 13)
+        $0.titleLabel?.font = UIFont.LoginFont.title
     }
     
-    lazy var loginButton = LoginButton(
+    let loginButton = LoginButton(
         title: "로그인",
-        backgroundColor: UIColor(named: "YellowSecondary") ?? .systemYellow
+        backgroundColor: UIColor.customColor(.secondary)
     )
     
     var email: String? {
@@ -102,6 +102,21 @@ class EmailLoginView: UIView {
     }
     
     private func setupConstraints() {
+        backButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(70)
+            make.leading.equalToSuperview().offset(17)
+        }
+        
+        mainLabel.snp.makeConstraints { make in
+            make.top.equalTo(backButton.snp.bottom).offset(22)
+            make.leading.equalTo(backButton)
+            make.width.equalTo(188)
+        }
+        
+        emailLabel.snp.makeConstraints { make in
+            make.top.equalTo(mainLabel.snp.bottom).offset(55)
+            make.leading.equalTo(backButton)
+        }
         
         backButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(70)
@@ -143,9 +158,7 @@ class EmailLoginView: UIView {
         
         loginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(17)
             make.bottom.equalToSuperview().offset(-40)
         }
     }
-    
 }
