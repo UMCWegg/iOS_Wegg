@@ -60,8 +60,8 @@ class LoginButton: UIButton {
     private func setupTextOnly(title: String) {
         let label = titleSetup(title: title)
         setTitle(label.text, for: .normal)
+        setTitleColor(label.textColor, for: .normal)
         titleLabel?.font = label.font
-        titleLabel?.textColor = label.textColor
     }
     
     private func setupIconText(title: String, image: UIImage) {
@@ -90,9 +90,11 @@ class LoginButton: UIButton {
         return UILabel().then {
             $0.text = title
             $0.font = UIFont.notoSans(.medium, size: 17)
-            $0.textColor = (backgroundColor == .black ||
-                           backgroundColor == UIColor.customColor(.secondary))
-                           ? .white : .black
+            $0.textColor = backgroundColor == UIColor.black ? .white : .black
+            
+            if backgroundColor == UIColor.customColor(.secondary) {
+                $0.textColor = .black
+            }
         }
     }
 }
