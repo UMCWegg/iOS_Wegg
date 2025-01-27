@@ -45,7 +45,7 @@ class LoginButton: UIButton {
     private let contentStack = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 10
-        $0.alignment = .fill
+        $0.alignment = .center
     }
     
     // MARK: - Setup
@@ -74,6 +74,7 @@ class LoginButton: UIButton {
         
         contentStack.snp.makeConstraints { make in
             make.center.equalToSuperview()
+            make.height.equalTo(40)
         }
         
         iconImageView.snp.makeConstraints { make in
