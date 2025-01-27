@@ -79,7 +79,17 @@ extension MapViewController: MapOverlayGestureDelegate {
     }
     
     func didHotPlaceListTapped() {
-        print("HotPlaceList Tapped")
+        lazy var bottomSheetVC = HotPlaceSheetViewController()
+        if let sheet = bottomSheetVC.sheetPresentationController {
+            // 바텀 시트 높이 설정
+            sheet.detents = [
+                .medium()
+            ]
+            sheet.prefersGrabberVisible = true // 상단 핸들 표시
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.largestUndimmedDetentIdentifier = .medium // 지도 뷰와 상호작용 가능
+        }
+        present(bottomSheetVC, animated: true, completion: nil)
     }
     
 }
