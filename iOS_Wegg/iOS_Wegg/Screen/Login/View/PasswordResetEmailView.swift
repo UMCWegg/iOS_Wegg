@@ -49,7 +49,7 @@ class PasswordResetEmailView: UIView {
     let loginButton = LoginButton(
         style: .textOnly,
         title: "인증 번호 보내기",
-        backgroundColor: UIColor.customColor(.secondary)
+        backgroundColor: UIColor.customColor(.primary)
     )
     
     // MARK: - Setup

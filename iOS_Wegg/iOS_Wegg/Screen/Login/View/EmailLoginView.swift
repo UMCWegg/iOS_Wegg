@@ -65,7 +65,7 @@ class EmailLoginView: UIView {
     let loginButton = LoginButton(
         style: .textOnly,
         title: "로그인",
-        backgroundColor: UIColor.customColor(.secondary)
+        backgroundColor: .primary
     )
     
     var email: String? {

@@ -59,7 +59,7 @@ class PasswordResetVerificationView: UIView {
     let loginButton = LoginButton(
         style: .textOnly,
         title: "확인",
-        backgroundColor: UIColor.customColor(.secondary)
+        backgroundColor: UIColor.customColor(.primary)
     )
     
     // MARK: - Setup
