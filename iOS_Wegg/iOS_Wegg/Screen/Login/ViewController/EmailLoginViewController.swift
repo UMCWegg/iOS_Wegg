@@ -25,7 +25,7 @@ class EmailLoginViewController: UIViewController {
         setupActions()
     }
     
-    // MARK: - Setup이렇게
+    // MARK: - Setup
     
     private func setupActions() {
         emailLoginView.loginButton.addTarget(self,
