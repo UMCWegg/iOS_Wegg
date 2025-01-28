@@ -53,7 +53,7 @@ class EmailLoginView: UIView {
     }
         
     private let passwordTextField = LoginTextField(
-        placeholder: "  비밀번호",
+        placeholder: "  6자 이상의 비밀번호",
         type: .password
     )
     
