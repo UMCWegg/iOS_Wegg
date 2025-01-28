@@ -521,9 +521,11 @@
 				DEVELOPMENT_TEAM = 6H8Y6F23HB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용 중에 위치를 활용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -552,9 +554,11 @@
 				DEVELOPMENT_TEAM = 6H8Y6F23HB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용 중에 위치를 활용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
