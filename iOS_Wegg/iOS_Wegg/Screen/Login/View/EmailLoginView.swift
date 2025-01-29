@@ -24,7 +24,7 @@ class EmailLoginView: UIView {
     // MARK: - Properties
     
     private let backButton = UIButton().then {
-        $0.setImage(UIImage(named: "Login/BackButton"), for: .normal)
+        $0.setImage(UIImage(named: "BackButton"), for: .normal)
     }
     
     private let mainLabel = UILabel().then {
