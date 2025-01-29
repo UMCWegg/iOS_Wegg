@@ -24,12 +24,13 @@ class HotPlaceCell: UICollectionViewCell {
     
     // MARK: - Property
     
-    lazy var imageView = UIImageView().then {
+    private lazy var imageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.clipsToBounds = true
+        $0.layer.cornerRadius = 12
     }
     
-    public func configure(model: HotPlaceModel) {
+    public func configure(model: HotPlaceImageModel) {
         imageView.image = UIImage(named: model.imageName)
     }
     

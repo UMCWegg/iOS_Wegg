@@ -9,7 +9,7 @@ import UIKit
 import Then
 
 class HotPlaceSheetViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = hotPlaceView
@@ -24,33 +24,41 @@ class HotPlaceSheetViewController: UIViewController {
 extension HotPlaceSheetViewController:
     UICollectionViewDelegateFlowLayout,
     UICollectionViewDataSource {
+    
+    /// 섹션 갯수
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return HotPlaceSectionModel.sampleSections.count
+    }
+    
+    /// 셀 아이템 갯수
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return HotPlaceModel.sampleData.count
+        return HotPlaceSectionModel.sampleSections[section].items.count
     }
     
+    /// 셀 아이템 데이터 설정
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        switch indexPath.section {
-        case 0:
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: HotPlaceCell.identifier,
-                for: indexPath
-            ) as? HotPlaceCell else {
-                return UICollectionViewCell()
-            }
-            
-            let data = HotPlaceModel.sampleData
-            cell.configure(model: data[indexPath.row])
-            
-            return cell
-        default:
-            return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: HotPlaceCell.identifier,
+            for: indexPath
+        ) as? HotPlaceCell else {
+            fatalError("Could not dequeue HotPlaceCell")
         }
+        
+        // 데이터 접근 시 범위 확인
+        let section = HotPlaceSectionModel.sampleSections[indexPath.section]
+        guard indexPath.row < section.items.count else {
+            fatalError("Index out of range for section items")
+        }
+        let data = section.items[indexPath.row]
+        cell.configure(model: data)
+        
+        return cell
     }
     
     /// 컬렉션 뷰의 행 사이 간격 설정
@@ -70,14 +78,20 @@ extension HotPlaceSheetViewController:
     ) -> CGFloat {
         return 0
     }
+    
+    /// 아이템 선택시 발생하는 이벤트 함수
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        if indexPath.section == 0 && indexPath.item == 0 {
+            print("이미지 컬렉션뷰 탭")
+        }
+    }
 }
 
 extension HotPlaceSheetViewController {
-    /// 섹션 갯수
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
+    /// 셀 헤더 데이터 설정
     func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
@@ -95,9 +109,8 @@ extension HotPlaceSheetViewController {
                 )
             }
             
-            // Configure header with data if needed
-            let headerData = HotPlaceHeaderModel.sampleDate[indexPath.section]
-            header.configure(model: headerData)
+            let section = HotPlaceSectionModel.sampleSections[indexPath.section]
+            header.configure(model: section.header)
             
             return header
         default:
@@ -113,12 +126,4 @@ extension HotPlaceSheetViewController {
         return CGSize(width: collectionView.bounds.width, height: 50) // 적절한 크기 설정
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-        if indexPath.section == 0 && indexPath.item == 0 {
-          print("이미지 컬렉션뷰 탭")
-        }
-      }
 }

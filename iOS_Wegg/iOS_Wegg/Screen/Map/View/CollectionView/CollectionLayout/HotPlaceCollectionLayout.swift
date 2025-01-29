@@ -11,12 +11,10 @@ class HotPlaceCollectionLayout {
     /// 컬렉션뷰가 가지는 레이아웃 지정
     static func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (section, _) -> NSCollectionLayoutSection? in
-            switch section {
-            case 0:
-                return createPlaceSection()
-            default:
+            guard section < HotPlaceSectionModel.sampleSections.count else {
                 return nil
             }
+            return createPlaceSection()
         }
     }
     

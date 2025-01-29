@@ -137,9 +137,9 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		0EAFD7862D49AB1600E96CB0 /* HotModel */ = {
+		0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = HotModel;
+			path = HotPlaceModel;
 			sourceTree = "<group>";
 		};
 		DE001E912D3BDF71003A273F /* Button */ = {
@@ -273,7 +273,7 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0EAFD7862D49AB1600E96CB0 /* HotModel */,
+				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
@@ -373,7 +373,7 @@
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
-				0EAFD7862D49AB1600E96CB0 /* HotModel */,
+				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE85E2742D4623BB0055C78C /* Browse */,
