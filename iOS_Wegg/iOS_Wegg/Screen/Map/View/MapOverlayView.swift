@@ -101,12 +101,12 @@ class MapOverlayView: UIView {
     private lazy var placeSearchButton = createImageView(imageName: "map_search_icon")
     
     private lazy var hotPlaceListButton = UIButton().then {
-        var config = UIButton.Configuration.filled() // 기본 스타일 설정
-        config.title = "목록 보기" // 텍스트 설정
+        var config = UIButton.Configuration.filled()
+        config.title = "목록 보기"
         var textTransformer = UIConfigurationTextAttributesTransformer { incoming in
             var updated = incoming
-            updated.font = .gmarketSans(.medium, size: 15) // 커스텀 폰트 설정
-            updated.foregroundColor = .secondary // 텍스트 색상 설정
+            updated.font = .gmarketSans(.medium, size: 15)
+            updated.foregroundColor = .secondary
             return updated
         }
         config.titleTextAttributesTransformer = textTransformer
@@ -115,6 +115,13 @@ class MapOverlayView: UIView {
         config.imagePlacement = .leading
         config.baseBackgroundColor = .white
         config.baseForegroundColor = .secondary
+        
+        config.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: 0,
+            bottom: 0,
+            trailing: 0
+        )
         
         // 버튼의 레이아웃 및 외곽선 스타일 설정
         $0.configuration = config
@@ -134,7 +141,7 @@ class MapOverlayView: UIView {
     /// - Returns: 설정된 `UIImageView` 인스턴스 반환
     private func createImageView(
         imageName: String,
-        contentMode: UIView.ContentMode = .scaleAspectFit,
+        contentMode: UIView.ContentMode = .scaleAspectFill,
         isUserInteractionEnabled: Bool = true
     ) -> UIImageView {
         let imageView = UIImageView()
@@ -208,14 +215,16 @@ private extension MapOverlayView {
             make.bottom.equalToSuperview().offset(
                 OverlayLayout.CurrentLocation.bottomOffset
             )
+            make.width.height.equalTo(42)
         }
         
         hotPlaceListButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(140)
-            make.trailing.equalToSuperview().offset(-140)
+            // leading, trailing 동시에 지정하면 width 지정 불가능.
+            // 따라서 centerX 사용
+            make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-21)
-            make.width.equalTo(100)
-            make.height.equalTo(43)
+            make.width.equalTo(120)
+            make.height.equalTo(46)
         }
     }
 }
