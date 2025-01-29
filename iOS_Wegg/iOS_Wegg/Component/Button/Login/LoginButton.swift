@@ -53,6 +53,12 @@ class LoginButton: UIButton {
     private func setupCommon(backgroundColor: UIColor) {
         self.backgroundColor = backgroundColor
         layer.cornerRadius = 26.5
+        
+        if backgroundColor == .primary {
+            layer.borderWidth = 1
+            layer.borderColor = UIColor.black.cgColor
+        }
+        
         heightAnchor.constraint(equalToConstant: 53).isActive = true
         widthAnchor.constraint(equalToConstant: 348).isActive = true
     }
@@ -92,7 +98,7 @@ class LoginButton: UIButton {
             $0.font = UIFont.notoSans(.medium, size: 17)
             $0.textColor = backgroundColor == UIColor.black ? .white : .black
             
-            if backgroundColor == UIColor.customColor(.secondary) {
+            if backgroundColor == .primary {
                 $0.textColor = .black
             }
         }
