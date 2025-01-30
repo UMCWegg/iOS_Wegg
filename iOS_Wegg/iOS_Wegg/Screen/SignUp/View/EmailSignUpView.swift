@@ -29,7 +29,7 @@ class EmailSignUpView: UIView {
     }
     
     private let mainLabel = UILabel().then {
-        $0.text = "이메일과 비밀번호를 입력해주세요"
+        $0.text = "이메일과 비밀번호를/n입력해주세요"
         $0.font = UIFont.LoginFont.title
         $0.textColor = .black
         $0.textAlignment = .left
@@ -111,7 +111,6 @@ class EmailSignUpView: UIView {
         mainLabel.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(22)
             make.leading.equalTo(backButton)
-            make.width.equalTo(188)
         }
     
         signUpButton.snp.makeConstraints { make in
