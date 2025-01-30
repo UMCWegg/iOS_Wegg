@@ -38,7 +38,7 @@ class DropdownButton: UIButton {
     private let arrowImage = UIImageView().then {
         $0.image = UIImage(systemName: "chevron.down")
         $0.tintColor = .black
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
     }
     
     private let occupationLabel = UILabel().then {
@@ -52,7 +52,7 @@ class DropdownButton: UIButton {
         backgroundColor = .white
         layer.borderWidth = 1
         layer.borderColor = UIColor.LoginColor.labelColor?.cgColor
-        layer.cornerRadius = 23
+        layer.cornerRadius = 22
         
         addSubview(occupationLabel)
         addSubview(arrowImage)
@@ -66,7 +66,7 @@ class DropdownButton: UIButton {
         arrowImage.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().offset(-15)
-            make.width.height.equalTo(15)
+            make.width.height.equalTo(16)
         }
         
         snp.makeConstraints { make in
@@ -84,11 +84,13 @@ class DropdownButton: UIButton {
             $0.delegate = self
             $0.dataSource = self
             $0.register(UITableViewCell.self, forCellReuseIdentifier: "DropdownCell")
-            $0.layer.cornerRadius = 23
+            $0.layer.cornerRadius = 22
             $0.layer.borderWidth = 1
             $0.layer.borderColor = UIColor.LoginColor.labelColor?.cgColor
             $0.backgroundColor = backgroundColor
-            $0.separatorInset = .zero
+            $0.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+            $0.separatorColor = .black
+            $0.layoutMargins.left = 15
             $0.showsVerticalScrollIndicator = false
         }
         
@@ -97,7 +99,7 @@ class DropdownButton: UIButton {
         let globalPoint = convert(bounds, to: window)
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(globalPoint.maxY + 5)
+            make.top.equalTo(globalPoint.minY)
             make.leading.equalTo(globalPoint.minX)
             make.width.equalTo(bounds.width)
             make.height.equalTo(CGFloat(options.count * buttonHeight))
@@ -144,11 +146,12 @@ extension DropdownButton: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DropdownCell", for: indexPath)
-        var content = cell.defaultContentConfiguration()
-        content.text = options[indexPath.row]
-        content.textProperties.font = UIFont.LoginFont.textField ?? .systemFont(ofSize: 15)
-        cell.contentConfiguration = content
+        
+        cell.textLabel?.text = options[indexPath.row]
+        cell.textLabel?.font = UIFont.LoginFont.textField
         cell.backgroundColor = .white
+        cell.selectionStyle = .none
+        
         return cell
     }
     
