@@ -1,13 +1,13 @@
 //
-//  NameInputView.swift
+//  NickNameInputView.swift
 //  iOS_Wegg
 //
-//  Created by 이건수 on 2025.01.30.
+//  Created by 이건수 on 2025.01.31.
 //
 
 import UIKit
 
-class NameInputView: UIView {
+class NickNameInputView: UIView {
 
     // MARK: - Init
     
@@ -27,20 +27,26 @@ class NameInputView: UIView {
         $0.setImage(UIImage(named: "BackButton"), for: .normal)
     }
     
-    private let mainLabel = UILabel().then {
-        $0.text = "성함이 어떻게 되시나요?"
+    private let topMainLabel = UILabel().then {
+        $0.text = "'위그'님,"
         $0.font = UIFont.LoginFont.title
         $0.textColor = .black
     }
     
-    private let nameLabel = UILabel().then {
-        $0.text = "이름"
+    private let bottomMainLabel = UILabel().then {
+        $0.text = "나만의 아이디를 만들어보세요!"
+        $0.font = UIFont.LoginFont.title
+        $0.textColor = .black
+    }
+    
+    private let nickNameLabel = UILabel().then {
+        $0.text = "아이디"
         $0.font = UIFont.LoginFont.label
         $0.textColor = UIColor.LoginColor.labelColor
     }
     
-    let nameTextField = UITextField().then {
-        $0.placeholder = "위그"
+    let nickNameTextField = UITextField().then {
+        $0.placeholder = "weggy"
         $0.font = UIFont.notoSans(.regular, size: 24)
         $0.textColor = .black
     }
@@ -60,9 +66,10 @@ class NameInputView: UIView {
     private func setupViews() {
         [
             backButton,
-            mainLabel,
-            nameLabel,
-            nameTextField,
+            topMainLabel,
+            bottomMainLabel,
+            nickNameLabel,
+            nickNameTextField,
             underLine,
             nextButton
         ].forEach { addSubview($0) }
@@ -75,25 +82,30 @@ class NameInputView: UIView {
             make.width.equalTo(8)
         }
         
-        mainLabel.snp.makeConstraints { make in
+        topMainLabel.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(22)
             make.leading.equalTo(backButton)
         }
         
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(mainLabel.snp.bottom).offset(81)
+        bottomMainLabel.snp.makeConstraints { make in
+            make.top.equalTo(topMainLabel.snp.bottom)
             make.leading.equalTo(backButton)
         }
         
-        nameTextField.snp.makeConstraints { make in
+        nickNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(bottomMainLabel.snp.bottom).offset(55)
+            make.leading.equalTo(backButton)
+        }
+        
+        nickNameTextField.snp.makeConstraints { make in
             make.height.equalTo(40)
             make.leading.equalTo(backButton)
-            make.top.equalTo(nameLabel.snp.bottom).offset(18)
+            make.top.equalTo(nickNameLabel.snp.bottom).offset(18)
             make.centerX.equalToSuperview()
         }
         
         underLine.snp.makeConstraints { make in
-            make.top.equalTo(nameTextField.snp.bottom).offset(6)
+            make.top.equalTo(nickNameTextField.snp.bottom).offset(6)
             make.height.equalTo(1)
             make.centerX.equalToSuperview()
             make.leading.equalTo(backButton)
