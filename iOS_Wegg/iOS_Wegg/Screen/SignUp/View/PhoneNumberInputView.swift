@@ -34,6 +34,7 @@ class PhoneNumberInputView: UIView {
     private let topStack = UIStackView().then {
         $0.axis = .horizontal
         $0.alignment = .fill
+        $0.spacing = 0
     }
     
     private let topMainLabel = UILabel().then {
@@ -55,11 +56,6 @@ class PhoneNumberInputView: UIView {
         $0.textAlignment = .left
         $0.numberOfLines = 0
         
-    }
-    
-    private let titleStack = UIStackView().then {
-        $0.axis = .vertical
-        $0.alignment = .center
     }
     
     private let numberLabel = UILabel().then {
@@ -96,7 +92,6 @@ class PhoneNumberInputView: UIView {
     }
     
     let underLine = UIView().then {
-        $0.heightAnchor.constraint(equalToConstant: 1).isActive = true
         $0.backgroundColor = UIColor.LoginColor.labelColor
     }
     
@@ -111,17 +106,19 @@ class PhoneNumberInputView: UIView {
     private func setupViews() {
         [topMainLabel, weggyImage].forEach { topStack.addArrangedSubview($0) }
         
-        [topStack, bottomMainLabel].forEach { titleStack.addArrangedSubview($0) }
-        
         [
             firstTextField,
             secondTextField,
             thirdTextField
-        ].forEach { textFieldStack.addArrangedSubview($0) }
+        ].forEach {
+            textFieldStack.addArrangedSubview($0)
+            $0.borderStyle = .none
+        }
         
         [
             backButton,
-            titleStack,
+            topStack,
+            bottomMainLabel,
             numberLabel,
             textFieldStack,
             underLine,
@@ -136,29 +133,54 @@ class PhoneNumberInputView: UIView {
             make.width.equalTo(8)
         }
         
-        titleStack.snp.makeConstraints { make in
-            make.top.equalTo(backButton.snp.bottom).offset(22)
+        topStack.snp.makeConstraints { make in
+                make.top.equalTo(backButton.snp.bottom).offset(22)
+                make.leading.equalTo(backButton)
+            }
+            
+        bottomMainLabel.snp.makeConstraints { make in
+            make.top.equalTo(topStack.snp.bottom)
             make.leading.equalTo(backButton)
         }
         
         numberLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleStack.snp.bottom).offset(50)
+            make.top.equalTo(bottomMainLabel.snp.bottom).offset(50)
             make.leading.equalTo(backButton)
         }
         
         textFieldStack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(numberLabel.snp.bottom).offset(18)
+            make.height.equalTo(30)
+            make.leading.equalTo(backButton.snp.leading).offset(46)
         }
         
+        setupTextFieldConstraints()
+        
         underLine.snp.makeConstraints { make in
+            make.top.equalTo(textFieldStack.snp.bottom).offset(6)
             make.centerX.equalToSuperview()
             make.leading.equalTo(backButton)
+            make.height.equalTo(1)
         }
         
         sendVerificationButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-40)
+        }
+    }
+    
+    private func setupTextFieldConstraints() {
+        firstTextField.snp.makeConstraints { make in
+            make.width.equalTo(40)
+        }
+        
+        secondTextField.snp.makeConstraints { make in
+            make.width.equalTo(60)
+        }
+        
+        thirdTextField.snp.makeConstraints { make in
+            make.width.equalTo(60)
         }
     }
 
