@@ -15,7 +15,7 @@ class HotPlaceSheetViewController: UIViewController {
         view = hotPlaceView
     }
     
-    private lazy var hotPlaceView = HotPlaceSheetView().then {
+    lazy var hotPlaceView = HotPlaceSheetView().then {
         $0.hotPlaceCollectionView.delegate = self
         $0.hotPlaceCollectionView.dataSource = self
     }

@@ -69,13 +69,6 @@ class MapOverlayView: UIView {
             return search
         }
         
-        if let hotPlaceList = hotPlaceListButton.hitTest(
-            convert(point, to: hotPlaceListButton),
-            with: event
-        ) {
-            return hotPlaceList
-        }
-        
         // 지도 외의 터치 이벤트는 nil을 반환
         return nil
     }
@@ -88,10 +81,6 @@ class MapOverlayView: UIView {
         gestureDelegate?.didPlaceSearchButtonTapped()
     }
     
-    @objc private func handleHotPlaceListButton() {
-        gestureDelegate?.didHotPlaceListTapped()
-    }
-    
     // MARK: - Property
     
     private lazy var currentLocationImageButton = createImageView(
@@ -99,36 +88,6 @@ class MapOverlayView: UIView {
     )
     
     private lazy var placeSearchButton = createImageView(imageName: "map_search_icon")
-    
-    private lazy var hotPlaceListButton = UIButton().then {
-        var config = UIButton.Configuration.filled()
-        config.title = "목록 보기"
-        var textTransformer = UIConfigurationTextAttributesTransformer { incoming in
-            var updated = incoming
-            updated.font = .gmarketSans(.medium, size: 15)
-            updated.foregroundColor = .secondary
-            return updated
-        }
-        config.titleTextAttributesTransformer = textTransformer
-        config.image = UIImage(named: "map_list_icon")
-        config.imagePadding = 8
-        config.imagePlacement = .leading
-        config.baseBackgroundColor = .white
-        config.baseForegroundColor = .secondary
-        
-        config.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 0,
-            bottom: 0,
-            trailing: 0
-        )
-        
-        // 버튼의 레이아웃 및 외곽선 스타일 설정
-        $0.configuration = config
-        $0.layer.cornerRadius = 24
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.secondary.cgColor
-    }
     
     // MARK: UI 제작하는 함수
     
@@ -173,20 +132,12 @@ private extension MapOverlayView {
             action: #selector(handlePlaceSearchButton)
         )
         placeSearchButton.addGestureRecognizer(placeSearchButtonTapGesture)
-        
-        // UIButton의 addTarget으로 탭 제스처 설정
-        hotPlaceListButton.addTarget(
-            self,
-            action: #selector(handleHotPlaceListButton),
-            for: .touchUpInside
-        )
     }
     
     func addComponents() {
         [
             currentLocationImageButton,
-            placeSearchButton,
-            hotPlaceListButton
+            placeSearchButton
         ].forEach {
             addSubview($0)
         }
@@ -216,15 +167,6 @@ private extension MapOverlayView {
                 OverlayLayout.CurrentLocation.bottomOffset
             )
             make.width.height.equalTo(42)
-        }
-        
-        hotPlaceListButton.snp.makeConstraints { make in
-            // leading, trailing 동시에 지정하면 width 지정 불가능.
-            // 따라서 centerX 사용
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-21)
-            make.width.equalTo(120)
-            make.height.equalTo(46)
         }
     }
 }

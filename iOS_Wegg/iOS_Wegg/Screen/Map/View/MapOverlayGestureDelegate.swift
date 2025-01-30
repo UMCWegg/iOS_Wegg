@@ -15,5 +15,4 @@ import Foundation
 protocol MapOverlayGestureDelegate: AnyObject {
     func didDetectOnLocationButtonTapped()
     func didPlaceSearchButtonTapped()
-    func didHotPlaceListTapped()
 }

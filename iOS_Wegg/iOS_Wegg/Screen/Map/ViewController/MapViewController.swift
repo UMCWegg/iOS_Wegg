@@ -6,10 +6,31 @@
 //
 
 import UIKit
+import FloatingPanel
 
-class MapViewController: UIViewController {
+class MyFloatingPanelLayout: FloatingPanelLayout {
+    let position: FloatingPanelPosition = .bottom
+    let initialState: FloatingPanelState = .tip
+    
+    let anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] = [
+        .full: FloatingPanelLayoutAnchor(
+            absoluteInset: 16.0, edge: .top, referenceGuide: .safeArea
+        ),
+        .half: FloatingPanelLayoutAnchor(
+            fractionalInset: 0.5, edge: .bottom, referenceGuide: .safeArea
+        ),
+        .tip: FloatingPanelLayoutAnchor(
+            absoluteInset: 93,
+            edge: .bottom,
+            referenceGuide: .safeArea
+        )
+    ]
+}
+
+class MapViewController: UIViewController, FloatingPanelControllerDelegate {
     private let mapManager: MapManagerProtocol
     private let overlayView = MapOverlayView()
+    private var fpc: FloatingPanelController?
     
     /// 의존성 주입
     init(mapManager: MapManagerProtocol) {
@@ -40,6 +61,7 @@ class MapViewController: UIViewController {
         setupMap()
         setupMapManagerGestures()
         setupOverlayView()
+        setupFloatingPanel()
     }
     
     // MARK: - Set Up
@@ -64,6 +86,24 @@ class MapViewController: UIViewController {
             print("롱탭한 위치: \(latlng.latitude), \(latlng.longitude)")
         }
     }
+    
+    private func setupFloatingPanel() {
+        fpc = FloatingPanelController()
+        guard let fpc = fpc else { return }
+        fpc.delegate = self
+        
+        let hotPlaceSheetVC = HotPlaceSheetViewController()
+        fpc.set(contentViewController: hotPlaceSheetVC)
+        fpc.track(scrollView: hotPlaceSheetVC.hotPlaceView.hotPlaceCollectionView)
+        //        fpc.isRemovalInteractionEnabled = true
+        fpc.layout = MyFloatingPanelLayout()
+        
+        fpc.surfaceView.appearance.cornerRadius = 25
+        fpc.surfaceView.appearance.borderWidth = 1
+        fpc.surfaceView.appearance.borderColor = .secondary
+        
+        fpc.addPanel(toParent: self)
+    }
 }
 
 // MARK: MapOverlayGestureDelegate
@@ -76,20 +116,6 @@ extension MapViewController: MapOverlayGestureDelegate {
     
     func didPlaceSearchButtonTapped() {
         print("Search Button Tapped")
-    }
-    
-    func didHotPlaceListTapped() {
-        lazy var bottomSheetVC = HotPlaceSheetViewController()
-        if let sheet = bottomSheetVC.sheetPresentationController {
-            // 바텀 시트 높이 설정
-            sheet.detents = [
-                .medium()
-            ]
-            sheet.prefersGrabberVisible = true // 상단 핸들 표시
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.largestUndimmedDetentIdentifier = .medium // 지도 뷰와 상호작용 가능
-        }
-        present(bottomSheetVC, animated: true, completion: nil)
     }
     
 }

@@ -25,6 +25,7 @@ class HotPlaceSheetView: UIView {
         frame: bounds,
         collectionViewLayout: HotPlaceCollectionLayout.createCompositionalLayout()
     ).then {
+        $0.backgroundColor = .white
         $0.register(
             HotPlaceCellHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
