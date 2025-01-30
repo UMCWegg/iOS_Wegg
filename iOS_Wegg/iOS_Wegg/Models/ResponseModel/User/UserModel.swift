@@ -12,7 +12,7 @@ struct BaseUser: Codable {
     let marketingAgree: Bool
     let accountID: String
     let occupation: UserOccupation?
-    let reason: String?
+    let reason: UserReason?
     let contact: [Contact]
     let alarm: Bool
     
