@@ -1,5 +1,5 @@
 //
-//  OccupationInputViewController.swift
+//  ReasonInputViewController.swift
 //  iOS_Wegg
 //
 //  Created by 이건수 on 2025.01.31.
@@ -7,35 +7,34 @@
 
 import UIKit
 
-class OccupationInputViewController: UIViewController {
+class ReasonInputViewController: UIViewController {
 
     // MARK: - Properties
     
-    private let occupationInputView = OccupationInputView()
+    private let reasonInputView = ReasonInputView()
     
     // MARK: - Lifecycle
     
     override func loadView() {
-        view = occupationInputView
+        view = reasonInputView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupActions()
     }
     
     // MARK: - Setup
     
     private func setupActions() {
-        occupationInputView.backButton.addTarget(
+        reasonInputView.backButton.addTarget(
             self,
             action: #selector(backButtonTapped),
             for: .touchUpInside
         )
         
-        occupationInputView.occupationDropdown.didSelectOption = { [weak self] selectedOption in
-            self?.handleOccupationSelection(selectedOption)
+        reasonInputView.reasonDropdown.didSelectOption = { [weak self] selectedOption in
+            self?.handlereasonSelection(selectedOption)
         }
     }
     
@@ -45,23 +44,20 @@ class OccupationInputViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    private func handleOccupationSelection(_ occupation: String) {
-        guard let occupationType = UserOccupation(rawValue: occupation) else { return }
+    private func handlereasonSelection(_ reason: String) {
+        guard let reasonType = UserReason(rawValue: reason) else { return }
         
-        switch occupationType {
-        case .employee:
+        switch reasonType {
+        case .formHabits:
             
             break
-        case .university:
+        case .followFriends:
             
             break
-        case .elementary:
+        case .recordStudy:
             
             break
-        case .secondary:
-            
-            break
-        case .unemployed:
+        case .shareKnowledge:
             
             break
         case .other:
