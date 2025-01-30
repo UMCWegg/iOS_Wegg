@@ -24,7 +24,8 @@ class PhoneNumberVerificationView: UIView {
     // MARK: - Properties
     
     private let backButton = UIButton().then {
-        $0.setImage(UIImage(named: "BackButton"), for: .normal)
+        $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        $0.tintColor = .black
     }
     
     private let mainLabel = UILabel().then {

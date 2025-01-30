@@ -28,7 +28,8 @@ class PhoneNumberInputView: UIView {
     // MARK: - Properties
     
     let backButton = UIButton().then {
-        $0.setImage(UIImage(named: "BackButton"), for: .normal)
+        $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        $0.tintColor = .black
     }
     
     private let topStack = UIStackView().then {
