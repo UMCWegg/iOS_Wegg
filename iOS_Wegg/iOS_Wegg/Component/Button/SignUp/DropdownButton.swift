@@ -15,6 +15,7 @@ class DropdownButton: UIButton {
     // MARK: - Design Component
     
     private let buttonHeight = 44
+    var didSelectOption: ((String) -> Void)?
     
     // MARK: - Init
     
@@ -155,5 +156,6 @@ extension DropdownButton: UITableViewDelegate, UITableViewDataSource {
         let selectedOption = options[indexPath.row]
         occupationLabel.text = selectedOption
         hideDropdown()
+        didSelectOption?(selectedOption)
     }
 }
