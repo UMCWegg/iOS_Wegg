@@ -23,7 +23,11 @@ class PostDetailView: UIView {
     }
     
     // MARK: - Properties
+    
+    /// 팝업창 프로퍼티
     private lazy var emojiPopupView = EmojiPopupView()
+    private lazy var plusEmojiView = PlusEmojiView()
+    
     private let postImageSize: CGFloat = 43 // 유지보수를 위한 상수 정의
     private let space: CGFloat = 23 // 레이아웃 기본 여백
     
@@ -129,7 +133,7 @@ class PostDetailView: UIView {
             self.emojiPopupView.alpha = 1 // 팝업의 투명도를 1로 설정하여 표시
         }
     }
-
+    
     /// 이모지 팝업을 화면에서 숨기는 메서드
     func hideEmojiPopup() {
         UIView.animate(

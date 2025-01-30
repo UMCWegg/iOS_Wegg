@@ -78,7 +78,6 @@ class PostDetailViewController: UIViewController {
     /// 이모지 버튼이 클릭되었을 때 호출되는 메서드
     @objc private func handleEmojiButtonTap() {
         // 현재 이모지 팝업이 표시된 상태인지 확인
-        
         if isEmojiPopupVisible {
             postDetailView.hideEmojiPopup() // 팝업이 표시 중인 상태에서 다른 동작시 숨기기
         } else {

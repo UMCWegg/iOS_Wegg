@@ -11,6 +11,7 @@ class EmojiPopupView: UIView {
     
     // 이모지 선택 시 호출되는 클로저
     var emojiSelected: ((String) -> Void)? // 선택된 이모지를 전달하는 클로저
+    var showPlusView: (() -> Void)? // PlusEmojiView를 호출하는 클로저
     
     // MARK: - Init
     
@@ -51,10 +52,12 @@ class EmojiPopupView: UIView {
             
             // 버튼 생성
             let button = UIButton(type: .system)
-            button.setImage(
-                UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal),
-                for: .normal
-            )
+            if let image = UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal) {
+                // 이미지 파일명 식별자 설정, 선택 시 이미지파일 이름 나옴
+                image.accessibilityIdentifier = imageName
+                button.setImage(image, for: .normal)
+            }
+            
             button.imageView?.contentMode = .scaleAspectFit
             button.addTarget(self, action: #selector(emojiTapped(_:)), for: .touchUpInside)
             
@@ -84,8 +87,17 @@ class EmojiPopupView: UIView {
     /// 이모지 버튼 클릭 시 호출되는 메서드
     @objc private func emojiTapped(_ sender: UIButton) {
         // 클릭된 버튼의 이미지를 가져오기
-        guard let emojiImage = sender.imageView?.image else { return }
-        // 선택된 이모지의 ID 또는 이름을 클로저를 통해 전달
-        emojiSelected?(emojiImage.accessibilityIdentifier ?? "")
+        guard let emojiName = sender.imageView?.image?.accessibilityIdentifier else { return }
+        if emojiName == "plus.png" {
+            showPlusView?() // PlusEmojiView 표시
+            removeFromSuperview() // 기존 팝업 닫기
+        }
+        
+        else {
+            // 선택된 이모지의 ID 또는 이름을 클로저를 통해 전달
+            // 옵셔널 체이닝 사용, 옵셔널 확인 후에 호출하는 동작입니다.
+            // nill아니면 클로져 실행 nill이면 아무런 수행도 하지 않는다.
+            emojiSelected?(emojiName)
+        }
     }
 }
