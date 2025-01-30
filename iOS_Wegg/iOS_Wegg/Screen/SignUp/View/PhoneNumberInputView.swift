@@ -134,10 +134,10 @@ class PhoneNumberInputView: UIView {
         }
         
         topStack.snp.makeConstraints { make in
-                make.top.equalTo(backButton.snp.bottom).offset(22)
-                make.leading.equalTo(backButton)
-            }
-            
+            make.top.equalTo(backButton.snp.bottom).offset(22)
+            make.leading.equalTo(backButton)
+        }
+        
         bottomMainLabel.snp.makeConstraints { make in
             make.top.equalTo(topStack.snp.bottom)
             make.leading.equalTo(backButton)
