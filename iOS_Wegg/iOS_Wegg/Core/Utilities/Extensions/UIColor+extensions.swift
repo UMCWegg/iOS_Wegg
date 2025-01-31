@@ -34,6 +34,8 @@ extension UIColor {
             case .captionGray:
                 guard let color = UIColor(named: "captionGray") else {
                     return UIColor.gray
+                }
+                return color
             case .yellowWhite:
                 guard let color = UIColor(named: "YellowWhite") else {
                     return UIColor(red: 255 / 255, green: 253 / 255, blue: 249 / 255, alpha: 1.0)
