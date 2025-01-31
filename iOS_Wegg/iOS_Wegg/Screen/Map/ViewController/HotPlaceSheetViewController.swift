@@ -91,7 +91,7 @@ extension HotPlaceSheetViewController:
 }
 
 extension HotPlaceSheetViewController {
-    /// 셀 헤더 데이터 설정
+    /// 셀 헤더 데이터 & 푸터 설정
     func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
@@ -105,14 +105,23 @@ extension HotPlaceSheetViewController {
                 for: indexPath
             ) as? HotPlaceCellHeader else {
                 fatalError(
-                    "Could not dequeue header with identifier \(HotPlaceCellHeader.identifier)"
+                    "\(HotPlaceCellHeader.identifier)의 식별자를 찾을 수 없습니다."
                 )
             }
-            
+            /// HotPlaceCellHeader의 각 섹션마다 데이터 주입
             let section = HotPlaceSectionModel.sampleSections[indexPath.section]
             header.configure(model: section.header)
-            
             return header
+            
+        case UICollectionView.elementKindSectionFooter:
+            guard let footer = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SectionSeparatorFooter.identifier,
+                for: indexPath
+            ) as? SectionSeparatorFooter else {
+                fatalError("\(SectionSeparatorFooter.identifier)의 식별자를 찾을 수 없습니다.")
+            }
+            return footer
         default:
             return UICollectionReusableView()
         }

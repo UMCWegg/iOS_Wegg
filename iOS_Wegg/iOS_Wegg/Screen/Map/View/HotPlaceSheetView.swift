@@ -31,10 +31,14 @@ class HotPlaceSheetView: UIView {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: HotPlaceCellHeader.identifier
         )
-        
         $0.register(
             HotPlaceCell.self,
             forCellWithReuseIdentifier: HotPlaceCell.identifier
+        )
+        $0.register(
+            SectionSeparatorFooter.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: SectionSeparatorFooter.identifier
         )
     }
     

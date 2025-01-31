@@ -47,8 +47,8 @@ class HotPlaceCollectionLayout {
         )
         
         section.boundarySupplementaryItems = [
-            createHeaderItem()
-//            createFooterItem()
+            createHeaderItem(),
+            createFooterItem()
         ]
         
         return section
