@@ -43,14 +43,14 @@ class LoginView: UIView {
         style: .iconText,
         title: "Google로 로그인",
         backgroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 1),
-        image: UIImage(named: "Login/google_icon")
+        image: UIImage(named: "google_icon")
     )
         
     let kakaoLoginButton = LoginButton(
         style: .iconText,
         title: "카카오로 로그인",
         backgroundColor: UIColor(red: 0.98, green: 0.886, blue: 0.012, alpha: 1),
-        image: UIImage(named: "Login/kakao_icon")
+        image: UIImage(named: "kakao_icon")
     )
         
     let emailLoginButton = LoginButton(
