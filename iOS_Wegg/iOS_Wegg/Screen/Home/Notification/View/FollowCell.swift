@@ -38,8 +38,8 @@ class FollowCell: UITableViewCell {
     private let actionButton = UIView().then {
         $0.layer.cornerRadius = 15
         $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor(red: 0.486, green: 0.314, blue: 0.176, alpha: 1).cgColor
-        $0.layer.backgroundColor = UIColor(red: 1, green: 0.876, blue: 0.535, alpha: 1).cgColor
+        $0.layer.borderColor = UIColor.secondary.cgColor
+        $0.layer.backgroundColor = UIColor.primary.cgColor
     }
     private let actionLabel = UILabel().then {
         $0.text = "확인"
@@ -51,7 +51,7 @@ class FollowCell: UITableViewCell {
     private let deleteButton = UIView().then {
         $0.layer.cornerRadius = 15
         $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor(red: 0.486, green: 0.314, blue: 0.176, alpha: 1).cgColor
+        $0.layer.borderColor = UIColor.secondary.cgColor
     }
     private let deleteLabel = UILabel().then {
         $0.text = "취소"
@@ -63,8 +63,8 @@ class FollowCell: UITableViewCell {
     private let followButton = UIView().then {
         $0.layer.cornerRadius = 15
         $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor(red: 0.486, green: 0.314, blue: 0.176, alpha: 1).cgColor
-        $0.layer.backgroundColor = UIColor(red: 1, green: 0.876, blue: 0.535, alpha: 1).cgColor
+        $0.layer.borderColor = UIColor.secondary.cgColor
+        $0.layer.backgroundColor = UIColor.primary.cgColor
     }
     private let followLabel = UILabel().then {
         $0.text = "팔로우"

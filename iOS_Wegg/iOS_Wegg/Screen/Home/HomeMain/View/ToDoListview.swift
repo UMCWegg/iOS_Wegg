@@ -23,7 +23,7 @@ class ToDoListView: UIView {
         let label = UILabel()
         label.text = "TO DO LIST"
         label.font = .systemFont(ofSize: 16, weight: .semibold)
-        label.textColor = UIColor(red: 162/255, green: 131/255, blue: 106/255, alpha: 1.0)
+        label.textColor = .secondary
         return label
     }()
 
@@ -66,10 +66,10 @@ class ToDoListView: UIView {
 
     // MARK: - Setup Methods
     private func setupUI() {
-        backgroundColor = UIColor(red: 255/255, green: 253/255, blue: 249/255, alpha: 1.0)
+        backgroundColor = .yellowWhite
         layer.cornerRadius = 24
         layer.borderWidth = 1
-        layer.borderColor = UIColor(red: 162/255, green: 131/255, blue: 106/255, alpha: 1.0).cgColor
+        layer.borderColor = UIColor.secondary.cgColor
 
         tableView.delegate = self
         tableView.dataSource = self

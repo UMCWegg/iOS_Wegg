@@ -50,20 +50,10 @@ final class SwipeView: UIView, UIScrollViewDelegate {
     // MARK: - Setup Methods
     private func setupUI() {
         self.do {
-            $0.backgroundColor = UIColor(
-                red: 255 / 255,
-                green: 253 / 255,
-                blue: 249 / 255,
-                alpha: 1.0
-            )
+            $0.backgroundColor = .yellowWhite
             $0.layer.cornerRadius = 20
             $0.layer.borderWidth = 1
-            $0.layer.borderColor = UIColor(
-                red: 162 / 255,
-                green: 131 / 255,
-                blue: 106 / 255,
-                alpha: 1.0
-            ).cgColor
+            $0.layer.borderColor = UIColor.secondary.cgColor
         }
         
         addSubview(scrollView)
@@ -124,7 +114,7 @@ final class SwipeView: UIView, UIScrollViewDelegate {
         )
     }
     
-    private func createSlideView(
+    private func createSlideView (
         title: String,
         progressText: String,
         remainingText: String,
@@ -132,12 +122,7 @@ final class SwipeView: UIView, UIScrollViewDelegate {
         image: String?
     ) -> UIView {
         let view = UIView().then {
-            $0.backgroundColor = UIColor(
-                red: 255 / 255,
-                green: 253 / 255,
-                blue: 249 / 255,
-                alpha: 1.0
-            )
+            $0.backgroundColor = .yellowWhite
             $0.layer.cornerRadius = 24
             $0.layer.masksToBounds = true
         }

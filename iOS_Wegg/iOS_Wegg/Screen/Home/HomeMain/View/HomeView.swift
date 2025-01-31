@@ -15,19 +15,9 @@ class HomeView: UIView {
     let weeklyEggView = WeeklyEggView()
     
     let modalView = UIView().then {
-        $0.backgroundColor = UIColor(
-            red: 255/255,
-            green: 250/255,
-            blue: 236/255,
-            alpha: 1.0
-        ) // 배경색 FFFAEC
+        $0.backgroundColor = .yellowWhite
 
-        $0.layer.borderColor = UIColor(
-            red: 124/255,
-            green: 80/255,
-            blue: 45/255,
-            alpha: 1.0
-        ).cgColor // 테두리 색 7C502D
+        $0.layer.borderColor = UIColor.secondary.cgColor
 
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 25
@@ -41,7 +31,7 @@ class HomeView: UIView {
             green: 250/255,
             blue: 236/255,
             alpha: 1.0
-        ) // 배경색 FFFAEC
+        ) /// 배경색 FFFAEC (스크롤 뷰 및 모달 뷰 배경 색)
         $0.showsVerticalScrollIndicator = false
         $0.contentInsetAdjustmentBehavior = .never
         $0.alwaysBounceVertical = true

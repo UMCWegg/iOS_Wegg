@@ -34,7 +34,7 @@ class NotiFollowView: UIView {
     private let followLabel = UILabel().then {
         $0.text = "sojin1108님 외 3명"
         $0.font = UIFont(name: "NotoSansKR-Regular", size: 13)
-        $0.textColor = UIColor(red: 0.842, green: 0.842, blue: 0.842, alpha: 1)
+        $0.textColor = .gray
     }
 
     // 버튼 그룹
