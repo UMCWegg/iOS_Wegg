@@ -9,20 +9,6 @@ import UIKit
 import SnapKit
 import Then
 
-/// MapOverlayViewLayout
-private struct OverlayLayout {
-    struct CurrentLocation {
-        static let leadingOffset: CGFloat = 327
-        static let trailingOffset: CGFloat = -21
-        static let bottomOffset: CGFloat = -21
-    }
-    struct PlaceSearch {
-        static let leadingOffset: CGFloat = 327
-        static let trailingOffset: CGFloat = -21
-        static let topOffset: CGFloat = 10
-    }
-}
-
 class MapOverlayView: UIView {
     weak var gestureDelegate: MapOverlayGestureDelegate?
     
@@ -146,25 +132,26 @@ private extension MapOverlayView {
     func constraints() {
         placeSearchButton.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(
-                OverlayLayout.PlaceSearch.topOffset
+                MapViewLayout.PlaceSearch.topOffset
             )
             make.leading.equalToSuperview().offset(
-                OverlayLayout.PlaceSearch.leadingOffset
+                MapViewLayout.PlaceSearch.leadingOffset
             )
             make.trailing.equalToSuperview().offset(
-                OverlayLayout.PlaceSearch.trailingOffset
+                MapViewLayout.PlaceSearch.trailingOffset
             )
         }
         
         currentLocationImageButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(
-                OverlayLayout.CurrentLocation.leadingOffset
+                MapViewLayout.CurrentLocation.leadingOffset
             )
             make.trailing.equalToSuperview().offset(
-                OverlayLayout.CurrentLocation.trailingOffset
+                MapViewLayout.CurrentLocation.trailingOffset
             )
+            // 바텀 시트 높이 + Offset
             make.bottom.equalToSuperview().offset(
-                OverlayLayout.CurrentLocation.bottomOffset
+                -MapViewLayout.initialBottomSheetHeight + MapViewLayout.CurrentLocation.bottomOffset
             )
             make.width.height.equalTo(42)
         }

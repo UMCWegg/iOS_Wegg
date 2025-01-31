@@ -8,6 +8,7 @@
 import UIKit
 import FloatingPanel
 
+/// 바텀 시트 레이아웃 커스텀 클래스
 class MyFloatingPanelLayout: FloatingPanelLayout {
     let position: FloatingPanelPosition = .bottom
     let initialState: FloatingPanelState = .tip
@@ -20,7 +21,7 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
             fractionalInset: 0.5, edge: .bottom, referenceGuide: .safeArea
         ),
         .tip: FloatingPanelLayoutAnchor(
-            absoluteInset: 93,
+            absoluteInset: MapViewLayout.initialBottomSheetHeight,
             edge: .bottom,
             referenceGuide: .safeArea
         )
@@ -87,20 +88,27 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate {
         }
     }
     
+    /// 바텀 시트 초기 설정
     private func setupFloatingPanel() {
         fpc = FloatingPanelController()
         guard let fpc = fpc else { return }
+        let fpcSurfaceView = fpc.surfaceView
         fpc.delegate = self
         
         let hotPlaceSheetVC = HotPlaceSheetViewController()
         fpc.set(contentViewController: hotPlaceSheetVC)
+        // 스크롤 추적
         fpc.track(scrollView: hotPlaceSheetVC.hotPlaceView.hotPlaceCollectionView)
-        //        fpc.isRemovalInteractionEnabled = true
         fpc.layout = MyFloatingPanelLayout()
         
-        fpc.surfaceView.appearance.cornerRadius = 25
-        fpc.surfaceView.appearance.borderWidth = 1
-        fpc.surfaceView.appearance.borderColor = .secondary
+        fpcSurfaceView.appearance.cornerRadius = 25
+//        fpc.surfaceView.appearance.borderWidth = 1
+//        fpc.surfaceView.appearance.borderColor = .secondary
+        fpcSurfaceView.layer.shadowColor = UIColor.secondary.cgColor
+        fpcSurfaceView.layer.shadowOpacity = 0.2
+        fpcSurfaceView.layer.shadowOffset = CGSize(width: 0, height: -3)
+        fpcSurfaceView.layer.shadowRadius = 7 // Blur 설정
+        fpcSurfaceView.clipsToBounds = false // 그림자 표시 위해 설정
         
         fpc.addPanel(toParent: self)
     }
