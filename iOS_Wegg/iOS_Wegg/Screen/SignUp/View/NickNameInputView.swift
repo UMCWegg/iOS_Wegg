@@ -28,13 +28,7 @@ class NickNameInputView: UIView {
         $0.tintColor = .black
     }
     
-    private let mainLabel = UILabel().then {
-        $0.text = "'위그'님,\n나만의 아이디를 만들어보세요!"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-        $0.textAlignment = .left
-        $0.numberOfLines = 0
-    }
+    private let mainLabel = LoginLabel(title: "'위그'님,\n나만의 아이디를 만들어보세요!", type: .main)
     
     private let nickNameLabel = UILabel().then {
         $0.text = "아이디"

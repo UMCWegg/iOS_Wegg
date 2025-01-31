@@ -28,11 +28,7 @@ class NameInputView: UIView {
         $0.tintColor = .black
     }
     
-    private let mainLabel = UILabel().then {
-        $0.text = "성함이 어떻게 되시나요?"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-    }
+    private let mainLabel = LoginLabel(title: "성함이 어떻게 되시나요?", type: .main)
     
     private let nameLabel = UILabel().then {
         $0.text = "이름"
