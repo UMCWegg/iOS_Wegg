@@ -24,16 +24,11 @@ class EmailLoginView: UIView {
     // MARK: - Properties
     
     private let backButton = UIButton().then {
-        $0.setImage(UIImage(named: "Login/BackButton"), for: .normal)
+        $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        $0.tintColor = .black
     }
     
-    private let mainLabel = UILabel().then {
-        $0.text = "이메일과 비밀번호를 입력해주세요"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-        $0.textAlignment = .left
-        $0.numberOfLines = 0
-    }
+    private let mainLabel = LoginLabel(title: "이메일과 비밀번호를\n입력해주세요", type: .main)
     
     private let emailLabel = UILabel().then {
         $0.text = "이메일"
@@ -53,7 +48,7 @@ class EmailLoginView: UIView {
     }
         
     private let passwordTextField = LoginTextField(
-        placeholder: "  비밀번호",
+        placeholder: "  6자 이상의 비밀번호",
         type: .password
     )
     
@@ -65,7 +60,7 @@ class EmailLoginView: UIView {
     let loginButton = LoginButton(
         style: .textOnly,
         title: "로그인",
-        backgroundColor: UIColor.customColor(.secondary)
+        backgroundColor: .primary
     )
     
     var email: String? {
@@ -103,7 +98,6 @@ class EmailLoginView: UIView {
         mainLabel.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(22)
             make.leading.equalTo(backButton)
-            make.width.equalTo(188)
         }
         
         emailLabel.snp.makeConstraints { make in

@@ -14,6 +14,7 @@ extension UIColor {
         case primary
         case secondary
         case captionGray
+        case yellowWhite
         //        case background
         //        case accent
         
@@ -33,6 +34,9 @@ extension UIColor {
             case .captionGray:
                 guard let color = UIColor(named: "captionGray") else {
                     return UIColor.gray
+            case .yellowWhite:
+                guard let color = UIColor(named: "YellowWhite") else {
+                    return UIColor(red: 255 / 255, green: 253 / 255, blue: 249 / 255, alpha: 1.0)
                 }
                 return color
             }
@@ -48,5 +52,6 @@ extension UIColor {
     enum LoginColor {
         static let textFieldColor = UIColor(named: "Login/TextField")
         static let labelColor = UIColor(named: "Login/Label")
+        static let subTitleColor = UIColor(named: "Login/SubTitle")
     }
 }

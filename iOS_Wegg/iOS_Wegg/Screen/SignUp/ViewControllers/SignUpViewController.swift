@@ -21,7 +21,7 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.customColor(.secondary)
+        view.backgroundColor = UIColor.customColor(.primary)
         setupActions()
     }
     
