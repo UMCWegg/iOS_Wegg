@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         // 원하는 뷰 컨트롤러 파일의 이름을 작성
-        window?.rootViewController = PhoneNumberInputViewController()
+        window?.rootViewController = PhoneNumberVerificationViewController()
         window?.makeKeyAndVisible()
     }
     
