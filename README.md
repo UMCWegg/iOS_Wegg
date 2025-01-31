@@ -11,6 +11,7 @@
 - KakaoOpenSDK: 카카오 로그인 SDK.
 - GoogleSignIn: 구글 로그인 SDK.
 - Firebase: Firebase SDK. 구글 로그인에 사용.
+- FloatingPanel: 지도 뷰 바텀 시트 구현에 사용
 
 ## 브랜치 컨벤션
 - 브랜치 전략: GitHub Flow
