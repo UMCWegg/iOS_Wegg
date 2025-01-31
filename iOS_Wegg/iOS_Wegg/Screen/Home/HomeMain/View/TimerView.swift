@@ -18,7 +18,7 @@ final class TimerView: UIView {
     // MARK: - UI Components
     private lazy var titleLabel = UILabel().then {
         $0.text = "총 공부 시간"
-        $0.font = UIFont(name: "NotoSansKR-Regular", size: 13)
+        $0.font = UIFont(name: "NotoSansKR-Bold", size: 13)
         $0.textColor = UIColor(
             red: 124 / 255,
             green: 80 / 255,
@@ -29,7 +29,7 @@ final class TimerView: UIView {
     
     private lazy var timeLabel = UILabel().then {
         $0.text = "00:00:00"
-        $0.font = UIFont(name: "NotoSansKR-Regular", size: 24)
+        $0.font = UIFont(name: "NotoSansKR-Bold", size: 24)
         $0.textColor = UIColor(
             red: 124 / 255,
             green: 80 / 255,

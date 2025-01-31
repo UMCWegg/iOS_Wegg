@@ -107,6 +107,7 @@ class HeaderView: UIView {
     @objc private func bellTapped() {
         print("알림 버튼 터치 ✅")
         let notiVC = NotiViewController()
+        notiVC.hidesBottomBarWhenPushed = true
         viewController?.navigationController?.pushViewController(notiVC, animated: true)
     }
 }
