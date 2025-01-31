@@ -75,7 +75,7 @@ class OccupationInputViewController: UIViewController {
     }
     
     private func moveToNextScreen() {
-        //
+        // 추후 구현 예정
     }
 
 }

@@ -5,8 +5,6 @@
 //  Created by 이건수 on 2025.01.31.
 //
 
-import UIKit
-
 enum UserOccupation: String, Codable {
     case employee = "직장인"
     case university = "대학생"
