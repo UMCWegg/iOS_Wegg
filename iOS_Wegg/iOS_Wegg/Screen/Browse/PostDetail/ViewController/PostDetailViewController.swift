@@ -78,6 +78,12 @@ class PostDetailViewController: UIViewController {
 
     /// 이모지 버튼이 클릭되었을 때 호출되는 메서드
     @objc private func handleEmojiButtonTap() {
+        // PlusEmojiView가 열려 있다면 닫기
+            if let plusEmojiView = view.subviews.first(where: { $0 is PlusEmojiView }) {
+                hidePopupView(plusEmojiView) // PlusEmojiView 닫기
+                return
+            }
+        
         // 현재 이모지 팝업이 표시된 상태인지 확인
         if isEmojiPopupVisible {
             postDetailView.hideEmojiPopup() // 팝업이 표시 중인 상태에서 다른 동작시 숨기기
@@ -118,7 +124,7 @@ class PostDetailViewController: UIViewController {
         view.addSubview(popupView)
         
         // 배경 둥글게 설정하기
-        popupView.layer.cornerRadius = 15
+        popupView.layer.cornerRadius = 25
         popupView.clipsToBounds = true // 모서리 둥글게
         
         popupView.snp.makeConstraints {
