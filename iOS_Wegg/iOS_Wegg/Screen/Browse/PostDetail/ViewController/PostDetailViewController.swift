@@ -86,4 +86,14 @@ class PostDetailViewController: UIViewController {
         // 팝업 상태를 반대로 토글
         isEmojiPopupVisible.toggle()
     }
+    
+    // PlusEmojiView를 포함하고, plus 버튼 클릭시 팝업을 표시하기
+    private func handlePlusEmojiSelection() {
+        postDetailView.emojiPopupView.showPlusView = { [weak self] in
+            guard let self = self else { return }
+            
+            // PlusEmojiView 생성 및 설정
+            let plusEmojiView = PlusEmojiView()
+        }
+    }
 }
