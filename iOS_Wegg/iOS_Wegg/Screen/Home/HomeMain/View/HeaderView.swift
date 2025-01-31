@@ -40,6 +40,8 @@ class HeaderView: UIView {
         return button
     }()
 
+    weak var viewController: UIViewController?
+
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -104,5 +106,7 @@ class HeaderView: UIView {
     
     @objc private func bellTapped() {
         print("알림 버튼 터치 ✅")
+        let notiVC = NotiViewController()
+        viewController?.navigationController?.pushViewController(notiVC, animated: true)
     }
 }
