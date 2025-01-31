@@ -138,7 +138,7 @@ class PhoneNumberInputView: UIView {
             make.top.equalTo(backButton.snp.bottom).offset(22)
             make.leading.equalTo(backButton)
         }
-        
+
         bottomMainLabel.snp.makeConstraints { make in
             make.top.equalTo(topStack.snp.bottom)
             make.leading.equalTo(backButton)
@@ -184,5 +184,4 @@ class PhoneNumberInputView: UIView {
             make.width.equalTo(60)
         }
     }
-
 }
