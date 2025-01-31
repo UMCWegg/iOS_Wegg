@@ -41,6 +41,6 @@ class EmojiCell: UICollectionViewCell {
         
     }
     func configure(with emoji: EmojiModel) {
-        emojiImageView.image = UIImage(named: emoji.imageNmae)
+        emojiImageView.image = UIImage(named: emoji.imageName)
     }
 }
