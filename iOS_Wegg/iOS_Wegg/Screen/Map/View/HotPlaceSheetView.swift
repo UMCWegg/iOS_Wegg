@@ -75,6 +75,7 @@ class HotPlaceSheetView: UIView {
         $0.attributedText = fullText
     }
     
+    /// 헤더와 컬렉션뷰 사이의 구분선
     lazy var dividedLineView = UIView().then {
         $0.backgroundColor = .gray
     }
@@ -123,6 +124,9 @@ private extension HotPlaceSheetView {
     }
     
     func setupStackView() {
+        let initialtHeight: CGFloat = 20
+        let buttonWidth: CGFloat = 49
+        
         [logoImageView, logoLabel].forEach {
             bottomSheetTitleStack.addArrangedSubview($0)
         }
@@ -132,22 +136,23 @@ private extension HotPlaceSheetView {
         }
         
         logoImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(18)
+            make.width.height.equalTo(
+                MapViewLayout.BottomSheetHeader.logoHeight
+            )
         }
         
         logoLabel.snp.makeConstraints { make in
             make.width.equalTo(150)
-            make.height.equalTo(50)
         }
         
         distanceButtonView.snp.makeConstraints { make in
-            make.width.equalTo(49)
-            make.height.equalTo(20)
+            make.width.equalTo(buttonWidth)
+            make.height.equalTo(initialtHeight)
         }
         
         verficationButtonView.snp.makeConstraints { make in
-            make.width.equalTo(49)
-            make.height.equalTo(20)
+            make.width.equalTo(buttonWidth)
+            make.height.equalTo(initialtHeight)
         }
     }
     
@@ -164,20 +169,32 @@ private extension HotPlaceSheetView {
     
     func constraints() {
         bottomSheetTitleStack.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(47.5)
-            make.leading.equalToSuperview().offset(21)
-            make.bottom.equalTo(dividedLineView.snp.top).offset(-24)
+            make.top.equalToSuperview().offset(
+                MapViewLayout.BottomSheetHeader.topOffset
+            )
+            make.leading.equalToSuperview().offset(
+                MapViewLayout.BottomSheetHeader.leadingOffset
+            )
+            make.bottom.equalTo(dividedLineView.snp.top).offset(
+                MapViewLayout.BottomSheetHeader.bottomOffset
+            )
         }
         
         bottomSheetButtonStack.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(47.5)
-            make.trailing.equalToSuperview().offset(-21)
-            make.bottom.equalTo(dividedLineView.snp.top).offset(-24)
+            make.top.equalToSuperview().offset(
+                MapViewLayout.BottomSheetHeader.topOffset
+            )
+            make.trailing.equalToSuperview().offset(
+                MapViewLayout.BottomSheetHeader.trailingOffset
+            )
+            make.bottom.equalTo(dividedLineView.snp.top).offset(
+                MapViewLayout.BottomSheetHeader.bottomOffset
+            )
         }
         
         dividedLineView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(hotPlaceCollectionView.snp.top).offset(-14)
+            make.bottom.equalTo(hotPlaceCollectionView.snp.top).offset(-12)
             make.height.equalTo(0.5)
         }
         

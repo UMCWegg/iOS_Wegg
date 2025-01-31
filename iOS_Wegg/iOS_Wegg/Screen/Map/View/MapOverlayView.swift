@@ -153,7 +153,9 @@ private extension MapOverlayView {
             make.bottom.equalToSuperview().offset(
                 -MapViewLayout.initialBottomSheetHeight + MapViewLayout.CurrentLocation.bottomOffset
             )
-            make.width.height.equalTo(42)
+            make.width.height.equalTo(
+                MapViewLayout.CurrentLocation.widthAndHeight
+            )
         }
     }
 }

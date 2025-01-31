@@ -109,7 +109,9 @@ private extension HotPlaceCellHeader {
         }
         
         logoImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(18)
+            make.width.height.equalTo(
+                MapViewLayout.BottomSheetHeader.logoHeight
+            )
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -141,15 +143,23 @@ private extension HotPlaceCellHeader {
     
     func constraints() {
         headerTitleStack.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(14)
+            make.top.equalToSuperview().offset(
+                MapViewLayout.BottomSheetContent.topOffset
+            )
             make.leading.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(
+                MapViewLayout.BottomSheetContent.bottomOffset
+            )
         }
         
         headerStatusStack.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(14)
+            make.top.equalToSuperview().offset(
+                MapViewLayout.BottomSheetContent.topOffset
+            )
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(
+                MapViewLayout.BottomSheetContent.bottomOffset
+            )
         }
     }
 }
