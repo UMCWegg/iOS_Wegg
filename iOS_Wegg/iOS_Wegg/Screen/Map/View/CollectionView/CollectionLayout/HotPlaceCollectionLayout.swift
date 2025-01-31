@@ -41,9 +41,9 @@ class HotPlaceCollectionLayout {
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = NSDirectionalEdgeInsets(
             top: 8,
-            leading: 10,
+            leading: 18,
             bottom: 10,
-            trailing: 10
+            trailing: 15
         )
         
         section.boundarySupplementaryItems = [

@@ -165,13 +165,13 @@ private extension HotPlaceSheetView {
     func constraints() {
         bottomSheetTitleStack.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(47.5)
-            make.leading.equalToSuperview().offset(28.2)
+            make.leading.equalToSuperview().offset(21)
             make.bottom.equalTo(dividedLineView.snp.top).offset(-24)
         }
         
         bottomSheetButtonStack.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(47.5)
-            make.trailing.equalToSuperview().offset(-28.2)
+            make.trailing.equalToSuperview().offset(-21)
             make.bottom.equalTo(dividedLineView.snp.top).offset(-24)
         }
         
@@ -182,7 +182,7 @@ private extension HotPlaceSheetView {
         }
         
         hotPlaceCollectionView.snp.makeConstraints { make in
-            make.bottom.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
 }

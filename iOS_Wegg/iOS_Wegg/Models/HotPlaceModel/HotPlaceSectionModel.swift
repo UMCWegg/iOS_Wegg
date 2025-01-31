@@ -29,8 +29,8 @@ extension HotPlaceSectionModel {
             header: .init(
                 title: "스타벅스 신용산점",
                 category: "카페",
-                verificationCount: "99+",
-                saveCount: "34"
+                verificationCount: "인증 99+",
+                saveCount: "저장 34"
             ),
             items: HotPlaceImageModel.sampleData
         ),
@@ -38,8 +38,8 @@ extension HotPlaceSectionModel {
             header: .init(
                 title: "스타벅스 신용산점",
                 category: "카페",
-                verificationCount: "99+",
-                saveCount: "34"
+                verificationCount: "인증 99+",
+                saveCount: "저장 34"
             ),
             items: HotPlaceImageModel.sampleData
         ),
@@ -47,8 +47,8 @@ extension HotPlaceSectionModel {
             header: .init(
                 title: "스타벅스 신용산점",
                 category: "카페",
-                verificationCount: "99+",
-                saveCount: "34"
+                verificationCount: "인증 99+",
+                saveCount: "저장 34"
             ),
             items: HotPlaceImageModel.sampleData
         ),
@@ -56,8 +56,8 @@ extension HotPlaceSectionModel {
             header: .init(
                 title: "스타벅스 신용산점",
                 category: "카페",
-                verificationCount: "99+",
-                saveCount: "34"
+                verificationCount: "인증 99+",
+                saveCount: "저장 34"
             ),
             items: HotPlaceImageModel.sampleData
         )

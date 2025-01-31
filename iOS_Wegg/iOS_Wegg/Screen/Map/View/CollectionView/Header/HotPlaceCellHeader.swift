@@ -15,8 +15,7 @@ class HotPlaceCellHeader: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addComponents()
-        constraints()
+        setupView()
     }
     
     required init?(coder: NSCoder) {
@@ -24,6 +23,11 @@ class HotPlaceCellHeader: UICollectionReusableView {
     }
     
     // MARK: - Property
+    
+    lazy var logoImageView = UIImageView().then {
+        $0.image = UIImage(named: "wegg_icon2")
+        $0.contentMode = .scaleAspectFill
+    }
     
     lazy var titleLabel = makeLabel(
         font: UIFont.notoSans(.bold, size: 16),
@@ -45,11 +49,8 @@ class HotPlaceCellHeader: UICollectionReusableView {
         .captionGray
     )
     
-    private lazy var headerStack = UIStackView().then {
-        $0.axis = .horizontal
-        $0.spacing = 8
-        $0.distribution = .equalSpacing
-    }
+    private lazy var headerTitleStack = makeStackView(spacing: 8, axis: .horizontal)
+    private lazy var headerStatusStack = makeStackView(spacing: 8, axis: .horizontal)
     
     // MARK: - Function
     
@@ -68,6 +69,17 @@ class HotPlaceCellHeader: UICollectionReusableView {
         return label
     }
     
+    func makeStackView(
+        spacing: CGFloat,
+        axis: NSLayoutConstraint.Axis
+    ) -> UIStackView {
+        let stack = UIStackView()
+        stack.axis = axis
+        stack.spacing = spacing
+        stack.distribution = .fill
+        return stack
+    }
+    
     /// 헤더 셀 초기화 설정 함수
     public func configure(model: HotPlaceHeaderModel) {
         titleLabel.text = model.title
@@ -76,45 +88,68 @@ class HotPlaceCellHeader: UICollectionReusableView {
         saveCount.text = model.saveCount
     }
     
-    private func addComponents() {
-        [
-            titleLabel,
-            categoryLabel,
-            verificationCount,
-            saveCount
-        ].forEach {
-            headerStack.addArrangedSubview($0)
-        }
-        addSubview(headerStack)
+}
+
+private extension HotPlaceCellHeader {
+    func setupView() {
+        setupStackView()
+        addComponents()
+        constraints()
     }
     
-    private func constraints() {
+    func setupStackView() {
         let labelHeight: CGFloat = 20
         
-        headerStack.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(14)
-            make.leading.trailing.bottom.equalToSuperview()
+        [logoImageView, titleLabel, categoryLabel].forEach {
+            headerTitleStack.addArrangedSubview($0)
+        }
+        
+        [verificationCount, saveCount].forEach {
+            headerStatusStack.addArrangedSubview($0)
+        }
+        
+        logoImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(18)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.width.greaterThanOrEqualTo(150)
+            make.width.greaterThanOrEqualTo(122)
             make.height.equalTo(labelHeight)
         }
         
         categoryLabel.snp.makeConstraints { make in
-            make.width.greaterThanOrEqualTo(55)
+            make.width.greaterThanOrEqualTo(26)
             make.height.equalTo(labelHeight)
         }
         
         verificationCount.snp.makeConstraints { make in
-            make.width.greaterThanOrEqualTo(55)
+            make.width.lessThanOrEqualTo(55)
             make.height.equalTo(labelHeight)
         }
         
         saveCount.snp.makeConstraints { make in
-            make.width.greaterThanOrEqualTo(55)
+            make.width.lessThanOrEqualTo(55)
             make.height.equalTo(labelHeight)
         }
     }
     
+    func addComponents() {
+        [headerTitleStack, headerStatusStack].forEach {
+            addSubview($0)
+        }
+    }
+    
+    func constraints() {
+        headerTitleStack.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(14)
+            make.leading.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-10)
+        }
+        
+        headerStatusStack.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(14)
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-10)
+        }
+    }
 }
