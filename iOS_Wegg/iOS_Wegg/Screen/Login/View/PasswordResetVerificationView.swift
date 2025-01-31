@@ -28,19 +28,9 @@ class PasswordResetVerificationView: UIView {
         $0.tintColor = .black
     }
     
-    private let mainLabel = UILabel().then {
-        $0.text = "인증 번호를 입력해주세요"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-        $0.textAlignment = .left
-        $0.numberOfLines = 0
-    }
+    private let mainLabel = LoginLabel(title: "인증 번호를 입력해주세요", type: .main)
     
-    private let subLabel = UILabel().then {
-        $0.text = "wegg@email.com로 인증 번호를 보냈어요"
-        $0.font = UIFont.notoSans(.medium, size: 14)
-        $0.textColor = UIColor.LoginColor.labelColor
-    }
+    private let subLabel = LoginLabel(title: "wegg@email.com로 인증 번호를 보냈어요", type: .sub)
     
     let verificationTextField = VerificationTextField()
     

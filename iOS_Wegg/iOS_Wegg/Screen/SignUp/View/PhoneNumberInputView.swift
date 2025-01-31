@@ -38,26 +38,13 @@ class PhoneNumberInputView: UIView {
         $0.spacing = 0
     }
     
-    private let topMainLabel = UILabel().then {
-        $0.text = "안녕하세요, "
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-        $0.textAlignment = .left
-        $0.numberOfLines = 0
-    }
+    private let topMainLabel = LoginLabel(title: "안녕하세요, ", type: .main)
     
     private let weggyImage = UIImageView().then {
         $0.image = UIImage(named: "weggy!")
     }
     
-    private let bottomMainLabel = UILabel().then {
-        $0.text = "전화번호가 어떻게 되시나요?"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-        $0.textAlignment = .left
-        $0.numberOfLines = 0
-        
-    }
+    private let bottomMainLabel = LoginLabel(title: "전화번호가 어떻게 되시나요?", type: .main)
     
     private let numberLabel = UILabel().then {
         $0.text = "전화번호"
@@ -138,7 +125,7 @@ class PhoneNumberInputView: UIView {
             make.top.equalTo(backButton.snp.bottom).offset(22)
             make.leading.equalTo(backButton)
         }
-
+        
         bottomMainLabel.snp.makeConstraints { make in
             make.top.equalTo(topStack.snp.bottom)
             make.leading.equalTo(backButton)
@@ -184,4 +171,5 @@ class PhoneNumberInputView: UIView {
             make.width.equalTo(60)
         }
     }
+
 }

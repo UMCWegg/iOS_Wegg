@@ -28,13 +28,7 @@ class PasswordResetEmailView: UIView {
         $0.tintColor = .black
     }
     
-    private let mainLabel = UILabel().then {
-        $0.text = "인증 번호를 받을 이메일을 입력해주세요"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-        $0.textAlignment = .left
-        $0.numberOfLines = 0
-    }
+    private let mainLabel = LoginLabel(title: "인증 번호를 받을\n이메일을 입력해주세요", type: .main)
     
     private let emailLabel = UILabel().then {
         $0.text = "이메일"
@@ -75,7 +69,6 @@ class PasswordResetEmailView: UIView {
         mainLabel.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(22)
             make.leading.equalTo(backButton)
-            make.width.equalTo(208)
         }
         
         emailLabel.snp.makeConstraints { make in

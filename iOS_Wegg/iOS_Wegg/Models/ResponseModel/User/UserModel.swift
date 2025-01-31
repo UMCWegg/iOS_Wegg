@@ -14,7 +14,7 @@ struct BaseUser: Codable {
     let occupation: UserOccupation?
     let reason: UserReason?
     let contact: [Contact]
-    let alarm: Bool
+    let alert: Bool
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -23,7 +23,7 @@ struct BaseUser: Codable {
         case occupation
         case reason
         case contact = "contact"
-        case alarm
+        case alert
     }
 }
 

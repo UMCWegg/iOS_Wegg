@@ -41,17 +41,9 @@ class SignUpView: UIView {
         $0.alignment = .center
     }
     
-    private let topWelcomeLabel = UILabel().then {
-        $0.text = "에 오신것을"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-    }
+    private let topMainLabel = LoginLabel(title: "에 오신 것을", type: .main)
     
-    private let bottomWelcomeLabel = UILabel().then {
-        $0.text = "환영해요!"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-    }
+    private let bottomMainLabel = LoginLabel(title: "환영해요!", type: .main)
     
     let googleLoginButton = LoginButton(
         style: .iconText,
@@ -76,9 +68,9 @@ class SignUpView: UIView {
     // MARK: - Setup
     
     private func setupViews() {
-        [appLogo, topWelcomeLabel].forEach { topStack.addArrangedSubview($0) }
+        [appLogo, topMainLabel].forEach { topStack.addArrangedSubview($0) }
         
-        [topStack, bottomWelcomeLabel].forEach { welcomeStackView.addArrangedSubview($0) }
+        [topStack, bottomMainLabel].forEach { welcomeStackView.addArrangedSubview($0) }
         
         [
             appIcon,

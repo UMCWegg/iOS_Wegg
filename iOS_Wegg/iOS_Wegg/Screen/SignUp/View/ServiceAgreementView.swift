@@ -32,11 +32,7 @@ class ServiceAggrementView: UIView {
         $0.tintColor = .black
     }
     
-    private let mainLabel = UILabel().then {
-        $0.text = "서비스 이용 동의를 진행해주세요"
-        $0.textColor = .black
-        $0.font = UIFont.LoginFont.title
-    }
+    private let mainLabel = LoginLabel(title: "서비스 이용 동의를 진행해주세요", type: .main)
     
     private let underLineView = UIView().then {
         $0.backgroundColor = UIColor.LoginColor.labelColor

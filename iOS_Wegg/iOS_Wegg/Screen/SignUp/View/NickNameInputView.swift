@@ -28,17 +28,7 @@ class NickNameInputView: UIView {
         $0.tintColor = .black
     }
     
-    private let topMainLabel = UILabel().then {
-        $0.text = "'위그'님,"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-    }
-    
-    private let bottomMainLabel = UILabel().then {
-        $0.text = "나만의 아이디를 만들어보세요!"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-    }
+    private let mainLabel = LoginLabel(title: "'위그'님,\n나만의 아이디를 만들어보세요!", type: .main)
     
     private let nickNameLabel = UILabel().then {
         $0.text = "아이디"
@@ -67,8 +57,7 @@ class NickNameInputView: UIView {
     private func setupViews() {
         [
             backButton,
-            topMainLabel,
-            bottomMainLabel,
+            mainLabel,
             nickNameLabel,
             nickNameTextField,
             underLine,
@@ -83,18 +72,13 @@ class NickNameInputView: UIView {
             make.width.equalTo(8)
         }
         
-        topMainLabel.snp.makeConstraints { make in
+        mainLabel.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(22)
             make.leading.equalTo(backButton)
         }
         
-        bottomMainLabel.snp.makeConstraints { make in
-            make.top.equalTo(topMainLabel.snp.bottom)
-            make.leading.equalTo(backButton)
-        }
-        
         nickNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(bottomMainLabel.snp.bottom).offset(55)
+            make.top.equalTo(mainLabel.snp.bottom).offset(55)
             make.leading.equalTo(backButton)
         }
         
