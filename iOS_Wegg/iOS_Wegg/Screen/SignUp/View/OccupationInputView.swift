@@ -1,5 +1,5 @@
 //
-//  NickNameInputView.swift
+//  OccupationInputView.swift
 //  iOS_Wegg
 //
 //  Created by 이건수 on 2025.01.31.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class NickNameInputView: UIView {
-
+class OccupationInputView: UIView {
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -40,20 +40,35 @@ class NickNameInputView: UIView {
         $0.textColor = .black
     }
     
-    private let nickNameLabel = UILabel().then {
-        $0.text = "아이디"
+    let passButton = UIButton().then {
+        $0.setTitle("건너뛰기", for: .normal)
+        $0.setTitleColor(UIColor.LoginColor.labelColor, for: .normal)
+        $0.titleLabel?.font = UIFont.notoSans(.regular, size: 12)
+    }
+    
+    private let subLabel = UILabel().then {
+        $0.text = "더 좋은 앱을 만드는데 자료로 사용되어요"
+        $0.font = UIFont.notoSans(.medium, size: 14)
+        $0.textColor = UIColor.LoginColor.labelColor
+    }
+    
+    private let occupationLabel = UILabel().then {
+        $0.text = "신분"
         $0.font = UIFont.LoginFont.label
         $0.textColor = UIColor.LoginColor.labelColor
     }
     
-    let nickNameTextField = UITextField().then {
-        $0.placeholder = "weggy"
-        $0.font = UIFont.notoSans(.regular, size: 24)
-        $0.textColor = .black
+    let occupationDropdown = DropdownButton().then {
+        $0.configure(
+            options: UserOccupation.allCases,
+            placeholder: UserOccupation.employee.rawValue
+        )
     }
     
-    private let underLine = UIView().then {
-        $0.backgroundColor = UIColor.LoginColor.labelColor
+    var selectedOccupation: String? {
+        didSet {
+            // 추후 구현 예정.
+        }
     }
     
     let nextButton = LoginButton(
@@ -69,9 +84,10 @@ class NickNameInputView: UIView {
             backButton,
             topMainLabel,
             bottomMainLabel,
-            nickNameLabel,
-            nickNameTextField,
-            underLine,
+            passButton,
+            subLabel,
+            occupationLabel,
+            occupationDropdown,
             nextButton
         ].forEach { addSubview($0) }
     }
@@ -93,23 +109,25 @@ class NickNameInputView: UIView {
             make.leading.equalTo(backButton)
         }
         
-        nickNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(bottomMainLabel.snp.bottom).offset(55)
+        subLabel.snp.makeConstraints { make in
+            make.top.equalTo(bottomMainLabel.snp.bottom).offset(8)
             make.leading.equalTo(backButton)
         }
         
-        nickNameTextField.snp.makeConstraints { make in
-            make.height.equalTo(40)
-            make.leading.equalTo(backButton)
-            make.top.equalTo(nickNameLabel.snp.bottom).offset(18)
-            make.centerX.equalToSuperview()
+        passButton.snp.makeConstraints { make in
+            make.centerY.equalTo(backButton)
+            make.trailing.equalToSuperview().offset(-17)
         }
         
-        underLine.snp.makeConstraints { make in
-            make.top.equalTo(nickNameTextField.snp.bottom).offset(6)
-            make.height.equalTo(1)
+        occupationLabel.snp.makeConstraints { make in
+            make.top.equalTo(subLabel.snp.bottom).offset(30)
+            make.leading.equalTo(backButton)
+        }
+        
+        occupationDropdown.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.equalTo(backButton)
+            make.top.equalTo(occupationLabel.snp.bottom).offset(9)
         }
         
         nextButton.snp.makeConstraints { make in

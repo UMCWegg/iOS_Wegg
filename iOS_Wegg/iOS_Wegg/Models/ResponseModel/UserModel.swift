@@ -11,7 +11,7 @@ struct BaseUser: Codable {
     let name: String
     let marketingAgree: Bool
     let accountID: String
-    let job: String?
+    let occupation: UserOccupation?
     let reason: String?
     let contact: [Contact]
     let alarm: Bool
@@ -20,7 +20,7 @@ struct BaseUser: Codable {
         case name
         case marketingAgree = "marketing_agree"
         case accountID = "account_id"
-        case job
+        case occupation
         case reason
         case contact = "contact"
         case alarm
