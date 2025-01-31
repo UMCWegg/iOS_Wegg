@@ -90,6 +90,7 @@
 			membershipExceptions = (
 				PostDetail/ViewController/PostDetailViewController.swift,
 				PostDetail/Views/Cell/EmojiCell.swift,
+				PostDetail/Views/CommentView.swift,
 				PostDetail/Views/EmojiPopupView.swift,
 				PostDetail/Views/PlusEmojiView.swift,
 				PostDetail/Views/PostDetailView.swift,
@@ -395,8 +396,8 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DE85E2822D4623BB0055C78C /* Time */,
-				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				DEEB72322D4D211C001C3880 /* Label */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 			);
