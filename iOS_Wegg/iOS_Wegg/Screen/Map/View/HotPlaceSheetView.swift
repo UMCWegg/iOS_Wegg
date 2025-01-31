@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class HotPlaceSheetView: UIView {
+    
+    // MARK: - init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,6 +22,9 @@ class HotPlaceSheetView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    // MARK: - Property
     
     public lazy var hotPlaceCollectionView = UICollectionView(
         frame: bounds,
@@ -89,6 +94,8 @@ class HotPlaceSheetView: UIView {
     private lazy var bottomSheetTitleStack = makeStackView(spacing: 8, axis: .horizontal)
     private lazy var bottomSheetButtonStack = makeStackView(spacing: 8, axis: .horizontal)
     
+    // MARK: - Function
+    
     func makeStackView(
         spacing: CGFloat,
         axis: NSLayoutConstraint.Axis
@@ -119,6 +126,8 @@ class HotPlaceSheetView: UIView {
     }
     
 }
+
+// MARK: - Set UP Extenstion
 
 private extension HotPlaceSheetView {
     func setupView() {

@@ -30,9 +30,12 @@ class HotPlaceCell: UICollectionViewCell {
         $0.layer.cornerRadius = 12
     }
     
+    /// 이미지 셀 주입 함수
     public func configure(model: HotPlaceImageModel) {
         imageView.image = UIImage(named: model.imageName)
     }
+    
+    // MARK: Set up
     
     private func addComponents() {
         [imageView].forEach {

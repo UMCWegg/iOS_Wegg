@@ -90,6 +90,8 @@ class HotPlaceCellHeader: UICollectionReusableView {
     
 }
 
+// MARK: - Set Up Extenstion
+
 private extension HotPlaceCellHeader {
     func setupView() {
         setupStackView()

@@ -18,6 +18,8 @@ class HotPlaceCollectionLayout {
         }
     }
     
+    // MARK: 컬렉션뷰 섹션 생성
+    
     private static func createPlaceSection() -> NSCollectionLayoutSection {
         let itemSpacing: CGFloat = 8
         

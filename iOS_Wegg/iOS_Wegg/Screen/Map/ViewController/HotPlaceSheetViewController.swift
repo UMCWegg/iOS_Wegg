@@ -21,6 +21,8 @@ class HotPlaceSheetViewController: UIViewController {
     }
 }
 
+// MARK: - Delegate & DataSource Extenstion
+
 extension HotPlaceSheetViewController:
     UICollectionViewDelegateFlowLayout,
     UICollectionViewDataSource {
