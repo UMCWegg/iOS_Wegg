@@ -177,6 +177,11 @@
 			path = Time;
 			sourceTree = "<group>";
 		};
+		DEEB72322D4D211C001C3880 /* Label */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Label;
+			sourceTree = "<group>";
+		};
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -249,6 +254,7 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				DEEB72322D4D211C001C3880 /* Label */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE001E912D3BDF71003A273F /* Button */,
 			);
@@ -375,6 +381,7 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DE85E2822D4623BB0055C78C /* Time */,
+				DEEB72322D4D211C001C3880 /* Label */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 			);
 			name = iOS_Wegg;

@@ -28,17 +28,7 @@ class ReasonInputView: UIView {
         $0.tintColor = .black
     }
     
-    private let topMainLabel = UILabel().then {
-        $0.text = "이 앱을 시작하게 된"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-    }
-    
-    private let bottomMainLabel = UILabel().then {
-        $0.text = "이유가 무엇인가요?"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-    }
+    private let mainLabel = LoginLabel(title: "이 앱을 시작하게 된 \n이유가 무엇인가요?", type: .main)
     
     let passButton = UIButton().then {
         $0.setTitle("건너뛰기", for: .normal)
@@ -46,11 +36,7 @@ class ReasonInputView: UIView {
         $0.titleLabel?.font = UIFont.notoSans(.regular, size: 12)
     }
     
-    private let subLabel = UILabel().then {
-        $0.text = "더 좋은 앱을 만드는데 자료로 사용되어요"
-        $0.font = UIFont.notoSans(.medium, size: 14)
-        $0.textColor = UIColor.LoginColor.labelColor
-    }
+    private let subLabel = LoginLabel(title: "더 좋은 앱을 만드는데 자료로 사용되어요", type: .sub)
     
     private let reasonLabel = UILabel().then {
         $0.text = "이유"
@@ -82,8 +68,7 @@ class ReasonInputView: UIView {
     private func setupViews() {
         [
             backButton,
-            topMainLabel,
-            bottomMainLabel,
+            mainLabel,
             passButton,
             subLabel,
             reasonLabel,
@@ -99,18 +84,13 @@ class ReasonInputView: UIView {
             make.width.equalTo(8)
         }
         
-        topMainLabel.snp.makeConstraints { make in
+        mainLabel.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(22)
             make.leading.equalTo(backButton)
         }
         
-        bottomMainLabel.snp.makeConstraints { make in
-            make.top.equalTo(topMainLabel.snp.bottom)
-            make.leading.equalTo(backButton)
-        }
-        
         subLabel.snp.makeConstraints { make in
-            make.top.equalTo(bottomMainLabel.snp.bottom).offset(8)
+            make.top.equalTo(mainLabel.snp.bottom).offset(8)
             make.leading.equalTo(backButton)
         }
         
