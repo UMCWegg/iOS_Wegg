@@ -29,7 +29,7 @@ class OccupationInputView: UIView {
     }
     
     private let mainLabel = UILabel().then {
-        $0.text = "'위그'님,\n나만의 아이디를 만들어보세요!"
+        $0.text = "'위그'님,\n직업이 어떻게 되시나요?"
         $0.font = UIFont.LoginFont.title
         $0.textColor = .black
         $0.textAlignment = .left

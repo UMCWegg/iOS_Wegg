@@ -28,16 +28,12 @@ class ReasonInputView: UIView {
         $0.tintColor = .black
     }
     
-    private let topMainLabel = UILabel().then {
-        $0.text = "이 앱을 시작하게 된"
+    private let mainLabel = UILabel().then {
+        $0.text = "이 앱을 시작하게 된 \n이유가 무엇인가요?"
         $0.font = UIFont.LoginFont.title
         $0.textColor = .black
-    }
-    
-    private let bottomMainLabel = UILabel().then {
-        $0.text = "이유가 무엇인가요?"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
+        $0.textAlignment = .left
+        $0.numberOfLines = 0
     }
     
     let passButton = UIButton().then {
@@ -82,8 +78,7 @@ class ReasonInputView: UIView {
     private func setupViews() {
         [
             backButton,
-            topMainLabel,
-            bottomMainLabel,
+            mainLabel,
             passButton,
             subLabel,
             reasonLabel,
@@ -99,18 +94,14 @@ class ReasonInputView: UIView {
             make.width.equalTo(8)
         }
         
-        topMainLabel.snp.makeConstraints { make in
+        mainLabel.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(22)
             make.leading.equalTo(backButton)
         }
         
-        bottomMainLabel.snp.makeConstraints { make in
-            make.top.equalTo(topMainLabel.snp.bottom)
-            make.leading.equalTo(backButton)
-        }
         
         subLabel.snp.makeConstraints { make in
-            make.top.equalTo(bottomMainLabel.snp.bottom).offset(8)
+            make.top.equalTo(mainLabel.snp.bottom).offset(8)
             make.leading.equalTo(backButton)
         }
         
