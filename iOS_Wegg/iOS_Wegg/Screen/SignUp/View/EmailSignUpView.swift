@@ -1,14 +1,14 @@
 //
-//  EmailLoginView.swift
+//  EmailSignUpView.swift
 //  iOS_Wegg
 //
-//  Created by 이건수 on 2025.01.18.
+//  Created by 이건수 on 2025.01.27.
 //
 
 import UIKit
 
-class EmailLoginView: UIView {
-    
+class EmailSignUpView: UIView {
+
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -52,14 +52,20 @@ class EmailLoginView: UIView {
         type: .password
     )
     
-    let findPasswordButton = UIButton().then {
-        $0.setTitle("비밀번호를 잊으셨나요?", for: .normal)
-        $0.titleLabel?.font = UIFont.LoginFont.title
+    private let passwordCheckLabel = UILabel().then {
+        $0.text = "비밀번호"
+        $0.font = UIFont.LoginFont.label
+        $0.textColor = UIColor.LoginColor.labelColor
     }
+        
+    private let passwordCheckTextField = LoginTextField(
+        placeholder: "  6자 이상의 비밀번호",
+        type: .password
+    )
     
-    let loginButton = LoginButton(
+    let signUpButton = LoginButton(
         style: .textOnly,
-        title: "로그인",
+        title: "회원가입",
         backgroundColor: .primary
     )
     
@@ -83,8 +89,9 @@ class EmailLoginView: UIView {
             emailTextField,
             passwordLabel,
             passwordTextField,
-            findPasswordButton,
-            loginButton
+            passwordCheckLabel,
+            passwordCheckTextField,
+            signUpButton
         ].forEach { addSubview($0) }
     }
     
@@ -99,7 +106,16 @@ class EmailLoginView: UIView {
             make.top.equalTo(backButton.snp.bottom).offset(22)
             make.leading.equalTo(backButton)
         }
+    
+        signUpButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-40)
+        }
         
+        setupContentConstraints()
+    }
+    
+    private func setupContentConstraints() {
         emailLabel.snp.makeConstraints { make in
             make.top.equalTo(mainLabel.snp.bottom).offset(55)
             make.leading.equalTo(backButton)
@@ -122,14 +138,15 @@ class EmailLoginView: UIView {
             make.trailing.equalTo(emailTextField)
         }
         
-        findPasswordButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(10)
-            make.trailing.equalTo(emailTextField)
+        passwordCheckLabel.snp.makeConstraints { make in
+            make.top.equalTo(passwordTextField.snp.bottom).offset(22)
+            make.leading.equalTo(backButton)
         }
         
-        loginButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-40)
+        passwordCheckTextField.snp.makeConstraints { make in
+            make.top.equalTo(passwordCheckLabel.snp.bottom).offset(9)
+            make.leading.equalTo(backButton)
+            make.trailing.equalTo(emailTextField)
         }
     }
 }

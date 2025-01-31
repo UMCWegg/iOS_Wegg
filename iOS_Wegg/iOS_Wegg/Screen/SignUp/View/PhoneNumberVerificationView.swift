@@ -1,13 +1,13 @@
 //
-//  PasswordResetVerificationView.swift
+//  PhoneNumberVerificationView.swift
 //  iOS_Wegg
 //
-//  Created by 이건수 on 2025.01.24.
+//  Created by 이건수 on 2025.01.30.
 //
 
 import UIKit
 
-class PasswordResetVerificationView: UIView {
+class PhoneNumberVerificationView: UIView {
 
     // MARK: - Init
     
@@ -30,7 +30,13 @@ class PasswordResetVerificationView: UIView {
     
     private let mainLabel = LoginLabel(title: "인증 번호를 입력해주세요", type: .main)
     
-    private let subLabel = LoginLabel(title: "wegg@email.com로 인증 번호를 보냈어요", type: .sub)
+    private let subLabel = LoginLabel(title: "01000000000로 인증 번호를 보냈어요", type: .sub)
+    
+    private let verificationLabel = UILabel().then {
+        $0.text = "인증 번호"
+        $0.font = UIFont.LoginFont.label
+        $0.textColor = UIColor.LoginColor.labelColor
+    }
     
     let verificationTextField = VerificationTextField()
     
@@ -47,9 +53,9 @@ class PasswordResetVerificationView: UIView {
         $0.setTitleColor(UIColor.LoginColor.labelColor, for: .normal)
     }
     
-    let loginButton = LoginButton(
+    let nextButton = LoginButton(
         style: .textOnly,
-        title: "확인",
+        title: "다음",
         backgroundColor: .primary
     )
     
@@ -60,9 +66,10 @@ class PasswordResetVerificationView: UIView {
             backButton,
             mainLabel,
             subLabel,
+            verificationLabel,
             verificationTextField,
             resendButton,
-            loginButton
+            nextButton
         ].forEach { addSubview($0) }
     }
     
@@ -84,8 +91,13 @@ class PasswordResetVerificationView: UIView {
             make.leading.equalTo(backButton)
         }
         
+        verificationLabel.snp.makeConstraints { make in
+            make.top.equalTo(subLabel.snp.bottom).offset(56)
+            make.leading.equalTo(backButton)
+        }
+        
         verificationTextField.snp.makeConstraints { make in
-            make.top.equalTo(subLabel.snp.bottom).offset(130)
+            make.top.equalTo(verificationLabel.snp.bottom).offset(23)
             make.centerX.equalToSuperview()
             make.width.equalTo(364)
         }
@@ -95,9 +107,10 @@ class PasswordResetVerificationView: UIView {
             make.centerX.equalToSuperview()
         }
         
-        loginButton.snp.makeConstraints { make in
+        nextButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-40)
         }
     }
+
 }
