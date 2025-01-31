@@ -28,14 +28,11 @@ class ServiceAggrementView: UIView {
     // MARK: - Properties
     
     let backButton = UIButton().then {
-        $0.setImage(UIImage(named: "Login/BackButton"), for: .normal)
+        $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        $0.tintColor = .black
     }
     
-    private let mainLabel = UILabel().then {
-        $0.text = "서비스 이용 동의를 진행해주세요"
-        $0.textColor = .black
-        $0.font = UIFont.LoginFont.title
-    }
+    private let mainLabel = LoginLabel(title: "서비스 이용 동의를 진행해주세요", type: .main)
     
     private let underLineView = UIView().then {
         $0.backgroundColor = UIColor.LoginColor.labelColor
@@ -51,7 +48,7 @@ class ServiceAggrementView: UIView {
     let nextButton = LoginButton(
         style: .textOnly,
         title: "다음",
-        backgroundColor: UIColor.customColor(.secondary)
+        backgroundColor: .primary
     )
     
     // MARK: - Setup

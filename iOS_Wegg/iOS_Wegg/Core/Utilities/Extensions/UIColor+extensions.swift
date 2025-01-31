@@ -48,5 +48,6 @@ extension UIColor {
     enum LoginColor {
         static let textFieldColor = UIColor(named: "Login/TextField")
         static let labelColor = UIColor(named: "Login/Label")
+        static let subTitleColor = UIColor(named: "Login/SubTitle")
     }
 }

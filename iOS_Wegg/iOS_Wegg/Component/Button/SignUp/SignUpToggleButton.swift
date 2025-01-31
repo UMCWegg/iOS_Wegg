@@ -36,7 +36,7 @@ final class SignUpToggleButton: UIButton {
     private var buttonTapped: ((Bool) -> Void)?
     
     private let checkButton = UIButton().then {
-        $0.tintColor = UIColor.customColor(.secondary)
+        $0.tintColor = .primary
         $0.setImage(UIImage(systemName: "circle"), for: .normal)
     }
     

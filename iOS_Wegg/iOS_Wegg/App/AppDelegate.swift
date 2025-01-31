@@ -22,11 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         
-        KakaoSDK.initSDK(appKey: "234a311c28b6da40b7d4d6f1084510b1")
+        KakaoSDK.initSDK(appKey: APIKeys.kakaoAppKey)
         
         FirebaseApp.configure()
         let config = GIDConfiguration(
-            clientID: "498161093152-ajp8av7ktm4gcakp3fqjkbutbehjuebl.apps.googleusercontent.com")
+            clientID: APIKeys.googleClientId)
         GIDSignIn.sharedInstance.configuration = config
         
         return true

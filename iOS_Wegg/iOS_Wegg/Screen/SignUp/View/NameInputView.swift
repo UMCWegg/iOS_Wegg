@@ -1,13 +1,13 @@
 //
-//  PasswordResetEmailView.swift
+//  NameInputView.swift
 //  iOS_Wegg
 //
-//  Created by 이건수 on 2025.01.24.
+//  Created by 이건수 on 2025.01.30.
 //
 
 import UIKit
 
-class PasswordResetEmailView: UIView {
+class NameInputView: UIView {
 
     // MARK: - Init
     
@@ -23,28 +23,33 @@ class PasswordResetEmailView: UIView {
     
     // MARK: - Properties
     
-    private let backButton = UIButton().then {
+    let backButton = UIButton().then {
         $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         $0.tintColor = .black
     }
     
-    private let mainLabel = LoginLabel(title: "인증 번호를 받을\n이메일을 입력해주세요", type: .main)
+    private let mainLabel = LoginLabel(title: "성함이 어떻게 되시나요?", type: .main)
     
-    private let emailLabel = UILabel().then {
-        $0.text = "이메일"
+    private let nameLabel = UILabel().then {
+        $0.text = "이름"
         $0.font = UIFont.LoginFont.label
         $0.textColor = UIColor.LoginColor.labelColor
     }
     
-    let emailTextField = LoginTextField(
-        placeholder: "  wegg@email.com",
-        type: .email
-    )
+    let nameTextField = UITextField().then {
+        $0.placeholder = "위그"
+        $0.font = UIFont.notoSans(.regular, size: 24)
+        $0.textColor = .black
+    }
     
-    let loginButton = LoginButton(
+    private let underLine = UIView().then {
+        $0.backgroundColor = UIColor.LoginColor.labelColor
+    }
+    
+    let nextButton = LoginButton(
         style: .textOnly,
-        title: "인증 번호 보내기",
-        backgroundColor: UIColor.customColor(.primary)
+        title: "다음",
+        backgroundColor: .primary
     )
     
     // MARK: - Setup
@@ -53,9 +58,10 @@ class PasswordResetEmailView: UIView {
         [
             backButton,
             mainLabel,
-            emailLabel,
-            emailTextField,
-            loginButton
+            nameLabel,
+            nameTextField,
+            underLine,
+            nextButton
         ].forEach { addSubview($0) }
     }
     
@@ -71,18 +77,26 @@ class PasswordResetEmailView: UIView {
             make.leading.equalTo(backButton)
         }
         
-        emailLabel.snp.makeConstraints { make in
-            make.top.equalTo(mainLabel.snp.bottom).offset(55)
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(mainLabel.snp.bottom).offset(81)
             make.leading.equalTo(backButton)
         }
         
-        emailTextField.snp.makeConstraints { make in
-            make.top.equalTo(emailLabel.snp.bottom).offset(9)
+        nameTextField.snp.makeConstraints { make in
+            make.height.equalTo(40)
             make.leading.equalTo(backButton)
-            make.trailing.equalToSuperview().offset(-17)
+            make.top.equalTo(nameLabel.snp.bottom).offset(18)
+            make.centerX.equalToSuperview()
         }
         
-        loginButton.snp.makeConstraints { make in
+        underLine.snp.makeConstraints { make in
+            make.top.equalTo(nameTextField.snp.bottom).offset(6)
+            make.height.equalTo(1)
+            make.centerX.equalToSuperview()
+            make.leading.equalTo(backButton)
+        }
+        
+        nextButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-40)
         }

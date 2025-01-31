@@ -41,30 +41,22 @@ class SignUpView: UIView {
         $0.alignment = .center
     }
     
-    private let topWelcomeLabel = UILabel().then {
-        $0.text = "에 오신것을"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-    }
+    private let topMainLabel = LoginLabel(title: "에 오신 것을", type: .main)
     
-    private let bottomWelcomeLabel = UILabel().then {
-        $0.text = "환영해요!"
-        $0.font = UIFont.LoginFont.title
-        $0.textColor = .black
-    }
+    private let bottomMainLabel = LoginLabel(title: "환영해요!", type: .main)
     
     let googleLoginButton = LoginButton(
         style: .iconText,
         title: "Google로 계속하기",
         backgroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 1),
-        image: UIImage(named: "Login/google_icon")
+        image: UIImage(named: "google_icon")
     )
         
     let kakaoLoginButton = LoginButton(
         style: .iconText,
         title: "카카오로 계속하기",
         backgroundColor: UIColor(red: 0.98, green: 0.886, blue: 0.012, alpha: 1),
-        image: UIImage(named: "Login/kakao_icon")
+        image: UIImage(named: "kakao_icon")
     )
         
     let emailLoginButton = LoginButton(
@@ -76,9 +68,9 @@ class SignUpView: UIView {
     // MARK: - Setup
     
     private func setupViews() {
-        [appLogo, topWelcomeLabel].forEach{ topStack.addArrangedSubview($0) }
+        [appLogo, topMainLabel].forEach { topStack.addArrangedSubview($0) }
         
-        [topStack, bottomWelcomeLabel].forEach { welcomeStackView.addArrangedSubview($0) }
+        [topStack, bottomMainLabel].forEach { welcomeStackView.addArrangedSubview($0) }
         
         [
             appIcon,
