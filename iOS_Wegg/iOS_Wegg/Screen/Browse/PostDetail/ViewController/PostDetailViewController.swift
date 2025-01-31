@@ -36,6 +36,7 @@ class PostDetailViewController: UIViewController {
         configureUI()
         setNavigation()
         emojiButtonAction()
+        handlePlusEmojiSelection()
     }
     
     // MARK: - Methods
@@ -87,13 +88,58 @@ class PostDetailViewController: UIViewController {
         isEmojiPopupVisible.toggle()
     }
     
-    // PlusEmojiView를 포함하고, plus 버튼 클릭시 팝업을 표시하기
+    /// PlusEmojiView를 포함하고, plus 버튼 클릭시 팝업을 표시하기
     private func handlePlusEmojiSelection() {
         postDetailView.emojiPopupView.showPlusView = { [weak self] in
             guard let self = self else { return }
             
             // PlusEmojiView 생성 및 설정
             let plusEmojiView = PlusEmojiView()
+            plusEmojiView.configure(with: EmojiModel.getEmojiModels()) // 데이터 제공
+            
+            // 선택된 이모지 처리
+            plusEmojiView.emojiSelected = { [weak self] selectedEmoji in
+                print("이모지가 선택되었습니다: \(selectedEmoji.name)")
+                self?.postDetailView.hideEmojiPopup() // 기존 이모지 팝업 닫기 메서드 호출
+            }
+            
+            // 이모지 선택 시 팝업 닫기 설정
+            plusEmojiView.closePopup = { [weak self] in
+                print("PlusEmojiView에서 이모지 선택됨")
+                self?.hidePopupView(plusEmojiView) // 팝업 닫기 메서드
+            }
+            
+            self.showPopupView(plusEmojiView) // 팝업 표시하기
         }
+    }
+    
+    /// 플러스 이모지 팝업뷰를 보여주는 메서드
+    private func showPopupView(_ popupView: UIView) {
+        view.addSubview(popupView)
+        
+        // 배경 둥글게 설정하기
+        popupView.layer.cornerRadius = 15
+        popupView.clipsToBounds = true // 모서리 둥글게
+        
+        popupView.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(-140)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(360)
+            $0.height.equalTo(260)
+        }
+        
+        // 애니메이션으로 팝업 표시
+        UIView.animate(withDuration: 0.3) {
+            popupView.alpha = 1
+        }
+    }
+    
+    /// 플러스 이모지 팝업뷰 가리는 메서드
+    private func hidePopupView(_ popupView: UIView) {
+        UIView.animate(withDuration: 0.3, animations: {
+            popupView.alpha = 0 // 투명도 0으로 설정하여 사라지게 만듦
+        }, completion: { _ in
+            popupView.removeFromSuperview() // 애니메이션 완료 후 제거
+        })
     }
 }

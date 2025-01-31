@@ -88,15 +88,12 @@ class EmojiPopupView: UIView {
     @objc private func emojiTapped(_ sender: UIButton) {
         // 클릭된 버튼의 이미지를 가져오기
         guard let emojiName = sender.imageView?.image?.accessibilityIdentifier else { return }
+        
         if emojiName == "plus.png" {
+            print("Plus 버튼 클릭됨") // 로그 확인
             showPlusView?() // PlusEmojiView 표시
             removeFromSuperview() // 기존 팝업 닫기
-        }
-        
-        else {
-            // 선택된 이모지의 ID 또는 이름을 클로저를 통해 전달
-            // 옵셔널 체이닝 사용, 옵셔널 확인 후에 호출하는 동작입니다.
-            // nill아니면 클로져 실행 nill이면 아무런 수행도 하지 않는다.
+        } else {
             emojiSelected?(emojiName)
         }
     }

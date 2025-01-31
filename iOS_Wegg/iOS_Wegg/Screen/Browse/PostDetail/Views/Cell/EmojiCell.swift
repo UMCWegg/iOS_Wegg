@@ -35,11 +35,12 @@ class EmojiCell: UICollectionViewCell {
         contentView.addSubview(emojiImageView)
         contentView.layer.cornerRadius = 8
         contentView.clipsToBounds = true
-        contentView.snp.makeConstraints {
+        emojiImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+            $0.width.height.equalTo(35) // 크기 명시적으로 설정
         }
-        
     }
+    
     func configure(with emoji: EmojiModel) {
         emojiImageView.image = UIImage(named: emoji.imageName)
     }

@@ -25,14 +25,18 @@ class PlusEmojiView: UIView {
     
     private var emojis: [EmojiModel] = []
     var emojiSelected: ((EmojiModel) -> Void)? // 선택된 이모지를 전달하는 클로저
+    var closePopup: (() -> Void)? // 팝업 닫기 클로저
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 39, height: 39)
+        // 섹션 여백 설정
+        let sectionInsets = UIEdgeInsets(top: 30, left: 21, bottom: 15, right: 21)
+        layout.itemSize = CGSize(width: 35, height: 35)
         layout.minimumLineSpacing = 15
         layout.minimumInteritemSpacing = 19
+        layout.sectionInset = sectionInsets
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.white.withAlphaComponent(0.7) // 투명한 배경
+        collectionView.backgroundColor = UIColor.white.withAlphaComponent(0.6) // 투명한 배경
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(EmojiCell.self, forCellWithReuseIdentifier: EmojiCell.identifier)
         collectionView.dataSource = self
@@ -80,7 +84,8 @@ extension PlusEmojiView: UICollectionViewDataSource, UICollectionViewDelegateFlo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedEmoji = emojis[indexPath.item]
-        emojiSelected?(selectedEmoji)
+        let selectedEmoji = emojis[indexPath.item] // 선택된 이모지 가져오기
+        emojiSelected?(selectedEmoji) // 선택된 이모지 전달
+        closePopup?() // 팝업 닫기 클로저 호출 (PlusEmojiView 닫힘)
     }
 }
