@@ -23,8 +23,8 @@ class GetAlertPermissionView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        if let gradientLayer = imageContainerView.layer.sublayers?.first as? CAGradientLayer {
-            gradientLayer.frame = imageContainerView.bounds
+        if let gradientLayer = alertPhoneImage.layer.mask as? CAGradientLayer {
+            gradientLayer.frame = alertPhoneImage.bounds
         }
     }
     
@@ -44,17 +44,17 @@ class GetAlertPermissionView: UIView {
     
     private let alertPhoneImage = UIImageView().then {
         $0.image = UIImage(named: "alert_phone")
-    }
-    
-    private let imageContainerView = UIView().then {
+        $0.contentMode = .scaleAspectFit
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 30
+        
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [
-            UIColor.clear.cgColor,
-            UIColor(white: 1.0, alpha: 0.8).cgColor,
-            UIColor.white.cgColor
+            UIColor.white.cgColor,
+            UIColor.clear.cgColor
         ]
-        gradientLayer.locations = [0.0, 0.5, 1.0]
-        $0.layer.addSublayer(gradientLayer)
+        gradientLayer.locations = [0.5, 1.0]
+        $0.layer.mask = gradientLayer
     }
     
     let nextButton = LoginButton(
@@ -70,11 +70,9 @@ class GetAlertPermissionView: UIView {
             mainLabel,
             subLabel,
             infoLabel,
-            imageContainerView,
+            alertPhoneImage,
             nextButton
         ].forEach { addSubview($0) }
-        
-        imageContainerView.addSubview(alertPhoneImage)
     }
     
     private func setupConstraints() {
@@ -93,14 +91,9 @@ class GetAlertPermissionView: UIView {
             make.centerX.equalToSuperview()
         }
         
-        imageContainerView.snp.makeConstraints { make in
+        alertPhoneImage.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(infoLabel.snp.bottom).offset(18)
-            make.width.equalTo(alertPhoneImage)
-        }
-        
-        alertPhoneImage.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
             make.width.equalTo(264)
             make.height.equalTo(468)
         }
