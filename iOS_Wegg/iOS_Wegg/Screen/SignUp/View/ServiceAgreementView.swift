@@ -51,7 +51,7 @@ class ServiceAggrementView: UIView {
     let nextButton = LoginButton(
         style: .textOnly,
         title: "다음",
-        backgroundColor: UIColor.customColor(.secondary)
+        backgroundColor: .primary
     )
     
     // MARK: - Setup

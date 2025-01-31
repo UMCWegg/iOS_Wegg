@@ -65,7 +65,7 @@ class LoginView: UIView {
             attributes: [
                 .underlineStyle: NSUnderlineStyle.single.rawValue,
                 .baselineOffset: 6,
-                .font: UIFont(name: "NotoSansKR-Regular", size: 16) ?? .systemFont(ofSize: 16)
+                .font: UIFont.notoSans(.regular, size: 16) as Any
             ]
         )
         $0.setAttributedTitle(attributedString, for: .normal)

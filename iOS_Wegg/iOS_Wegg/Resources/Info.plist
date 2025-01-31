@@ -11,12 +11,10 @@
 			</array>
 		</dict>
 	</array>
+	<key>GOOGLE_CLIENT_ID</key>
+	<string>${GOOGLE_CLIENT_ID}</string>
 	<key>KAKAO_NATIVE_APP_KEY</key>
 	<string>${KAKAO_NATIVE_APP_KEY}</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>앱 사용 중에 위치를 활용합니다.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>사용자의 위치를 받습니다.</string>
 	<key>NMFClientId</key>
 	<string>${NAVER_MAP_CLIENT_ID}</string>
 	<key>UIAppFonts</key>

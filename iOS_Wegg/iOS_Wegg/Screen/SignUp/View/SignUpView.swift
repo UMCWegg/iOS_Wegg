@@ -76,7 +76,7 @@ class SignUpView: UIView {
     // MARK: - Setup
     
     private func setupViews() {
-        [appLogo, topWelcomeLabel].forEach{ topStack.addArrangedSubview($0) }
+        [appLogo, topWelcomeLabel].forEach { topStack.addArrangedSubview($0) }
         
         [topStack, bottomWelcomeLabel].forEach { welcomeStackView.addArrangedSubview($0) }
         

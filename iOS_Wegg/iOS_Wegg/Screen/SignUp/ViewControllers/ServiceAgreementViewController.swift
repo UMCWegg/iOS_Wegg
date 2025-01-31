@@ -30,6 +30,7 @@ class ServiceAgreementViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupButtons()
+        updateNextButtonState()
     }
     
     // MARK: - Setup
