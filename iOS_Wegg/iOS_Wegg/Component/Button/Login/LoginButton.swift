@@ -8,56 +8,99 @@
 import UIKit
 
 class LoginButton: UIButton {
-    init(title: String, backgroundColor: UIColor) {
+    
+    // MARK: - Style
+    
+    enum Style {
+        case textOnly
+        case iconText
+    }
+    
+    // MARK: - Init
+    
+    init(style: Style, title: String, backgroundColor: UIColor, image: UIImage? = nil) {
         super.init(frame: .zero)
-        setupButton(title: title, backgroundColor: backgroundColor)
+        setupCommon(backgroundColor: backgroundColor)
+        
+        switch style {
+        case .textOnly:
+            setupTextOnly(title: title)
+        case .iconText:
+            guard let image = image else { return }
+            setupIconText(title: title, image: image)
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupButton(title: String, backgroundColor: UIColor) {
-        self.backgroundColor = backgroundColor
-        setTitle(title, for: .normal)
-        layer.cornerRadius = 32
-        titleLabel?.font = UIFont(name: "NotoSansKR-Medium", size: 20)
-        
-        setTitleColor((backgroundColor == .black ||
-                       backgroundColor == UIColor(named: "BluePrimary"))
-                       ? .white : .black, for: .normal)
-        
-        heightAnchor.constraint(equalToConstant: 61).isActive = true
+    // MARK: - Properties
+    
+    private let iconImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
+        $0.clipsToBounds = false
     }
-}
-
-extension UIColor {
-    // HEX 문자열을 UIColor로 변환하는 초기화 메서드
-    convenience init?(hex: String) {
-        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
-        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
-
-        var rgb: UInt64 = 0
-
-        guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else { return nil }
-
-        let length = hexSanitized.count
-
-        let red, green, blue, alpha: CGFloat
-        if length == 6 {
-            red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
-            green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
-            blue = CGFloat(rgb & 0x0000FF) / 255.0
-            alpha = 1.0
-        } else if length == 8 {
-            red = CGFloat((rgb & 0xFF000000) >> 24) / 255.0
-            green = CGFloat((rgb & 0x00FF0000) >> 16) / 255.0
-            blue = CGFloat((rgb & 0x0000FF00) >> 8) / 255.0
-            alpha = CGFloat(rgb & 0x000000FF) / 255.0
-        } else {
-            return nil
+    
+    private let contentStack = UIStackView().then {
+        $0.axis = .horizontal
+        $0.spacing = 10
+        $0.alignment = .center
+    }
+    
+    // MARK: - Setup
+    
+    private func setupCommon(backgroundColor: UIColor) {
+        self.backgroundColor = backgroundColor
+        layer.cornerRadius = 26.5
+        
+        if backgroundColor == .primary {
+            layer.borderWidth = 1
+            layer.borderColor = UIColor.black.cgColor
         }
-
-        self.init(red: red, green: green, blue: blue, alpha: alpha)
+        
+        heightAnchor.constraint(equalToConstant: 53).isActive = true
+        widthAnchor.constraint(equalToConstant: 348).isActive = true
+    }
+    
+    private func setupTextOnly(title: String) {
+        let label = titleSetup(title: title)
+        setTitle(label.text, for: .normal)
+        setTitleColor(label.textColor, for: .normal)
+        titleLabel?.font = label.font
+    }
+    
+    private func setupIconText(title: String, image: UIImage) {
+        let textLabel = titleSetup(title: title)
+        iconImageView.image = image
+        
+        addSubview(contentStack)
+        contentStack.addArrangedSubview(iconImageView)
+        contentStack.addArrangedSubview(textLabel)
+        
+        contentStack.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.height.equalTo(40)
+        }
+        
+        iconImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(20)
+        }
+        
+        textLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+        }
+    }
+    
+    private func titleSetup(title: String) -> UILabel {
+        return UILabel().then {
+            $0.text = title
+            $0.font = UIFont.notoSans(.medium, size: 17)
+            $0.textColor = backgroundColor == UIColor.black ? .white : .black
+            
+            if backgroundColor == .primary {
+                $0.textColor = .black
+            }
+        }
     }
 }
