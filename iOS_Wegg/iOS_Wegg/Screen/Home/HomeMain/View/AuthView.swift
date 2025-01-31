@@ -122,20 +122,10 @@ final class AuthView: UIView {
     // MARK: - Helper Method
     static func createAuthButton(imageName: String, title: String) -> UIButton {
         let button = UIButton()
-        button.backgroundColor = UIColor(
-            red: 255 / 255,
-            green: 253 / 255,
-            blue: 249 / 255,
-            alpha: 1.0
-        )
+        button.backgroundColor = .yellowWhite
         button.layer.cornerRadius = 20
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor(
-            red: 162 / 255,
-            green: 131 / 255,
-            blue: 106 / 255,
-            alpha: 1.0
-        ).cgColor
+        button.layer.borderColor = UIColor.secondary.cgColor
         button.isUserInteractionEnabled = true // ✅ 버튼 터치 활성화
 
         let stackView = UIStackView()
@@ -152,12 +142,7 @@ final class AuthView: UIView {
 
         let label = UILabel()
         label.text = title
-        label.textColor = UIColor(
-            red: 124 / 255,
-            green: 80 / 255,
-            blue: 45 / 255,
-            alpha: 1.0
-        )
+        label.textColor = .secondary
         label.font = .systemFont(ofSize: 10, weight: .bold)
         label.textAlignment = .center
         label.isUserInteractionEnabled = false // ✅ 터치 이벤트 버튼으로 전달

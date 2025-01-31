@@ -18,24 +18,14 @@ final class TimerView: UIView {
     // MARK: - UI Components
     private lazy var titleLabel = UILabel().then {
         $0.text = "총 공부 시간"
-        $0.font = UIFont(name: "NotoSansKR-Regular", size: 13)
-        $0.textColor = UIColor(
-            red: 124 / 255,
-            green: 80 / 255,
-            blue: 45 / 255,
-            alpha: 1.0
-        ) // #7C502D
+        $0.font = UIFont(name: "NotoSansKR-Bold", size: 13)
+        $0.textColor = .secondary
     }
     
     private lazy var timeLabel = UILabel().then {
         $0.text = "00:00:00"
-        $0.font = UIFont(name: "NotoSansKR-Regular", size: 24)
-        $0.textColor = UIColor(
-            red: 124 / 255,
-            green: 80 / 255,
-            blue: 45 / 255,
-            alpha: 1.0
-        ) // #7C502D
+        $0.font = UIFont(name: "NotoSansKR-Bold", size: 24)
+        $0.textColor = .secondary
         $0.textAlignment = .center
     }
     
@@ -62,20 +52,10 @@ final class TimerView: UIView {
     // MARK: - Setup
     private func setupUI() {
         self.do {
-            $0.backgroundColor = UIColor(
-                red: 255 / 255,
-                green: 253 / 255,
-                blue: 249 / 255,
-                alpha: 1.0
-            )
+            $0.backgroundColor = .yellowWhite
             $0.layer.cornerRadius = 24
             $0.layer.borderWidth = 1
-            $0.layer.borderColor = UIColor(
-                red: 124 / 255,
-                green: 80 / 255,
-                blue: 45 / 255,
-                alpha: 1.0
-            ).cgColor // #7C502D
+            $0.layer.borderColor = UIColor.secondary.cgColor
         }
         
         addSubview(titleLabel)

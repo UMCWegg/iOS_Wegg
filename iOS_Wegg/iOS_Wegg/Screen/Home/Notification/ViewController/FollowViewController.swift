@@ -47,10 +47,15 @@ class FollowViewController: UIViewController {
         followView.tableView.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
     private func setupNavigationBar() {
         let backButton = UIButton().then {
-            $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-            $0.tintColor = .black
+            $0.setImage(UIImage(named: "backButton"), for: .normal)
             $0.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         }
         
@@ -121,5 +126,41 @@ extension FollowViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 57 // 셀 기본 높이(45) + 간격(12)
+    }
+    
+    // ✅ 섹션 헤더 폰트 및 색상 수정 (잘림 방지)
+    func tableView(
+        _ tableView: UITableView,
+        willDisplayHeaderView view: UIView,
+        forSection section: Int
+    ) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel?.font = UIFont(name: "NotoSansKR-Medium", size: 16)
+            header.textLabel?.textColor = .black
+            header.textLabel?.lineBreakMode = .byWordWrapping // ✅ 줄 바꿈 허용
+            header.textLabel?.numberOfLines = 0 // ✅ 여러 줄 표시 가능
+        }
+    }
+
+    // ✅ 섹션 헤더 뷰 설정 (잘림 방지 + 레이아웃 강제 업데이트)
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UITableViewHeaderFooterView()
+        headerView.textLabel?.font = UIFont(name: "NotoSansKR-Medium", size: 16)
+        headerView.textLabel?.textColor = .black
+        headerView.textLabel?.lineBreakMode = .byWordWrapping
+        headerView.textLabel?.numberOfLines = 0
+        headerView.textLabel?.text = sections[section]
+        
+        headerView.layoutIfNeeded() // ✅ 레이아웃 강제 업데이트
+        return headerView
+    }
+
+    // ✅ 섹션 헤더 높이 조정 (너비 부족으로 인한 줄바꿈 대응)
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 28 // 기본 높이보다 살짝 높게 설정하여 여유 공간 확보
     }
 }

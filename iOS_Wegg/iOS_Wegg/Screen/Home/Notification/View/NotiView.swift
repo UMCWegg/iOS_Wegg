@@ -34,7 +34,7 @@ class NotiView: UIView {
 
         notiFollowView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).offset(21)
-            $0.leading.equalToSuperview().inset(21.5)
+            $0.leading.trailing.equalToSuperview().inset(21.5) // leading과 trailing을 동시에 설정하여 너비를 조정
             $0.height.equalTo(46)
         }
 

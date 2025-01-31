@@ -13,9 +13,8 @@ class NotiCell: UITableViewCell {
     static let identifier = "NotiCell"
 
     private let profileImageView = UIImageView().then {
-        $0.layer.cornerRadius = 25
-        $0.clipsToBounds = true
-        $0.backgroundColor = .lightGray
+        $0.image = UIImage(named: "profileImage")
+        $0.backgroundColor = .clear
     }
 
     private let messageLabel = UILabel().then {

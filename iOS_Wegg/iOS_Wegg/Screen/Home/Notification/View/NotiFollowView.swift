@@ -11,41 +11,46 @@ import Then
 
 class NotiFollowView: UIView {
 
-    private let containerView = UIView()
-    
-    private let profileStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.spacing = -8
-        $0.alignment = .center
-    }
-
+    // 프로필 이미지 그룹
+    private let profileContainerView = UIView()
     private let firstProfileImageView = UIImageView().then {
         $0.backgroundColor = .lightGray
         $0.layer.cornerRadius = 12
         $0.clipsToBounds = true
     }
-
     private let secondProfileImageView = UIImageView().then {
         $0.backgroundColor = .darkGray
         $0.layer.cornerRadius = 12
         $0.clipsToBounds = true
     }
 
-    private let followLabel = UILabel().then {
-        $0.text = "sojin1108님 외 3명"
-        $0.font = .systemFont(ofSize: 14, weight: .medium)
+    // 팔로우 라벨 그룹
+    private let labelContainerView = UIView()
+    private let followRequestLabel = UILabel().then {
+        $0.text = "팔로우 요청"
+        $0.font = UIFont(name: "NotoSansKR-Regular", size: 15)
         $0.textColor = .black
     }
-
-    private let indicatorView = UIView().then {
-        $0.backgroundColor = .primary
-        $0.layer.cornerRadius = 3
+    private let followLabel = UILabel().then {
+        $0.text = "sojin1108님 외 3명"
+        $0.font = UIFont(name: "NotoSansKR-Regular", size: 13)
+        $0.textColor = .gray
     }
 
+    // 버튼 그룹
+    private let buttonContainerView = UIView()
+    private let indicatorView = UIImageView().then {
+        $0.image = UIImage(named: "newFollow")
+        $0.backgroundColor = .clear
+        $0.contentMode = .scaleAspectFit
+    }
     private let forwardButton = UIButton().then {
         $0.setImage(UIImage(named: "forwardButton"), for: .normal)
         $0.backgroundColor = .clear
+        $0.contentMode = .scaleAspectFit
     }
+    
+    weak var viewController: UIViewController?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,50 +66,75 @@ class NotiFollowView: UIView {
     private func setupUI() {
         backgroundColor = .clear
 
-        profileStackView.addArrangedSubview(firstProfileImageView)
-        profileStackView.addArrangedSubview(secondProfileImageView)
+        // 프로필 이미지 그룹
+        profileContainerView.addSubview(firstProfileImageView)
+        profileContainerView.addSubview(secondProfileImageView)
         
-        containerView.addSubview(profileStackView)
-        containerView.addSubview(followLabel)
-        containerView.addSubview(indicatorView)
-        containerView.addSubview(forwardButton)
+        // 팔로우 라벨 그룹
+        labelContainerView.addSubview(followRequestLabel)
+        labelContainerView.addSubview(followLabel)
         
-        addSubview(containerView)
+        // 버튼 그룹
+        buttonContainerView.addSubview(indicatorView)
+        buttonContainerView.addSubview(forwardButton)
+        
+        // 전체 뷰에 추가
+        addSubview(profileContainerView)
+        addSubview(labelContainerView)
+        addSubview(buttonContainerView)
     }
     
     private func setupConstraints() {
-        containerView.snp.makeConstraints {
-            $0.leading.top.bottom.equalToSuperview()
-            $0.trailing.equalTo(forwardButton.snp.leading).offset(-8)
+        // 프로필 이미지 그룹
+        profileContainerView.snp.makeConstraints {
+            $0.leading.centerY.equalToSuperview()
+            $0.size.equalTo(40)
         }
-
+        
         firstProfileImageView.snp.makeConstraints {
+            $0.leading.top.equalToSuperview()
             $0.size.equalTo(24)
         }
         
         secondProfileImageView.snp.makeConstraints {
+            $0.trailing.bottom.equalToSuperview().offset(-6)
             $0.size.equalTo(24)
         }
         
-        profileStackView.snp.makeConstraints {
-            $0.leading.centerY.equalToSuperview()
+        // zIndex 조정 (firstProfileImageView가 위로 올라오도록 설정)
+        profileContainerView.bringSubviewToFront(firstProfileImageView)
+
+        // 팔로우 라벨 그룹
+        labelContainerView.snp.makeConstraints {
+            $0.leading.equalTo(profileContainerView.snp.trailing).offset(8)
+            $0.centerY.equalToSuperview()
+        }
+        
+        followRequestLabel.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
         }
         
         followLabel.snp.makeConstraints {
-            $0.leading.equalTo(profileStackView.snp.trailing).offset(8)
-            $0.centerY.equalToSuperview()
+            $0.top.equalTo(followRequestLabel.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+
+        // 버튼 그룹
+        buttonContainerView.snp.makeConstraints {
+            $0.trailing.centerY.equalToSuperview()
+            $0.width.equalTo(24) // 버튼과 indicator의 너비
+            $0.height.equalTo(16) // 버튼 높이
         }
         
         indicatorView.snp.makeConstraints {
-            $0.size.equalTo(6)
-            $0.leading.equalTo(followLabel.snp.trailing).offset(6)
-            $0.centerY.equalToSuperview()
+            $0.leading.centerY.equalToSuperview()
+            $0.size.equalTo(10)
         }
         
-        // 오른쪽에 배치
         forwardButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(16)
+            $0.trailing.centerY.equalToSuperview()
+            $0.width.equalTo(8)
+            $0.height.equalTo(16)
         }
     }
     
@@ -114,5 +144,7 @@ class NotiFollowView: UIView {
 
     @objc private func followTapped() {
         print("FollowView tapped")
+        let followVC = FollowViewController()
+        viewController?.navigationController?.pushViewController(followVC, animated: true)
     }
 }
