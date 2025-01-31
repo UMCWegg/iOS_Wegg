@@ -85,10 +85,19 @@
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
-		DEE5A2012D47ED5F000F331D /* Exceptions for "BrowseItem" folder in "iOS_Wegg" target */ = {
+		FF3CC4262D4D5A7000006955 /* Exceptions for "Browse" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				BrowseItem.swift,
+				PostDetail/ViewController/PostDetailViewController.swift,
+				PostDetail/Views/Cell/EmojiCell.swift,
+				PostDetail/Views/EmojiPopupView.swift,
+				PostDetail/Views/PlusEmojiView.swift,
+				PostDetail/Views/PostDetailView.swift,
+				Search/ViewController/SearchViewController.swift,
+				Search/Views/SearchView.swift,
+				ViewController/BrowseViewController.swift,
+				Views/BrowseView.swift,
+				Views/CollectionView/BrowseCell.swift,
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
@@ -149,6 +158,9 @@
 		};
 		DE85E2742D4623BB0055C78C /* Browse */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FF3CC4262D4D5A7000006955 /* Exceptions for "Browse" folder in "iOS_Wegg" target */,
+			);
 			path = Browse;
 			sourceTree = "<group>";
 		};
@@ -184,15 +196,17 @@
 		};
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				DEE5A2012D47ED5F000F331D /* Exceptions for "BrowseItem" folder in "iOS_Wegg" target */,
-			);
 			path = BrowseItem;
 			sourceTree = "<group>";
 		};
 		FF3CBFAF2D41070000006955 /* PostModel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = PostModel;
+			sourceTree = "<group>";
+		};
+		FF3CC3402D4B41FD00006955 /* EmojiModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EmojiModel;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -274,6 +288,7 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
@@ -375,14 +390,15 @@
 				0E98EAC62D2FB789006F25EF /* Login */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
-				DE85E2742D4623BB0055C78C /* Browse */,
 				DE85E2762D4623BB0055C78C /* Home */,
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DE85E2822D4623BB0055C78C /* Time */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
