@@ -22,13 +22,16 @@ class PasswordResetEmailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setupActions()
     }
     
     // MARK: - Setup
     
     private func setupActions() {
-        passwordResetEmailView.sendNumberButton.addTarget(self,
-                                                          action: #selector(nextButtonTapped), for: .touchUpInside)
+        passwordResetEmailView.sendNumberButton.addTarget(
+            self,
+            action: #selector(nextButtonTapped),
+            for: .touchUpInside)
         
         passwordResetEmailView.backButton.addTarget(self,
                                                     action: #selector(backButtonTapped),
@@ -43,7 +46,7 @@ class PasswordResetEmailViewController: UIViewController {
     }
     
     @objc private func backButtonTapped() {
-        navigationController?.dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 
 }

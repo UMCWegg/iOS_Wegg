@@ -49,12 +49,12 @@ class EmailLoginViewController: UIViewController {
         LoginManager.shared.login(type: .email, email: email, password: password)
     }
     
-    @objc private func backButtonTapped() {
-        navigationController?.dismiss(animated: true)
-    }
-    
     @objc private func findPasswordButtonTapped() {
         let passwordResetEmailVC = PasswordResetEmailViewController()
         navigationController?.pushViewController(passwordResetEmailVC, animated: true)
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -22,6 +22,32 @@ class PasswordResetVerificationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setupActions()
+    }
+    
+    // MARK: - Setup
+    
+    private func setupActions() {
+        passwordResetVerificationView.confirmButton.addTarget(
+            self,
+            action: #selector(confirmButtonTapped),
+            for: .touchUpInside)
+        
+        passwordResetVerificationView.backButton.addTarget(
+            self,
+            action: #selector(backButtonTapped),
+            for: .touchUpInside)
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func confirmButtonTapped() {
+        let mainTabBarController = MainTabBarController()
+        navigationController?.pushViewController(mainTabBarController, animated: true)
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 
 }
