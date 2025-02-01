@@ -94,7 +94,16 @@ final class LoginManager {
             token
         }
         
-        authService.socialLogin(type: type, token: token)
+        let oauthID: String = switch type {
+            case .google:
+                userDefaultsManager.getGoogleData().email ?? ""
+            case .kakao:
+                userDefaultsManager.getKakaoData().id ?? ""
+            case .email:
+                ""
+            }
+        
+        authService.socialLogin(type: type, token: token, oauthID: oauthID)
             .sink { completion in
                 switch completion {
                 case .finished:

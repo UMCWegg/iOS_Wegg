@@ -15,13 +15,23 @@ final class GoogleLoginManager {
     static let shared = GoogleLoginManager()
     private let googleService = GoogleService.shared
     
+    private var cancellables: Set<AnyCancellable> = []
+    
     func requestLogin(from viewController: UIViewController) -> AnyPublisher<String, Error> {
         return Future { promise in
             self.googleService.signIn(presenting: viewController) { result in
                 switch result {
                 case .success((let email, let token)):
                     UserDefaultsManager.shared.saveGoogleData(token: token, email: email)
-                    promise(.success(email)) // 구글은 이메일을 oauthID로 사용
+                    AuthService.shared.socialSignUp(type: .google, token: token, oauthID: email)
+                        .sink { completion in
+                            if case .failure(let error) = completion {
+                                promise(.failure(error))
+                            }
+                        } receiveValue: { response in
+                            promise(.success(email))
+                        }
+                        .store(in: &self.cancellables)
                 case .failure(let error):
                     promise(.failure(error))
             }

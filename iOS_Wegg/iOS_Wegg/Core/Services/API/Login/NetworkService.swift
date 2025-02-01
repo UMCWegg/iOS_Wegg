@@ -12,9 +12,9 @@ import Moya
 
 enum APIEndpoint {
     case signUp(SignUpRequest)
-    case socialSignUp(SocialType, String)
+    case socialSignUp(SocialType, String, String)
     case login(LoginRequest)
-    case socialLogin(SocialType, String)
+    case socialLogin(SocialType, String, String)
     case logout
     case updateSettings(String)
     case verifyPhone(String)
@@ -26,7 +26,7 @@ enum APIEndpoint {
 
 extension APIEndpoint: TargetType {
     var baseURL: URL {
-        guard let baseURL = URL(string: "https://your-base-url.com") else {
+        guard let baseURL = URL(string: "https://weggserver.store") else {
             fatalError("Error: Invalid URL")
         }
         return baseURL
@@ -76,15 +76,15 @@ extension APIEndpoint: TargetType {
         switch self {
         case .login(let request):
             return .requestJSONEncodable(request)
-        case .socialLogin(let type, let token):
+        case .socialLogin(let type, let token, let oauthID):
             return .requestParameters(
-                parameters: ["type": type.rawValue, "token": token],
+                parameters: ["type": type.rawValue, "token": token, "oauth_id": oauthID],
                 encoding: JSONEncoding.default)
         case .signUp(let request):
             return .requestJSONEncodable(request)
-        case .socialSignUp(let type, let token):
+        case .socialSignUp(let type, let token, let oauthID):
             return .requestParameters(
-                parameters: ["type": type.rawValue, "token": token],
+                parameters: ["type": type.rawValue, "token": token, "oauth_id": oauthID],
                 encoding: JSONEncoding.default)
         case .logout:
             return .requestPlain

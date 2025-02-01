@@ -28,17 +28,23 @@ final class AuthService {
         publisher(.signUp(request))
     }
     
-    func socialSignUp(type: SocialType, token: String) -> AnyPublisher<SignUpResponse, Error> {
-        publisher(.socialSignUp(type, token))
+    func socialSignUp(
+        type: SocialType,
+        token: String,
+        oauthID: String) -> AnyPublisher<SignUpResponse, Error> {
+        publisher(.socialSignUp(type, token, oauthID))
     }
     
     func login(with request: LoginRequest) -> AnyPublisher<LoginResponse, Error> {
         publisher(.login(request))
     }
     
-    func socialLogin(type: SocialType, token: String) -> AnyPublisher<LoginResponse, Error> {
+    func socialLogin(
+        type: SocialType,
+        token: String,
+        oauthID: String) -> AnyPublisher<LoginResponse, Error> {
         let processedToken = type == .kakao ? "K\(token)" : token
-        return publisher(.socialLogin(type, processedToken))
+        return publisher(.socialLogin(type, processedToken, oauthID))
     }
     
     func logout() -> AnyPublisher<Void, Error> {

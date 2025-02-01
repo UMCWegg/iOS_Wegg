@@ -35,6 +35,7 @@
 		DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020DC2D420F3B003A273F /* FirebaseFirestore */; };
 		DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = DE00212C2D433D7F003A273F /* NMapsMap */; };
 		DE00217A2D439F3F003A273F /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */; };
+		DE1602EC2D4E18DD00416859 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DE1602EB2D4E18DD00416859 /* CombineMoya */; };
 		DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85E2772D4623BB0055C78C /* MainTabBarController.swift */; };
 /* End PBXBuildFile section */
 
@@ -205,6 +206,7 @@
 				0E98E9EF2D2E3265006F25EF /* SnapKit in Frameworks */,
 				DE0020D92D420F0E003A273F /* FirebaseAuth in Frameworks */,
 				DE0020D12D414BD9003A273F /* FirebaseAppCheck in Frameworks */,
+				DE1602EC2D4E18DD00416859 /* CombineMoya in Frameworks */,
 				0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */,
 				DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */,
 				DE0020CD2D414BD9003A273F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
@@ -404,6 +406,7 @@
 				DE0020DA2D420F0E003A273F /* FirebaseCore */,
 				DE0020DC2D420F3B003A273F /* FirebaseFirestore */,
 				DE00212C2D433D7F003A273F /* NMapsMap */,
+				DE1602EB2D4E18DD00416859 /* CombineMoya */,
 			);
 			productName = iOS_Wegg;
 			productReference = 0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */;
@@ -902,6 +905,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DE00212B2D433D7F003A273F /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
 			productName = NMapsMap;
+		};
+		DE1602EB2D4E18DD00416859 /* CombineMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E98E9F32D2E336F006F25EF /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = CombineMoya;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
