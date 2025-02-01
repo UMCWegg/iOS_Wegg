@@ -88,7 +88,9 @@
 		FF3CC4262D4D5A7000006955 /* Exceptions for "Browse" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				PostDetail/ViewController/CommentViewController.swift,
 				PostDetail/ViewController/PostDetailViewController.swift,
+				PostDetail/Views/Cell/CommentCell.swift,
 				PostDetail/Views/Cell/EmojiCell.swift,
 				PostDetail/Views/CommentView.swift,
 				PostDetail/Views/EmojiPopupView.swift,

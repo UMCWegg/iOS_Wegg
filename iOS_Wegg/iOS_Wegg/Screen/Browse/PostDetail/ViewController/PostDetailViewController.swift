@@ -37,6 +37,7 @@ class PostDetailViewController: UIViewController {
         setNavigation()
         emojiButtonAction()
         handlePlusEmojiSelection()
+        commentButtonAction()
     }
     
     // MARK: - Methods
@@ -147,5 +148,29 @@ class PostDetailViewController: UIViewController {
         }, completion: { _ in
             popupView.removeFromSuperview() // 애니메이션 완료 후 제거
         })
+    }
+    
+    /// 댓글 버튼에 액션을 추가하는 메서드
+    private func commentButtonAction() {
+        postDetailView.commentButton.addTarget(
+            self,
+            action: #selector(handleCommentButtonTap),
+            for: .touchUpInside)
+    }
+    
+    /// 댓글 버튼 클릭 시 바텀 시트 띄우기
+    @objc private func handleCommentButtonTap() {
+        let commentVC = CommentViewController()
+        
+        if let sheet = commentVC.sheetPresentationController {
+            sheet.detents = [
+                .medium(),
+                .large()
+            ]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 25
+        }
+        
+        present(commentVC, animated: true, completion: nil)
     }
 }
