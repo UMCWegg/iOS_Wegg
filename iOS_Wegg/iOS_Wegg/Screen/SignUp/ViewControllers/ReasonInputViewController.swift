@@ -69,8 +69,8 @@ class ReasonInputViewController: UIViewController {
     }
     
     @objc private func nextButtonTapped() {
-        let signUpCompleteViewController = SignUpCompleteViewController()
-        navigationController?.pushViewController(signUpCompleteViewController, animated: true)
+        let getAlertPermissionVC = GetAlertPermissionViewController()
+        navigationController?.pushViewController(getAlertPermissionVC, animated: true)
     }
     
     @objc private func backButtonTapped() {
