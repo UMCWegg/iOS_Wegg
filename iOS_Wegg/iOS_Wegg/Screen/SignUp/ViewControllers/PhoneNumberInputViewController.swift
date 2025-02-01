@@ -24,4 +24,19 @@ class PhoneNumberInputViewController: UIViewController {
         view.backgroundColor = .white
     }
     
+    // MARK: - Setup
+    
+    private func setupActions() {
+        phoneNumberInputView.sendVerificationButton.addTarget(self,
+                                                              action: #selector(sendVerificationButtonTapped),
+                                                              for: .touchUpInside)
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func sendVerificationButtonTapped() {
+        let phoneNumberVerificationVC = PhoneNumberVerificationViewController()
+        navigationController?.pushViewController(phoneNumberVerificationVC, animated: true)
+    }
+    
 }
