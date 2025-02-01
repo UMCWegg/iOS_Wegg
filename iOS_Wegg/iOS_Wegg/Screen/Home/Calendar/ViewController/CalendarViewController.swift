@@ -60,6 +60,11 @@ class CalendarViewController:
         generateCalendarDays()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     @objc private func previousMonthTapped() {
         components.month = (components.month ?? 1) - 1
         generateCalendarDays()

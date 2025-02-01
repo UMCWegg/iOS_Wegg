@@ -111,11 +111,10 @@ class HeaderView: UIView {
         if isHomeMode {
             print("캘린더 버튼 터치 ✅")
             let calendarVC = CalendarViewController()
-            calendarVC.modalPresentationStyle = .fullScreen
-            viewController.present(calendarVC, animated: false, completion: nil)
+            viewController.navigationController?.pushViewController(calendarVC, animated: false)
         } else {
             print("홈 버튼 터치 ✅")
-            viewController.dismiss(animated: false, completion: nil)
+            viewController.navigationController?.popViewController(animated: false)
         }
     }
     
@@ -123,6 +122,18 @@ class HeaderView: UIView {
         print("알림 버튼 터치 ✅")
         let notiVC = NotiViewController()
         notiVC.hidesBottomBarWhenPushed = true
-        viewController?.navigationController?.pushViewController(notiVC, animated: true)
+        
+        if let navigationController = viewController?.navigationController {
+            /// 네비게이션 컨트롤러가 있는 경우
+            navigationController.pushViewController(notiVC, animated: true)
+        } else if let presentingViewController = viewController?.presentingViewController {
+            /// 현재 뷰 컨트롤러가 모달로 표시된 경우
+            viewController?.dismiss(animated: false) {
+                presentingViewController.present(notiVC, animated: true, completion: nil)
+            }
+        } else {
+            /// 그 외의 경우 (예: 루트 뷰 컨트롤러인 경우)
+            viewController?.present(notiVC, animated: true, completion: nil)
+        }
     }
 }
