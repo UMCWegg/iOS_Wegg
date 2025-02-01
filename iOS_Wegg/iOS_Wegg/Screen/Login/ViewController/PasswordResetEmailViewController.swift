@@ -23,5 +23,27 @@ class PasswordResetEmailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
     }
+    
+    // MARK: - Setup
+    
+    private func setupActions() {
+        passwordResetEmailView.sendNumberButton.addTarget(self,
+                                                          action: #selector(nextButtonTapped), for: .touchUpInside)
+        
+        passwordResetEmailView.backButton.addTarget(self,
+                                                    action: #selector(backButtonTapped),
+                                                    for: .touchUpInside)
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func nextButtonTapped() {
+        let passwordResetVerificationVC = PasswordResetVerificationViewController()
+        navigationController?.pushViewController(passwordResetVerificationVC, animated: true)
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.dismiss(animated: true)
+    }
 
 }
