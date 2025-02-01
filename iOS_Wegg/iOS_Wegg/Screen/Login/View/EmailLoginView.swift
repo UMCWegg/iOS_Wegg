@@ -23,7 +23,7 @@ class EmailLoginView: UIView {
     
     // MARK: - Properties
     
-    private let backButton = UIButton().then {
+    let backButton = UIButton().then {
         $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         $0.tintColor = .black
     }
