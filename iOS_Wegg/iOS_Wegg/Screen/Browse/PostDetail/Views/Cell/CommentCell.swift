@@ -23,7 +23,6 @@ class CommentCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Property
     
     private let profileImageView = UIImageView().then {
@@ -48,7 +47,7 @@ class CommentCell: UITableViewCell {
     private func setupView() {
         [profileImageView,
          usernameLabel,
-         commentLabel].forEach{ self.addSubview($0)}
+         commentLabel].forEach { self.addSubview($0)}
     }
     
     private func setupConstraints() {

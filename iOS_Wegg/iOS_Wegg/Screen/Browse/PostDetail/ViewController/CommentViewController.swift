@@ -21,6 +21,9 @@ class CommentViewController: UIViewController {
         setupActions()
         setupTableView()
         setupSheetPresentation() // 바텀 시트 설정
+        
+        // 초기 이모지 설정 테스트
+        commentView.updateEmojiImages(with: ["blush", "cry", "pray"])
     }
     
     override func loadView() {
