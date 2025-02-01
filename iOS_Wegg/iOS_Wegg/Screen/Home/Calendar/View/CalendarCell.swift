@@ -22,8 +22,8 @@ class CalendarCell: UICollectionViewCell {
         $0.font = .systemFont(ofSize: 14, weight: .bold)
         $0.textColor = .secondary
         $0.textAlignment = .center
-        $0.numberOfLines = 1 // ✅ 한 줄로 제한 (줄넘김 방지)
-        $0.adjustsFontSizeToFitWidth = true // ✅ 글자가 커지더라도 크기에 맞춤
+        $0.numberOfLines = 1 // 한 줄로 제한 (줄넘김 방지)
+        $0.adjustsFontSizeToFitWidth = true // 글자가 커지더라도 크기에 맞춤
     }
     
     private let circleView = UIView().then {
@@ -62,7 +62,7 @@ class CalendarCell: UICollectionViewCell {
         
         dateLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.9) // ✅ 가로 너비 제한 추가 (요일 줄넘김 방지)
+            $0.width.equalToSuperview().multipliedBy(0.9) // 가로 너비 제한 추가 (요일 줄넘김 방지)
         }
     }
 

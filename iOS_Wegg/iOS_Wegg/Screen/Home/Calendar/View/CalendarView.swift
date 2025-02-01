@@ -60,7 +60,6 @@ class CalendarView: UIView {
     
     let toggleButton = ToggleButtonView()
 
-    // 기존 달력 컬렉션 뷰 (월간 달력)
     let calendarCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -72,24 +71,11 @@ class CalendarView: UIView {
         return cv
     }()
 
-    // 새로운 공부 시간 컬렉션 뷰 (공부 시간만 표시)
-    let studyTimeCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .clear
-        cv.register(StudyTimeCell.self, forCellWithReuseIdentifier: StudyTimeCell.identifier)
-        return cv
-    }()
-
     // MARK: - Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
         setupLayout()
-        setupToggleAction() // ✅ 토글 버튼 액션 추가
     }
     
     required init?(coder: NSCoder) {
@@ -109,11 +95,7 @@ class CalendarView: UIView {
         addSubview(previousButton)
         addSubview(nextButton)
         addSubview(toggleButton)
-
         addSubview(calendarCollectionView)
-        addSubview(studyTimeCollectionView)
-
-        studyTimeCollectionView.isHidden = true // ✅ 초기에는 월간 달력만 보이도록 설정
     }
     
     private func setupLayout() {
@@ -165,29 +147,10 @@ class CalendarView: UIView {
             $0.width.equalTo(60)
             $0.height.equalTo(32)
         }
-         
+        
         calendarCollectionView.snp.makeConstraints {
             $0.top.equalTo(monthLabel.snp.bottom).offset(10)
             $0.leading.trailing.bottom.equalToSuperview().inset(16)
         }
-
-        studyTimeCollectionView.snp.makeConstraints {
-            $0.top.equalTo(monthLabel.snp.bottom).offset(10)
-            $0.leading.trailing.bottom.equalToSuperview().inset(16)
-        }
-    }
-
-    // ✅ 토글 버튼을 눌렀을 때 collectionView 변경
-    private func setupToggleAction() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleState))
-        toggleButton.addGestureRecognizer(tapGesture)
-    }
-
-    // ✅ 토글 버튼 상태 변경 시 호출
-    @objc private func toggleState() {
-        let isOn = toggleButton.isOn // 토글 상태 확인
-        
-        calendarCollectionView.isHidden = isOn
-        studyTimeCollectionView.isHidden = !isOn
     }
 }

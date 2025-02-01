@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-class ToggleButtonView: UIButton { // UIButton을 상속받도록 변경
+class ToggleButtonView: UIView {
     
     // MARK: - Properties
     var isOn: Bool = false {
@@ -43,7 +43,8 @@ class ToggleButtonView: UIButton { // UIButton을 상속받도록 변경
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        updateToggleText()
+        setupGesture()
+        updateToggleText() // 초기 텍스트 설정
     }
     
     required init?(coder: NSCoder) {
@@ -55,11 +56,9 @@ class ToggleButtonView: UIButton { // UIButton을 상속받도록 변경
         addSubview(backgroundView)
         backgroundView.addSubview(toggleView)
         toggleView.addSubview(toggleLabel)
-
+        
         backgroundView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(22)
-            make.width.equalTo(36)
         }
         
         toggleView.snp.makeConstraints { make in
@@ -71,8 +70,11 @@ class ToggleButtonView: UIButton { // UIButton을 상속받도록 변경
         toggleLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-        
-        addTarget(self, action: #selector(toggleState), for: .touchUpInside) // 버튼 클릭 감지
+    }
+    
+    private func setupGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleState))
+        backgroundView.addGestureRecognizer(tapGesture)
     }
     
     // MARK: - Actions
@@ -80,10 +82,6 @@ class ToggleButtonView: UIButton { // UIButton을 상속받도록 변경
         isOn.toggle()
     }
     
-    private func updateToggleText() {
-        toggleLabel.text = isOn ? "T" : "P"
-    }
-
     private func updateTogglePosition(animated: Bool) {
         let newLeadingOffset = isOn ? (backgroundView.frame.width - toggleView.frame.width - 1) : 1
 
@@ -100,5 +98,9 @@ class ToggleButtonView: UIButton { // UIButton을 상속받도록 변경
             }
             self.layoutIfNeeded()
         }
+    }
+    
+    private func updateToggleText() {
+        toggleLabel.text = isOn ? "T" : "P"
     }
 }
