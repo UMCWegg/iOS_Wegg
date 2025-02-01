@@ -5,10 +5,17 @@
 //  Created by 이건수 on 2025.01.21.
 //
 
+import Foundation
+
+import Combine
+import Dispatch
+
 final class EmailLoginManager {
-   static let shared = EmailLoginManager()
+    static let shared = EmailLoginManager()
    
-   private init() {}
+    private init() {}
+    
+    private var cancellables: Set<AnyCancellable> = []
    
     func login(email: String, password: String) {
         let request = LoginRequest(
@@ -18,13 +25,18 @@ final class EmailLoginManager {
             password: password
         )
         
-        AuthService.shared.login(with: request) { result in
-            switch result {
-            case .success(let response):
-                print("Login success: \(response)")
-            case .failure(let error):
-                print("Login failed: \(error)")
+        AuthService.shared.login(with: request)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print("로그인 실패: \(error)")
+                }
+            } receiveValue: { response in
+                print("로그인 성공: \(response)")
             }
-        }
+            .store(in: &cancellables)
     }
 }

@@ -12,6 +12,7 @@ class LoginViewController: UIViewController {
     // MARK: - Properties
     
     private let loginView = LoginView()
+    private let loginManager = LoginManager.shared
     
     // MARK: - Lifecycle
     
@@ -23,6 +24,13 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .primary
         setupActions()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleLoginSuccess),
+            name: NSNotification.Name("LoginSuccess"),
+            object: nil
+        )
         
     }
     
@@ -40,6 +48,10 @@ class LoginViewController: UIViewController {
         loginView.emailLoginButton.addTarget(self,
                                              action: #selector(emailLoginButtonTapped),
                                              for: .touchUpInside)
+        
+        loginView.signUpButton.addTarget(self,
+                                         action: #selector(signUpButtonTapped),
+                                         for: .touchUpInside)
     }
     
     // Navigation 추후 구현
@@ -47,16 +59,32 @@ class LoginViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func googleLoginButtonTapped() {
+        print("Google Login Started")
         LoginManager.shared.login(type: .google, from: self)
     }
     
     @objc private func kakaoLoginButtonTapped() {
+        print("Kakao Login Started")
         LoginManager.shared.login(type: .kakao)
     }
     
     @objc private func emailLoginButtonTapped() {
+        print("Email Login Button Tapped")
         let emailLoginVC = EmailLoginViewController()
         navigationController?.pushViewController(emailLoginVC, animated: true)
+    }
+    
+    @objc private func signUpButtonTapped() {
+        print("Sign Up Button Tapped")
+        let signUpVC = SignUpViewController()
+        navigationController?.pushViewController(signUpVC, animated: true)
+    }
+    
+    @objc private func handleLoginSuccess() {
+        print("Login Success!")
+        // TODO: 메인 화면으로 이동
+        // let mainVC = MainViewController()
+        // navigationController?.setViewControllers([mainVC], animated: true)
     }
     
 }

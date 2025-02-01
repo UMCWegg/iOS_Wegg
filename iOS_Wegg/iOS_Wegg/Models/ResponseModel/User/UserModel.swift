@@ -51,3 +51,11 @@ struct EmailUser: Codable {
     let email: String
     let password: String
 }
+
+struct UserUpdateRequest: Codable {
+    let address: String
+    
+    enum CodingKeys: String, CodingKey {
+        case address
+    }
+}

@@ -10,4 +10,13 @@ struct LoginResponse: Codable {
     let refreshToken: String?
     let oauthID: String?
     let email: String?
+    let type: SocialType
+    
+    enum CodingKeys: String, CodingKey {
+        case accessToken = "access_token"
+        case refreshToken = "refresh_token"
+        case oauthID = "oauth_id"
+        case email
+        case type = "social_type"
+    }
 }

@@ -18,3 +18,15 @@ struct LoginRequest: Codable {
         case password
     }
 }
+
+struct VerificationResponse: Codable {
+    let isSuccess: Bool
+    let message: String
+    let verificationID: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case isSuccess = "is_success"
+        case message
+        case verificationID = "verification_id"
+    }
+}

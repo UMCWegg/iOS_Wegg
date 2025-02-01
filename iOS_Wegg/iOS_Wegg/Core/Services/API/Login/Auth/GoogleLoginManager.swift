@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Combine
 import GoogleSignIn
 import FirebaseAuth
 
@@ -14,31 +15,16 @@ final class GoogleLoginManager {
     static let shared = GoogleLoginManager()
     private let googleService = GoogleService.shared
     
-    private init() {}
-    
-    func requestLogin(from viewController: UIViewController) {
-        googleService.signIn(presenting: viewController) { result in
-            switch result {
-            case .success((let email, let token)):
-                UserDefaultsManager.shared.saveGoogleData(token: token, email: email)
-                let request = LoginRequest(
-                    type: .google,
-                    accessToken: token,
-                    email: email,
-                    password: nil
-                )
-                
-                AuthService.shared.login(with: request) { result in
-                    switch result {
-                    case .success(let response):
-                        print("Login success: \(response)")
-                    case .failure(let error):
-                        print("Login failed: \(error)")
-                    }
-                }
-            case .failure(let error):
-                print("Google sign in failed: \(error)")
+    func requestLogin(from viewController: UIViewController) -> AnyPublisher<String, Error> {
+        return Future { promise in
+            self.googleService.signIn(presenting: viewController) { result in
+                switch result {
+                case .success((let email, let token)):
+                    UserDefaultsManager.shared.saveGoogleData(token: token, email: email)
+                    promise(.success(email)) // 구글은 이메일을 oauthID로 사용
+                case .failure(let error):
+                    promise(.failure(error))
             }
         }
-    }
+    }.eraseToAnyPublisher()}
 }

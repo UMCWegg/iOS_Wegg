@@ -8,12 +8,15 @@
 import Foundation
 
 import Alamofire
+import Combine
+import CombineMoya
+import Moya
 
 final class AuthService {
     // MARK: - Properties
     
     static let shared = AuthService()
-    private let baseURL = "YOUR_BASE_URL"
+    private let provider = MoyaProvider<APIEndpoint>()
     
     // MARK: - Init
     
@@ -21,27 +24,77 @@ final class AuthService {
     
     // MARK: - Functions
     
-    func login(with request: LoginRequest,
-               completion: @escaping (Result<LoginResponse, Error>) -> Void) {
-        let endpoint = "\(baseURL)/auth/login"
-        
-        AF.request(
-            endpoint,
-            method: .post,
-            parameters: request,
-            encoder: JSONParameterEncoder.default
-        )
-        .validate()
-        .responseDecodable(of: LoginResponse.self) { response in
-            switch response.result {
-            case .success(let loginResponse):
-                UserDefaultsManager.shared.saveToken(loginResponse.accessToken)
-                completion(.success(loginResponse))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func signUp(with request: SignUpRequest) -> AnyPublisher<SignUpResponse, Error> {
+        publisher(.signUp(request))
     }
+    
+    func socialSignUp(type: SocialType, token: String) -> AnyPublisher<SignUpResponse, Error> {
+        publisher(.socialSignUp(type, token))
+    }
+    
+    func login(with request: LoginRequest) -> AnyPublisher<LoginResponse, Error> {
+        publisher(.login(request))
+    }
+    
+    func socialLogin(type: SocialType, token: String) -> AnyPublisher<LoginResponse, Error> {
+        let processedToken = type == .kakao ? "K\(token)" : token
+        return publisher(.socialLogin(type, processedToken))
+    }
+    
+    func logout() -> AnyPublisher<Void, Error> {
+        provider.requestPublisher(.logout)
+            .filterSuccessfulStatusCodes()
+            .map { _ in }
+            .mapError { error in
+                if let moyaError = error as? MoyaError {
+                    switch moyaError {
+                    case .statusCode:
+                        return AuthError.serverError
+                    default:
+                        return error
+                    }
+                }
+                return error
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func verifyEmail(_ email: String) -> AnyPublisher<VerificationResponse, Error> {
+        publisher(.verifyEmail(email))
+    }
+    
+    func verifyPhone(_ phone: String) -> AnyPublisher<VerificationResponse, Error> {
+        publisher(.verifyPhone(phone))
+    }
+    
+    func checkVerificationNumber(_ number: String) -> AnyPublisher<VerificationResponse, Error> {
+        publisher(.verificationNum(number))
+    }
+    
+    func checkAccountId(_ id: String) -> AnyPublisher<VerificationResponse, Error> {
+        publisher(.idCheck(id))
+    }
+
+    private func publisher<T: Decodable>(_ target: APIEndpoint) -> AnyPublisher<T, Error> {
+        return provider.requestPublisher(target)
+            .filterSuccessfulStatusCodes()
+            .tryMap { response -> T in
+                try response.map(T.self, using: JSONDecoder())
+            }
+            .mapError { error in
+                if let moyaError = error as? MoyaError {
+                    switch moyaError {
+                    case .statusCode:
+                        return AuthError.serverError
+                    default:
+                        return error
+                    }
+                }
+                return error
+            }
+            .eraseToAnyPublisher()
+    }
+
 }
 
 // MARK: - Error Handling
