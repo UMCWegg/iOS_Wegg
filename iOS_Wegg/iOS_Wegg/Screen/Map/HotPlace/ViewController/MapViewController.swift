@@ -123,7 +123,8 @@ extension MapViewController: MapOverlayGestureDelegate {
     }
     
     func didPlaceSearchButtonTapped() {
-        print("Search Button Tapped")
+        lazy var mapSearchVC = MapSearchViewController()
+        navigationController?.pushViewController(mapSearchVC, animated: true)
     }
     
 }
