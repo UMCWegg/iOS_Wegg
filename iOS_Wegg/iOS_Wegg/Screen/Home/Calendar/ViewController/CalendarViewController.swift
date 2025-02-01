@@ -5,12 +5,10 @@
 
 import UIKit
 
-class CalendarViewController:
-    UIViewController,
-    UICollectionViewDataSource,
-    UICollectionViewDelegateFlowLayout {
+class CalendarViewController: UIViewController, UICollectionViewDataSource {
     
     private let calendarView = CalendarView()
+    private var studyTimes: [String] = ["1시간", "2시간", "3시간"] // 샘플 데이터
     private var days: [String] = []
     private var weeks: [String] = ["일", "월", "화", "수", "목", "금", "토"]
     
@@ -20,8 +18,8 @@ class CalendarViewController:
     private var components = DateComponents()
     private var daysCountInMonth = 0
     private var weekdayAdding = 0
-    private var todayDate: Int = 0  // 오늘 날짜 저장
-    
+    private var todayDate: Int = 0
+
     override func loadView() {
         view = calendarView
     }
@@ -29,17 +27,14 @@ class CalendarViewController:
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        calendarView.calendarCollectionView.delegate = self
         calendarView.calendarCollectionView.dataSource = self
+        calendarView.studyTimeCollectionView.dataSource = self
         
-        calendarView.headerView.viewController = self
-        calendarView.headerView.updateHeaderMode(isHomeMode: false)
-        
-        calendarView.calendarCollectionView.register(
-            CalendarCell.self,
-            forCellWithReuseIdentifier: CalendarCell.identifier
-        )
-        
+        calendarView.toggleButton.onToggleChanged = { [weak self] isOn in
+            self?.calendarView.calendarCollectionView.isHidden = isOn
+            self?.calendarView.studyTimeCollectionView.isHidden = !isOn
+        }
+
         calendarView.previousButton.addTarget(
             self,
             action: #selector(previousMonthTapped),
@@ -55,16 +50,16 @@ class CalendarViewController:
         components.year = cal.component(.year, from: now)
         components.month = cal.component(.month, from: now)
         components.day = 1
-        todayDate = cal.component(.day, from: now)  // 오늘 날짜 저장
-        
+        todayDate = cal.component(.day, from: now)
+
         generateCalendarDays()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
+
     @objc private func previousMonthTapped() {
         components.month = (components.month ?? 1) - 1
         generateCalendarDays()
@@ -98,52 +93,59 @@ class CalendarViewController:
             }
         }
     }
-}
 
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
-extension CalendarViewController {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
-    }
-    
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return weeks.count
-        default:
-            return days.count
+        if collectionView == calendarView.calendarCollectionView {
+            return section == 0 ? weeks.count : days.count
+        } else {
+            return studyTimes.count
         }
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CalendarCell.identifier,
-            for: indexPath) as? CalendarCell else {
-            return UICollectionViewCell()
+        if collectionView == calendarView.calendarCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CalendarCell.identifier, for: indexPath
+            ) as? CalendarCell else {
+                return UICollectionViewCell()
+            }
+            
+            switch indexPath.section {
+            case 0:
+                cell.configure(day: weeks[indexPath.row], isWeekday: true)
+            default:
+                let isToday = days[indexPath.row] == String(todayDate)
+                cell.configure(day: days[indexPath.row], isToday: isToday)
+            }
+            
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: StudyTimeCell.identifier, for: indexPath
+            ) as? StudyTimeCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(with: studyTimes[indexPath.row])
+            return cell
         }
-        
-        switch indexPath.section {
-        case 0:
-            cell.configure(day: weeks[indexPath.row], isWeekday: true)
-        default:
-            let isToday = days[indexPath.row] == String(todayDate)
-            cell.configure(day: days[indexPath.row], isToday: isToday)
-        }
-        
-        return cell
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let totalSpacing: CGFloat = 48
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        let totalSpacing: CGFloat = 40 // 기존 48에서 감소하여 여백 줄이기
         let width = (collectionView.frame.width - totalSpacing) / 7
-        
-        return CGSize(width: width, height: width)
+
+        if indexPath.section == 0 {
+            return CGSize(width: width * 1.15, height: width * 0.9) // 요일 셀 크기 증가
+        } else {
+            return CGSize(width: width, height: width)
+        }
     }
 }

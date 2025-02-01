@@ -21,53 +21,65 @@ class CalendarView: UIView {
     
     private let profileLabel = UILabel().then {
         $0.text = "Me"
-        $0.font = .notoSans(.medium, size: 14)
-        $0.textColor = .secondary
+        $0.font = .systemFont(ofSize: 14, weight: .medium)
+        $0.textColor = UIColor.label
     }
     
     private let followerLabel = UILabel().then {
         $0.text = "0\n팔로워"
-        $0.font = .notoSans(.medium, size: 20)
-        $0.textColor = .secondary
+        $0.font = .systemFont(ofSize: 20, weight: .medium)
+        $0.textColor = UIColor.label
         $0.numberOfLines = 2
         $0.textAlignment = .center
     }
     
     private let followingLabel = UILabel().then {
         $0.text = "0\n팔로잉"
-        $0.font = .notoSans(.medium, size: 20)
-        $0.textColor = .secondary
+        $0.font = .systemFont(ofSize: 20, weight: .medium)
+        $0.textColor = UIColor.label
         $0.numberOfLines = 2
         $0.textAlignment = .center
     }
     
     let monthLabel = UILabel().then {
         $0.text = "2025년 1월"
-        $0.font = .notoSans(.medium, size: 20)
-        $0.textColor = .secondary
+        $0.font = .systemFont(ofSize: 20, weight: .medium)
+        $0.textColor = UIColor.label
         $0.textAlignment = .center
     }
     
     let previousButton = UIButton().then {
         $0.setTitle("<", for: .normal)
-        $0.setTitleColor(.secondary, for: .normal)
+        $0.setTitleColor(UIColor.label, for: .normal)
     }
     
     let nextButton = UIButton().then {
         $0.setTitle(">", for: .normal)
-        $0.setTitleColor(.secondary, for: .normal)
+        $0.setTitleColor(UIColor.label, for: .normal)
     }
     
     let toggleButton = ToggleButtonView()
+    
+    let containerView = UIView() // 두 개의 컬렉션 뷰를 담는 컨테이너 뷰 추가
 
     let calendarCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 8
+        layout.minimumInteritemSpacing = 2 // 셀 간 간격을 최소화 (기존 8 → 2)
         layout.minimumLineSpacing = 8
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .clear
         cv.register(CalendarCell.self, forCellWithReuseIdentifier: CalendarCell.identifier)
+        return cv
+    }()
+    
+    let studyTimeCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .clear
+        cv.register(StudyTimeCell.self, forCellWithReuseIdentifier: StudyTimeCell.identifier)
+        cv.isHidden = true // 기본적으로 숨김
         return cv
     }()
 
@@ -76,6 +88,7 @@ class CalendarView: UIView {
         super.init(frame: frame)
         setupUI()
         setupLayout()
+        setupToggleAction()
     }
     
     required init?(coder: NSCoder) {
@@ -85,7 +98,6 @@ class CalendarView: UIView {
     // MARK: - Setup Methods
     private func setupUI() {
         backgroundColor = .primary
-
         addSubview(headerView)
         addSubview(profileIcon)
         addSubview(followerLabel)
@@ -95,7 +107,9 @@ class CalendarView: UIView {
         addSubview(previousButton)
         addSubview(nextButton)
         addSubview(toggleButton)
-        addSubview(calendarCollectionView)
+        addSubview(containerView) // 컨테이너 뷰 추가
+        containerView.addSubview(calendarCollectionView) // 컨테이너에 추가
+        containerView.addSubview(studyTimeCollectionView) // 컨테이너에 추가
     }
     
     private func setupLayout() {
@@ -148,9 +162,24 @@ class CalendarView: UIView {
             $0.height.equalTo(32)
         }
         
-        calendarCollectionView.snp.makeConstraints {
+        containerView.snp.makeConstraints {
             $0.top.equalTo(monthLabel.snp.bottom).offset(10)
-            $0.leading.trailing.bottom.equalToSuperview().inset(16)
+            $0.leading.trailing.bottom.equalToSuperview().inset(10)
+        }
+
+        calendarCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        studyTimeCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+    
+    private func setupToggleAction() {
+        toggleButton.onToggleChanged = { [weak self] isOn in
+            self?.calendarCollectionView.isHidden = isOn
+            self?.studyTimeCollectionView.isHidden = !isOn
         }
     }
 }

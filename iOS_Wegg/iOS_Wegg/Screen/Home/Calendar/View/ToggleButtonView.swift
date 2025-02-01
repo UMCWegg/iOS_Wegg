@@ -16,8 +16,11 @@ class ToggleButtonView: UIView {
         didSet {
             updateTogglePosition(animated: true)
             updateToggleText()
+            onToggleChanged?(isOn) /// 토글 변경 시 호출
         }
     }
+    
+    var onToggleChanged: ((Bool) -> Void)? /// 토글 상태 변경 시 호출되는 클로저
     
     // MARK: - UI Components
     private let backgroundView = UIView().then {
