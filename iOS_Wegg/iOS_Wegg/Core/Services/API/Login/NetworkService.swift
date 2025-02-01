@@ -26,7 +26,7 @@ enum APIEndpoint {
 
 extension APIEndpoint: TargetType {
     var baseURL: URL {
-        guard let baseURL = URL(string: "3.38.86.106") else {
+        guard let baseURL = URL(string: "https://your-base-url.com") else {
             fatalError("Error: Invalid URL")
         }
         return baseURL
