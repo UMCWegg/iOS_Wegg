@@ -23,7 +23,6 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .primary
         setupActions()
-        
     }
     
     // MARK: - Setup
@@ -41,8 +40,6 @@ class LoginViewController: UIViewController {
                                              action: #selector(emailLoginButtonTapped),
                                              for: .touchUpInside)
     }
-    
-    // Navigation 추후 구현
     
     // MARK: - Actions
     
