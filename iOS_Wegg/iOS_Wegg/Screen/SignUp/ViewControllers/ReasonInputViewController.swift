@@ -27,6 +27,11 @@ class ReasonInputViewController: UIViewController {
     // MARK: - Setup
     
     private func setupActions() {
+        
+        reasonInputView.nextButton.addTarget(self,
+                                             action: #selector(nextButtonTapped),
+                                             for: .touchUpInside)
+        
         reasonInputView.backButton.addTarget(
             self,
             action: #selector(backButtonTapped),
@@ -39,10 +44,6 @@ class ReasonInputViewController: UIViewController {
     }
     
     // MARK: - Actions
-    
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
     
     private func handlereasonSelection(_ reason: String) {
         guard let reasonType = UserReason(rawValue: reason) else { return }
@@ -67,8 +68,13 @@ class ReasonInputViewController: UIViewController {
         
     }
     
-    private func moveToNextScreen() {
-        // 추후 구현 예정
+    @objc private func nextButtonTapped() {
+        let signUpCompleteViewController = SignUpCompleteViewController()
+        navigationController?.pushViewController(signUpCompleteViewController, animated: true)
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 
 }
