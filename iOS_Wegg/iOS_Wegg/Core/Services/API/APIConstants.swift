@@ -9,7 +9,7 @@ import Foundation
 
 /// API URL 정의한 상수 구조체
 struct APIConstants {
-    static let baseURL = "http://3.38.86.106:8080"
+    static let baseURL = "https://weggserver.store"
     
     struct User {
         static let signup = "/users/signup"
