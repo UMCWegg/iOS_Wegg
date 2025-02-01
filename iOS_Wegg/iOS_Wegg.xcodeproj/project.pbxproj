@@ -152,6 +152,11 @@
 			path = HotPlaceModel;
 			sourceTree = "<group>";
 		};
+		7BF71FD92D4DFA5E00695782 /* Home */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Home;
+			sourceTree = "<group>";
+		};
 		DE001E912D3BDF71003A273F /* Button */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Button;
@@ -275,6 +280,7 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				7BF71FD92D4DFA5E00695782 /* Home */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE001E912D3BDF71003A273F /* Button */,
@@ -397,6 +403,7 @@
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
 				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
+				7BF71FD92D4DFA5E00695782 /* Home */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE85E2762D4623BB0055C78C /* Home */,
@@ -404,8 +411,8 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DE85E2822D4623BB0055C78C /* Time */,
-				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				DEEB72322D4D211C001C3880 /* Label */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 			);

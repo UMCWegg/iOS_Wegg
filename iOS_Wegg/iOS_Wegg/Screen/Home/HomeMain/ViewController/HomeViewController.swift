@@ -18,7 +18,9 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         view.backgroundColor = .primary
         homeView.scrollView.delegate = self
+        
         homeView.headerView.viewController = self
+        homeView.headerView.updateHeaderMode(isHomeMode: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
