@@ -23,7 +23,7 @@ class EmailLoginView: UIView {
     
     // MARK: - Properties
     
-    private let backButton = UIButton().then {
+    let backButton = UIButton().then {
         $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         $0.tintColor = .black
     }
@@ -54,7 +54,8 @@ class EmailLoginView: UIView {
     
     let findPasswordButton = UIButton().then {
         $0.setTitle("비밀번호를 잊으셨나요?", for: .normal)
-        $0.titleLabel?.font = UIFont.LoginFont.title
+        $0.titleLabel?.font = UIFont.LoginFont.label
+        $0.setTitleColor(UIColor.Login.label, for: .normal)
     }
     
     let loginButton = LoginButton(

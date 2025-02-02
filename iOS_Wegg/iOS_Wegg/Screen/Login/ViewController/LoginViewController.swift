@@ -31,7 +31,6 @@ class LoginViewController: UIViewController {
             name: NSNotification.Name("LoginSuccess"),
             object: nil
         )
-        
     }
     
     // MARK: - Setup
@@ -53,8 +52,6 @@ class LoginViewController: UIViewController {
                                          action: #selector(signUpButtonTapped),
                                          for: .touchUpInside)
     }
-    
-    // Navigation 추후 구현
     
     // MARK: - Actions
     
@@ -79,12 +76,11 @@ class LoginViewController: UIViewController {
         let signUpVC = SignUpViewController()
         navigationController?.pushViewController(signUpVC, animated: true)
     }
-    
+
     @objc private func handleLoginSuccess() {
         print("Login Success!")
         // TODO: 메인 화면으로 이동
         // let mainVC = MainViewController()
         // navigationController?.setViewControllers([mainVC], animated: true)
     }
-    
 }
