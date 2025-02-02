@@ -16,4 +16,11 @@ enum StorageKeys {
         static let refreshToken = "refreshToken"
         static let userEmail = "userEmail"
     }
+    
+    enum Social {
+        static let googleToken = "googleToken"
+        static let googleEmail = "googleEmail"
+        static let kakaoToken = "kakaoToken"
+        static let kakaoID = "kakaoID"
+    }
 }

@@ -15,17 +15,21 @@ final class UserSignUpStorage {
     private init() {}
     
     struct SignUpData: Codable {
-        var email: String?
-        var password: String?
+        // 기본 사용자 정보
         var phoneNumber: String?
         var name: String?
         var nickname: String?
         var occupation: UserOccupation?
         var reason: UserReason?
         var marketingAgreed: Bool?
-        var isAlertEnabled: Bool?
-        var socialType: SocialType?
+        var alert: Bool?
+        var contact: [Contact]?
+        
+        // 소셜/로그인 구분
+        var email: String?
+        var password: String?
         var oauthID: String?
+        var socialType: SocialType?
     }
     
     func save(_ data: SignUpData) {
@@ -50,5 +54,24 @@ final class UserSignUpStorage {
     
     func clear() {
         defaults.removeObject(forKey: storageKeys.signUpData)
+    }
+}
+
+extension UserSignUpStorage.SignUpData {
+    func toSignUpRequest() -> SignUpRequest {
+        return SignUpRequest(
+            email: email,
+            password: password,
+            socialType: socialType,
+            oauthToken: oauthID,
+            name: name ?? "",
+            nickname: nickname ?? "",
+            phoneNumber: phoneNumber ?? "",
+            occupation: occupation ?? .other,
+            reason: reason ?? .other,
+            marketingAgreed: marketingAgreed ?? false,
+            contact: contact ?? [],
+            alert: alert ?? false
+        )
     }
 }

@@ -40,6 +40,9 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func googleLoginButtonTapped() {
+        UserSignUpStorage.shared.update { data in
+            data.socialType = .google
+        }
         LoginManager.shared.login(type: .google, from: self)
     }
     

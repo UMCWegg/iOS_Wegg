@@ -11,6 +11,8 @@ class PasswordResetEmailViewController: UIViewController {
 
     // MARK: - Properties
     
+    private var cancellables = Set<AnyCancellable>()
+    
     private let passwordResetEmailView = PasswordResetEmailView()
     
     // MARK: - Lifecycle
@@ -41,8 +43,24 @@ class PasswordResetEmailViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func nextButtonTapped() {
-        let passwordResetVerificationVC = PasswordResetVerificationViewController()
-        navigationController?.pushViewController(passwordResetVerificationVC, animated: true)
+        guard let email = passwordResetEmailView.emailTextField.text else { return }
+        
+        AuthService.shared.verifyEmail(email)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print("Email verification failed: \(error)")
+                }
+            } receiveValue: { response in
+                if response.isSuccess {
+                    let verificationVC = PasswordResetVerificationViewController()
+                    verificationVC.userEmail = email
+                    self.navigationController?.pushViewController(verificationVC, animated: true)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     @objc private func backButtonTapped() {
