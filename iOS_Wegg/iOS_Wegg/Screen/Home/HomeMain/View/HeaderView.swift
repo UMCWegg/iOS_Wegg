@@ -12,33 +12,25 @@ import Then
 class HeaderView: UIView {
     
     // MARK: - UI Components
-    private let weggLogo: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "weggLogo")
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
+    private let weggLogo = UIImageView().then {
+        $0.image = UIImage(named: "weggLogo")
+        $0.contentMode = .scaleAspectFit
+    }
 
-    let point: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "point"), for: .normal)
-        button.contentMode = .scaleAspectFit
-        return button
-    }()
+    let point = UIButton().then {
+        $0.setImage(UIImage(named: "point"), for: .normal)
+        $0.contentMode = .scaleAspectFit
+    }
 
-    let calendar: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "calendar"), for: .normal)
-        button.contentMode = .scaleAspectFit
-        return button
-    }()
+    let calendar = UIButton().then {
+        $0.setImage(UIImage(named: "calendar"), for: .normal)
+        $0.contentMode = .scaleAspectFit
+    }
 
-    let bell: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "bell"), for: .normal)
-        button.contentMode = .scaleAspectFit
-        return button
-    }()
+    let bell = UIButton().then {
+        $0.setImage(UIImage(named: "bell"), for: .normal)
+        $0.contentMode = .scaleAspectFit
+    }
 
     weak var viewController: UIViewController?
 
