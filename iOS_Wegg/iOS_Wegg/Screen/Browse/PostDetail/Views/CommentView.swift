@@ -87,12 +87,12 @@ class CommentView: UIView {
     /// UI 요소들을 추가하는 메서드
     private func setupView() {
         backgroundColor = .white
-        addSubview(headerView)
-        addSubview(headerSeparator)
-        addSubview(tableView)
-        addSubview(separator)
-        addSubview(textFieldContainerView)
-        
+        [headerView,
+         headerSeparator,
+         tableView,
+         separator,
+         textFieldContainerView
+        ].forEach { self.addSubview($0) }
         
         headerView.addSubview(emojiScrollView)
         emojiScrollView.addSubview(emojiStackView)
@@ -126,7 +126,7 @@ class CommentView: UIView {
         
         tableView.snp.makeConstraints {
             $0.top.equalTo(headerSeparator.snp.bottom).offset(8)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(10)
             $0.bottom.equalTo(textFieldContainerView.snp.top).offset(-16)
         }
         
