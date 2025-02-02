@@ -8,53 +8,34 @@
 import Foundation
 
 final class UserDefaultsManager {
-   static let shared = UserDefaultsManager()
-   private let defaults = UserDefaults.standard
-   
-   private enum Keys {
-       static let accessToken = "accessToken"
-       static let refreshToken = "refreshToken"
-       static let googleToken = "googleToken"
-       static let googleEmail = "googleEmail"
-       static let kakaoToken = "kakaoToken"
-       static let kakaoId = "kakaoId"
-    }
+    static let shared = UserDefaultsManager()
+    private let defaults = UserDefaults.standard
     
+    private init() {}
+    
+    // Token 관리
     func saveToken(_ token: String) {
-        defaults.setValue(token, forKey: Keys.accessToken)
+        defaults.set(token, forKey: StorageKeys.Login.accessToken)
     }
     
     func getToken() -> String? {
-        return defaults.string(forKey: Keys.accessToken)
-    }
-   
-    func saveGoogleData(token: String, email: String) {
-        defaults.setValue(token, forKey: Keys.googleToken)
-        defaults.setValue(email, forKey: Keys.googleEmail)
+        return defaults.string(forKey: StorageKeys.Login.accessToken)
     }
     
-    func getGoogleData() -> (token: String?, email: String?) {
-        let token = defaults.string(forKey: Keys.googleToken)
-        let email = defaults.string(forKey: Keys.googleEmail)
-        return (token, email)
+    // 소셜 로그인 데이터 관리
+    func saveGoogleData(token: String, email: String) {
+        defaults.set(token, forKey: "googleToken")
+        defaults.set(email, forKey: "googleEmail")
     }
     
     func saveKakaoData(token: String, id: String) {
-        defaults.setValue(token, forKey: Keys.kakaoToken)
-        defaults.setValue(id, forKey: Keys.kakaoId)
+        defaults.set(token, forKey: "kakaoToken")
+        defaults.set(id, forKey: "kakaoID")
     }
     
-    func getKakaoData() -> (token: String?, id: String?) {
-        let token = defaults.string(forKey: Keys.kakaoToken)
-        let id = defaults.string(forKey: Keys.kakaoId)
-        return (token, id)
+    // 데이터 초기화
+    func clearAllData() {
+        let domain = Bundle.main.bundleIdentifier!
+        defaults.removePersistentDomain(forName: domain)
     }
-    
-    func clearAuthData() {
-        defaults.removeObject(forKey: Keys.googleToken)
-        defaults.removeObject(forKey: Keys.googleEmail)
-        defaults.removeObject(forKey: Keys.kakaoToken)
-        defaults.removeObject(forKey: Keys.kakaoId)
-    }
-    
 }
