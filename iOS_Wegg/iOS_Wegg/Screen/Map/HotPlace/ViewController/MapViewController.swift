@@ -28,7 +28,10 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
     ]
 }
 
-class MapViewController: UIViewController, FloatingPanelControllerDelegate {
+class MapViewController:
+    UIViewController,
+    FloatingPanelControllerDelegate,
+    UIGestureRecognizerDelegate {
     private let mapManager: MapManagerProtocol
     private let overlayView = MapOverlayView()
     private var fpc: FloatingPanelController?
@@ -47,6 +50,9 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate {
         super.viewWillAppear(animated)
         // Navigation Bar 숨김. 다음 화면에서도 보이지 않음.
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        // 뒤로가기 제스처 활성화
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     override func viewDidLoad() {
@@ -111,9 +117,9 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate {
 // MARK: MapOverlayGestureDelegate
 
 extension MapViewController: MapOverlayGestureDelegate {
+    
     func didDetectOnLocationButtonTapped() {
         mapManager.requestCurrentLocation()
-        print("didTabLocationButton")
     }
     
     func didPlaceSearchButtonTapped() {

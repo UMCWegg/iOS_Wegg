@@ -26,6 +26,7 @@ extension MapSearchViewController:
     MapSearchViewGestureDelegate {
     
     func didTapSearchBackButton() {
+        navigationController?.popViewController(animated: true)
         print("뒤로 가기")
     }
     
