@@ -36,6 +36,7 @@
 		DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = DE00212C2D433D7F003A273F /* NMapsMap */; };
 		DE00217A2D439F3F003A273F /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */; };
 		DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85E2772D4623BB0055C78C /* MainTabBarController.swift */; };
+		FFC8DAFB2D50DDE30094B687 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = FFC8DAFA2D50DDE30094B687 /* FloatingPanel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -225,6 +226,7 @@
 				0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */,
 				DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */,
 				DE0020CD2D414BD9003A273F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				FFC8DAFB2D50DDE30094B687 /* FloatingPanel in Frameworks */,
 				0E98EB802D38E554006F25EF /* KakaoMapsSDK-SPM in Frameworks */,
 				DE0020DB2D420F0E003A273F /* FirebaseCore in Frameworks */,
 				0E98E9F52D2E336F006F25EF /* Moya in Frameworks */,
@@ -423,6 +425,7 @@
 				DE0020DA2D420F0E003A273F /* FirebaseCore */,
 				DE0020DC2D420F3B003A273F /* FirebaseFirestore */,
 				DE00212C2D433D7F003A273F /* NMapsMap */,
+				FFC8DAFA2D50DDE30094B687 /* FloatingPanel */,
 			);
 			productName = iOS_Wegg;
 			productReference = 0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */;
@@ -463,6 +466,7 @@
 				DE0020C42D3F942B003A273F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				DE0020C92D414BD9003A273F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				DE00212B2D433D7F003A273F /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
+				FFC8DAF92D50DDE30094B687 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0E98E9D62D2D009D006F25EF /* Products */;
@@ -824,6 +828,14 @@
 				minimumVersion = 3.20.0;
 			};
 		};
+		FFC8DAF92D50DDE30094B687 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scenee/FloatingPanel";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -921,6 +933,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DE00212B2D433D7F003A273F /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
 			productName = NMapsMap;
+		};
+		FFC8DAFA2D50DDE30094B687 /* FloatingPanel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFC8DAF92D50DDE30094B687 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
+			productName = FloatingPanel;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
