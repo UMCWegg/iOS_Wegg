@@ -9,6 +9,8 @@ import UIKit
 import Then
 
 class MapSearchView: UIView {
+    
+    weak var gestureDelegte: MapSearchViewGestureDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,13 +54,36 @@ class MapSearchView: UIView {
         return button
     }
     
+    @objc func searchButtonTapped() {
+        gestureDelegte?.didTapSearchButton()
+    }
+    
+    @objc func searchBackButtonTapped() {
+        gestureDelegte?.didTapSearchBackButton()
+    }
+    
 }
 
 private extension MapSearchView {
     func setupView() {
+        setupGestures()
         setupStackView()
         addComponenets()
         constraints()
+    }
+    
+    func setupGestures() {
+        searchBackButtonView.addTarget(
+            self,
+            action: #selector(searchBackButtonTapped),
+            for: .touchUpInside
+        )
+        
+        searchButtonView.addTarget(
+            self,
+            action: #selector(searchButtonTapped),
+            for: .touchUpInside
+        )
     }
     
     func setupStackView() {
