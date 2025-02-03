@@ -11,7 +11,7 @@ class MapSearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view = MapSearchView()
         // Do any additional setup after loading the view.
     }
 

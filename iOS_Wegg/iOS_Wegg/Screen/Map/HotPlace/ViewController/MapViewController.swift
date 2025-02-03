@@ -45,14 +45,8 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Navigation Bar 숨김
+        // Navigation Bar 숨김. 다음 화면에서도 보이지 않음.
         navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // 다른 화면에서는 다시 활성화
-        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewDidLoad() {
