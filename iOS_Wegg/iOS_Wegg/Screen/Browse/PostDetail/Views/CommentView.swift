@@ -94,19 +94,27 @@ class CommentView: UIView {
          textFieldContainerView
         ].forEach { self.addSubview($0) }
         
+        // hearderView에 이모지 스크롤뷰, 이모지 가로 스택뷰 추가
         headerView.addSubview(emojiScrollView)
         emojiScrollView.addSubview(emojiStackView)
         
+        // 텍스트필드 컨테이너에 댓글과 보내기버튼 추가
         textFieldContainerView.addSubview(commentTextField)
         textFieldContainerView.addSubview(submitButton)
     }
     
-    /// UI 요소들의 제약 조건을 설정하는 메서드
-    private func setupConstraints() {
+    /// Header 제약 조건을 설정하는 메서드
+    private func setupHeaderConstraints() {
         headerView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.leading.trailing.equalToSuperview().inset(12)
             $0.height.equalTo(55)
+        }
+        
+        headerSeparator.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(headerView.snp.bottom).offset(8)
         }
         
         emojiScrollView.snp.makeConstraints {
@@ -118,11 +126,11 @@ class CommentView: UIView {
             $0.height.equalToSuperview()
         }
         
-        headerSeparator.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(headerView.snp.bottom).offset(8)
-        }
+    }
+    
+    /// UI 요소들의 제약 조건을 설정하는 메서드
+    private func setupConstraints() {
+        setupHeaderConstraints() 
         
         tableView.snp.makeConstraints {
             $0.top.equalTo(headerSeparator.snp.bottom).offset(8)
