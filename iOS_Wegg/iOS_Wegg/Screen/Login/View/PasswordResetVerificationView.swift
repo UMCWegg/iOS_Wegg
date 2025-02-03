@@ -23,7 +23,7 @@ class PasswordResetVerificationView: UIView {
     
     // MARK: - Properties
     
-    private let backButton = UIButton().then {
+    let backButton = UIButton().then {
         $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         $0.tintColor = .black
     }
@@ -47,7 +47,7 @@ class PasswordResetVerificationView: UIView {
         $0.setTitleColor(UIColor.LoginColor.labelColor, for: .normal)
     }
     
-    let loginButton = LoginButton(
+    let confirmButton = LoginButton(
         style: .textOnly,
         title: "확인",
         backgroundColor: .primary
@@ -62,7 +62,7 @@ class PasswordResetVerificationView: UIView {
             subLabel,
             verificationTextField,
             resendButton,
-            loginButton
+            confirmButton
         ].forEach { addSubview($0) }
     }
     
@@ -95,7 +95,7 @@ class PasswordResetVerificationView: UIView {
             make.centerX.equalToSuperview()
         }
         
-        loginButton.snp.makeConstraints { make in
+        confirmButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-40)
         }

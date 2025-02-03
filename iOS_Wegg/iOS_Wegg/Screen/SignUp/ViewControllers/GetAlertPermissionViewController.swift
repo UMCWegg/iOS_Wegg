@@ -8,7 +8,7 @@
 import UIKit
 
 class GetAlertPermissionViewController: UIViewController {
-
+    
     // MARK: - Properties
     
     private let getAlertPermissionView = GetAlertPermissionView()
@@ -33,13 +33,6 @@ class GetAlertPermissionViewController: UIViewController {
     // MAKR: - Functions
     
     private func setupActions() {
-        /*
-        getAlertPermissionView.backButton.addTarget(
-            self,
-            action: #selector(backButtonTapped),
-            for: .touchUpInside
-        )
-        */
         
         getAlertPermissionView.nextButton.addTarget(
             self,
@@ -64,27 +57,25 @@ class GetAlertPermissionViewController: UIViewController {
     }
     
     private func handlePermissionGranted() {
-       UserDefaults.standard.set(true, forKey: "notificationEnabled")
-       updateUserAlertStatus(enabled: true)
+        UserDefaults.standard.set(true, forKey: "notificationEnabled")
+        updateUserAlertStatus(enabled: true)
     }
-
+    
     private func handlePermissionDenied() {
-       UserDefaults.standard.set(false, forKey: "notificationEnabled")
-       updateUserAlertStatus(enabled: false)
-    }
-
-    private func navigateToNextScreen() {
+        UserDefaults.standard.set(false, forKey: "notificationEnabled")
+        updateUserAlertStatus(enabled: false)
     }
     
     private func updateUserAlertStatus(enabled: Bool) {
     }
     
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+    private func navigateToNextScreen() {
+        let signUpCompleteViewController = SignUpCompleteViewController()
+        navigationController?.pushViewController(signUpCompleteViewController, animated: true)
     }
     
     @objc private func nextButtonTapped() {
         requestNotificationPermission()
     }
-
+    
 }
