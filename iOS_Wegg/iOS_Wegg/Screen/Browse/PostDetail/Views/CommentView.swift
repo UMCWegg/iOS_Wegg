@@ -94,7 +94,7 @@ class CommentView: UIView {
          textFieldContainerView
         ].forEach { self.addSubview($0) }
         
-        // hearderView에 이모지 스크롤뷰, 이모지 가로 스택뷰 추가
+        // hearderView에 -> 이모지 스크롤뷰 -> 이모지 가로 스택뷰 추가
         headerView.addSubview(emojiScrollView)
         emojiScrollView.addSubview(emojiStackView)
         
@@ -103,18 +103,12 @@ class CommentView: UIView {
         textFieldContainerView.addSubview(submitButton)
     }
     
-    /// Header 제약 조건을 설정하는 메서드
+    /// Header 제약: (이모지 스크롤 + 이모지 가로스택) 제약 조건 설정
     private func setupHeaderConstraints() {
         headerView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.leading.trailing.equalToSuperview().inset(12)
             $0.height.equalTo(55)
-        }
-        
-        headerSeparator.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(headerView.snp.bottom).offset(8)
         }
         
         emojiScrollView.snp.makeConstraints {
@@ -126,9 +120,14 @@ class CommentView: UIView {
             $0.height.equalToSuperview()
         }
         
+        headerSeparator.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(headerView.snp.bottom).offset(8)
+        }
     }
     
-    /// UI 요소들의 제약 조건을 설정하는 메서드
+    /// UI 제약:  댓글창 테이블뷰, (텍스트 + 전송버튼) 컨테이너뷰 제약조건
     private func setupConstraints() {
         setupHeaderConstraints() 
         
@@ -139,7 +138,8 @@ class CommentView: UIView {
         }
         
         textFieldContainerView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-52)
+            // 키보드 높이에 맞게 조정
+            $0.bottom.equalTo(self.keyboardLayoutGuide.snp.top).offset(-12)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(50)
         }
