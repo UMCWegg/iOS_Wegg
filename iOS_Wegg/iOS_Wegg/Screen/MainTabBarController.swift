@@ -48,22 +48,21 @@ class MainTabBarController: UITabBarController {
         // UITabBarAppearance 설정
         let barAppearance = UITabBarAppearance()
         
-        // BluePrimary 색상 가져오기
-        guard let bluePrimary = UIColor(named: "BluePrimary") else {
-            print("Error: 컬러가 존재하지 않습니다.")
-            return
-        }
+        // Primary Color 가져오기
+        let primaryColor = UIColor.customColor(.primary)
         
         // 선택된 아이템의 Appearance 설정
-        barAppearance.stackedLayoutAppearance.selected.iconColor = bluePrimary
+        barAppearance.stackedLayoutAppearance.selected.iconColor = primaryColor
+        
         // 선택된 아이템의 텍스트 색상 적용
-        barAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [
-            .foregroundColor: bluePrimary
-        ]
+                barAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [
+                    .foregroundColor: primaryColor
+                ]
+        
         // 알림이나 뱃지 색상 적용
-        barAppearance.stackedLayoutAppearance.selected.badgeBackgroundColor = bluePrimary
+        barAppearance.stackedLayoutAppearance.selected.badgeBackgroundColor = primaryColor
+        
         // UITabBar에 적용하기
         self.tabBar.standardAppearance = barAppearance
-        self.tabBar.backgroundColor = .clear
     }
 }
