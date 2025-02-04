@@ -16,6 +16,8 @@ struct SignUpRequest: Codable {
     let occupation: UserOccupation
     let reason: UserReason
     let marketingAgreed: Bool
+    let contact: [Contact]
+    let alert: Bool?
     
     enum CodingKeys: String, CodingKey {
         case email
@@ -28,5 +30,7 @@ struct SignUpRequest: Codable {
         case occupation = "occupation"
         case reason
         case marketingAgreed = "marketing_agreed"
+        case contact = "contact"
+        case alert
     }
 }

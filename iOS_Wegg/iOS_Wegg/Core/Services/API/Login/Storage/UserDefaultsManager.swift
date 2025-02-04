@@ -13,6 +13,16 @@ final class UserDefaultsManager {
     
     private init() {}
     
+    // 일반 데이터
+    
+    func saveToken(_ token: String) {
+        defaults.set(token, forKey: StorageKeys.Login.accessToken)
+    }
+    
+    func getToken() -> String? {
+        return defaults.string(forKey: StorageKeys.Login.accessToken)
+    }
+    
     // Google 데이터
     func saveGoogleData(token: String, email: String) {
         defaults.set(token, forKey: StorageKeys.Social.googleToken)
@@ -39,7 +49,7 @@ final class UserDefaultsManager {
     
     // 데이터 초기화
     func clearAllData() {
-        let domain = Bundle.main.bundleIdentifier
+        guard let domain = Bundle.main.bundleIdentifier else { return }
         defaults.removePersistentDomain(forName: domain)
     }
 }
