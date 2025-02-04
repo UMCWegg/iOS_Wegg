@@ -45,9 +45,11 @@ private extension MapSearchView {
     
     func constraints() {
         searchBarView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.height.greaterThanOrEqualTo(50)
+            make.height.greaterThanOrEqualTo(
+                MapViewLayout.PlaceSearch.searchBarHeight
+            )
         }
     }
 }

@@ -26,15 +26,19 @@ class MapSearchViewController: UIViewController {
 
 extension MapSearchViewController: MapSearchBarDelegate {
     
-    func didTapSearchBox() {
-        print("didTapSearchBox")
-    }
-    
     func didTapSearchBackButton() {
         navigationController?.popViewController(animated: true)
     }
     
     func didSearch(query: String?) {
         print("Search button tapped with query: \(query ?? "empty")")
+        
+        // navigationController에서 MapViewController 탐색
+        guard let mapVC = navigationController?.viewControllers.first(
+            where: { $0 is MapViewController }) as? MapViewController else {
+            return
+        }
+        mapVC.overlayView.placeSearchBar.isHidden = false
+        customNavigationAnimation(to: nil, isPush: false)
     }
 }

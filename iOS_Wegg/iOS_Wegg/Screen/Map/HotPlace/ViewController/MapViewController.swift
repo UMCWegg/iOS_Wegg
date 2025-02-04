@@ -33,8 +33,9 @@ class MapViewController:
     FloatingPanelControllerDelegate,
     UIGestureRecognizerDelegate {
     private let mapManager: MapManagerProtocol
-    private let overlayView = MapOverlayView()
     private var fpc: FloatingPanelController?
+    private var mapSearchVC: MapSearchViewController?
+    lazy var overlayView = MapOverlayView()
     
     /// 의존성 주입
     init(mapManager: MapManagerProtocol) {
@@ -123,8 +124,8 @@ extension MapViewController: MapOverlayGestureDelegate {
     }
     
     func didPlaceSearchButtonTapped() {
-        lazy var mapSearchVC = MapSearchViewController()
+        mapSearchVC = MapSearchViewController()
+        guard let mapSearchVC = mapSearchVC else { return }
         navigationController?.pushViewController(mapSearchVC, animated: true)
     }
-    
 }

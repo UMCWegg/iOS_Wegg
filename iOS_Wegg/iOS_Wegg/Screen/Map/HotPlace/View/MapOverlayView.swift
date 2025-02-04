@@ -87,7 +87,7 @@ class MapOverlayView: UIView {
         $0.isHidden = true
     }
     
-    private lazy var placeSearchButton = createImageView(imageName: "map_search_icon")
+    lazy var placeSearchButton = createImageView(imageName: "map_search_icon")
     
     private lazy var currentLocationImageButton = createImageView(
         imageName: "current_position_icon"
@@ -158,7 +158,9 @@ private extension MapOverlayView {
         placeSearchBar.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.height.greaterThanOrEqualTo(130)
+            make.height.greaterThanOrEqualTo(
+                MapViewLayout.PlaceSearch.searchBarHeight
+            )
         }
         
         placeSearchButton.snp.makeConstraints { make in
