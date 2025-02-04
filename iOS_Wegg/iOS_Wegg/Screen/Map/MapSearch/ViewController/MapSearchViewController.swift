@@ -27,6 +27,12 @@ class MapSearchViewController: UIViewController {
 extension MapSearchViewController: MapSearchBarDelegate {
     
     func didTapSearchBackButton() {
+        // navigationController에서 MapViewController 탐색
+        guard let mapVC = navigationController?.viewControllers.first(
+            where: { $0 is MapViewController }) as? MapViewController else {
+            return
+        }
+        mapVC.overlayView.placeSearchBar.isHidden = true
         navigationController?.popViewController(animated: true)
     }
     
