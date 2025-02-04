@@ -29,6 +29,18 @@ class MapSearchBar: UIView {
     // MARK: - Delegate
     weak var delegate: MapSearchBarDelegate?
 
+    // MARK: - Init
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+        constraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - UI Components
     
     lazy var searchTextFieldView = UITextField().then {
@@ -57,19 +69,13 @@ class MapSearchBar: UIView {
         $0.addArrangedSubview(searchTextFieldView)
         $0.addArrangedSubview(searchButtonView)
     }
-
-    // MARK: - Init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-        constraints()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    private lazy var dividedLine = UIView().then {
+        $0.backgroundColor = .gray1
     }
 
     // MARK: - Actions
+    
     @objc private func didTapBackButton() {
         delegate?.didTapSearchBackButton()
     }
@@ -80,13 +86,23 @@ class MapSearchBar: UIView {
     }
 
     // MARK: - Setup
+    
     private func setupView() {
-        addSubview(stackView)
+        [stackView, dividedLine].forEach {
+            addSubview($0)
+        }
     }
 
     private func constraints() {
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.bottom.equalToSuperview().inset(20)
+            make.leading.trailing.equalToSuperview().inset(21)
+        }
+        
+        dividedLine.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
 
         searchBackButtonView.snp.makeConstraints { make in
