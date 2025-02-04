@@ -45,13 +45,13 @@ class PasswordResetVerificationViewController: UIViewController {
         
         passwordResetVerificationView.resendButton.addTarget(
             self,
-            action: #selector(resendButtonTapped()),
+            action: #selector(resendButtonTapped),
             for: .touchUpInside)
     }
     
     private func setupEmailLabel() {
         if let email = userEmail {
-            passwordResetVerificationView.subLabel.text = "\(email)로 인증 번호를 보냈어요"
+            passwordResetVerificationView.emailText = email
         }
     }
     

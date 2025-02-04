@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Combine
+
 class PasswordResetEmailViewController: UIViewController {
 
     // MARK: - Properties

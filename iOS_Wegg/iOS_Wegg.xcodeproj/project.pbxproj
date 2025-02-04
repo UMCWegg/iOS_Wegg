@@ -89,6 +89,13 @@
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
+		DE8D56742D52A4400099B5BC /* Exceptions for "BrowseItem" folder in "iOS_Wegg" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				BrowseItem.swift,
+			);
+			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
+		};
 		FF3CC4262D4D5A7000006955 /* Exceptions for "Browse" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -203,6 +210,9 @@
 		};
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DE8D56742D52A4400099B5BC /* Exceptions for "BrowseItem" folder in "iOS_Wegg" target */,
+			);
 			path = BrowseItem;
 			sourceTree = "<group>";
 		};
@@ -948,15 +958,15 @@
 			package = DE00212B2D433D7F003A273F /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
 			productName = NMapsMap;
 		};
-		FFC8DAFA2D50DDE30094B687 /* FloatingPanel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FFC8DAF92D50DDE30094B687 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
-			productName = FloatingPanel;
-		};
 		DE1602EB2D4E18DD00416859 /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0E98E9F32D2E336F006F25EF /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = CombineMoya;
+		};
+		FFC8DAFA2D50DDE30094B687 /* FloatingPanel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFC8DAF92D50DDE30094B687 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
+			productName = FloatingPanel;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
