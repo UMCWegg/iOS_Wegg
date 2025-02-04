@@ -28,6 +28,7 @@ class MapSearchView: UIView {
     // MARK: - Property
     
     lazy var searchTextFieldView = UITextField().then {
+        $0.textColor = .black
         $0.placeholder = "Search..."
         $0.clearButtonMode = .always // 입력내용 한번에 지우는 x버튼(오른쪽)
         $0.clearsOnBeginEditing = false // 편집 시 기존 텍스트필드값 제거
@@ -104,8 +105,7 @@ private extension MapSearchView {
         }
         
         searchBackButtonView.snp.makeConstraints { make in
-            make.width.equalTo(10)
-            make.height.equalTo(20)
+            make.width.height.equalTo(20)
         }
         
         searchTextFieldView.snp.makeConstraints { make in

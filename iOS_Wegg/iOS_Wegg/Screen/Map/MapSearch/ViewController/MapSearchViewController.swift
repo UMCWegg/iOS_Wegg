@@ -18,6 +18,7 @@ class MapSearchViewController: UIViewController {
     
     lazy var mapSearchView = MapSearchView().then {
         $0.gestureDelegte = self
+        $0.searchTextFieldView.delegate = self
     }
 
 }
@@ -25,15 +26,25 @@ class MapSearchViewController: UIViewController {
 // MARK: - Delegate Extenstion
 
 extension MapSearchViewController:
-    MapSearchViewGestureDelegate {
+    MapSearchViewGestureDelegate,
+    UITextFieldDelegate {
+    
+    // MARK: - MapSearchViewGestureDelegate
     
     func didTapSearchBackButton() {
         navigationController?.popViewController(animated: true)
-        print("뒤로 가기")
     }
     
     func didTapSearchButton() {
         print("검색 하기")
     }
     
+    // MARK: - UITextFieldDelegate
+    
+    // 엔터(Return 키) 누를 때 호출되는 함수
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("입력된 값: \(textField.text ?? "")")
+        textField.resignFirstResponder() // 키보드 내리기
+        return true
+    }
 }
