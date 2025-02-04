@@ -53,7 +53,6 @@ final class KakaoLoginManager {
         }
     }
 
-    
     private func getUserInfo(
         oauthToken: OAuthToken?,
         completion: @escaping (Result<String, Error>) -> Void) {

@@ -48,5 +48,4 @@ class EmailSignUpViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 
-
 }

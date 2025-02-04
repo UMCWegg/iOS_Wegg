@@ -11,9 +11,7 @@ import GoogleSignIn
 
 final class GoogleService {
     static let shared = GoogleService()
-    private let clientID =
-    "498161093152-ajp8av7ktm4gcakp3fqjkbutbehjuebl.apps.googleusercontent.com"
-    
+    private let clientID = APIKeys.googleClientId
     private init() {
         setupGoogleSignIn()
     }

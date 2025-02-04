@@ -21,20 +21,20 @@ final class GoogleLoginManager {
         return Future { promise in
             self.googleService.signIn(presenting: viewController) { result in
                 switch result {
-                case .success((let email, let token)):
-                    UserDefaultsManager.shared.saveGoogleData(token: token, email: email)
-                    AuthService.shared.socialSignUp(type: .google, token: token, oauthID: email)
-                        .sink { completion in
-                            if case .failure(let error) = completion {
-                                promise(.failure(error))
+                    case .success((let email, let token)):
+                        UserDefaultsManager.shared.saveGoogleData(token: token, email: email)
+                        AuthService.shared.socialSignUp(type: .google, token: token, oauthID: email)
+                            .sink { completion in
+                                if case .failure(let error) = completion {
+                                    promise(.failure(error))
+                                }
+                            } receiveValue: { _ in
+                                promise(.success(email))
                             }
-                        } receiveValue: { response in
-                            promise(.success(email))
-                        }
-                        .store(in: &self.cancellables)
-                case .failure(let error):
-                    promise(.failure(error))
-            }
+                            .store(in: &self.cancellables)
+                    case .failure(let error):
+                        promise(.failure(error))
+                }
         }
     }.eraseToAnyPublisher()}
 }
