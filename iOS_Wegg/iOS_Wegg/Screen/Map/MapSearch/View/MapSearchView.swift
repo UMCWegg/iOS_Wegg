@@ -11,6 +11,8 @@ import Then
 class MapSearchView: UIView {
     
     weak var gestureDelegte: MapSearchViewGestureDelegate?
+    
+    // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,6 +25,8 @@ class MapSearchView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Property
+    
     lazy var searchTextFieldView = UITextField().then {
         $0.placeholder = "Search..."
         $0.clearButtonMode = .always // 입력내용 한번에 지우는 x버튼(오른쪽)
@@ -32,6 +36,8 @@ class MapSearchView: UIView {
     lazy var searchBackButtonView = makeButtonView(imageName: "searchBackButton")
     lazy var searchButtonView = makeButtonView(imageName: "MapSearchButton")
     lazy var searchBarStack = makeStackView(spacing: 8, axis: .horizontal)
+    
+    // MARK: - Function
     
     func makeStackView(
         spacing: CGFloat,
@@ -63,6 +69,8 @@ class MapSearchView: UIView {
     }
     
 }
+
+// MARK: - Setup Extension
 
 private extension MapSearchView {
     func setupView() {
