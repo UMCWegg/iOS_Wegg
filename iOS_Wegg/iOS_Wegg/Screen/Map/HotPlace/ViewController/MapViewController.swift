@@ -35,7 +35,9 @@ class MapViewController:
     private let mapManager: MapManagerProtocol
     private var fpc: FloatingPanelController?
     private var mapSearchVC: MapSearchViewController?
-    lazy var overlayView = MapOverlayView()
+    lazy var overlayView = MapOverlayView().then {
+        $0.placeSearchBar.searchTextFieldView.isUserInteractionEnabled = false
+    }
     
     /// 의존성 주입
     init(mapManager: MapManagerProtocol) {
@@ -115,14 +117,12 @@ class MapViewController:
         fpc.addPanel(toParent: self)
     }
     
-    // FIXME: 검색 결과 지도 뷰에서 검색 다시 하면 텍스트필드 포커싱되면서 키보드 올라감
-    
     private func navigateToSearchViewWithAnimation() {
         mapSearchVC = MapSearchViewController()
         guard let mapSearchVC = mapSearchVC else { return }
         guard let navigationController = self.navigationController else { return }
 
-        /// 네비게이션 스택을 직접 설정하여 MapViewController + MapSearchViewController만 유지
+        // 네비게이션 스택을 직접 설정하여 MapViewController + MapSearchViewController만 유지
             /*
              현재 네비게이션 스택에서 기존의 `MapSearchViewController`를 제거한 후 새로운 `MapSearchViewController` 추가
              
@@ -161,27 +161,23 @@ extension MapViewController:
     
     // MARK: - MapOverlayGestureDelegate
     
-    func didDetectOnLocationButtonTapped() {
+    func didTapDetectOnLocationButton() {
         mapManager.requestCurrentLocation()
     }
     
-    func didPlaceSearchButtonTapped() {
+    func didTapPlaceSearchButton() {
         mapSearchVC = MapSearchViewController()
         guard let mapSearchVC = mapSearchVC else { return }
         navigationController?.pushViewController(mapSearchVC, animated: true)
     }
     
-    // MARK: - MapSearchBarDelegate
-    
-    func didTapSearchBackButton() {
+    func didTapPlaceSearchBar() {
         navigateToSearchViewWithAnimation()
     }
     
-    func didSearch(query: String?) {
-        print("Search Result Query: \(query ?? "")")
-    }
+    // MARK: - MapSearchBarDelegate
     
-    func didTapSearchBox() {
+    func didTapSearchBackButton() {
         navigateToSearchViewWithAnimation()
     }
 }

@@ -15,10 +15,7 @@ import Then
     func didTapSearchBackButton()
 
     /// 검색이 실행되었을 때 호출됩니다. 입력된 검색어를 전달.
-    func didSearch(query: String?)
-
-    /// 검색 상자를 탭하거나 편집을 시작했을 때 호출(Optional)
-    @objc optional func didTapSearchBox()
+    @objc optional func didSearch(query: String?)
 }
 
 ///  설명:
@@ -82,7 +79,7 @@ class MapSearchBar: UIView {
 
     @objc private func didTapSearchButton() {
         let query = searchTextFieldView.text
-        delegate?.didSearch(query: query)
+        delegate?.didSearch?(query: query)
     }
 
     // MARK: - Setup
@@ -118,11 +115,6 @@ class MapSearchBar: UIView {
 // MARK: - UITextFieldDelegate
 
 extension MapSearchBar: UITextFieldDelegate {
-    // 탭하여 편집을 시작할 때 호출
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        (delegate?.didTapSearchBox)?()
-    }
-    
     // 엔터(Return 키) 누를 때 호출되는 함수(검색 결과 처리)
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let query = textField.text,
@@ -130,7 +122,7 @@ extension MapSearchBar: UITextFieldDelegate {
             return false
         }
         
-        delegate?.didSearch(query: query)
+        delegate?.didSearch?(query: query)
         
         return true
     }

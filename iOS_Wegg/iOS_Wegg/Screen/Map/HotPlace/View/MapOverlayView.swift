@@ -68,15 +68,15 @@ class MapOverlayView: UIView {
     }
     
     @objc private func handleLocationImageButton() {
-        gestureDelegate?.didDetectOnLocationButtonTapped()
+        gestureDelegate?.didTapDetectOnLocationButton()
     }
     
     @objc private func handlePlaceSearchButton() {
-        gestureDelegate?.didPlaceSearchButtonTapped()
+        gestureDelegate?.didTapPlaceSearchButton()
     }
     
     @objc private func handlePlaceSearchBar() {
-        print("handlePlaceSearchBar")
+        gestureDelegate?.didTapPlaceSearchBar()
     }
     
     // MARK: - Property
