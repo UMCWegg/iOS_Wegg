@@ -6,57 +6,78 @@
 //
 
 import UIKit
+import SnapKit
 
 class SearchView: UIView, UISearchBarDelegate {
     
     // MARK: - Init
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
         addComponents()
-        constraints()
-        changeCancelKorean()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Property
+    // MARK: - Properties
     
-    /// 검색바 UI
+    /// 검색 바와 아이콘을 포함하는 컨테이너 뷰
+    private let searchContainerView = UIView().then {
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 15
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.customColor(.secondary).cgColor
+    }
+    
+    /// 검색바 (검색 텍스트 입력 필드)
     public lazy var searchBar = UISearchBar().then {
         $0.placeholder = "계정 검색"
-        $0.barTintColor = .white
-        $0.backgroundColor = .clear
-        $0.showsCancelButton = true
         $0.backgroundImage = UIImage()
         $0.delegate = self
-        
-        /* 돋보기 아이콘 및 여백 제거 */
+        $0.searchTextField.backgroundColor = .white
+        $0.searchTextField.borderStyle = .none
+        $0.searchTextField.textColor = .black
         $0.searchTextField.leftView = nil
+    }
+    
+    /// 돋보기 아이콘 (검색 아이콘 역할)
+    private let searchIconView = UIImageView().then {
+        $0.image = UIImage(named: "search")
+        $0.contentMode = .scaleAspectFit
+        $0.tintColor = .gray
     }
     
     // MARK: - Methods
     
-    /// 검색바  cancel이라고 영어로 칭해져서 등장한다. 이를 취소 버튼으로 재생성
-    private func changeCancelKorean() {
-        if let cancelButton = searchBar.value(forKey: "cancelButton") as? UIButton {
-            cancelButton.setTitle("취소", for: .normal)
-        }
-    }
- 
-    /// 제약조건 및 컴포넌트 추가
+    /// UI 구성 요소 추가
     private func addComponents() {
-        [searchBar].forEach { self.addSubview($0) }
+        self.addSubview(searchContainerView)
+        searchContainerView.addSubview(searchBar)
+        searchContainerView.addSubview(searchIconView)
     }
     
-    private func constraints() {
-        searchBar.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(60)
+    /// UI 제약 조건 설정
+    private func setupConstraints() {
+        searchContainerView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(5)
             $0.left.equalToSuperview().offset(16)
             $0.right.equalToSuperview().offset(-16)
+            $0.height.equalTo(45)
+        }
+        
+        searchBar.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(12)
+            $0.right.equalTo(searchIconView.snp.left).offset(-10)
+            $0.top.bottom.equalToSuperview()
+        }
+        
+        searchIconView.snp.makeConstraints {
+            $0.right.equalToSuperview().offset(-12)
+            $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(24) // 아이콘 크기 조정
         }
     }
 }

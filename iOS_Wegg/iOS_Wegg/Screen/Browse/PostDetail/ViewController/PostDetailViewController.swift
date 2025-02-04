@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class PostDetailViewController: UIViewController {
     
@@ -37,6 +38,7 @@ class PostDetailViewController: UIViewController {
         setNavigation()
         emojiButtonAction()
         handlePlusEmojiSelection()
+        commentButtonAction()
     }
     
     // MARK: - Methods
@@ -49,12 +51,24 @@ class PostDetailViewController: UIViewController {
     
     /// 네비게이션 상단 바 타이틀 지정 및 나가기 버튼 커스텀
     private func setNavigation() {
-        self.navigationItem.title = "Wegg 게시물"
+        let titleView = UIView()
+        // 로고 이미지로 스타일 변경
+        let logoImageView = UIImageView(image: UIImage(named: "wegg_text"))
+        logoImageView.contentMode = .scaleAspectFit
+        self.navigationItem.titleView = logoImageView
+        
+        titleView.addSubview(logoImageView)
+        
+        logoImageView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.height.equalTo(44)
+            make.width.equalTo(logoImageView.snp.height).multipliedBy(1.5) // 비율 유지
+        }
         
         let backBtn = UIBarButtonItem(
             image: UIImage(systemName: "arrow.left")?
             .withRenderingMode(.alwaysOriginal)
-            .withTintColor(UIColor.black),
+            .withTintColor(UIColor.white),
             style: .plain,
             target: self,
             action: #selector(didTap))
@@ -147,5 +161,29 @@ class PostDetailViewController: UIViewController {
         }, completion: { _ in
             popupView.removeFromSuperview() // 애니메이션 완료 후 제거
         })
+    }
+    
+    /// 댓글 버튼에 액션을 추가하는 메서드
+    private func commentButtonAction() {
+        postDetailView.commentButton.addTarget(
+            self,
+            action: #selector(handleCommentButtonTap),
+            for: .touchUpInside)
+    }
+    
+    /// 댓글 버튼 클릭 시 바텀 시트 띄우기
+    @objc private func handleCommentButtonTap() {
+        let commentVC = CommentViewController()
+        
+        if let sheet = commentVC.sheetPresentationController {
+            sheet.detents = [
+                .medium(),
+                .large()
+            ]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 25
+        }
+        
+        present(commentVC, animated: true, completion: nil)
     }
 }
