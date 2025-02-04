@@ -10,8 +10,6 @@ import Then
 
 class MapSearchView: UIView {
     
-    weak var gestureDelegte: MapSearchViewGestureDelegate?
-    
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -51,15 +49,5 @@ private extension MapSearchView {
             make.leading.trailing.equalToSuperview().inset(21)
             make.height.greaterThanOrEqualTo(50)
         }
-    }
-}
-
-extension MapSearchView: MapSearchBarDelegate {
-    func mapSearchBarDidTapBackButton() {
-        print("Back button tapped")
-    }
-    
-    func mapsearchBarDidTapSearchButton(query: String?) {
-        print("Search button tapped with query: \(query ?? "empty")")
     }
 }
