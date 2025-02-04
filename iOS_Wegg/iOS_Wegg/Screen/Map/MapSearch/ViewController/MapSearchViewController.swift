@@ -41,10 +41,38 @@ extension MapSearchViewController:
     
     // MARK: - UITextFieldDelegate
     
-    // 엔터(Return 키) 누를 때 호출되는 함수
+    // 탭하여 편집을 시작할 때 호출
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(
+            withDuration: 0.3,
+            animations: { [weak self] in
+                // alpha 값을 0으로 설정하여 뷰가 사라지도록 함(추후 복귀 용이)
+                self?.mapSearchView.searchResultView.alpha = 0.0
+            },
+            completion: { [weak self] _ in
+                self?.mapSearchView.searchResultView.isHidden = true
+            }
+        )
+    }
+    
+    // 엔터(Return 키) 누를 때 호출되는 함수(검색 결과 처리)
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("입력된 값: \(textField.text ?? "")")
+        guard let query = textField.text,
+              !query.isEmpty else {
+            return false
+        }
+        
+        print("입력된 값: \(query)")
+        // 검색 결과 뷰 다시 표시
+        mapSearchView.searchResultView.isHidden = false
+        mapSearchView.searchResultView.alpha = 0.0 // 먼저 투명하게 설정
+        
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.mapSearchView.searchResultView.alpha = 1.0 // 서서히 나타남
+        }
+        
         textField.resignFirstResponder() // 키보드 내리기
+        
         return true
     }
 }

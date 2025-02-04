@@ -34,6 +34,10 @@ class MapSearchView: UIView {
         $0.clearsOnBeginEditing = false // 편집 시 기존 텍스트필드값 제거
     }
     
+    lazy var searchResultView = MapSearchResultView().then {
+        $0.isHidden = true
+    }
+    
     lazy var searchBackButtonView = makeButtonView(imageName: "searchBackButton")
     lazy var searchButtonView = makeButtonView(imageName: "MapSearchButton")
     lazy var searchBarStack = makeStackView(spacing: 8, axis: .horizontal)
@@ -119,7 +123,7 @@ private extension MapSearchView {
     }
     
     func addComponenets() {
-        [searchBarStack].forEach {
+        [searchBarStack, searchResultView].forEach {
             addSubview($0)
         }
     }
@@ -129,6 +133,12 @@ private extension MapSearchView {
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.leading.trailing.equalToSuperview().inset(21)
             make.height.greaterThanOrEqualTo(50)
+        }
+        
+        searchResultView.snp.makeConstraints { make in
+            make.top.equalTo(searchBarStack.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.width.height.equalToSuperview()
         }
     }
 }
