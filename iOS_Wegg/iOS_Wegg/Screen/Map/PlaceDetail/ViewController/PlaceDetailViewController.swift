@@ -8,26 +8,51 @@
 import UIKit
 
 class PlaceDetailViewController: UIViewController {
+    private var detailData: HotPlaceDetailModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view = PlaceDetailView()
-        
-        // 추후에 네비게이션 전환과 동시에 호출되는 곳에 위치시키기
-        fetchDetail(for: "1") { detail in
-            HotPlaceSectionModel.sampleSections[0].details = detail
+        loadDetailData()
+    }
+    
+    private func loadDetailData() {
+        Task {
+            // 비동기로 데이터 로드
+            let mockData = await fetchDetailData()
+            
+            // UI 업데이트
+            updateUI(with: mockData)
         }
     }
-
-    // 상세 데이터 로드 (장소 선택 시 호출)
-    func fetchDetail(for placeID: String, completion: @escaping (HotPlaceDetailModel) -> Void) {
-        // 예시 API 호출
-        let detail = HotPlaceDetailModel(
+    
+    /**
+     비동기적으로 상세 데이터를 가져오는 함수
+     - Returns: `HotPlaceDetailModel`을 반환
+     */
+    private func fetchDetailData() async -> HotPlaceDetailModel {
+        // 임시 Mock 데이터이므로 0.5초 지연
+        try? await Task.sleep(nanoseconds: 500_000_000)
+        // 임시로 반환
+        return HotPlaceDetailModel(
             phoneNumber: "1522-3232",
             openingHours: "영업 중 · 매장 22:00에 영업 종료",
             websiteURL: "http://www.starbucks.co.kr/"
         )
-        completion(detail)
+    }
+    
+    /**
+     메인 스레드에서 UI를 업데이트하는 함수
+     - Parameter detail: `HotPlaceDetailModel` 데이터
+     */
+    @MainActor
+    private func updateUI(with detail: HotPlaceDetailModel) {
+        self.detailData = detail
+        print("Phone: \(detail.phoneNumber)")
+        print("Hours: \(detail.openingHours)")
+        print("Website: \(detail.websiteURL)")
+        
+        // TODO: [25.02.05] - UI 업데이트 작업 - 작성자: 이재원
     }
 }
