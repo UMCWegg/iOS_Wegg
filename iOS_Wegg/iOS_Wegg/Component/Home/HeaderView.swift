@@ -111,29 +111,34 @@ class HeaderView: UIView {
         if isHomeMode {
             print("캘린더 버튼 터치 ✅")
             let calendarVC = CalendarViewController()
+            calendarVC.calendarView.headerView.viewController = calendarVC
             viewController.navigationController?.pushViewController(calendarVC, animated: false)
         } else {
             print("홈 버튼 터치 ✅")
-            viewController.navigationController?.popViewController(animated: false)
+            
+            if let navigationController = viewController.navigationController {
+                navigationController.popToRootViewController(animated: false) // ✅ 홈으로 이동
+            } else if let tabBarController = viewController.tabBarController {
+                tabBarController.selectedIndex = 0 // ✅ 홈 탭으로 이동
+            } else {
+                print("홈 화면으로 이동 실패")
+            }
         }
     }
-    
+
     @objc private func bellTapped() {
         print("알림 버튼 터치 ✅")
         let notiVC = NotiViewController()
         notiVC.hidesBottomBarWhenPushed = true
-        
-        if let navigationController = viewController?.navigationController {
-            /// 네비게이션 컨트롤러가 있는 경우
+
+        guard let viewController = viewController else { return }
+
+        if let navigationController = viewController.navigationController {
             navigationController.pushViewController(notiVC, animated: true)
-        } else if let presentingViewController = viewController?.presentingViewController {
-            /// 현재 뷰 컨트롤러가 모달로 표시된 경우
-            viewController?.dismiss(animated: false) {
-                presentingViewController.present(notiVC, animated: true, completion: nil)
-            }
+        } else if let tabBarController = viewController.tabBarController {
+            tabBarController.present(notiVC, animated: true, completion: nil)
         } else {
-            /// 그 외의 경우 (예: 루트 뷰 컨트롤러인 경우)
-            viewController?.present(notiVC, animated: true, completion: nil)
+            viewController.present(notiVC, animated: true, completion: nil)
         }
     }
 }

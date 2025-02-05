@@ -12,7 +12,7 @@ import Then
 class CalendarView: UIView {
     
     // MARK: - UI Components
-    let headerView = HeaderView()
+    let headerView = HeaderView(isHomeMode: false)
 
     private let profileIcon = UIImageView().then {
         $0.image = UIImage(named: "profileIcon")

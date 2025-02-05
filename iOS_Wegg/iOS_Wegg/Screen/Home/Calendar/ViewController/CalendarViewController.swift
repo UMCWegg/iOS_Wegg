@@ -7,7 +7,7 @@ import UIKit
 
 class CalendarViewController: UIViewController, UICollectionViewDataSource {
     
-    private let calendarView = CalendarView()
+    let calendarView = CalendarView()
     private var studyTimes: [String] = ["1시간", "2시간", "3시간"] // 샘플 데이터
     private var days: [String] = []
     private var weeks: [String] = ["일", "월", "화", "수", "목", "금", "토"]
@@ -26,6 +26,8 @@ class CalendarViewController: UIViewController, UICollectionViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        calendarView.headerView.viewController = self
         
         calendarView.calendarCollectionView.dataSource = self
         calendarView.studyTimeCollectionView.dataSource = self
