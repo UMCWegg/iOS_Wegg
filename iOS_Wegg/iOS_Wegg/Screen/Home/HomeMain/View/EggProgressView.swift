@@ -54,8 +54,8 @@ class EggProgressView: UIView {
         layer.addSublayer(progressLayer)
         addSubview(percentageLabel)
         
-        percentageLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        percentageLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 

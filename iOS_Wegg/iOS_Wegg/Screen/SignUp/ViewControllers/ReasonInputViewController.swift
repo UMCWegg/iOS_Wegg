@@ -22,11 +22,17 @@ class ReasonInputViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setupActions()
     }
     
     // MARK: - Setup
     
     private func setupActions() {
+        
+        reasonInputView.nextButton.addTarget(self,
+                                             action: #selector(nextButtonTapped),
+                                             for: .touchUpInside)
+        
         reasonInputView.backButton.addTarget(
             self,
             action: #selector(backButtonTapped),
@@ -39,10 +45,6 @@ class ReasonInputViewController: UIViewController {
     }
     
     // MARK: - Actions
-    
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
     
     private func handlereasonSelection(_ reason: String) {
         guard let reasonType = UserReason(rawValue: reason) else { return }
@@ -67,8 +69,13 @@ class ReasonInputViewController: UIViewController {
         
     }
     
-    private func moveToNextScreen() {
-        // 추후 구현 예정
+    @objc private func nextButtonTapped() {
+        let getAlertPermissionVC = GetAlertPermissionViewController()
+        navigationController?.pushViewController(getAlertPermissionVC, animated: true)
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 
 }
