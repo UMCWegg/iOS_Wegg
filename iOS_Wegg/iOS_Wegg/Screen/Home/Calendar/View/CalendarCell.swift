@@ -9,7 +9,6 @@ import Then
 
 class CalendarCell: UICollectionViewCell {
     
-    // MARK: - Identifier
     static let identifier = "CalendarCell"
     
     // MARK: - UI Components
@@ -19,19 +18,14 @@ class CalendarCell: UICollectionViewCell {
     }
     
     let dateLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 14, weight: .bold)
-        $0.textColor = .secondary
+        $0.font = .systemFont(ofSize: 14, weight: .regular)
         $0.textAlignment = .center
-        $0.numberOfLines = 1
         $0.adjustsFontSizeToFitWidth = true
-        $0.minimumScaleFactor = 0.5
-        $0.lineBreakMode = .byClipping
+        $0.minimumScaleFactor = 0.8
     }
     
     private let circleView = UIView().then {
-        $0.backgroundColor = .clear
-        $0.layer.borderWidth = 2
-        $0.layer.borderColor = UIColor.secondary.cgColor
+        $0.layer.borderWidth = 1.5
         $0.layer.cornerRadius = 12
         $0.isHidden = true
     }
@@ -64,19 +58,33 @@ class CalendarCell: UICollectionViewCell {
         
         dateLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.99)
+            $0.width.height.equalTo(24)
         }
     }
 
     func configure(day: String, isWeekday: Bool = false, isToday: Bool = false) {
         dateLabel.text = day
-        circleView.isHidden = !isToday
         
-        if isWeekday {
+        if day.isEmpty {
             eggImageView.isHidden = true
-        } else {
-            eggImageView.isHidden = false
-            eggImageView.image = UIImage(named: "emptyEgg")
+            circleView.isHidden = true
+            dateLabel.text = ""
+            return
         }
+        
+        if isToday {
+            circleView.backgroundColor = .clear
+            circleView.layer.borderColor = UIColor.secondary.cgColor
+            circleView.isHidden = false
+            dateLabel.textColor = .secondary
+        } else {
+            circleView.backgroundColor = .clear
+            circleView.layer.borderColor = UIColor.secondary.cgColor
+            circleView.isHidden = true
+            dateLabel.textColor = isWeekday ? .secondary : .black
+        }
+        
+        eggImageView.isHidden = isWeekday
+        dateLabel.font = isWeekday ? .notoSans(.bold, size: 12) : .notoSans(.regular, size: 14)
     }
 }
