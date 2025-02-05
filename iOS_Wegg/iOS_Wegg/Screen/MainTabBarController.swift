@@ -32,10 +32,10 @@ class MainTabBarController: UITabBarController {
         let mapVC = UINavigationController(
             rootViewController: MapViewController(mapManager: mapManager)
         )
-        mapVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Map"), tag: 3)
+        mapVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Time"), tag: 3)
         
         let timeVC = UINavigationController(rootViewController: TimeViewController())
-        timeVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Time"), tag: 4)
+        timeVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Map"), tag: 4)
         
         let myVC = UINavigationController(rootViewController: MyPageViewController())
         myVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "My"), tag: 5)
