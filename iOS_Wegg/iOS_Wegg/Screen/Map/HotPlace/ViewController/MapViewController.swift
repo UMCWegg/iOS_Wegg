@@ -117,7 +117,7 @@ class MapViewController:
         fpc.addPanel(toParent: self)
     }
     
-    private func navigateToSearchViewWithAnimation() {
+    private func pushUniqueSearchViewWithAnimation() {
         mapSearchVC = MapSearchViewController()
         guard let mapSearchVC = mapSearchVC else { return }
         guard let navigationController = self.navigationController else { return }
@@ -172,12 +172,12 @@ extension MapViewController:
     }
     
     func didTapPlaceSearchBar() {
-        navigateToSearchViewWithAnimation()
+        pushUniqueSearchViewWithAnimation()
     }
     
     // MARK: - MapSearchBarDelegate
     
     func didTapSearchBackButton() {
-        navigateToSearchViewWithAnimation()
+        pushUniqueSearchViewWithAnimation()
     }
 }
