@@ -92,6 +92,7 @@ class CalendarView: UIView {
         setupUI()
         setupWeekdays()
         setupLayout()
+        setupToggleAction()
     }
     
     required init?(coder: NSCoder) {
@@ -188,6 +189,13 @@ class CalendarView: UIView {
         
         studyTimeCollectionView.snp.makeConstraints {
             $0.edges.equalTo(calendarCollectionView)
+        }
+    }
+    
+    private func setupToggleAction() {
+        toggleButton.onToggleChanged = { [weak self] isOn in
+            self?.calendarCollectionView.isHidden = isOn
+            self?.studyTimeCollectionView.isHidden = !isOn
         }
     }
 }
