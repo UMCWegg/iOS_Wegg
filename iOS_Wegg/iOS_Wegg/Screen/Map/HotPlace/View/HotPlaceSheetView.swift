@@ -66,7 +66,7 @@ class HotPlaceSheetView: UIView {
         ])
         
         let imageAttachment = NSTextAttachment()
-        imageAttachment.image = UIImage(named: "weggy")
+        imageAttachment.image = UIImage(named: "weggy_border")
         imageAttachment.bounds = CGRect(x: 0, y: -2, width: 60, height: 18)
         
         let imageAttributedString = NSAttributedString(attachment: imageAttachment)
@@ -149,7 +149,7 @@ private extension HotPlaceSheetView {
         
         logoImageView.snp.makeConstraints { make in
             make.width.height.equalTo(
-                MapViewLayout.BottomSheetHeader.logoHeight
+                MapViewLayout.yellowLogoIcon
             )
         }
         

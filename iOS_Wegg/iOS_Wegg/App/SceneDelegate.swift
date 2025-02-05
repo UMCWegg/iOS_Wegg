@@ -20,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         // 원하는 뷰 컨트롤러 파일의 이름을 작성
-        window?.rootViewController = MainTabBarController()
+        // TODO: 추후에 PR 올리기 전, MainTabBarController로 변경하기
+        window?.rootViewController = PlaceDetailViewController()
         window?.makeKeyAndVisible()
     }
     

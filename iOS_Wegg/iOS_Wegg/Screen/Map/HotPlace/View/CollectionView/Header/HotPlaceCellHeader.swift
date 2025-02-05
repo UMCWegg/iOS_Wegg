@@ -112,7 +112,7 @@ private extension HotPlaceCellHeader {
         
         logoImageView.snp.makeConstraints { make in
             make.width.height.equalTo(
-                MapViewLayout.BottomSheetHeader.logoHeight
+                MapViewLayout.yellowLogoIcon
             )
         }
         
