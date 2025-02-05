@@ -36,17 +36,17 @@ class HotPlaceCellHeader: UICollectionReusableView {
     
     lazy var categoryLabel = makeLabel(
         font: .notoSans(.medium, size: 14),
-        .captionGray
+        .gray1
     )
     
     lazy var verificationCount = makeLabel(
         font: .notoSans(.medium, size: 14),
-        .captionGray
+        .gray1
     )
     
     lazy var saveCount = makeLabel(
         font: .notoSans(.medium, size: 14),
-        .captionGray
+        .gray1
     )
     
     private lazy var headerTitleStack = makeStackView(spacing: 8, axis: .horizontal)

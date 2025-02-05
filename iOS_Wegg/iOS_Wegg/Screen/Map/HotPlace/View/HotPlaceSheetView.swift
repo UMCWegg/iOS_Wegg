@@ -23,7 +23,6 @@ class HotPlaceSheetView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Property
     
     public lazy var hotPlaceCollectionView = UICollectionView(

@@ -26,6 +26,7 @@ struct MapViewLayout {
         static let leadingOffset: CGFloat = 327
         static let trailingOffset: CGFloat = -21
         static let topOffset: CGFloat = 10
+        static let searchBarHeight: CGFloat = 130
     }
     
     struct BottomSheetHeader {
