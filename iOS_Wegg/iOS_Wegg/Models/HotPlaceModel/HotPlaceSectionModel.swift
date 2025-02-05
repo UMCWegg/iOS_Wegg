@@ -10,6 +10,7 @@ import Foundation
 struct HotPlaceSectionModel {
     let header: HotPlaceHeaderModel
     let items: [HotPlaceImageModel]
+    var details: HotPlaceDetailModel?
 }
 
 struct HotPlaceHeaderModel {
@@ -23,8 +24,14 @@ struct HotPlaceImageModel {
     let imageName: String
 }
 
+struct HotPlaceDetailModel {
+    let phoneNumber: String
+    let openingHours: String
+    let websiteURL: String
+}
+
 extension HotPlaceSectionModel {
-    static let sampleSections: [HotPlaceSectionModel] = [
+    static var sampleSections: [HotPlaceSectionModel] = [
         .init(
             header: .init(
                 title: "스타벅스 신용산점",
@@ -32,7 +39,8 @@ extension HotPlaceSectionModel {
                 verificationCount: "인증 99+",
                 saveCount: "저장 34"
             ),
-            items: HotPlaceImageModel.sampleData
+            items: HotPlaceImageModel.sampleData,
+            details: nil
         ),
         .init(
             header: .init(
@@ -41,7 +49,8 @@ extension HotPlaceSectionModel {
                 verificationCount: "인증 99+",
                 saveCount: "저장 34"
             ),
-            items: HotPlaceImageModel.sampleData
+            items: HotPlaceImageModel.sampleData,
+            details: nil
         ),
         .init(
             header: .init(
@@ -50,7 +59,8 @@ extension HotPlaceSectionModel {
                 verificationCount: "인증 99+",
                 saveCount: "저장 34"
             ),
-            items: HotPlaceImageModel.sampleData
+            items: HotPlaceImageModel.sampleData,
+            details: nil
         ),
         .init(
             header: .init(
@@ -59,7 +69,8 @@ extension HotPlaceSectionModel {
                 verificationCount: "인증 99+",
                 saveCount: "저장 34"
             ),
-            items: HotPlaceImageModel.sampleData
+            items: HotPlaceImageModel.sampleData,
+            details: nil
         )
     ]
 }
