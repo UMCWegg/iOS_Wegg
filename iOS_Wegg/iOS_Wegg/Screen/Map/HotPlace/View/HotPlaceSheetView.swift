@@ -47,7 +47,7 @@ class HotPlaceSheetView: UIView {
     }
     
     lazy var logoImageView = UIImageView().then {
-        $0.image = UIImage(named: "wegg_icon2")
+        $0.image = UIImage(named: "yellow_wegg_icon")
         $0.contentMode = .scaleAspectFill
     }
     
