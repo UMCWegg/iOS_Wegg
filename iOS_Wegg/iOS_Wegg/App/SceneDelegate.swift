@@ -26,8 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationController.setNavigationBarHidden(true, animated: false)
         
         // 원하는 뷰 컨트롤러 파일의 이름을 작성
-        // TODO: 추후에 PR 올리기 전, MainTabBarController로 변경하기
-        window?.rootViewController = PlaceDetailViewController()
+        window?.rootViewController = MainTabBarController()
         window?.makeKeyAndVisible()
     }
     
