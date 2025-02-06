@@ -22,7 +22,42 @@ class PlaceDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    lazy var yellowIconImageView = makeImageView(imageName: "yellow_wegg_icon")
+    // MARK: - ImageViews
+    
+    lazy var yellowIconImageView = makeImageView("yellow_wegg_icon")
+    lazy var starImageView = makeImageView("star")
+
+    // 아이콘 이미지 뷰 배열을 한 번에 생성
+    private lazy var iconImageViews: [UIImageView] = [
+        "wegg_icon",
+        "brown_phone",
+        "brown_clock",
+        "brown_web"
+    ].map { makeImageView($0) }
+
+    // 배열을 통해 개별 아이콘 뷰에 접근할 수 있도록 변수 선언
+    private lazy var addressIconImageView = iconImageViews[0]
+    private lazy var phoneIconImageView = iconImageViews[1]
+    private lazy var openingIconImageView = iconImageViews[2]
+    private lazy var webUrlIconImageView = iconImageViews[3]
+
+    // MARK: - Labels
+    
+    lazy var verificationCount = makeLabel(.notoSans(.medium, size: 14), .gray1)
+    lazy var saveCount = makeLabel(.notoSans(.medium, size: 14), .gray1)
+
+    // 공통 라벨을 배열을 사용해 일괄 생성
+    private lazy var infoLabels: [UILabel] = (0..<4).map { index in
+        makeLabel(.notoSans(.medium, size: 14), index == 3 ? .primary : .black)
+    }
+
+    // 배열을 통해 개별 라벨에 접근할 수 있도록 변수 선언
+    lazy var addressLabel = infoLabels[0]
+    lazy var phoneNumberLabel = infoLabels[1]
+    lazy var openingInfoLabel = infoLabels[2]
+    lazy var webUrlLabel = infoLabels[3]
+
+    // MARK: - Styled Visitor Count Label
     
     lazy var styledVisitorCountLabel = UILabel().then {
         let fullText = NSMutableAttributedString()
@@ -30,9 +65,10 @@ class PlaceDetailView: UIView {
         let visitorCountText = NSAttributedString(
             string: "132명의 ",
             attributes: [
-            .font: UIFont.notoSans(.medium, size: 12) ?? UIFont.systemFont(ofSize: 12),
-            .foregroundColor: UIColor.primary
-        ])
+                .font: UIFont.notoSans(.medium, size: 12) ?? UIFont.systemFont(ofSize: 12),
+                .foregroundColor: UIColor.primary
+            ]
+        )
         
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named: "weggy")
@@ -43,28 +79,19 @@ class PlaceDetailView: UIView {
         let visitedPlaceText = NSAttributedString(
             string: " 가 이 장소를 방문하였어요",
             attributes: [
-            .font: UIFont.notoSans(.medium, size: 12) ?? UIFont.systemFont(ofSize: 12),
-            .foregroundColor: UIColor.primary
-        ])
+                .font: UIFont.notoSans(.medium, size: 12) ?? UIFont.systemFont(ofSize: 12),
+                .foregroundColor: UIColor.primary
+            ]
+        )
 
         fullText.append(visitorCountText)
         fullText.append(weggyAttributedString)
         fullText.append(visitedPlaceText)
-        
+
         $0.attributedText = fullText
     }
-    
-    lazy var verificationCount = makeLabel(
-        font: .notoSans(.medium, size: 14),
-        .gray1
-    )
-    
-    lazy var saveCount = makeLabel(
-        font: .notoSans(.medium, size: 14),
-        .gray1
-    )
-    
-    lazy var starImageView = makeImageView(imageName: "star")
+
+    // MARK: - CollectionView
     
     public lazy var studyImageCollectionView = UICollectionView(
         frame: bounds,
@@ -75,75 +102,66 @@ class PlaceDetailView: UIView {
             forCellWithReuseIdentifier: PlaceDetailImageCell.identifier
         )
     }
+
+    // MARK: - StackViews
+    private lazy var styledVisitorTextStack = makeStackView(8, .horizontal)
+    private lazy var statusStack = makeStackView(8, .horizontal)
+
+    // 공통 스택뷰 배열을 사용하여 리팩토링
+    private lazy var infoStacks: [UIStackView] = [
+        makeStackView(8, .horizontal),
+        makeStackView(8, .horizontal),
+        makeStackView(8, .horizontal),
+        makeStackView(8, .horizontal)
+    ]
+
+    // 배열을 통해 개별 스택뷰에 접근할 수 있도록 변수 선언
+    private lazy var addressStack = infoStacks[0]
+    private lazy var phoneStack = infoStacks[1]
+    private lazy var openingInfoStack = infoStacks[2]
+    private lazy var webUrlStack = infoStacks[3]
+
+    // MARK: - Utility Functions
     
-    lazy var addressIconImageView = makeImageView(imageName: "wegg_icon")
-    lazy var addressLabel = makeLabel(
-        font: .notoSans(.medium, size: 14), .black
-    )
-    
-    lazy var phoneIconImageView = makeImageView(imageName: "brown_phone")
-    lazy var phoneNumberLabel = makeLabel(
-        font: .notoSans(.medium, size: 14), .black
-    )
-    
-    lazy var openingIconImageView = makeImageView(imageName: "brown_clock")
-    lazy var openingInfoLabel = makeLabel(
-        font: .notoSans(.medium, size: 14), .black
-    )
-    
-    lazy var webUrlIconImageView = makeImageView(imageName: "brown_web")
-    lazy var webUrlLabel = makeLabel(
-        font: .notoSans(.medium, size: 14), .primary
-    )
-    
-    private lazy var styledVisitorTextStack = makeStackView(spacing: 8, axis: .horizontal)
-    // verificationCount와 saveCount 스택 쌓음
-    private lazy var statusStack = makeStackView(spacing: 8, axis: .horizontal)
-    private lazy var addressStack = makeStackView(spacing: 8, axis: .horizontal)
-    private lazy var phoneStack = makeStackView(spacing: 8, axis: .horizontal)
-    private lazy var openingInfoStack = makeStackView(spacing: 8, axis: .horizontal)
-    private lazy var webUrlStack = makeStackView(spacing: 8, axis: .horizontal)
-    
-    // MARK: - Function
-    
-    /// 중복 라벨 처리 함수
-    /// - Parameter font: 텍스트 폰트 지정
-    /// - Returns: 지정된 폰트 UILabel 반환
+    /// UILabel 생성 함수
     func makeLabel(
-        font: UIFont?,
+        _ font: UIFont?,
         _ color: UIColor
     ) -> UILabel {
-        let label = UILabel()
-        label.font = font ?? UIFont.systemFont(ofSize: 19, weight: .medium)
-        label.textColor = color
-        label.numberOfLines = 2
-        label.textAlignment = .left
-        return label
+        return UILabel().then {
+            $0.font = font ?? UIFont.systemFont(ofSize: 19, weight: .medium)
+            $0.textColor = color
+            $0.numberOfLines = 2
+            $0.textAlignment = .left
+        }
     }
-    
-    func makeImageView(imageName: String) -> UIImageView {
-        let image = UIImageView()
-        image.image = UIImage(named: imageName)
-        image.contentMode = .scaleAspectFill
-        return image
+
+    /// UIImageView 생성 함수
+    func makeImageView(_ imageName: String) -> UIImageView {
+        return UIImageView().then {
+            $0.image = UIImage(named: imageName)
+            $0.contentMode = .scaleAspectFill
+        }
     }
-    
+
+    /// UIStackView 생성 함수
     func makeStackView(
-        spacing: CGFloat,
-        axis: NSLayoutConstraint.Axis,
-        distribution: UIStackView.Distribution = .fill
+        _ spacing: CGFloat,
+        _ axis: NSLayoutConstraint.Axis,
+        _ distribution: UIStackView.Distribution = .fill
     ) -> UIStackView {
-        let stack = UIStackView()
-        stack.axis = axis
-        stack.spacing = spacing
-        stack.distribution = distribution
-        
-        return stack
+        return UIStackView().then {
+            $0.axis = axis
+            $0.spacing = spacing
+            $0.distribution = distribution
+        }
     }
 }
 
-private extension PlaceDetailView {
+// MARK: - Set Up Extenstion
 
+private extension PlaceDetailView {
+    
     func setupView() {
         setupStackView()
         addComponents()
@@ -151,35 +169,24 @@ private extension PlaceDetailView {
     }
     
     func setupStackView() {
-        [yellowIconImageView, styledVisitorCountLabel].forEach {
-            styledVisitorTextStack.addArrangedSubview($0)
-        }
+        // 스택뷰와 추가할 서브뷰를 매핑한 배열 생성
+        let stackViewMappings: [(UIStackView, [UIView])] = [
+            (styledVisitorTextStack, [yellowIconImageView, styledVisitorCountLabel]),
+            (statusStack, [verificationCount, saveCount]),
+            (addressStack, [addressIconImageView, addressLabel]),
+            (phoneStack, [phoneIconImageView, phoneNumberLabel]),
+            (openingInfoStack, [openingIconImageView, openingInfoLabel]),
+            (webUrlStack, [webUrlIconImageView, webUrlLabel])
+        ]
         
-        [verificationCount, saveCount].forEach {
-            statusStack.addArrangedSubview($0)
-        }
-        
-        [addressIconImageView, addressLabel].forEach {
-            addressStack.addArrangedSubview($0)
-        }
-        
-        [phoneIconImageView, phoneNumberLabel].forEach {
-            phoneStack.addArrangedSubview($0)
-        }
-        
-        [openingIconImageView, openingInfoLabel].forEach {
-            openingInfoStack.addArrangedSubview($0)
-        }
-        
-        [webUrlIconImageView, webUrlLabel].forEach {
-            webUrlStack.addArrangedSubview($0)
+        // `forEach`를 사용하여 각 스택뷰에 서브뷰를 추가
+        stackViewMappings.forEach { stackView, subviews in
+            subviews.forEach { stackView.addArrangedSubview($0) }
         }
     }
     
     func addComponents() {
-        
         // MARK: - addSubview
-        
         [
             styledVisitorTextStack,
             statusStack,
@@ -189,34 +196,29 @@ private extension PlaceDetailView {
             phoneStack,
             openingInfoStack,
             webUrlStack
-        ].forEach {
-            addSubview($0)
-        }
+        ].forEach(addSubview)
         
         // MARK: - 레이아웃 크기 설정
         
-        // 아이콘 크기 설정
-        [
+        // 아이콘 크기 설정 (공통 아이콘 + Yellow 아이콘 포함)
+        let iconViews = [
             addressIconImageView,
             phoneIconImageView,
             openingIconImageView,
-            webUrlIconImageView
-        ].forEach {
-            $0.snp.makeConstraints { make in
-                make.width.height.equalTo(
-                    MapViewLayout.PlaceDetail.iconSize
-                )
+            webUrlIconImageView,
+            yellowIconImageView
+        ]
+        
+        iconViews.forEach { icon in
+            icon.snp.makeConstraints { make in
+                let size = (icon == yellowIconImageView) ?
+                MapViewLayout.yellowLogoIcon : MapViewLayout.PlaceDetail.iconSize
+                make.width.height.equalTo(size)
             }
         }
         
-        yellowIconImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(
-                MapViewLayout.yellowLogoIcon
-            )
-        }
-        
-        // 라벨 길이 설정
-        [
+        // 라벨 및 스택뷰 높이 설정
+        let labelViews = [
             styledVisitorTextStack,
             statusStack,
             starImageView,
@@ -224,7 +226,9 @@ private extension PlaceDetailView {
             phoneStack,
             openingInfoStack,
             webUrlStack
-        ].forEach {
+        ]
+        
+        labelViews.forEach {
             $0.snp.makeConstraints { make in
                 make.height.equalTo(20)
             }
@@ -240,42 +244,33 @@ private extension PlaceDetailView {
         
         statusStack.snp.makeConstraints { make in
             make.top.equalTo(styledVisitorTextStack.snp.bottom).offset(10)
-            make.leading.lessThanOrEqualToSuperview().inset(21) // leading만 설정하여 자동 크기
+            make.leading.lessThanOrEqualToSuperview().inset(21)
         }
         
         starImageView.snp.makeConstraints { make in
             make.top.equalTo(styledVisitorTextStack.snp.bottom).offset(10)
-            make.trailing.lessThanOrEqualToSuperview().inset(21) // trailing만 설정하여 자동 크기 조절
+            make.trailing.lessThanOrEqualToSuperview().inset(21)
         }
         
         studyImageCollectionView.snp.makeConstraints { make in
             make.top.equalTo(statusStack.snp.bottom).offset(15)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(230) // 임시 크기 지정
+            make.height.equalTo(230)
         }
         
-        addressStack.snp.makeConstraints { make in
-            make.top.equalTo(studyImageCollectionView.snp.bottom).offset(50)
-            make.leading.lessThanOrEqualToSuperview().inset(21) // leading만 설정하여 자동 크기
-            make.height.equalTo(277)
-        }
+        // 공통 height 적용할 스택뷰 배열
+        let stackViews = [addressStack, phoneStack, openingInfoStack, webUrlStack]
         
-        phoneStack.snp.makeConstraints { make in
-            make.top.equalTo(addressStack.snp.bottom).offset(50)
-            make.leading.lessThanOrEqualToSuperview().inset(21) // leading만 설정하여 자동 크기
-            make.height.equalTo(277)
-        }
-        
-        openingInfoStack.snp.makeConstraints { make in
-            make.top.equalTo(phoneStack.snp.bottom).offset(50)
-            make.leading.lessThanOrEqualToSuperview().inset(21) // leading만 설정하여 자동 크기
-            make.height.equalTo(277)
-        }
-        
-        webUrlStack.snp.makeConstraints { make in
-            make.top.equalTo(openingInfoStack.snp.bottom).offset(50)
-            make.leading.lessThanOrEqualToSuperview().inset(21) // leading만 설정하여 자동 크기
-            make.height.equalTo(277)
+        stackViews.enumerated().forEach { index, stackView in
+            stackView.snp.makeConstraints { make in
+                make.top.equalTo(
+                    index == 0 ?
+                    studyImageCollectionView.snp.bottom
+                    : stackViews[index - 1].snp.bottom
+                ).offset(50)
+                make.leading.lessThanOrEqualToSuperview().inset(21)
+                make.height.equalTo(277)
+            }
         }
     }
 }
