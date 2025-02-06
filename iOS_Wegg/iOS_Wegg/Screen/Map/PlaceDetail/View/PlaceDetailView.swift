@@ -66,9 +66,14 @@ class PlaceDetailView: UIView {
     
     lazy var starImageView = makeImageView(imageName: "star")
     
-    // TODO: [25.02.05] 추후 CollectionView 구현 예정 - 작성자: 이재원
-    lazy var studyImageCollectionView = UIView().then {
-        $0.backgroundColor = .blue
+    public lazy var studyImageCollectionView = UICollectionView(
+        frame: bounds,
+        collectionViewLayout: PlaceDetailCollectionLayout.createCompositionalLayout()
+    ).then {
+        $0.register(
+            PlaceDetailImageCell.self,
+            forCellWithReuseIdentifier: PlaceDetailImageCell.identifier
+        )
     }
     
     lazy var addressIconImageView = makeImageView(imageName: "wegg_icon")
