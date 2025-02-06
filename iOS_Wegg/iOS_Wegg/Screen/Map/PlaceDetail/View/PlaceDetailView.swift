@@ -120,6 +120,49 @@ class PlaceDetailView: UIView {
     private lazy var phoneStack = infoStacks[1]
     private lazy var openingInfoStack = infoStacks[2]
     private lazy var webUrlStack = infoStacks[3]
+    
+    lazy var bottomBackgorundView = UIView().then {
+        $0.backgroundColor = .yellowBg
+    }
+    
+    lazy var placeCreateButton = UIButton(type: .system).then {
+        var config = UIButton.Configuration.filled()
+        config.title = "이 장소로 알 생성하기"
+        config.image = UIImage(named: "yellow_wegg_icon")
+        config.imagePlacement = .leading
+        config.imagePadding = 5
+        config.baseBackgroundColor = .white
+        config.baseForegroundColor = UIColor.secondary
+        config.cornerStyle = .capsule
+        
+        // Dynamic Type 비활성화
+        let fontTransformer = UIConfigurationTextAttributesTransformer { attributes in
+            var attributes = attributes
+            attributes.font = UIFont.notoSans(.medium, size: 14) // 원하는 커스텀 폰트 적용
+            return attributes
+        }
+        config.titleTextAttributesTransformer = fontTransformer
+        
+        // 내부 여백 설정 (양쪽 여백 조정)
+        config.contentInsets = NSDirectionalEdgeInsets(
+            top: 10, leading: 0, bottom: 10, trailing: 0
+        )
+        
+        $0.clipsToBounds = true
+        $0.layer.shadowColor = UIColor.secondary.cgColor
+        $0.layer.shadowOpacity = 0.2
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.shadowRadius = 7
+        $0.layer.borderColor = UIColor.secondary.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 19
+        
+        $0.configuration = config
+    }
+    
+    private lazy var dividedLine = UIView().then {
+        $0.backgroundColor = .gray1
+    }
 
     // MARK: - Utility Functions
     
@@ -195,7 +238,10 @@ private extension PlaceDetailView {
             addressStack,
             phoneStack,
             openingInfoStack,
-            webUrlStack
+            webUrlStack,
+            bottomBackgorundView,
+            placeCreateButton,
+            dividedLine
         ].forEach(addSubview)
         
         // MARK: - 레이아웃 크기 설정
@@ -267,10 +313,28 @@ private extension PlaceDetailView {
                     index == 0 ?
                     studyImageCollectionView.snp.bottom
                     : stackViews[index - 1].snp.bottom
-                ).offset(50)
+                ).offset(45)
                 make.leading.lessThanOrEqualToSuperview().inset(21)
                 make.height.equalTo(277)
             }
+        }
+        
+        bottomBackgorundView.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalToSuperview()
+            make.height.equalTo(157)
+        }
+        
+        placeCreateButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(73)
+            make.width.equalTo(170)
+            make.height.equalTo(37)
+        }
+        
+        dividedLine.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(bottomBackgorundView.snp.top)
         }
     }
 }
