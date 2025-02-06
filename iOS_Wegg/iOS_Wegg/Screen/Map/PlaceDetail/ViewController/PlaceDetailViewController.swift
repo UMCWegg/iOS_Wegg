@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Then
 
 class PlaceDetailViewController: UIViewController {
     private var detailData: HotPlaceDetailModel?
@@ -13,9 +14,11 @@ class PlaceDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view = PlaceDetailView()
+        view = placeDetailView
         loadDetailData()
     }
+    
+    lazy var placeDetailView = PlaceDetailView()
     
     private func loadDetailData() {
         Task {
@@ -37,7 +40,7 @@ class PlaceDetailViewController: UIViewController {
         // 임시로 반환
         return HotPlaceDetailModel(
             phoneNumber: "1522-3232",
-            openingHours: "영업 중 · 매장 22:00에 영업 종료",
+            openingInfo: "영업 중 · 매장 22:00에 영업 종료",
             websiteURL: "http://www.starbucks.co.kr/"
         )
     }
@@ -50,9 +53,15 @@ class PlaceDetailViewController: UIViewController {
     private func updateUI(with detail: HotPlaceDetailModel) {
         self.detailData = detail
         print("Phone: \(detail.phoneNumber)")
-        print("Hours: \(detail.openingHours)")
+        print("Hours: \(detail.openingInfo)")
         print("Website: \(detail.websiteURL)")
         
-        // TODO: [25.02.05] - UI 업데이트 작업 - 작성자: 이재원
+        // TODO: [25.02.05] UI 업데이트 작업 - 작성자: 이재원
+        placeDetailView.verificationCount.text = "인증 99+"
+        placeDetailView.saveCount.text = "저장 34"
+        placeDetailView.addressLabel.text = "서울특별시 강남구 강남대로101길 101"
+        placeDetailView.phoneNumberLabel.text = detail.phoneNumber
+        placeDetailView.openingInfoLabel.text = detail.openingInfo
+        placeDetailView.webUrlLabel.text = detail.websiteURL
     }
 }

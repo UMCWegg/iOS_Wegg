@@ -43,4 +43,8 @@ struct MapViewLayout {
         static let bottomOffset: CGFloat = -10
     }
     
+    struct PlaceDetail {
+        static let iconSize: CGFloat = 20
+    }
+    
 }

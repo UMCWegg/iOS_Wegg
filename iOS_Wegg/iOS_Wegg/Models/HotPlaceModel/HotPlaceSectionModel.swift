@@ -26,7 +26,7 @@ struct HotPlaceImageModel {
 
 struct HotPlaceDetailModel {
     let phoneNumber: String
-    let openingHours: String
+    let openingInfo: String
     let websiteURL: String
 }
 
