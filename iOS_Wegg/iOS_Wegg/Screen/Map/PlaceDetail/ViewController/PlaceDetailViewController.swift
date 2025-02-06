@@ -72,19 +72,19 @@ class PlaceDetailViewController: UIViewController {
 
 // MARK: - Delegate & DataSource Extenstion
 
-// TODO: [25.02.05] 주석 처리하기 - 작성자: 이재원
-
 extension PlaceDetailViewController:
     UICollectionViewDelegateFlowLayout,
     UICollectionViewDataSource {
     
-    /// 섹션 갯수
+    /// 컬렉션 뷰에서 하나의 섹션만 표시
+    /// - 장소 상세 화면에서는 하나의 섹션만 필요하므로 1을 반환
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // 장소 상제 뷰에서는 섹션 하나만 필요
         return 1
     }
     
-    /// 특정 인덱스의 섹션에 속한 아이템 개수만 반환
+    /// 특정 인덱스(`targetSectionIndex`)에 해당하는 섹션의 아이템 개수를 반환
+    /// - `targetSectionIndex`가 `sampleSections`의 범위를 벗어나지 않는지 확인 후 반환
+    /// - 유효한 인덱스가 아닐 경우, 안전하게 0을 반환하여 크래시 방지
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -95,7 +95,10 @@ extension PlaceDetailViewController:
         return HotPlaceSectionModel.sampleSections[targetSectionIndex].items.count
     }
     
-    /// 특정 인덱스의 섹션 데이터만 사용하여 셀을 구성
+    /// 특정 인덱스(`targetSectionIndex`)의 섹션에서 셀을 생성하고 데이터를 설정
+    /// - `PlaceDetailImageCell`을 사용하여 셀을 구성
+    /// - `targetSectionIndex`가 유효한지 확인 후 해당 섹션의 데이터만 사용
+    /// - `indexPath.row`가 `items` 배열의 범위를 초과하지 않는지 검사하여 안전하게 접근
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -107,24 +110,26 @@ extension PlaceDetailViewController:
             fatalError("Could not dequeue PlaceDetailImageCell")
         }
         
-        // targetSectionIndex의 데이터만 사용
+        // `targetSectionIndex`가 유효한지 확인 (배열 범위 초과 방지)
         guard HotPlaceSectionModel.sampleSections.indices.contains(targetSectionIndex) else {
             fatalError("Invalid targetSectionIndex: \(targetSectionIndex)")
         }
         
         let section = HotPlaceSectionModel.sampleSections[targetSectionIndex]
         
+        // `indexPath.row`가 섹션의 아이템 개수보다 작은지 확인 (배열 범위 초과 방지)
         guard indexPath.row < section.items.count else {
             fatalError("Index out of range for section items")
         }
         
+        // 모델 데이터를 셀에 설정
         let data = section.items[indexPath.row]
         cell.configure(model: data)
         
         return cell
     }
     
-    /// 컬렉션 뷰의 행 사이 간격 설정
+    // 컬렉션 뷰에서 행(줄) 간 간격 설정
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -133,7 +138,7 @@ extension PlaceDetailViewController:
         return 14
     }
     
-    /// 같은 라인 내에서 아이템 간의 최소 간격 설정
+    // 같은 행(라인) 내에서 아이템 간 최소 간격 설정
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -142,7 +147,7 @@ extension PlaceDetailViewController:
         return 0
     }
     
-    /// 아이템 선택시 발생하는 이벤트 함수
+    // 컬렉션 뷰의 특정 아이템이 선택되었을 때 실행되는 이벤트 처리
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
