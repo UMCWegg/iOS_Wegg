@@ -9,11 +9,6 @@ import UIKit
 import Then
 import SnapKit
 
-protocol PlaceDetailViewGestureDelegate: AnyObject {
-    func didTapFavoriteStar()
-    func didTapPlaceCreateButton()
-}
-
 class PlaceDetailView: UIView {
     
     weak var gestureDelegate: PlaceDetailViewGestureDelegate?
