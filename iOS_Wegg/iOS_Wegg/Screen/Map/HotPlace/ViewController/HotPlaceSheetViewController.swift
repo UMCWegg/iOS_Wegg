@@ -142,7 +142,27 @@ extension HotPlaceSheetViewController {
 
 extension HotPlaceSheetViewController: HotPlaceCellGestureDelegate {
     func didTapHotPlaceCellHeader() {
-        print("didTapHotPlaceCellHeader")
+        // REFACT: MapSearchVC와 중복된 코드, 리팩토링 필요
+        if let hotPlaceVC = FloatingPanelManager.shared.getContentViewController()
+            as? HotPlaceSheetViewController {
+            let hotPlaceView = hotPlaceVC.hotPlaceView
+            hotPlaceView.bottomSheetTitleStack.isHidden = true
+            hotPlaceView.bottomSheetButtonStack.isHidden = true
+            hotPlaceView.dividedLineView.isHidden = true
+            hotPlaceView.updateCollectionViewLayout()
+        }
+        
+        // 검색시 바텀시트 half 위치로 이동
+        FloatingPanelManager.shared.fpc?.move(to: .half, animated: true)
+        FloatingPanelManager.shared.fpc?.set(
+            contentViewController: PlaceDetailViewController()
+        )
+        // navigationController에서 MapViewController 탐색
+        guard let mapVC = navigationController?.viewControllers.first(
+            where: { $0 is MapViewController }) as? MapViewController else {
+            return
+        }
+        mapVC.overlayView.placeSearchBar.isHidden = false
     }
     
 }
