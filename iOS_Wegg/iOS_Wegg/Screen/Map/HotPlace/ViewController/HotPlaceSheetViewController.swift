@@ -110,6 +110,7 @@ extension HotPlaceSheetViewController {
                     "\(HotPlaceCellHeader.identifier)의 식별자를 찾을 수 없습니다."
                 )
             }
+            header.gestureDelegate = self
             /// HotPlaceCellHeader의 각 섹션마다 데이터 주입
             let section = HotPlaceSectionModel.sampleSections[indexPath.section]
             header.configure(model: section.header)
@@ -135,6 +136,13 @@ extension HotPlaceSheetViewController {
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 50) // 적절한 크기 설정
+    }
+    
+}
+
+extension HotPlaceSheetViewController: HotPlaceCellGestureDelegate {
+    func didTapHotPlaceCellHeader() {
+        print("didTapHotPlaceCellHeader")
     }
     
 }
