@@ -10,6 +10,8 @@ import Then
 import SnapKit
 
 class PlaceDetailView: UIView {
+    
+    weak var gestureDelegate: PlaceDetailViewGestureDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,7 +27,7 @@ class PlaceDetailView: UIView {
     // MARK: - ImageViews
     
     lazy var yellowIconImageView = makeImageView("yellow_wegg_icon")
-    lazy var starImageView = makeImageView("star")
+    lazy var favoriteStarImageView = makeImageView("star")
 
     // 아이콘 이미지 뷰 배열을 한 번에 생성
     private lazy var iconImageViews: [UIImageView] = [
@@ -199,6 +201,16 @@ class PlaceDetailView: UIView {
             $0.distribution = distribution
         }
     }
+    
+    // MARK: - Action Handler
+    
+    @objc private func favoriteStarButtonTapped() {
+        gestureDelegate?.didTapFavoriteStar()
+    }
+    
+    @objc private func placeCreateButtonTapped() {
+        gestureDelegate?.didTapPlaceCreateButton()
+    }
 }
 
 // MARK: - Set Up Extenstion
@@ -206,9 +218,25 @@ class PlaceDetailView: UIView {
 private extension PlaceDetailView {
     
     func setupView() {
+        setupGestures()
         setupStackView()
         addComponents()
         constraints()
+    }
+    
+    func setupGestures() {
+        let starTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(favoriteStarButtonTapped)
+        )
+        favoriteStarImageView.isUserInteractionEnabled = true
+        favoriteStarImageView.addGestureRecognizer(starTapGesture)
+        
+        placeCreateButton.addTarget(
+            self,
+            action: #selector(placeCreateButtonTapped),
+            for: .touchUpInside
+        )
     }
     
     func setupStackView() {
@@ -234,7 +262,7 @@ private extension PlaceDetailView {
             styledVisitorTextStack,
             statusStack,
             studyImageCollectionView,
-            starImageView,
+            favoriteStarImageView,
             addressStack,
             phoneStack,
             openingInfoStack,
@@ -267,7 +295,7 @@ private extension PlaceDetailView {
         let labelViews = [
             styledVisitorTextStack,
             statusStack,
-            starImageView,
+            favoriteStarImageView,
             addressStack,
             phoneStack,
             openingInfoStack,
@@ -293,7 +321,7 @@ private extension PlaceDetailView {
             make.leading.lessThanOrEqualToSuperview().inset(21)
         }
         
-        starImageView.snp.makeConstraints { make in
+        favoriteStarImageView.snp.makeConstraints { make in
             make.top.equalTo(styledVisitorTextStack.snp.bottom).offset(10)
             make.trailing.lessThanOrEqualToSuperview().inset(21)
         }
