@@ -28,12 +28,23 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
     ]
 }
 
+class FloatingPanelManager {
+    static let shared = FloatingPanelManager() // 싱글톤 인스턴스
+    var fpc: FloatingPanelController? // `FloatingPanelController` 인스턴스
+
+    private init() {} // 외부에서 새로운 인스턴스 생성 방지
+
+    /// `FloatingPanelController`의 `contentViewController`에 안전하게 접근
+    func getContentViewController<T: UIViewController>() -> T? {
+        return fpc?.contentViewController as? T
+    }
+}
+
 class MapViewController:
     UIViewController,
     FloatingPanelControllerDelegate,
     UIGestureRecognizerDelegate {
     private let mapManager: MapManagerProtocol
-    private var fpc: FloatingPanelController?
     private var mapSearchVC: MapSearchViewController?
     lazy var overlayView = MapOverlayView().then {
         $0.placeSearchBar.searchTextFieldView.isUserInteractionEnabled = false
@@ -94,25 +105,25 @@ class MapViewController:
     
     /// 바텀 시트 초기 설정
     private func setupFloatingPanel() {
-        fpc = FloatingPanelController()
-        guard let fpc = fpc else { return }
-        let fpcSurfaceView = fpc.surfaceView
+        let fpc = FloatingPanelController()
         fpc.delegate = self
         
         let hotPlaceSheetVC = HotPlaceSheetViewController()
         fpc.set(contentViewController: hotPlaceSheetVC)
         // 스크롤 추적
         fpc.track(scrollView: hotPlaceSheetVC.hotPlaceView.hotPlaceCollectionView)
-        fpc.layout = MyFloatingPanelLayout()
         
-        fpcSurfaceView.appearance.cornerRadius = 25
-//        fpc.surfaceView.appearance.borderWidth = 1
-//        fpc.surfaceView.appearance.borderColor = .secondary
-        fpcSurfaceView.layer.shadowColor = UIColor.secondary.cgColor
-        fpcSurfaceView.layer.shadowOpacity = 0.2
-        fpcSurfaceView.layer.shadowOffset = CGSize(width: 0, height: -3)
-        fpcSurfaceView.layer.shadowRadius = 7 // Blur 설정
-        fpcSurfaceView.clipsToBounds = false // 그림자 표시 위해 설정
+        // `FloatingPanelManager`에 저장하여 다른 뷰 컨트롤러에서도 접근 가능
+        FloatingPanelManager.shared.fpc = fpc
+
+        // FloatingPanel 스타일 설정
+        fpc.layout = MyFloatingPanelLayout()
+        fpc.surfaceView.appearance.cornerRadius = 25
+        fpc.surfaceView.layer.shadowColor = UIColor.secondary.cgColor
+        fpc.surfaceView.layer.shadowOpacity = 0.2
+        fpc.surfaceView.layer.shadowOffset = CGSize(width: 0, height: -3)
+        fpc.surfaceView.layer.shadowRadius = 7
+        fpc.surfaceView.clipsToBounds = false
         
         fpc.addPanel(toParent: self)
     }
