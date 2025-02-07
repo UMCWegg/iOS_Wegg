@@ -28,10 +28,16 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
     ]
 }
 
-class MapViewController: UIViewController, FloatingPanelControllerDelegate {
+class MapViewController:
+    UIViewController,
+    FloatingPanelControllerDelegate,
+    UIGestureRecognizerDelegate {
     private let mapManager: MapManagerProtocol
-    private let overlayView = MapOverlayView()
     private var fpc: FloatingPanelController?
+    private var mapSearchVC: MapSearchViewController?
+    lazy var overlayView = MapOverlayView().then {
+        $0.placeSearchBar.searchTextFieldView.isUserInteractionEnabled = false
+    }
     
     /// 의존성 주입
     init(mapManager: MapManagerProtocol) {
@@ -45,14 +51,11 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Navigation Bar 숨김
+        // Navigation Bar 숨김. 다음 화면에서도 보이지 않음.
         navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // 다른 화면에서는 다시 활성화
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        // 뒤로가기 제스처 활성화
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     override func viewDidLoad() {
@@ -75,6 +78,7 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate {
     private func setupOverlayView() {
         overlayView.setupOverlayConstraints(in: view)
         overlayView.gestureDelegate = self
+        overlayView.placeSearchBar.delegate = self
     }
     
     private func setupMapManagerGestures() {
@@ -112,18 +116,68 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate {
         
         fpc.addPanel(toParent: self)
     }
+    
+    private func pushUniqueSearchViewWithAnimation() {
+        mapSearchVC = MapSearchViewController()
+        guard let mapSearchVC = mapSearchVC else { return }
+        guard let navigationController = self.navigationController else { return }
+
+        // 네비게이션 스택을 직접 설정하여 MapViewController + MapSearchViewController만 유지
+            /*
+             현재 네비게이션 스택에서 기존의 `MapSearchViewController`를 제거한 후 새로운 `MapSearchViewController` 추가
+             
+             기존의 navigationController.viewControllers 배열에서 `MapSearchViewController`가 아닌
+             화면들만 필터링하여 새로운 배열을 생성.
+             
+             - `viewControllers.filter { !$0.isKind(of: MapSearchViewController.self) }`
+               → `isKind(of:)` 메서드를 사용하여 `MapSearchViewController` 타입인 뷰 컨트롤러를 제외.
+               → 즉, 기존 네비게이션 스택에서 `MapSearchViewController`가 여러 개 쌓이는 문제를 방지함.
+               
+             - 이후 `viewControllers.append(mapSearchVC)`를 통해 새로운 검색 화면을 추가.
+               → 이렇게 하면 네비게이션 스택에는 `MapViewController` + `MapSearchViewController`만 유지됨.
+            */
+        var viewControllers = navigationController
+            .viewControllers.filter { !$0.isKind(of: MapSearchViewController.self) }
+        viewControllers.append(mapSearchVC)
+
+        // 커스텀 애니메이션 설정
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        transition.type = .fade
+        transition.subtype = .fromRight
+
+        // 애니메이션을 네비게이션 컨트롤러 뷰에 추가
+        navigationController.view.layer.add(transition, forKey: kCATransition)
+
+        // 네비게이션 스택 설정
+        navigationController.setViewControllers(viewControllers, animated: false)
+    }
 }
 
-// MARK: MapOverlayGestureDelegate
-
-extension MapViewController: MapOverlayGestureDelegate {
-    func didDetectOnLocationButtonTapped() {
+extension MapViewController:
+    MapOverlayGestureDelegate,
+    MapSearchBarDelegate {
+    
+    // MARK: - MapOverlayGestureDelegate
+    
+    func didTapDetectOnLocationButton() {
         mapManager.requestCurrentLocation()
-        print("didTabLocationButton")
     }
     
-    func didPlaceSearchButtonTapped() {
-        print("Search Button Tapped")
+    func didTapPlaceSearchButton() {
+        mapSearchVC = MapSearchViewController()
+        guard let mapSearchVC = mapSearchVC else { return }
+        navigationController?.pushViewController(mapSearchVC, animated: true)
     }
     
+    func didTapPlaceSearchBar() {
+        pushUniqueSearchViewWithAnimation()
+    }
+    
+    // MARK: - MapSearchBarDelegate
+    
+    func didTapSearchBackButton() {
+        pushUniqueSearchViewWithAnimation()
+    }
 }
