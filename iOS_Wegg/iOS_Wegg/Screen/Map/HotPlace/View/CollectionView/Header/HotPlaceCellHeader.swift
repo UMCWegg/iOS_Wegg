@@ -25,7 +25,7 @@ class HotPlaceCellHeader: UICollectionReusableView {
     // MARK: - Property
     
     lazy var logoImageView = UIImageView().then {
-        $0.image = UIImage(named: "wegg_icon2")
+        $0.image = UIImage(named: "yellow_wegg_icon")
         $0.contentMode = .scaleAspectFill
     }
     
@@ -36,17 +36,17 @@ class HotPlaceCellHeader: UICollectionReusableView {
     
     lazy var categoryLabel = makeLabel(
         font: .notoSans(.medium, size: 14),
-        .captionGray
+        .gray1
     )
     
     lazy var verificationCount = makeLabel(
         font: .notoSans(.medium, size: 14),
-        .captionGray
+        .gray1
     )
     
     lazy var saveCount = makeLabel(
         font: .notoSans(.medium, size: 14),
-        .captionGray
+        .gray1
     )
     
     private lazy var headerTitleStack = makeStackView(spacing: 8, axis: .horizontal)
@@ -112,7 +112,7 @@ private extension HotPlaceCellHeader {
         
         logoImageView.snp.makeConstraints { make in
             make.width.height.equalTo(
-                MapViewLayout.BottomSheetHeader.logoHeight
+                MapViewLayout.yellowLogoIcon
             )
         }
         

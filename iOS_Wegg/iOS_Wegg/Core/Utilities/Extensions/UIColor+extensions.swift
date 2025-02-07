@@ -13,8 +13,9 @@ extension UIColor {
     enum CustomColor {
         case primary
         case secondary
-        case captionGray
+        case gray1
         case yellowWhite
+        case yellowBG
         //        case background
         //        case accent
         
@@ -31,14 +32,19 @@ extension UIColor {
                     return UIColor(red: 1.0, green: 0.8, blue: 0.0, alpha: 1.0) // 기본 노랑
                 }
                 return color
-            case .captionGray:
-                guard let color = UIColor(named: "captionGray") else {
+            case .gray1:
+                guard let color = UIColor(named: "gray1") else {
                     return UIColor.gray
                 }
                 return color
             case .yellowWhite:
                 guard let color = UIColor(named: "YellowWhite") else {
                     return UIColor(red: 255 / 255, green: 253 / 255, blue: 249 / 255, alpha: 1.0)
+                }
+                return color
+            case .yellowBG:
+                guard let color = UIColor(named: "yellow-bg") else {
+                    return .yellow
                 }
                 return color
             }

@@ -85,6 +85,7 @@
 			membershipExceptions = (
 				"Extensions/UIColor+extensions.swift",
 				"Extensions/UIFont+extensions.swift",
+				"Extensions/UIViewController+extension.swift",
 				Formatters/DateFormatterUtility.swift,
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
@@ -118,6 +119,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0E0237B92D51F38000A55E45 /* Map */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Map;
+			sourceTree = "<group>";
+		};
 		0E98EA322D2F8F8F006F25EF /* Services */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Services;
@@ -287,6 +293,7 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				0E0237B92D51F38000A55E45 /* Map */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE001E912D3BDF71003A273F /* Button */,
@@ -411,6 +418,7 @@
 				0E98EA062D2E5FDB006F25EF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				0E0237B92D51F38000A55E45 /* Map */,
 				0E98EA322D2F8F8F006F25EF /* Services */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,

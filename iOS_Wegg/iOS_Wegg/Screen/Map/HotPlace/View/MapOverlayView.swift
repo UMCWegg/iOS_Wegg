@@ -39,14 +39,6 @@ class MapOverlayView: UIView {
     /// - 지도 위에서 제스처 필요한 버튼 추가
     /// - Returns: 터치 이벤트를 처리할 UIView(없을 경우 nil 반한)
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        // 현재 위치 버튼 터치 이벤트 처리
-        if let currentLocation = currentLocationImageButton.hitTest(
-            convert(point, to: currentLocationImageButton),
-            with: event
-        ) {
-            return currentLocation
-        }
-        
         // 장소 검색 버튼 터치 이벤트를 처리
         if let search = placeSearchButton.hitTest(
             convert(point, to: placeSearchButton),
@@ -55,25 +47,51 @@ class MapOverlayView: UIView {
             return search
         }
         
+        // 검색바 터치 이벤트 처리
+        if let placeSearchBar = placeSearchBar.hitTest(
+            convert(point, to: placeSearchBar),
+            with: event
+        ) {
+            return placeSearchBar
+        }
+        
+        // 현재 위치 버튼 터치 이벤트 처리
+        if let currentLocation = currentLocationImageButton.hitTest(
+            convert(point, to: currentLocationImageButton),
+            with: event
+        ) {
+            return currentLocation
+        }
+        
         // 지도 외의 터치 이벤트는 nil을 반환
         return nil
     }
     
     @objc private func handleLocationImageButton() {
-        gestureDelegate?.didDetectOnLocationButtonTapped()
+        gestureDelegate?.didTapDetectOnLocationButton()
     }
     
     @objc private func handlePlaceSearchButton() {
-        gestureDelegate?.didPlaceSearchButtonTapped()
+        gestureDelegate?.didTapPlaceSearchButton()
+    }
+    
+    @objc private func handlePlaceSearchBar() {
+        gestureDelegate?.didTapPlaceSearchBar()
     }
     
     // MARK: - Property
     
+    /// `MapSearchView`에서 검색 결과 반환시 보여줄 검색바
+    lazy var placeSearchBar = MapSearchBar().then {
+        $0.backgroundColor = .white
+        $0.isHidden = true
+    }
+    
+    lazy var placeSearchButton = createImageView(imageName: "map_search_icon")
+    
     private lazy var currentLocationImageButton = createImageView(
         imageName: "current_position_icon"
     )
-    
-    private lazy var placeSearchButton = createImageView(imageName: "map_search_icon")
     
     // MARK: UI 제작하는 함수
     
@@ -118,18 +136,33 @@ private extension MapOverlayView {
             action: #selector(handlePlaceSearchButton)
         )
         placeSearchButton.addGestureRecognizer(placeSearchButtonTapGesture)
+        
+        let placeSearchBarTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handlePlaceSearchBar)
+        )
+        placeSearchBar.addGestureRecognizer(placeSearchBarTapGesture)
     }
     
     func addComponents() {
         [
-            currentLocationImageButton,
-            placeSearchButton
+            placeSearchButton,
+            placeSearchBar,
+            currentLocationImageButton
         ].forEach {
             addSubview($0)
         }
     }
     
     func constraints() {
+        placeSearchBar.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.greaterThanOrEqualTo(
+                MapViewLayout.PlaceSearch.searchBarHeight
+            )
+        }
+        
         placeSearchButton.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(
                 MapViewLayout.PlaceSearch.topOffset
