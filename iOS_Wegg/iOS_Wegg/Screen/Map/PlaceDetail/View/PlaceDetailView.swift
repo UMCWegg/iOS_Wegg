@@ -24,6 +24,16 @@ class PlaceDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    lazy var titleLabel = makeLabel(
+        UIFont.notoSans(.bold, size: 16), .secondary
+    )
+    
+    lazy var categoryLabel = makeLabel(
+        .notoSans(.medium, size: 14), .gray1
+    )
+    
+    private lazy var headerTitleStack = makeStackView(8, .horizontal)
+    
     // MARK: - ImageViews
     
     lazy var yellowIconImageView = makeImageView("yellow_wegg_icon")
@@ -242,6 +252,7 @@ private extension PlaceDetailView {
     func setupStackView() {
         // 스택뷰와 추가할 서브뷰를 매핑한 배열 생성
         let stackViewMappings: [(UIStackView, [UIView])] = [
+            (headerTitleStack, [titleLabel, categoryLabel]),
             (styledVisitorTextStack, [yellowIconImageView, styledVisitorCountLabel]),
             (statusStack, [verificationCount, saveCount]),
             (addressStack, [addressIconImageView, addressLabel]),
@@ -259,6 +270,7 @@ private extension PlaceDetailView {
     func addComponents() {
         // MARK: - addSubview
         [
+            headerTitleStack,
             styledVisitorTextStack,
             statusStack,
             studyImageCollectionView,
@@ -293,6 +305,7 @@ private extension PlaceDetailView {
         
         // 라벨 및 스택뷰 높이 설정
         let labelViews = [
+            headerTitleStack,
             styledVisitorTextStack,
             statusStack,
             favoriteStarImageView,
@@ -310,8 +323,15 @@ private extension PlaceDetailView {
     }
     
     func constraints() {
+        headerTitleStack.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(
+                MapViewLayout.BottomSheetContent.topOffset
+            )
+            make.leading.lessThanOrEqualToSuperview().inset(21)
+        }
+        
         styledVisitorTextStack.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide)
+            make.top.equalTo(headerTitleStack.snp.bottom).offset(12)
             make.leading.equalToSuperview().offset(21)
             make.trailing.greaterThanOrEqualToSuperview().inset(100)
         }

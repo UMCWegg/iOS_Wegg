@@ -68,6 +68,8 @@ class PlaceDetailViewController: UIViewController {
         
         // TODO: [25.02.05] UI 업데이트 작업 - 작성자: 이재원
         let info = [
+            placeDetailView.titleLabel: "스타벅스 신용산점",
+            placeDetailView.categoryLabel: "카페",
             placeDetailView.verificationCount: "인증 99+",
             placeDetailView.saveCount: "저장 34",
             placeDetailView.addressLabel: "서울특별시 강남구 강남대로101길 101",

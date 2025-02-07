@@ -39,7 +39,7 @@ extension MapSearchViewController: MapSearchBarDelegate {
         
         // 검색시 바텀시트 tip 위치로 이동
         fpcManager.fpc?.move(to: .tip, animated: false)
-        
+        fpcManager.fpc?.set(contentViewController: HotPlaceSheetViewController())
         guard let mapVC = navigationController?.viewControllers.first(
             where: { $0 is MapViewController }) as? MapViewController else {
             return
@@ -62,6 +62,7 @@ extension MapSearchViewController: MapSearchBarDelegate {
         
         // 검색시 바텀시트 half 위치로 이동
         fpcManager.fpc?.move(to: .half, animated: true)
+        fpcManager.fpc?.set(contentViewController: PlaceDetailViewController())
         // navigationController에서 MapViewController 탐색
         guard let mapVC = navigationController?.viewControllers.first(
             where: { $0 is MapViewController }) as? MapViewController else {
