@@ -37,7 +37,7 @@ class ToggleButtonView: UIView {
     }
     
     private let toggleLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 12, weight: .bold)
+        $0.font = .notoSans(.bold, size: 12)
         $0.textColor = .primary
         $0.textAlignment = .center
     }
