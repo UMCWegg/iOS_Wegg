@@ -15,6 +15,7 @@ extension UIColor {
         case secondary
         case gray1
         case yellowWhite
+        case yellowBG
         //        case background
         //        case accent
         
@@ -39,6 +40,11 @@ extension UIColor {
             case .yellowWhite:
                 guard let color = UIColor(named: "YellowWhite") else {
                     return UIColor(red: 255 / 255, green: 253 / 255, blue: 249 / 255, alpha: 1.0)
+                }
+                return color
+            case .yellowBG:
+                guard let color = UIColor(named: "yellow-bg") else {
+                    return .yellow
                 }
                 return color
             }

@@ -47,7 +47,7 @@ class HotPlaceSheetView: UIView {
     }
     
     lazy var logoImageView = UIImageView().then {
-        $0.image = UIImage(named: "wegg_icon2")
+        $0.image = UIImage(named: "yellow_wegg_icon")
         $0.contentMode = .scaleAspectFill
     }
     
@@ -66,7 +66,7 @@ class HotPlaceSheetView: UIView {
         ])
         
         let imageAttachment = NSTextAttachment()
-        imageAttachment.image = UIImage(named: "weggy")
+        imageAttachment.image = UIImage(named: "weggy_border")
         imageAttachment.bounds = CGRect(x: 0, y: -2, width: 60, height: 18)
         
         let imageAttributedString = NSAttributedString(attachment: imageAttachment)
@@ -149,7 +149,7 @@ private extension HotPlaceSheetView {
         
         logoImageView.snp.makeConstraints { make in
             make.width.height.equalTo(
-                MapViewLayout.BottomSheetHeader.logoHeight
+                MapViewLayout.yellowLogoIcon
             )
         }
         

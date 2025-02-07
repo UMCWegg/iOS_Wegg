@@ -14,6 +14,7 @@ import Foundation
 /// - 레이아웃 값을 모듈화하여 코드 유지보수를 용이하게 함
 struct MapViewLayout {
     static let initialBottomSheetHeight: CGFloat = 93
+    static let yellowLogoIcon: CGFloat = 18
     
     struct CurrentLocation {
         static let leadingOffset: CGFloat = 327
@@ -30,7 +31,6 @@ struct MapViewLayout {
     }
     
     struct BottomSheetHeader {
-        static let logoHeight: CGFloat = 18
         static let topOffset: CGFloat = 47.5
         static let leadingOffset: CGFloat = 21
         static let trailingOffset: CGFloat = -21
@@ -41,6 +41,10 @@ struct MapViewLayout {
     struct BottomSheetContent {
         static let topOffset: CGFloat = 14
         static let bottomOffset: CGFloat = -10
+    }
+    
+    struct PlaceDetail {
+        static let iconSize: CGFloat = 20
     }
     
 }
