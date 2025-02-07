@@ -9,7 +9,14 @@ import UIKit
 import Then
 import SnapKit
 
+protocol PlaceDetailViewGestureDelegate: AnyObject {
+    func didTapFavoriteStar()
+    func didTapPlaceCreateButton()
+}
+
 class PlaceDetailView: UIView {
+    
+    weak var gestureDelegate: PlaceDetailViewGestureDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -203,11 +210,11 @@ class PlaceDetailView: UIView {
     // MARK: - Action Handler
     
     @objc private func favoriteStarButtonTapped() {
-        print("favoriteStarButtonTapped")
+        gestureDelegate?.didTapFavoriteStar()
     }
     
     @objc private func placeCreateButtonTapped() {
-        print("placeCreateButtonTapped")
+        gestureDelegate?.didTapPlaceCreateButton()
     }
 }
 

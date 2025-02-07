@@ -23,6 +23,7 @@ class PlaceDetailViewController: UIViewController {
     private func configureCollectionView() {
         placeDetailView.studyImageCollectionView.delegate = self
         placeDetailView.studyImageCollectionView.dataSource = self
+        placeDetailView.gestureDelegate = self
     }
     
     private func loadDetailData() {
@@ -142,4 +143,15 @@ extension PlaceDetailViewController:
             print("이미지 컬렉션뷰 탭")
         }
     }
+}
+
+extension PlaceDetailViewController: PlaceDetailViewGestureDelegate {
+    func didTapFavoriteStar() {
+        print("didTapFavoriteStar")
+    }
+    
+    func didTapPlaceCreateButton() {
+        print("didTapPlaceCreateButton")
+    }
+    
 }
