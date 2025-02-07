@@ -1,5 +1,5 @@
 //
-//  StudyTImeView.swift
+//  StudyTimeView.swift
 //  iOS_Wegg
 //
 //  Created by KKM on 2/1/25.
@@ -10,24 +10,25 @@ import SnapKit
 import Then
 
 class StudyTimeView: UIView {
+    
     // MARK: - UI Components
     let studyTimeCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .clear
-        cv.register(StudyTimeCell.self, forCellWithReuseIdentifier: StudyTimeCell.identifier)
-        return cv
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.register(
+            StudyTimeCell.self,
+            forCellWithReuseIdentifier: StudyTimeCell.identifier
+        )
+        return collectionView
     }()
     
-    var studyTimes: [String] = [] {
-        didSet {
-            studyTimeCollectionView.reloadData()
-        }
-    }
-    
+    private var studyTimes: [String: String] = [:]
+    private var days: [String] = []
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -46,7 +47,7 @@ class StudyTimeView: UIView {
     
     private func setupLayout() {
         studyTimeCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(16)
+            $0.edges.equalToSuperview()
         }
     }
     
@@ -54,13 +55,19 @@ class StudyTimeView: UIView {
         studyTimeCollectionView.dataSource = self
         studyTimeCollectionView.delegate = self
     }
+    
+    func updateStudyTimes(days: [String], studyTimes: [String: String]) {
+        self.days = days
+        self.studyTimes = studyTimes
+        studyTimeCollectionView.reloadData()
+    }
 }
 
 extension StudyTimeView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
-        return studyTimes.count
+        return days.count
     }
     
     func collectionView(
@@ -71,16 +78,11 @@ extension StudyTimeView: UICollectionViewDataSource, UICollectionViewDelegateFlo
             for: indexPath) as? StudyTimeCell else {
             return UICollectionViewCell()
         }
-        cell.configure(with: studyTimes[indexPath.row])
+        
+        let day = days[indexPath.row]
+        let studyTime = studyTimes[day]
+        
+        cell.configure(day: day, studyTime: studyTime)
         return cell
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let totalSpacing: CGFloat = 16
-        let width = (collectionView.frame.width - totalSpacing) / 2
-        return CGSize(width: width, height: 50)
     }
 }

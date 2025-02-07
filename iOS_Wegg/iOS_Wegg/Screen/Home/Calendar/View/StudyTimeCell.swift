@@ -10,17 +10,24 @@ import SnapKit
 import Then
 
 class StudyTimeCell: UICollectionViewCell {
-    // MARK: - Identifier
+    
     static let identifier = "StudyTimeCell"
     
     // MARK: - UI Components
-    private let studyLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 14, weight: .bold)
-        $0.textColor = .secondary
-        $0.textAlignment = .center
-        $0.numberOfLines = 1
+    private let eggImageView = UIImageView().then {
+        $0.image = UIImage(named: "emptyEgg")
+        $0.contentMode = .scaleAspectFit
     }
     
+    private let studyTimeLabel = UILabel().then {
+        $0.font = .notoSans(.regular, size: 12)
+        $0.textAlignment = .center
+        $0.adjustsFontSizeToFitWidth = true
+        $0.minimumScaleFactor = 0.8
+        $0.textColor = .secondary
+        $0.numberOfLines = 0
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -32,18 +39,37 @@ class StudyTimeCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(studyLabel)
-        contentView.backgroundColor = .yellowWhite
-        contentView.layer.cornerRadius = 12
+        contentView.addSubview(eggImageView)
+        contentView.addSubview(studyTimeLabel)
     }
     
     private func setupLayout() {
-        studyLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(8)
+        eggImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        studyTimeLabel.snp.makeConstraints {
+            $0.center.equalTo(eggImageView)
+            $0.width.equalTo(eggImageView.snp.width).multipliedBy(0.8)
+            $0.height.equalTo(eggImageView.snp.height).multipliedBy(0.6)
         }
     }
-    
-    func configure(with studyTime: String) {
-        studyLabel.text = studyTime
+
+    func configure(day: String, studyTime: String?) {
+        if day.isEmpty {
+            eggImageView.isHidden = true
+            studyTimeLabel.text = ""
+            return
+        }
+        
+        eggImageView.isHidden = false
+        
+        if let studyTime = studyTime {
+            studyTimeLabel.text = studyTime.replacingOccurrences(of: " ", with: "\n")
+            eggImageView.image = UIImage(named: "fillEgg")
+        } else {
+            studyTimeLabel.text = ""
+            eggImageView.image = UIImage(named: "emptyEgg")
+        }
     }
 }

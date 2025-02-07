@@ -64,18 +64,7 @@ class CalendarView: UIView {
         return collectionView
     }()
     
-    let studyTimeCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.register(
-            StudyTimeCell.self,
-            forCellWithReuseIdentifier: StudyTimeCell.identifier
-        )
-        collectionView.isHidden = true /// 기본적으로
-        return collectionView
-    }()
+    let studyTimeView = StudyTimeView()
     
     let previousButton = UIButton().then {
         $0.setImage(UIImage(named: "previous"), for: .normal)
@@ -110,7 +99,7 @@ class CalendarView: UIView {
         addSubview(toggleButton)
         addSubview(weekdayStackView)
         addSubview(calendarCollectionView)
-        addSubview(studyTimeCollectionView)
+        addSubview(studyTimeView)
         addSubview(previousButton)
         addSubview(nextButton)
     }
@@ -187,15 +176,18 @@ class CalendarView: UIView {
             $0.bottom.equalTo(safeAreaLayoutGuide).offset(-10)
         }
         
-        studyTimeCollectionView.snp.makeConstraints {
+        studyTimeView.snp.makeConstraints {
             $0.edges.equalTo(calendarCollectionView)
         }
     }
     
     private func setupToggleAction() {
         toggleButton.onToggleChanged = { [weak self] isOn in
-            self?.calendarCollectionView.isHidden = isOn
-            self?.studyTimeCollectionView.isHidden = !isOn
+            guard let self = self else { return }
+            self.calendarCollectionView.isHidden = isOn
+            self.studyTimeView.isHidden = !isOn
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
         }
     }
 }

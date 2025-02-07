@@ -14,6 +14,7 @@ class CalendarViewController: UIViewController {
     private let dateFormatter = DateFormatter().then {
         $0.dateFormat = "yyyy년 M월"
     }
+    private var studyTimes: [String: String] = [:] // 공부 시간 데이터를 저장할 딕셔너리
 
     override func loadView() {
         view = calendarView
@@ -21,27 +22,44 @@ class CalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectionView()
+        setupCollectionViews()
         setupButtonActions()
         generateCalendar()
+        generateDummyStudyTimes()
+        
+        // 초기 상태 설정
+        calendarView.calendarCollectionView.isHidden = false
+        calendarView.studyTimeView.isHidden = true
     }
     
-    private func setupCollectionView() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    private func setupCollectionViews() {
         calendarView.calendarCollectionView.dataSource = self
         calendarView.calendarCollectionView.delegate = self
+        
+        calendarView.studyTimeView.studyTimeCollectionView.dataSource = self
+        calendarView.studyTimeView.studyTimeCollectionView.delegate = self
     }
     
     private func setupButtonActions() {
         calendarView.previousButton.addTarget(
-            self,
-            action: #selector(previousMonth),
+            self, action: #selector(previousMonth),
             for: .touchUpInside
         )
-        calendarView.nextButton.addTarget(
-            self,
-            action: #selector(nextMonth),
-            for: .touchUpInside
-        )
+        calendarView.nextButton.addTarget(self, action: #selector(nextMonth), for: .touchUpInside)
+        
+        // 토글 버튼의 초기 상태 설정 및 동작 정의
+        calendarView.toggleButton.isOn = false
+        calendarView.toggleButton.onToggleChanged = { [weak self] isOn in
+            self?.calendarView.calendarCollectionView.isHidden = isOn
+            self?.calendarView.studyTimeView.isHidden = !isOn
+            self?.view.setNeedsLayout()
+            self?.view.layoutIfNeeded()
+        }
     }
     
     @objc private func previousMonth() {
@@ -58,22 +76,38 @@ class CalendarViewController: UIViewController {
         let components = calendar.dateComponents([.year, .month], from: currentDate)
         guard let startDate = calendar.date(from: components),
               let monthRange = calendar.range(of: .day, in: .month, for: startDate) else { return }
-
+        
         let firstWeekday = calendar.component(.weekday, from: startDate)
         let totalDays = monthRange.count
-        let offset = 2 - firstWeekday
-
+        let offset = (firstWeekday - 1 + 7) % 7 // 일요일부터 시작하는 경우를 위한 수정
+        
         days.removeAll()
-        for day in offset..<(42 + offset) {
-            if day < 1 || day > totalDays {
-                days.append("")
-            } else {
-                days.append("\(day)")
-            }
+        // 이전 달의 날짜 추가
+        for _ in 0..<offset {
+            days.append("")
         }
-
+        // 현재 달의 날짜 추가
+        for day in 1...totalDays {
+            days.append("\(day)")
+        }
+        // 다음 달의 날짜 추가 (42개 셀을 채우기 위해)
+        while days.count < 42 {
+            days.append("")
+        }
+        
         calendarView.monthLabel.text = dateFormatter.string(from: currentDate)
         calendarView.calendarCollectionView.reloadData()
+        calendarView.studyTimeView.studyTimeCollectionView.reloadData()
+    }
+    
+    private func generateDummyStudyTimes() {
+        let totalDays = calendar.range(of: .day, in: .month, for: currentDate)?.count ?? 30
+        for _ in 1...10 { // 10개의 랜덤 날짜에 공부 시간 할당
+            let randomDay = Int.random(in: 1...totalDays)
+            let randomHours = Int.random(in: 0...3)
+            let randomMinutes = Int.random(in: 0...59)
+            studyTimes["\(randomDay)"] = "\(randomHours)H \(randomMinutes)M"
+        }
     }
 }
 
@@ -87,27 +121,40 @@ extension CalendarViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(
         _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CalendarCell.identifier,
-            for: indexPath
-        ) as? CalendarCell else { return UICollectionViewCell() }
+        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let day = days[indexPath.row]
         
-        let isToday: Bool = {
-            let currentComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-            let cellComponents = calendar.dateComponents([.year, .month], from: currentDate)
-            guard let currentDay = currentComponents.day,
-                  let cellDay = Int(days[indexPath.row]) else {
-                return false
+        if collectionView == calendarView.calendarCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CalendarCell.identifier,
+                for: indexPath
+            ) as? CalendarCell else { return UICollectionViewCell() }
+            
+            let isToday: Bool = {
+                let currentComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+                let cellComponents = calendar.dateComponents([.year, .month], from: currentDate)
+                guard let currentDay = currentComponents.day,
+                      let cellDay = Int(day) else {
+                    return false
+                }
+                return currentComponents.year == cellComponents.year &&
+                currentComponents.month == cellComponents.month &&
+                cellDay == currentDay
+            }()
+            
+            cell.configure(day: day, isToday: isToday)
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: StudyTimeCell.identifier,
+                for: indexPath
+            ) as? StudyTimeCell else { return UICollectionViewCell()
             }
-            return currentComponents.year == cellComponents.year &&
-                   currentComponents.month == cellComponents.month &&
-                   cellDay == currentDay
-        }()
-        
-        cell.configure(day: days[indexPath.row], isToday: isToday)
-        return cell
+            
+            let studyTime = studyTimes[day]
+            cell.configure(day: day, studyTime: studyTime)
+            return cell
+        }
     }
     
     func collectionView(
