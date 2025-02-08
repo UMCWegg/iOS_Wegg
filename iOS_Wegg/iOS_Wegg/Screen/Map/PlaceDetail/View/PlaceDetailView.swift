@@ -368,13 +368,14 @@ private extension PlaceDetailView {
         }
         
         bottomBackgorundView.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalToSuperview()
+            make.top.equalTo(webUrlStack.snp.bottom).offset(20)
+            make.leading.trailing.equalToSuperview()
             make.height.equalTo(157)
         }
         
         placeCreateButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(73)
+            make.top.equalTo(dividedLine.snp.bottom).offset(73)
             make.width.equalTo(170)
             make.height.equalTo(37)
         }

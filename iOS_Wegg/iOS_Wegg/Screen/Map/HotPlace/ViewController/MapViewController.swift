@@ -15,7 +15,7 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
     
     let anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] = [
         .full: FloatingPanelLayoutAnchor(
-            absoluteInset: 16.0, edge: .top, referenceGuide: .safeArea
+            absoluteInset: 100.0, edge: .top, referenceGuide: .safeArea
         ),
         .half: FloatingPanelLayoutAnchor(
             fractionalInset: 0.5, edge: .bottom, referenceGuide: .safeArea
@@ -110,7 +110,7 @@ class MapViewController:
     
     /// 바텀 시트 초기 설정
     private func setupFloatingPanel() {
-        floatingPanel.delegate = placeDetailVC
+        floatingPanel.delegate = self
         floatingPanel.set(contentViewController: hotPlaceSheetVC)
         // 스크롤 추적
         floatingPanel.track(scrollView: hotPlaceSheetVC.hotPlaceView.hotPlaceCollectionView)
@@ -122,7 +122,9 @@ class MapViewController:
         floatingPanel.surfaceView.layer.shadowOffset = CGSize(width: 0, height: -3)
         floatingPanel.surfaceView.layer.shadowRadius = 7
         floatingPanel.surfaceView.clipsToBounds = false
-        
+        floatingPanel.isRemovalInteractionEnabled = true // 패널 제거 인터랙션 활성화
+        floatingPanel.backdropView.isHidden = true // 패널 뒤 배경 숨김
+        floatingPanel.surfaceView.backgroundColor = .clear
         floatingPanel.addPanel(toParent: self)
     }
     
