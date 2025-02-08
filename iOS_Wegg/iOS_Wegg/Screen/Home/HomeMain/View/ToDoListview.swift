@@ -71,7 +71,7 @@ class ToDoListView: UIView {
     }
 
     private let emptyStateLabel = UILabel().then {
-        $0.text = "할 일이 없습니다. 새로운 할 일을 추가해보세요!"
+        $0.text = "새로운 할 일을 추가해보세요!"
         $0.font = .notoSans(.regular, size: 13)
         $0.textAlignment = .center
         $0.textColor = .gray
