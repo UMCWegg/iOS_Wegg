@@ -151,9 +151,8 @@ extension HotPlaceSheetViewController {
     
 }
 
-/// TODO:
-/// - 바텀 시트 확장해서 뷰 전체로 확장되는거 시도해보고
-/// - 안된다면 클로즈 버튼 MapOverlayView 상단에 만들기
+// MARK: - Delegate Extension
+
 extension HotPlaceSheetViewController: HotPlaceCellGestureDelegate {
     func didTapHotPlaceCellHeader() {
         // REFACT: MapSearchVC와 중복된 코드, 리팩토링 필요

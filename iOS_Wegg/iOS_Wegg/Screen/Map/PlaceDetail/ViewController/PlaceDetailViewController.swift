@@ -14,7 +14,7 @@ class PlaceDetailViewController: UIViewController {
     private var collectionHandler: PlaceDetailCollectionHandler?
     private let sampleSections = HotPlaceSectionModel.sampleSections
     private var detailData: HotPlaceDetailModel?
-    private lazy var placeDetailView = PlaceDetailView()
+    lazy var placeDetailView = PlaceDetailView()
     
     init(mapVC: MapViewController?) { // 생성자에서 의존성 주입
         self.mapVC = mapVC
