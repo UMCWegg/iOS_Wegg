@@ -28,7 +28,9 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         view.backgroundColor = .primary
         homeView.scrollView.delegate = self
+        
         homeView.headerView.viewController = self
+        homeView.headerView.updateHeaderMode(isHomeMode: true)
         
         toDoListView.tableView.delegate = self
         toDoListView.tableView.dataSource = self
