@@ -15,7 +15,7 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
     
     let anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] = [
         .full: FloatingPanelLayoutAnchor(
-            absoluteInset: 100.0, edge: .top, referenceGuide: .safeArea
+            fractionalInset: 0.12, edge: .top, referenceGuide: .safeArea
         ),
         .half: FloatingPanelLayoutAnchor(
             fractionalInset: 0.5, edge: .bottom, referenceGuide: .safeArea
@@ -110,7 +110,7 @@ class MapViewController:
     
     /// 바텀 시트 초기 설정
     private func setupFloatingPanel() {
-        floatingPanel.delegate = self
+        floatingPanel.delegate = placeDetailVC
         floatingPanel.set(contentViewController: hotPlaceSheetVC)
         // 스크롤 추적
         floatingPanel.track(scrollView: hotPlaceSheetVC.hotPlaceView.hotPlaceCollectionView)

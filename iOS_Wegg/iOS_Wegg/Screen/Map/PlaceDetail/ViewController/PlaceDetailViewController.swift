@@ -93,3 +93,14 @@ extension PlaceDetailViewController: PlaceDetailViewGestureDelegate {
     }
     
 }
+
+/// MapViewController에게서 위임 받은 Delegate 함수들 구현
+extension PlaceDetailViewController: FloatingPanelControllerDelegate {
+    /// FloatingPanel이 특정 높이에 도달하면 PlaceDetailViewController로 변경
+    func floatingPanelDidMove(_ fpc: FloatingPanelController) {
+        let progress = fpc.surfaceView.frame.origin.y / view.frame.height
+        if progress < 0.3 { // 30% 이하로 올리면 실행
+            print("floatingPanelDidMove")
+        }
+    }
+}
