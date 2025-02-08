@@ -87,7 +87,7 @@ class MapOverlayView: UIView {
     }
     
     @objc private func handlePlaceDetailBackButton() {
-        print("handlePlaceDetailBackButton")
+        gestureDelegate?.didTapPlaceDetailBackButton()
     }
     
     // MARK: - Property

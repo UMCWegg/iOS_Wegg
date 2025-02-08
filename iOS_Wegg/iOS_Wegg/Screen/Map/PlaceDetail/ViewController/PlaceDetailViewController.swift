@@ -113,7 +113,7 @@ extension PlaceDetailViewController: FloatingPanelControllerDelegate {
             return
         }
         if panelCurrentVC == self {
-            if progress < 0.3 { // 50% 이하로 올리면 true
+            if progress < 0.3 { // 30% 이하로 올리면 true
                 mapVC?.overlayView.placeDetailBackButton.isHidden = false
             } else {
                 mapVC?.overlayView.placeDetailBackButton.isHidden = true
