@@ -14,6 +14,39 @@ protocol ToDoListViewDelegate: AnyObject {
     func didUpdateToDoItem(at index: Int, with text: String)
 }
 
+extension UIAlertController {
+    func styleAlert() {
+        guard let subView = self.view.subviews.first,
+              let alertContentView = subView.subviews.first else {
+            print("Alert view structure is different than expected")
+            return
+        }
+        
+        alertContentView.backgroundColor = .primary
+        alertContentView.layer.cornerRadius = 12
+        alertContentView.layer.borderWidth = 1
+        alertContentView.layer.borderColor = UIColor.secondary.cgColor
+        
+        // Title 스타일 변경
+        if let title = self.title {
+            let attributedString = NSAttributedString(string: title, attributes: [
+                NSAttributedString.Key.font: UIFont.notoSans(.bold, size: 16),
+                NSAttributedString.Key.foregroundColor: UIColor.black
+            ])
+            self.setValue(attributedString, forKey: "attributedTitle")
+        }
+        
+        // Message 스타일 변경
+        if let message = self.message {
+            let attributedString = NSAttributedString(string: message, attributes: [
+                NSAttributedString.Key.font: UIFont.notoSans(.regular, size: 14),
+                NSAttributedString.Key.foregroundColor: UIColor.darkGray
+            ])
+            self.setValue(attributedString, forKey: "attributedMessage")
+        }
+    }
+}
+
 class ToDoListView: UIView {
 
     // MARK: - UI Components
@@ -155,9 +188,12 @@ class ToDoListView: UIView {
             message: "할 일을 입력하세요.",
             preferredStyle: .alert
         )
+        alert.styleAlert()  // 커스텀 스타일 적용
 
         alert.addTextField { textField in
             textField.placeholder = "할 일 내용"
+            textField.font = .notoSans(.regular, size: 14)
+            textField.backgroundColor = .white
         }
 
         let addAction = UIAlertAction(title: "추가", style: .default) { [weak self] _ in
@@ -172,6 +208,10 @@ class ToDoListView: UIView {
         alert.addAction(addAction)
         alert.addAction(cancelAction)
 
+        // 버튼 색상 변경
+        addAction.setValue(UIColor.blue, forKey: "titleTextColor")
+        cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
+
         findViewController()?.present(alert, animated: true)
     }
 
@@ -181,9 +221,15 @@ class ToDoListView: UIView {
             message: "할 일을 수정하세요.",
             preferredStyle: .alert
         )
+        alert.styleAlert()  // 커스텀 스타일 적용
 
         alert.addTextField { textField in
             textField.text = self.todoItems[indexPath.row].name
+            textField.font = .notoSans(.regular, size: 14)
+            textField.backgroundColor = .white
+            textField.layer.cornerRadius = 5
+            textField.layer.borderWidth = 1
+            textField.layer.borderColor = UIColor.lightGray.cgColor
         }
 
         let saveAction = UIAlertAction(title: "저장", style: .default) { [weak self] _ in
@@ -198,6 +244,10 @@ class ToDoListView: UIView {
 
         alert.addAction(saveAction)
         alert.addAction(cancelAction)
+
+        // 버튼 색상 변경
+        saveAction.setValue(UIColor.blue, forKey: "titleTextColor")
+        cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
 
         findViewController()?.present(alert, animated: true)
     }
