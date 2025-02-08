@@ -111,11 +111,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0E0237B92D51F38000A55E45 /* Map */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Map;
-			sourceTree = "<group>";
-		};
 		0E98EA322D2F8F8F006F25EF /* Services */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Services;
@@ -231,6 +226,16 @@
 			path = EmojiModel;
 			sourceTree = "<group>";
 		};
+		FFC8E52F2D5605100094B687 /* Map */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Map;
+			sourceTree = "<group>";
+		};
+		FFC8E8992D574C990094B687 /* Map */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Map;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +273,7 @@
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
 				0E98E9D62D2D009D006F25EF /* Products */,
+				FFC8E7792D574BC10094B687 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -291,8 +297,8 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				FFC8E8992D574C990094B687 /* Map */,
 				7BF71FD92D4DFA5E00695782 /* Home */,
-				0E0237B92D51F38000A55E45 /* Map */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE001E912D3BDF71003A273F /* Button */,
@@ -399,6 +405,15 @@
 			path = HotPlaceModel;
 			sourceTree = "<group>";
 		};
+		FFC8E7792D574BC10094B687 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
+				FFC8E52F2D5605100094B687 /* Map */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -417,7 +432,6 @@
 				0E98EA062D2E5FDB006F25EF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0E0237B92D51F38000A55E45 /* Map */,
 				0E98EA322D2F8F8F006F25EF /* Services */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
 				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
@@ -436,6 +450,8 @@
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FFC8E52F2D5605100094B687 /* Map */,
+				FFC8E8992D574C990094B687 /* Map */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
