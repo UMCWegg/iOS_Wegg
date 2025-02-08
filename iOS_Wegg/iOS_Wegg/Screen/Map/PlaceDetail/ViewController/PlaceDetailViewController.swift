@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FloatingPanel
 
 class PlaceDetailViewController: UIViewController {
     var targetSectionIndex: Int = 3 // 모델에서 원하는 인덱스 설정
@@ -91,4 +92,17 @@ extension PlaceDetailViewController: PlaceDetailViewGestureDelegate {
         print("didTapPlaceCreateButton")
     }
     
+}
+
+/// MapViewController에게서 위임 받은 Delegate 함수들 구현
+extension PlaceDetailViewController: FloatingPanelControllerDelegate {
+    /// FloatingPanel이 특정 높이에 도달하면 `PlaceDetailViewController`로 변경
+    func floatingPanelDidMove(_ fpc: FloatingPanelController) {
+        let progress = fpc.surfaceView.frame.origin.y / view.frame.height
+        if progress < 0.1 { // 10% 이하로 올리면 fullScreen으로 변경
+            customNavigationAnimation(
+                to: self, isPush: true, duration: 0
+            )
+        }
+    }
 }

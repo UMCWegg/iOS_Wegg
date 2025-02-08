@@ -110,7 +110,7 @@ class MapViewController:
     
     /// 바텀 시트 초기 설정
     private func setupFloatingPanel() {
-        floatingPanel.delegate = self
+        floatingPanel.delegate = placeDetailVC
         floatingPanel.set(contentViewController: hotPlaceSheetVC)
         // 스크롤 추적
         floatingPanel.track(scrollView: hotPlaceSheetVC.hotPlaceView.hotPlaceCollectionView)
@@ -124,16 +124,6 @@ class MapViewController:
         floatingPanel.surfaceView.clipsToBounds = false
         
         floatingPanel.addPanel(toParent: self)
-    }
-    
-    /// FloatingPanel이 특정 높이에 도달하면 `PlaceDetailViewController`로 변경
-    func floatingPanelDidMove(_ fpc: FloatingPanelController) {
-        let progress = fpc.surfaceView.frame.origin.y / view.frame.height
-        if progress < 0.1 { // 10% 이하로 올리면 fullScreen으로 변경
-            customNavigationAnimation(
-                to: placeDetailVC, isPush: true, duration: 0
-            )
-        }
     }
     
     private func pushUniqueSearchViewWithAnimation() {
