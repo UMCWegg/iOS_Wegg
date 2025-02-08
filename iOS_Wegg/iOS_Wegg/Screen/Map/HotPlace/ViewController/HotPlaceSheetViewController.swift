@@ -9,6 +9,17 @@ import UIKit
 import Then
 
 class HotPlaceSheetViewController: UIViewController {
+    /// `MapViewController`를 참조하도록 설정하여 FloatingPanel에 접근할 수 있도록 함
+    weak var mapVC: MapViewController?
+    
+    init(mapVC: MapViewController?) { // 생성자에서 의존성 주입
+        self.mapVC = mapVC
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,23 +151,28 @@ extension HotPlaceSheetViewController {
     
 }
 
+/// TODO:
+/// - 바텀 시트 확장해서 뷰 전체로 확장되는거 시도해보고
+/// - 안된다면 클로즈 버튼 MapOverlayView 상단에 만들기
 extension HotPlaceSheetViewController: HotPlaceCellGestureDelegate {
     func didTapHotPlaceCellHeader() {
         // REFACT: MapSearchVC와 중복된 코드, 리팩토링 필요
-        if let hotPlaceVC = FloatingPanelManager.shared.getContentViewController()
+        if let hotPlaceSheetVC = mapVC?.hotPlaceSheetVC
             as? HotPlaceSheetViewController {
-            let hotPlaceView = hotPlaceVC.hotPlaceView
+            let hotPlaceView = hotPlaceSheetVC.hotPlaceView
             hotPlaceView.bottomSheetTitleStack.isHidden = true
             hotPlaceView.bottomSheetButtonStack.isHidden = true
             hotPlaceView.dividedLineView.isHidden = true
             hotPlaceView.updateCollectionViewLayout()
         }
         
-        // 검색시 바텀시트 half 위치로 이동
-        FloatingPanelManager.shared.fpc?.move(to: .half, animated: true)
-        FloatingPanelManager.shared.fpc?.set(
-            contentViewController: PlaceDetailViewController()
-        )
+        // MapViewController에서 관리하는 PlaceDetailViewController로 변경
+        if let placeDetailVC = mapVC?.placeDetailVC {
+            // 바텀시트 half 위치로 이동
+            mapVC?.floatingPanel.move(to: .half, animated: true)
+            mapVC?.floatingPanel.set(contentViewController: placeDetailVC)
+        }
+        
         // navigationController에서 MapViewController 탐색
         guard let mapVC = navigationController?.viewControllers.first(
             where: { $0 is MapViewController }) as? MapViewController else {
