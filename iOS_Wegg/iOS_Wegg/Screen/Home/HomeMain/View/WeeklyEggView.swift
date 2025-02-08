@@ -12,20 +12,17 @@ import Then
 class WeeklyEggView: UIView {
 
     // MARK: - UI Components
-    private let calendarStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        stackView.alignment = .center
-        return stackView
-    }()
+    private let calendarStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.distribution = .equalSpacing
+        $0.alignment = .center
+    }
 
     private var dayEggs: [UIImageView] = []
     private var dayLabels: [UILabel] = []
     private var circleViews: [UIView] = []
 
     // MARK: - Initializers
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -44,8 +41,8 @@ class WeeklyEggView: UIView {
     }
 
     private func setupLayout() {
-        calendarStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        calendarStackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
 
         setupCalendarDayConstraints()
@@ -54,13 +51,10 @@ class WeeklyEggView: UIView {
     private func setupCalendarStackView() {
         let days = ["월", "화", "수", "목", "금", "토", "일"]
         for day in days {
-            let dayStack = UIStackView()
-            dayStack.axis = .vertical
-            dayStack.alignment = .center
-            dayStack.spacing = 4
-
-            let eggImageView = UIImageView(image: UIImage(named: "emptyEgg"))
-            eggImageView.contentMode = .scaleAspectFit
+            let eggImageView = UIImageView().then {
+                $0.image = UIImage(named: "emptyEgg")
+                $0.contentMode = .scaleAspectFit
+            }
             dayEggs.append(eggImageView)
 
             let circleView = UIView().then {
@@ -95,6 +89,13 @@ class WeeklyEggView: UIView {
 
             dayStack.addArrangedSubview(eggImageView)
             dayStack.addArrangedSubview(labelContainer)
+            let dayStack = UIStackView().then {
+                $0.axis = .vertical
+                $0.alignment = .center
+                $0.spacing = 4
+                $0.addArrangedSubview(eggImageView)
+                $0.addArrangedSubview(dayLabel)
+            }
 
             calendarStackView.addArrangedSubview(dayStack)
         }
@@ -102,13 +103,13 @@ class WeeklyEggView: UIView {
 
     private func setupCalendarDayConstraints() {
         for (index, eggImageView) in dayEggs.enumerated() {
-            eggImageView.snp.makeConstraints { make in
-                make.width.height.equalTo(50)
+            eggImageView.snp.makeConstraints {
+                $0.width.height.equalTo(50)
             }
 
-            dayLabels[index].snp.makeConstraints { make in
-                make.width.equalTo(eggImageView)
-                make.top.equalTo(eggImageView.snp.bottom).offset(4)
+            dayLabels[index].snp.makeConstraints {
+                $0.width.equalTo(eggImageView)
+                $0.top.equalTo(eggImageView.snp.bottom).offset(4)
             }
         }
     }

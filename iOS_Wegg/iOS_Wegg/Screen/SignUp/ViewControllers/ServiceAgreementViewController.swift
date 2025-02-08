@@ -92,8 +92,8 @@ class ServiceAgreementViewController: UIViewController {
     }
     
     @objc private func nextButtonTapped() {
-        // let phoneNumVC = PhoneNumberViewController()
-        // navigationController?.pushViewController(phoneNumVC, animated: true)
+        let phoneNumberInputVC = PhoneNumberInputViewController()
+        navigationController?.pushViewController(phoneNumberInputVC, animated: true)
     }
     
     @objc private func backButtonTapped() {

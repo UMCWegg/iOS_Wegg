@@ -27,6 +27,11 @@ final class SwipeView: UIView, UIScrollViewDelegate {
     
     private var slides: [UIView] = []
     
+    // MARK: - Dynamic Data
+    private var totalTodos: Int = 4
+    private var completedTodos: Int = 2
+    private var consecutiveSuccesses: Int = 3
+    
     // MARK: - Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -77,17 +82,29 @@ final class SwipeView: UIView, UIScrollViewDelegate {
         scrollView.subviews.forEach { $0.removeFromSuperview() }
         slides.removeAll()
         
+        let totalTodos = 4
+        let completedTodos = 2
+        let consecutiveSuccesses = 3
+
         let slide1 = createSlideView(
             title: "나의 목표 달성",
-            progressText: "4개의 투두 중 2개를 달성했어요!",
-            remainingText: "나머지 2개도 마저 달성하여 에그를 얻어보세요",
-            progress: 0.5,
+            progressText: attributedText(
+                fullText: "\(totalTodos)개의 투두 중 \(completedTodos)개를 달성했어요!",
+                highlightText: "\(completedTodos)개",
+                highlightColor: .primary
+            ),
+            remainingText: "나머지 \(totalTodos - completedTodos)개도 마저 달성하여 에그를 얻어보세요",
+            progress: CGFloat(completedTodos) / CGFloat(totalTodos),
             image: nil
         )
         
         let slide2 = createSlideView(
             title: "포인트 얻기",
-            progressText: "목표를 달성하고 포인트를 쌓아보세요!",
+            progressText: attributedText(
+                fullText: "\(consecutiveSuccesses)번 연속으로 인증에 성공했어요!",
+                highlightText: "\(consecutiveSuccesses)번",
+                highlightColor: .primary
+            ),
             remainingText: "알을 눌러 포인트를 적립하세요",
             progress: nil,
             image: "shineEgg"
@@ -113,10 +130,23 @@ final class SwipeView: UIView, UIScrollViewDelegate {
             height: slideHeight
         )
     }
-    
-    private func createSlideView (
+
+    // MARK: - 텍스트 컬러 적용 함수
+    private func attributedText(
+        fullText: String,
+        highlightText: String,
+        highlightColor: UIColor) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(string: fullText)
+        let range = (fullText as NSString).range(of: highlightText)
+        
+        attributedString.addAttribute(.foregroundColor, value: highlightColor, range: range)
+        return attributedString
+    }
+
+    // MARK: - createSlideView 수정
+    private func createSlideView(
         title: String,
-        progressText: String,
+        progressText: NSAttributedString,
         remainingText: String,
         progress: CGFloat?,
         image: String?
@@ -137,9 +167,8 @@ final class SwipeView: UIView, UIScrollViewDelegate {
         }
 
         let progressLabel = UILabel().then {
-            $0.text = progressText
+            $0.attributedText = progressText
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 14)
-            $0.textColor = .black
             $0.numberOfLines = 2
         }
 
@@ -183,7 +212,7 @@ final class SwipeView: UIView, UIScrollViewDelegate {
 
         labelContainerView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.6) // 전체 너비의 60% 사용
+            make.width.equalToSuperview().multipliedBy(0.7)
         }
 
         titleLabel.snp.makeConstraints { make in
@@ -218,7 +247,7 @@ final class SwipeView: UIView, UIScrollViewDelegate {
 
         return view
     }
-    
+
     // MARK: - Button Action
     @objc private func shineEggButtonTapped(_ sender: UIButton) {
         print("포인트 버튼 클릭✅")

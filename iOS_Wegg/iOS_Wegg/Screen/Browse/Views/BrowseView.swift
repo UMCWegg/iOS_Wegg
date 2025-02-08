@@ -42,8 +42,8 @@ class BrowseView: UIView {
     /// UI 구성 요소 추가
     private func addcomponents() {
         [
-            browseCollectionView,
-            searchView
+            searchView,
+            browseCollectionView
         ].forEach {
             self.addSubview($0)
         }
@@ -52,13 +52,16 @@ class BrowseView: UIView {
     
     /// UI 제약 조건 설정
     private func setupConstraints() {
-        browseCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(
-                UIEdgeInsets(top: 120, left: 0, bottom: 20, right: 0)
-            )
-        }
         searchView.snp.makeConstraints {
-            $0.top.left.right.equalToSuperview()
+            $0.top.equalToSuperview().offset(60)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(50)
+        }
+        
+        browseCollectionView.snp.makeConstraints {
+            $0.top.equalTo(searchView.snp.bottom).offset(10) // 검색바 아래에 위치하도록 수정
+            $0.left.right.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(20)
         }
     }
     

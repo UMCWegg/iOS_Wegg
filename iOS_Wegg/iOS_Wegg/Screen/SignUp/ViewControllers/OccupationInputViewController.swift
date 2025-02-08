@@ -28,6 +28,11 @@ class OccupationInputViewController: UIViewController {
     // MARK: - Setup
     
     private func setupActions() {
+        
+        occupationInputView.nextButton.addTarget(self,
+                                                 action: #selector(nextButtonTapped),
+                                                 for: .touchUpInside)
+        
         occupationInputView.backButton.addTarget(
             self,
             action: #selector(backButtonTapped),
@@ -40,10 +45,6 @@ class OccupationInputViewController: UIViewController {
     }
     
     // MARK: - Actions
-    
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
     
     private func handleOccupationSelection(_ occupation: String) {
         guard let occupationType = UserOccupation(rawValue: occupation) else { return }
@@ -74,8 +75,13 @@ class OccupationInputViewController: UIViewController {
         // moveToNextScreen()
     }
     
-    private func moveToNextScreen() {
-        // 추후 구현 예정
+    @objc private func nextButtonTapped() {
+        let reasonInputVC = ReasonInputViewController()
+        navigationController?.pushViewController(reasonInputVC, animated: true)
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 
 }

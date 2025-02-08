@@ -48,8 +48,8 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func emailLoginButtonTapped() {
-        // let emailLoginVC = EmailLoginViewController()
-        // navigationController?.pushViewController(emailLoginVC, animated: true)
+        let emailSignUpVC = EmailSignUpViewController()
+        navigationController?.pushViewController(emailSignUpVC, animated: true)
     }
 
 }

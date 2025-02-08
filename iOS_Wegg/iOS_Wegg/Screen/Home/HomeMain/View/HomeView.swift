@@ -16,9 +16,7 @@ class HomeView: UIView {
     
     let modalView = UIView().then {
         $0.backgroundColor = .yellowWhite
-
         $0.layer.borderColor = UIColor.secondary.cgColor
-
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 25
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -74,8 +72,6 @@ class HomeView: UIView {
     }
     
     private func setupLayout() {
-        let referenceScreenHeight: CGFloat = 844
-
         headerView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
@@ -98,7 +94,7 @@ class HomeView: UIView {
         contentView.snp.makeConstraints {
             $0.edges.equalTo(scrollView.contentLayoutGuide)
             $0.width.equalTo(scrollView.frameLayoutGuide)
-            $0.height.equalTo(referenceScreenHeight * 1)
+            $0.height.greaterThanOrEqualToSuperview().priority(.low) // 높이 유연성 추가
         }
 
         authView.snp.makeConstraints {
@@ -110,12 +106,13 @@ class HomeView: UIView {
         toDoListView.snp.makeConstraints {
             $0.top.equalTo(authView.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(164)
+            $0.height.equalTo(toDoListView.tableView.contentSize.height).priority(.medium)
         }
         
         swipeView.snp.makeConstraints {
             $0.top.equalTo(toDoListView.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(164) // swipeView의 높이 고정
         }
         
         timerView.snp.makeConstraints {
