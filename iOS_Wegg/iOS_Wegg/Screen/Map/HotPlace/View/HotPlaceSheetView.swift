@@ -139,6 +139,13 @@ class HotPlaceSheetView: UIView {
         }
         layoutIfNeeded() // 레이아웃 변경 즉시 적용
     }
+    
+    func showBottomSheetComponents(isHidden: Bool) {
+        bottomSheetTitleStack.isHidden = isHidden
+        bottomSheetButtonStack.isHidden = isHidden
+        dividedLineView.isHidden = isHidden
+        updateCollectionViewLayout()
+    }
 }
 
 // MARK: - Set UP Extenstion

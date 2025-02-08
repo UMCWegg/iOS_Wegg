@@ -189,10 +189,7 @@ extension MapViewController:
     
     func didTapPlaceDetailBackButton() {
         overlayView.placeDetailBackButton.isHidden = true
-        hotPlaceSheetVC.hotPlaceView.bottomSheetTitleStack.isHidden = false
-        hotPlaceSheetVC.hotPlaceView.bottomSheetButtonStack.isHidden = false
-        hotPlaceSheetVC.hotPlaceView.dividedLineView.isHidden = false
-        hotPlaceSheetVC.hotPlaceView.updateCollectionViewLayout()
+        hotPlaceSheetVC.hotPlaceView.showBottomSheetComponents(isHidden: false)
         floatingPanel.set(contentViewController: hotPlaceSheetVC)
         floatingPanel.move(to: .half, animated: true)
     }

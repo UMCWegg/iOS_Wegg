@@ -160,16 +160,11 @@ extension HotPlaceSheetViewController: HotPlaceCellGestureDelegate {
         if let hotPlaceSheetVC = mapVC?.hotPlaceSheetVC
             as? HotPlaceSheetViewController {
             let hotPlaceView = hotPlaceSheetVC.hotPlaceView
-            hotPlaceView.bottomSheetTitleStack.isHidden = true
-            hotPlaceView.bottomSheetButtonStack.isHidden = true
-            hotPlaceView.dividedLineView.isHidden = true
-            hotPlaceView.updateCollectionViewLayout()
+            hotPlaceView.showBottomSheetComponents(isHidden: true)
         }
         
         // MapViewController에서 관리하는 PlaceDetailViewController로 변경
         if let placeDetailVC = mapVC?.placeDetailVC {
-            // 바텀시트 half 위치로 이동
-            mapVC?.floatingPanel.move(to: .half, animated: true)
             mapVC?.floatingPanel.set(contentViewController: placeDetailVC)
         }
         
@@ -179,6 +174,7 @@ extension HotPlaceSheetViewController: HotPlaceCellGestureDelegate {
             return
         }
         mapVC.overlayView.placeSearchBar.isHidden = false
+        mapVC.overlayView.placeDetailBackButton.isHidden = false
     }
     
 }

@@ -40,10 +40,7 @@ extension MapSearchViewController: MapSearchBarDelegate {
         if let hotPlaceSheetVC = mapVC?.hotPlaceSheetVC
             as? HotPlaceSheetViewController {
             let hotPlaceView = hotPlaceSheetVC.hotPlaceView
-            hotPlaceView.bottomSheetTitleStack.isHidden = false
-            hotPlaceView.bottomSheetButtonStack.isHidden = false
-            hotPlaceView.dividedLineView.isHidden = false
-            hotPlaceView.updateCollectionViewLayout()
+            hotPlaceView.showBottomSheetComponents(isHidden: false)
         }
         
         // 검색시 바텀시트 tip 위치로 이동
@@ -63,10 +60,7 @@ extension MapSearchViewController: MapSearchBarDelegate {
         if let hotPlaceVC = mapVC?.hotPlaceSheetVC
             as? HotPlaceSheetViewController {
             let hotPlaceView = hotPlaceVC.hotPlaceView
-            hotPlaceView.bottomSheetTitleStack.isHidden = true
-            hotPlaceView.bottomSheetButtonStack.isHidden = true
-            hotPlaceView.dividedLineView.isHidden = true
-            hotPlaceView.updateCollectionViewLayout()
+            hotPlaceView.showBottomSheetComponents(isHidden: true)
         }
         
         // 검색시 바텀시트 half 위치로 이동
