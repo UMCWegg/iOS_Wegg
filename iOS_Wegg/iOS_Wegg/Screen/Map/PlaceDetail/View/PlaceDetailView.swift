@@ -325,7 +325,7 @@ private extension PlaceDetailView {
     func constraints() {
         headerTitleStack.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(
-                MapViewLayout.BottomSheetContent.topOffset
+                MapViewLayout.BottomSheetHeader.topOffset
             )
             make.leading.lessThanOrEqualToSuperview().inset(21)
         }

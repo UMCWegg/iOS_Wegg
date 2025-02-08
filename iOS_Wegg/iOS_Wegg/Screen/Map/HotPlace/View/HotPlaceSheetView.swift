@@ -129,7 +129,10 @@ class HotPlaceSheetView: UIView {
             make.leading.trailing.bottom.equalToSuperview()
             
             if dividedLineView.isHidden {
-                make.top.equalToSuperview() // dividedLineView가 숨겨지면 최상단으로 이동
+                // dividedLineView가 숨겨지면 최상단으로 이동
+                make.top.equalToSuperview().offset(
+                    MapViewLayout.BottomSheetHeader.topOffset
+                )
             } else {
                 make.top.equalTo(dividedLineView.snp.bottom) // 기존 레이아웃 유지
             }

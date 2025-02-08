@@ -71,7 +71,6 @@ extension MapSearchViewController: MapSearchBarDelegate {
         
         // 검색시 바텀시트 half 위치로 이동
         mapVC?.floatingPanel.move(to: .half, animated: true)
-        mapVC?.floatingPanel.set(contentViewController: mapVC?.placeDetailVC)
         // navigationController에서 MapViewController 탐색
         guard let mapVC = navigationController?.viewControllers.first(
             where: { $0 is MapViewController }) as? MapViewController else {

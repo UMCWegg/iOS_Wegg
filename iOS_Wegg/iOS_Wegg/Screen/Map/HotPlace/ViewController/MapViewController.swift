@@ -127,12 +127,14 @@ class MapViewController:
     }
     
     /// FloatingPanel이 특정 높이에 도달하면 `PlaceDetailViewController`로 변경
-//    func floatingPanelDidMove(_ fpc: FloatingPanelController) {
-//        let progress = fpc.surfaceView.frame.origin.y / view.frame.height
-//        if progress < 0.1 { // 10% 이하로 올리면 fullScreen으로 변경
-//            floatingPanel.set(contentViewController: placeDetailVC)
-//        }
-//    }
+    func floatingPanelDidMove(_ fpc: FloatingPanelController) {
+        let progress = fpc.surfaceView.frame.origin.y / view.frame.height
+        if progress < 0.1 { // 10% 이하로 올리면 fullScreen으로 변경
+            customNavigationAnimation(
+                to: placeDetailVC, isPush: true, duration: 0
+            )
+        }
+    }
     
     private func pushUniqueSearchViewWithAnimation() {
         guard let mapSearchVC = mapSearchVC else { return }
