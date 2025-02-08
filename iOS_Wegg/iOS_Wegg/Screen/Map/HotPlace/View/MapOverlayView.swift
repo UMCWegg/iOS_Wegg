@@ -100,6 +100,8 @@ class MapOverlayView: UIView {
     
     lazy var placeDetailBackButton = createImageView(imageName: "place_back_button").then {
         $0.isHidden = true
+        $0.image?.withRenderingMode(.alwaysTemplate)
+        $0.tintColor = .secondary
     }
     lazy var placeSearchButton = createImageView(imageName: "map_search_icon")
     private lazy var currentLocationImageButton = createImageView(

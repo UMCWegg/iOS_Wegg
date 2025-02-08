@@ -53,12 +53,13 @@ class MapViewController:
         self.mapSearchVC = MapSearchViewController(mapVC: nil)
         self.floatingPanel = FloatingPanelController()
         self.hotPlaceSheetVC = HotPlaceSheetViewController(mapVC: nil)
-        self.placeDetailVC = PlaceDetailViewController()
+        self.placeDetailVC = PlaceDetailViewController(mapVC: nil)
         
         super.init(nibName: nil, bundle: nil)
-        // `HotPlaceSheetViewController`와 `MapSearchViewController`에 `MapViewController`를 주입
+        // 각각의 ViewController에 `MapViewController`를 주입
         self.hotPlaceSheetVC.mapVC = self
         self.mapSearchVC?.mapVC = self
+        self.placeDetailVC.mapVC = self
     }
     
     required init?(coder: NSCoder) {
@@ -178,6 +179,8 @@ extension MapViewController:
     func didTapPlaceSearchButton() {
         guard let mapSearchVC = mapSearchVC else { return }
         navigationController?.pushViewController(mapSearchVC, animated: true)
+        // 검색 버튼 탭한 경우 뒤로 가기 버튼 비활성화
+        overlayView.placeDetailBackButton.isHidden = true
     }
     
     func didTapPlaceSearchBar() {
