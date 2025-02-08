@@ -19,7 +19,7 @@ class ToDoListView: UIView {
     // MARK: - UI Components
     private let titleLabel = UILabel().then {
         $0.text = "TO DO LIST"
-        $0.font = .systemFont(ofSize: 16, weight: .semibold)
+        $0.font = .notoSans(.bold, size: 13)
         $0.textColor = .secondary
     }
 
@@ -39,6 +39,7 @@ class ToDoListView: UIView {
 
     private let emptyStateLabel = UILabel().then {
         $0.text = "할 일이 없습니다. 새로운 할 일을 추가해보세요!"
+        $0.font = .notoSans(.regular, size: 13)
         $0.textAlignment = .center
         $0.textColor = .gray
         $0.isHidden = true
