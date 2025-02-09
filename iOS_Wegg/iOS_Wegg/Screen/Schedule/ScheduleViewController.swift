@@ -1,13 +1,13 @@
 //
-//  BookViewController.swift
+//  ScheduleViewController.swift
 //  iOS_Wegg
 //
-//  Created by 송승윤 on 1/20/25.
+//  Created by jaewon Lee on 1/20/25.
 //
 
 import UIKit
 
-class TimeViewController: UIViewController {
+class ScheduleViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
