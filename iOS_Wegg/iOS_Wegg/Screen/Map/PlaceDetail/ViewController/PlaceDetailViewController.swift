@@ -103,21 +103,3 @@ extension PlaceDetailViewController: PlaceDetailViewGestureDelegate {
     }
     
 }
-
-/// MapViewController에게서 위임 받은 Delegate 함수들 구현
-extension PlaceDetailViewController: FloatingPanelControllerDelegate {
-    /// FloatingPanel 움직임 추적
-    func floatingPanelDidMove(_ fpc: FloatingPanelController) {
-        let progress = fpc.surfaceView.frame.origin.y / view.frame.height
-        guard let panelCurrentVC = mapVC?.floatingPanel.contentViewController else {
-            return
-        }
-        if panelCurrentVC == self {
-            if progress < 0.3 { // 30% 이하로 올리면 true
-                mapVC?.overlayView.placeDetailBackButton.isHidden = false
-            } else {
-                mapVC?.overlayView.placeDetailBackButton.isHidden = true
-            }
-        }
-    }
-}

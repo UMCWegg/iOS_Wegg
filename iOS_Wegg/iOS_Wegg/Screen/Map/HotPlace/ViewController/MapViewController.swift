@@ -111,7 +111,7 @@ class MapViewController:
     
     /// 바텀 시트 초기 설정
     private func setupFloatingPanel() {
-        floatingPanel.delegate = placeDetailVC
+        floatingPanel.delegate = self
         floatingPanel.set(contentViewController: hotPlaceSheetVC)
         // 스크롤 추적
         floatingPanel.track(scrollView: hotPlaceSheetVC.hotPlaceView.hotPlaceCollectionView)
