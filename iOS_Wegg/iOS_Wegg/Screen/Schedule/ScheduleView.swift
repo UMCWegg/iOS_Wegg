@@ -8,14 +8,6 @@
 import UIKit
 import Then
 
-struct Schedule: Hashable {
-    let id: UUID
-    let date: String
-    let location: String
-    let timeRange: String
-    var isOn: Bool
-}
-
 class ScheduleView: UIView {
 
     override init(frame: CGRect) {

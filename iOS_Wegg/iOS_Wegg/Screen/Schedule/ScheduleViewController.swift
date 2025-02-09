@@ -7,8 +7,17 @@
 
 import UIKit
 
+struct Schedule: Hashable {
+    let id: UUID
+    let date: String
+    let location: String
+    let timeRange: String
+    var isOn: Bool
+}
+
 class ScheduleViewController: UIViewController {
     
+    // UITableViewDiffableDataSource를 사용하여 데이터 관리
     private var dataSource: UITableViewDiffableDataSource<Int, Schedule>?
 
     override func viewDidLoad() {
@@ -24,6 +33,7 @@ class ScheduleViewController: UIViewController {
     }
 
     private func setupDataSource() {
+        // Diffable Data Source를 생성하여 테이블 뷰에 연결
         dataSource = UITableViewDiffableDataSource<Int, Schedule>(
             tableView: scheduleView.studyCardTableView
         ) { tableView, indexPath, schedule in
@@ -34,6 +44,7 @@ class ScheduleViewController: UIViewController {
                 return UITableViewCell()
             }
             
+            // 셀에 데이터 구성
             cell.configure(with: schedule)
             return cell
         }
@@ -41,7 +52,7 @@ class ScheduleViewController: UIViewController {
 
     private func applyInitialSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Int, Schedule>()
-        snapshot.appendSections([0])
+        snapshot.appendSections([0]) // 단일 섹션 추가
         snapshot.appendItems([
             Schedule(
                 id: UUID(),
@@ -58,40 +69,35 @@ class ScheduleViewController: UIViewController {
                 isOn: false
             )
         ])
+        // DataSource가 nil이 아닌 경우 스냅샷 적용
         guard let dataSource = dataSource else { return }
         dataSource.apply(snapshot, animatingDifferences: true)
+        
+//        // 현재 스냅샷 가져오기
+//        let currentSnapshot = dataSource.snapshot()
+//        // 스냅샷에서 모든 아이템 가져오기
+//        print(currentSnapshot.itemIdentifiers)
     }
-    
-    func toggleScheduleState(schedule: Schedule) {
-        guard let dataSource = dataSource else { return }
-        var snapshot = dataSource.snapshot()
-        guard let index = snapshot.indexOfItem(schedule) else { return }
-        
-        var updatedSchedule = schedule
-        updatedSchedule.isOn.toggle()
-        
-        snapshot.insertItems([updatedSchedule], beforeItem: snapshot.itemIdentifiers[index])
-        snapshot.deleteItems([schedule])
-        
-        dataSource.apply(snapshot, animatingDifferences: true)
-    }
-
 }
 
 extension ScheduleViewController: UITableViewDelegate {
-//    func tableView(
-//        _ tableView: UITableView,
-//        didSelectRowAt indexPath: IndexPath
-//    ) {
-//        guard let dataSource = dataSource else { return }
-//        guard let selectedItem = dataSource.itemIdentifier(
-//            for: indexPath
-//        ) else { return }
-//        print("선택된 항목: \(selectedItem.location)")
-//    }
+    /*
+    // 셀 선택 시 호출되는 메서드
+    // 현재 주석 처리: 필요 시 활성화
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
+        guard let dataSource = dataSource else { return }
+        guard let selectedItem = dataSource.itemIdentifier(
+            for: indexPath
+        ) else { return }
+        print("선택된 항목: \(selectedItem.location)")
+    }
+    */
     
-    // 셀 높이 설정
+    // 각 셀의 높이를 설정하는 메서드
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 138
+        return 138 // 셀 높이를 138로 고정
     }
 }
