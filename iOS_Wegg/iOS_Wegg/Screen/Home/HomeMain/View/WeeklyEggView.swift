@@ -76,7 +76,7 @@ class WeeklyEggView: UIView {
                 $0.text = day
                 $0.textColor = .secondary
                 $0.textAlignment = .center
-                $0.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+                $0.font = UIFont.systemFont(ofSize: 14, weight: .medium)
             }
             dayLabels.append(dayLabel)
 

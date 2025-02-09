@@ -162,19 +162,19 @@ final class SwipeView: UIView, UIScrollViewDelegate {
 
         let titleLabel = UILabel().then {
             $0.text = title
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 13)
-            $0.textColor = .gray
+            $0.font = .notoSans(.bold, size: 13)
+            $0.textColor = .secondary
         }
 
         let progressLabel = UILabel().then {
             $0.attributedText = progressText
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 14)
+            $0.font = .notoSans(.bold, size: 14)
             $0.numberOfLines = 2
         }
 
         let remainingLabel = UILabel().then {
             $0.text = remainingText
-            $0.font = UIFont(name: "NotoSansKR-Medium", size: 11)
+            $0.font = .notoSans(.medium, size: 11)
             $0.textColor = .gray
         }
 
