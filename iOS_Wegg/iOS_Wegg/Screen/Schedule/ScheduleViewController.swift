@@ -79,16 +79,16 @@ class ScheduleViewController: UIViewController {
 }
 
 extension ScheduleViewController: UITableViewDelegate {
-    func tableView(
-        _ tableView: UITableView,
-        didSelectRowAt indexPath: IndexPath
-    ) {
-        guard let dataSource = dataSource else { return }
-        guard let selectedItem = dataSource.itemIdentifier(
-            for: indexPath
-        ) else { return }
-        print("선택된 항목: \(selectedItem.location)")
-    }
+//    func tableView(
+//        _ tableView: UITableView,
+//        didSelectRowAt indexPath: IndexPath
+//    ) {
+//        guard let dataSource = dataSource else { return }
+//        guard let selectedItem = dataSource.itemIdentifier(
+//            for: indexPath
+//        ) else { return }
+//        print("선택된 항목: \(selectedItem.location)")
+//    }
     
     // 셀 높이 설정
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -14,6 +14,7 @@ class ScheduleCardCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .clear
+        selectionStyle = .none // 셀 선택 효과 제거
         setupView()
     }
     
@@ -54,7 +55,7 @@ class ScheduleCardCell: UITableViewCell {
     private lazy var logoTitleStack = UIStackView().then {
         $0.axis = .horizontal
         $0.distribution = .fill
-        $0.spacing = 1
+        $0.spacing = 4
     }
     
     // 테이블 datasoruce 주입
@@ -118,7 +119,6 @@ private extension ScheduleCardCell {
         toggleSwitch.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(44)
             make.trailing.lessThanOrEqualToSuperview().offset(-20)
-            make.width.equalTo(36)
         }
     }
 }
