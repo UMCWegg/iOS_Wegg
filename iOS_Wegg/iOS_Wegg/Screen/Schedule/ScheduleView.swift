@@ -136,8 +136,8 @@ private extension ScheduleView {
         }
         
         studyCardTableView.snp.makeConstraints { make in
-            make.top.equalTo(headerStackView.snp.bottom).offset(50)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(headerStackView.snp.bottom).offset(30)
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }

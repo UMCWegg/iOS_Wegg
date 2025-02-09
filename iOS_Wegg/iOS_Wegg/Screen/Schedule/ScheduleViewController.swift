@@ -92,6 +92,6 @@ extension ScheduleViewController: UITableViewDelegate {
     
     // 셀 높이 설정
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 124
+        return 138
     }
 }
