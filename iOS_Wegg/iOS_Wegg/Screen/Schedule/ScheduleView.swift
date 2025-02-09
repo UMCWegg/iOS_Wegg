@@ -6,6 +6,15 @@
 //
 
 import UIKit
+import Then
+
+struct Schedule: Hashable {
+    let id: UUID
+    let date: String
+    let location: String
+    let timeRange: String
+    var isOn: Bool
+}
 
 class ScheduleView: UIView {
 
@@ -38,6 +47,14 @@ class ScheduleView: UIView {
     )
     
     private lazy var headerStackView = makeStackView(108, .horizontal)
+    
+    lazy var studyCardTableView = UITableView().then {
+        $0.register(
+            ScheduleCardCell.self,
+            forCellReuseIdentifier: ScheduleCardCell.reuseIdentifier
+        )
+        $0.separatorStyle = .none
+    }
     
     // MARK: - Utility Functions
     
@@ -101,7 +118,10 @@ private extension ScheduleView {
     }
     
     func addComponents() {
-        [headerStackView].forEach(addSubview)
+        [
+            headerStackView,
+            studyCardTableView
+        ].forEach(addSubview)
         
         addScheduleImageButton.snp.makeConstraints { make in
             make.width.height.equalTo(20)
@@ -113,6 +133,12 @@ private extension ScheduleView {
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.leading.lessThanOrEqualToSuperview().inset(21)
             make.height.equalTo(30)
+        }
+        
+        studyCardTableView.snp.makeConstraints { make in
+            make.top.equalTo(headerStackView.snp.bottom).offset(50)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview()
         }
     }
 }
