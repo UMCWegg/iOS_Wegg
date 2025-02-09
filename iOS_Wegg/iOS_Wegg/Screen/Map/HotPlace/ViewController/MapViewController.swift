@@ -115,7 +115,6 @@ class MapViewController:
         floatingPanel.set(contentViewController: hotPlaceSheetVC)
         // 스크롤 추적
         floatingPanel.track(scrollView: hotPlaceSheetVC.hotPlaceView.hotPlaceCollectionView)
-        floatingPanel.track(scrollView: placeDetailVC.placeDetailView.scrollView)
         // FloatingPanel 스타일 설정
         floatingPanel.layout = MyFloatingPanelLayout()
         floatingPanel.surfaceView.appearance.cornerRadius = 25

@@ -163,9 +163,8 @@ extension HotPlaceSheetViewController: HotPlaceCellGestureDelegate {
         }
         
         // MapViewController에서 관리하는 PlaceDetailViewController로 변경
-        if let placeDetailVC = mapVC?.placeDetailVC {
-            mapVC?.floatingPanel.set(contentViewController: placeDetailVC)
-        }
+        guard let placeDetailVC = mapVC?.placeDetailVC else { return }
+        mapVC?.floatingPanel.set(contentViewController: placeDetailVC)
         
         // navigationController에서 MapViewController 탐색
         guard let mapVC = navigationController?.viewControllers.first(
