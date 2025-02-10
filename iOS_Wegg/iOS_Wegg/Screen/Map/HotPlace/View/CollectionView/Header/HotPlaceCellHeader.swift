@@ -8,7 +8,13 @@
 import UIKit
 import SnapKit
 
+protocol HotPlaceCellGestureDelegate: AnyObject {
+    func didTapHotPlaceCellHeader()
+}
+
 class HotPlaceCellHeader: UICollectionReusableView {
+    
+    weak var gestureDelegate: HotPlaceCellGestureDelegate?
     
     static let identifier = "HotPlaceCellHeader"
     
@@ -88,6 +94,10 @@ class HotPlaceCellHeader: UICollectionReusableView {
         saveCount.text = model.saveCount
     }
     
+    @objc private func headerTitleStackTapped() {
+        gestureDelegate?.didTapHotPlaceCellHeader()
+    }
+    
 }
 
 // MARK: - Set Up Extenstion
@@ -95,8 +105,18 @@ class HotPlaceCellHeader: UICollectionReusableView {
 private extension HotPlaceCellHeader {
     func setupView() {
         setupStackView()
+        setupGestures()
         addComponents()
         constraints()
+    }
+    
+    func setupGestures() {
+        let headerTitleTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(headerTitleStackTapped)
+        )
+        headerTitleStack.isUserInteractionEnabled = true
+        headerTitleStack.addGestureRecognizer(headerTitleTapGesture)
     }
     
     func setupStackView() {

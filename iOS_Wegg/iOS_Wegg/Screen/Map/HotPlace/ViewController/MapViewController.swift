@@ -15,7 +15,7 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
     
     let anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] = [
         .full: FloatingPanelLayoutAnchor(
-            absoluteInset: 16.0, edge: .top, referenceGuide: .safeArea
+            fractionalInset: 0.12, edge: .top, referenceGuide: .safeArea
         ),
         .half: FloatingPanelLayoutAnchor(
             fractionalInset: 0.5, edge: .bottom, referenceGuide: .safeArea
@@ -33,16 +33,33 @@ class MapViewController:
     FloatingPanelControllerDelegate,
     UIGestureRecognizerDelegate {
     private let mapManager: MapManagerProtocol
-    private var fpc: FloatingPanelController?
+    /// `MapSearchViewController`도 의존성 주입하여 재사용 (옵셔널로 선언)
     private var mapSearchVC: MapSearchViewController?
+    /// FloatingPanelController를 `MapViewController`에서 직접 관리하여 중복 생성을 방지
+    let floatingPanel: FloatingPanelController
+    /// `HotPlaceSheetViewController`를 한 번만 생성하여 재사용
+    let hotPlaceSheetVC: HotPlaceSheetViewController
+    /// `PlaceDetailViewController`도 한 번만 생성하여 FloatingPanel 내에서 재사용
+    let placeDetailVC: PlaceDetailViewController
+    
     lazy var overlayView = MapOverlayView().then {
         $0.placeSearchBar.searchTextFieldView.isUserInteractionEnabled = false
     }
     
     /// 의존성 주입
+    /// `MapViewController`에서 모든 뷰 컨트롤러를 한 번만 생성하여 유지하도록 함
     init(mapManager: MapManagerProtocol) {
         self.mapManager = mapManager
+        self.mapSearchVC = MapSearchViewController(mapVC: nil)
+        self.floatingPanel = FloatingPanelController()
+        self.hotPlaceSheetVC = HotPlaceSheetViewController(mapVC: nil)
+        self.placeDetailVC = PlaceDetailViewController(mapVC: nil)
+        
         super.init(nibName: nil, bundle: nil)
+        // 각각의 ViewController에 `MapViewController`를 주입
+        self.hotPlaceSheetVC.mapVC = self
+        self.mapSearchVC?.mapVC = self
+        self.placeDetailVC.mapVC = self
     }
     
     required init?(coder: NSCoder) {
@@ -94,31 +111,25 @@ class MapViewController:
     
     /// 바텀 시트 초기 설정
     private func setupFloatingPanel() {
-        fpc = FloatingPanelController()
-        guard let fpc = fpc else { return }
-        let fpcSurfaceView = fpc.surfaceView
-        fpc.delegate = self
-        
-        let hotPlaceSheetVC = HotPlaceSheetViewController()
-        fpc.set(contentViewController: hotPlaceSheetVC)
+        floatingPanel.delegate = self
+        floatingPanel.set(contentViewController: hotPlaceSheetVC)
         // 스크롤 추적
-        fpc.track(scrollView: hotPlaceSheetVC.hotPlaceView.hotPlaceCollectionView)
-        fpc.layout = MyFloatingPanelLayout()
-        
-        fpcSurfaceView.appearance.cornerRadius = 25
-//        fpc.surfaceView.appearance.borderWidth = 1
-//        fpc.surfaceView.appearance.borderColor = .secondary
-        fpcSurfaceView.layer.shadowColor = UIColor.secondary.cgColor
-        fpcSurfaceView.layer.shadowOpacity = 0.2
-        fpcSurfaceView.layer.shadowOffset = CGSize(width: 0, height: -3)
-        fpcSurfaceView.layer.shadowRadius = 7 // Blur 설정
-        fpcSurfaceView.clipsToBounds = false // 그림자 표시 위해 설정
-        
-        fpc.addPanel(toParent: self)
+        floatingPanel.track(scrollView: hotPlaceSheetVC.hotPlaceView.hotPlaceCollectionView)
+        // FloatingPanel 스타일 설정
+        floatingPanel.layout = MyFloatingPanelLayout()
+        floatingPanel.surfaceView.appearance.cornerRadius = 25
+        floatingPanel.surfaceView.layer.shadowColor = UIColor.secondary.cgColor
+        floatingPanel.surfaceView.layer.shadowOpacity = 0.2
+        floatingPanel.surfaceView.layer.shadowOffset = CGSize(width: 0, height: -3)
+        floatingPanel.surfaceView.layer.shadowRadius = 7
+        floatingPanel.surfaceView.clipsToBounds = false
+        floatingPanel.isRemovalInteractionEnabled = false // 패널 제거 인터랙션 비활성화
+        floatingPanel.backdropView.isHidden = true // 패널 뒤 배경 숨김
+        floatingPanel.surfaceView.backgroundColor = .clear
+        floatingPanel.addPanel(toParent: self)
     }
     
     private func pushUniqueSearchViewWithAnimation() {
-        mapSearchVC = MapSearchViewController()
         guard let mapSearchVC = mapSearchVC else { return }
         guard let navigationController = self.navigationController else { return }
 
@@ -166,13 +177,21 @@ extension MapViewController:
     }
     
     func didTapPlaceSearchButton() {
-        mapSearchVC = MapSearchViewController()
         guard let mapSearchVC = mapSearchVC else { return }
         navigationController?.pushViewController(mapSearchVC, animated: true)
+        // 검색 버튼 탭한 경우 뒤로 가기 버튼 비활성화
+        overlayView.placeDetailBackButton.isHidden = true
     }
     
     func didTapPlaceSearchBar() {
         pushUniqueSearchViewWithAnimation()
+    }
+    
+    func didTapPlaceDetailBackButton() {
+        overlayView.placeDetailBackButton.isHidden = true
+        hotPlaceSheetVC.hotPlaceView.showBottomSheetComponents(isHidden: false)
+        floatingPanel.set(contentViewController: hotPlaceSheetVC)
+        floatingPanel.move(to: .half, animated: true)
     }
     
     // MARK: - MapSearchBarDelegate
