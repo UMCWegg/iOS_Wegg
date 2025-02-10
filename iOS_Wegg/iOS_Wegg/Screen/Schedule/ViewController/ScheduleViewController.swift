@@ -15,7 +15,9 @@ struct Schedule: Hashable {
     var isOn: Bool
 }
 
-class ScheduleViewController: UIViewController {
+class ScheduleViewController:
+    UIViewController,
+    UIGestureRecognizerDelegate {
     
     // UITableViewDiffableDataSource를 사용하여 데이터 관리
     private var dataSource: UITableViewDiffableDataSource<Int, Schedule>?
@@ -27,9 +29,19 @@ class ScheduleViewController: UIViewController {
         setupDataSource()
         applyInitialSnapshot()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Navigation Bar 숨김. 다음 화면에서도 보이지 않음.
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        // 뒤로가기 제스처 활성화
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
 
     lazy var scheduleView = ScheduleView().then {
         $0.studyCardTableView.delegate = self
+        $0.gestureDelegate = self
     }
 
     private func setupDataSource() {
@@ -100,4 +112,13 @@ extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 138 // 셀 높이를 138로 고정
     }
+}
+
+extension ScheduleViewController: ScheduleViewGestureDelegate {
+    func didTapAddScheduleButton() {
+        let addScheduleVC = AddScheduleViewController()
+        addScheduleVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(addScheduleVC, animated: true)
+    }
+    
 }

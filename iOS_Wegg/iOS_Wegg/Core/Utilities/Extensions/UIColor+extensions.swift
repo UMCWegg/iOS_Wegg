@@ -14,6 +14,7 @@ extension UIColor {
         case primary
         case secondary
         case customGray // #767676
+        case customGray2 // #D7D7D7
         case gray1
         case yellowWhite
         case yellowBG
@@ -35,6 +36,11 @@ extension UIColor {
                 return color
             case .customGray:
                 guard let color = UIColor(named: "customGray") else {
+                    return UIColor.gray
+                }
+                return color
+            case .customGray2:
+                guard let color = UIColor(named: "customGray2") else {
                     return UIColor.gray
                 }
                 return color
