@@ -31,7 +31,9 @@ class ScheduleView: UIView {
         "create egg",
         .notoSans(.medium, size: 16),
         .customGray
-    )
+    ).then {
+        $0.textAlignment = .center
+    }
     
     lazy var addScheduleImageButton = makeImageView(
         "AddSchedule",
@@ -46,6 +48,7 @@ class ScheduleView: UIView {
             forCellReuseIdentifier: ScheduleCardCell.reuseIdentifier
         )
         $0.separatorStyle = .none
+        $0.backgroundColor = .yellowWhite
     }
     
     // MARK: - Utility Functions
@@ -115,6 +118,10 @@ private extension ScheduleView {
             studyCardTableView
         ].forEach(addSubview)
         
+        createEggLabel.snp.makeConstraints { make in
+            make.width.equalTo(80)
+        }
+        
         addScheduleImageButton.snp.makeConstraints { make in
             make.width.height.equalTo(20)
         }
@@ -123,7 +130,7 @@ private extension ScheduleView {
     func constraints() {
         headerStackView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
-            make.leading.lessThanOrEqualToSuperview().inset(21)
+            make.leading.trailing.equalToSuperview().inset(21)
             make.height.equalTo(30)
         }
         

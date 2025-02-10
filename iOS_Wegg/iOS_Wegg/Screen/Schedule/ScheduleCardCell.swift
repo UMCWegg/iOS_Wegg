@@ -13,6 +13,7 @@ class ScheduleCardCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .yellowWhite
         contentView.backgroundColor = .clear
         selectionStyle = .none // 셀 선택 효과 제거
         setupView()
