@@ -55,7 +55,7 @@ class PostDetailView: UIView {
     }
     
     /// 댓글이 게시된 뷰도 따로있기에 댓글 입력창을 텍스트 필드가 아닌 버튼으로 설정함
-    private let commentButton = UIButton().then {
+    lazy var commentButton = UIButton().then {
         // 버튼 구성
         var config = UIButton.Configuration.plain()
         config.title = "댓글을 입력하세요..."

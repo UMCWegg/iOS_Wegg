@@ -23,7 +23,7 @@ class PasswordResetEmailView: UIView {
     
     // MARK: - Properties
     
-    private let backButton = UIButton().then {
+    let backButton = UIButton().then {
         $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         $0.tintColor = .black
     }
@@ -41,7 +41,7 @@ class PasswordResetEmailView: UIView {
         type: .email
     )
     
-    let loginButton = LoginButton(
+    let sendNumberButton = LoginButton(
         style: .textOnly,
         title: "인증 번호 보내기",
         backgroundColor: UIColor.customColor(.primary)
@@ -55,7 +55,7 @@ class PasswordResetEmailView: UIView {
             mainLabel,
             emailLabel,
             emailTextField,
-            loginButton
+            sendNumberButton
         ].forEach { addSubview($0) }
     }
     
@@ -82,7 +82,7 @@ class PasswordResetEmailView: UIView {
             make.trailing.equalToSuperview().offset(-17)
         }
         
-        loginButton.snp.makeConstraints { make in
+        sendNumberButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-40)
         }

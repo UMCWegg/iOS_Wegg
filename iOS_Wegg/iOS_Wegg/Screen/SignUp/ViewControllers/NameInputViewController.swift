@@ -22,6 +22,22 @@ class NameInputViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setupActions()
+    }
+    
+    // MARK: - Setup
+    
+    private func setupActions() {
+        nameInputView.nextButton.addTarget(self,
+                                           action: #selector(nextButtonTapped),
+                                           for: .touchUpInside)
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func nextButtonTapped() {
+        let nickNameInputVC = NickNameInputViewController()
+        navigationController?.pushViewController(nickNameInputVC, animated: true)
     }
     
 }

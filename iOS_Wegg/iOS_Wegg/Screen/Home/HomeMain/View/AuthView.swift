@@ -19,20 +19,20 @@ final class AuthView: UIView {
     
     private let locationLabel = UILabel().then {
         $0.text = "스타벅스 미아점"
-        $0.font = .systemFont(ofSize: 12, weight: .bold)
+        $0.font = .gmarketSans(.bold, size: 12)
         $0.textColor = .black
     }
     
     private let titleLabel = UILabel().then {
         $0.text = "곧 공부할 시간이에요!"
-        $0.font = .systemFont(ofSize: 20, weight: .bold)
+        $0.font = .gmarketSans(.bold, size: 20)
         $0.textColor = .black
     }
     
     private let subtitleLabel = UILabel().then {
         $0.text = "🚨서둘러 인증을 진행해주세요"
-        $0.font = .systemFont(ofSize: 10)
-        $0.textColor = .gray
+        $0.font = .notoSans(.bold, size: 10)
+        $0.textColor = .secondary
     }
     
     private let authStackView = UIStackView().then {
@@ -42,8 +42,13 @@ final class AuthView: UIView {
         $0.spacing = 16
     }
     
-    let locationAuthButton = AuthView.createAuthButton(imageName: "locCert", title: "장소 인증하기")
-    let photoAuthButton = AuthView.createAuthButton(imageName: "photoCert", title: "사진 인증하기")
+    private let locationAuthButton = UIButton().then {
+        $0.setupAuthButton(imageName: "locCert", title: "장소 인증하기")
+    }
+    
+    private let photoAuthButton = UIButton().then {
+        $0.setupAuthButton(imageName: "photoCert", title: "사진 인증하기")
+    }
 
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -103,12 +108,7 @@ final class AuthView: UIView {
             action: #selector(locationAuthTapped),
             for: .touchUpInside
         )
-
-        photoAuthButton.addTarget(
-            self,
-            action: #selector(photoAuthTapped),
-            for: .touchUpInside
-        )
+        photoAuthButton.addTarget(self, action: #selector(photoAuthTapped), for: .touchUpInside)
     }
     
     @objc private func locationAuthTapped() {
@@ -118,43 +118,47 @@ final class AuthView: UIView {
     @objc private func photoAuthTapped() {
         print("사진 인증 터치 ✅")
     }
+}
 
-    // MARK: - Helper Method
-    static func createAuthButton(imageName: String, title: String) -> UIButton {
-        let button = UIButton()
-        button.backgroundColor = .yellowWhite
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.secondary.cgColor
-        button.isUserInteractionEnabled = true // ✅ 버튼 터치 활성화
-
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = 8
-        stackView.isUserInteractionEnabled = false // ✅ 내부 요소 터치 이벤트 버튼으로 전달
-
-        let imageView = UIImageView(image: UIImage(named: imageName))
-        imageView.contentMode = .scaleAspectFit
+// MARK: - UIButton Extension
+private extension UIButton {
+    func setupAuthButton(imageName: String, title: String) {
+        self.then {
+            $0.backgroundColor = .yellowWhite
+            $0.layer.cornerRadius = 20
+            $0.layer.borderWidth = 1
+            $0.layer.borderColor = UIColor.secondary.cgColor
+            $0.isUserInteractionEnabled = true
+        }
+        
+        let stackView = UIStackView().then {
+            $0.axis = .vertical
+            $0.alignment = .center
+            $0.spacing = 8
+            $0.isUserInteractionEnabled = false
+        }
+        
+        let imageView = UIImageView(image: UIImage(named: imageName)).then {
+            $0.contentMode = .scaleAspectFit
+        }
         imageView.snp.makeConstraints { make in
             make.width.height.equalTo(60)
         }
-
-        let label = UILabel()
-        label.text = title
-        label.textColor = .secondary
-        label.font = .systemFont(ofSize: 10, weight: .bold)
-        label.textAlignment = .center
-        label.isUserInteractionEnabled = false // ✅ 터치 이벤트 버튼으로 전달
-
+        
+        let label = UILabel().then {
+            $0.text = title
+            $0.textColor = .secondary
+            $0.font = .notoSans(.bold, size: 10)
+            $0.textAlignment = .center
+            $0.isUserInteractionEnabled = false
+        }
+        
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(label)
-
-        button.addSubview(stackView)
+        self.addSubview(stackView)
+        
         stackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-
-        return button
     }
 }

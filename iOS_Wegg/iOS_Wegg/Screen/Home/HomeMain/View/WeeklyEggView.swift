@@ -22,6 +22,7 @@ class WeeklyEggView: UIView {
 
     private var dayEggs: [UIImageView] = []
     private var dayLabels: [UILabel] = []
+    private var circleViews: [UIView] = []
 
     // MARK: - Initializers
 
@@ -62,15 +63,38 @@ class WeeklyEggView: UIView {
             eggImageView.contentMode = .scaleAspectFit
             dayEggs.append(eggImageView)
 
-            let dayLabel = UILabel()
-            dayLabel.text = day
-            dayLabel.textColor = .secondary
-            dayLabel.textAlignment = .center
-            dayLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+            let circleView = UIView().then {
+                $0.backgroundColor = .clear
+                $0.layer.borderWidth = 1
+                $0.layer.borderColor = UIColor.secondary.cgColor
+                $0.layer.cornerRadius = 12
+                $0.isHidden = true
+            }
+            circleViews.append(circleView)
+
+            let dayLabel = UILabel().then {
+                $0.text = day
+                $0.textColor = .secondary
+                $0.textAlignment = .center
+                $0.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+            }
             dayLabels.append(dayLabel)
 
+            let labelContainer = UIView()
+            labelContainer.addSubview(circleView)
+            labelContainer.addSubview(dayLabel)
+
+            circleView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.width.height.equalTo(24)
+            }
+
+            dayLabel.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
+
             dayStack.addArrangedSubview(eggImageView)
-            dayStack.addArrangedSubview(dayLabel)
+            dayStack.addArrangedSubview(labelContainer)
 
             calendarStackView.addArrangedSubview(dayStack)
         }
@@ -103,20 +127,8 @@ class WeeklyEggView: UIView {
         let today = calendar.component(.weekday, from: Date()) - 2
 
         if today >= 0 && today < 7 {
-            updateEggImage(for: today, with: "fillEgg")
+            circleViews[today].isHidden = false
+            dayLabels[today].textColor = .secondary
         }
-    }
-    
-    // MARK: - Actions
-    @objc private func locationAuthTapped() {
-        print("장소 인증 터치")
-    }
-
-    @objc private func photoAuthTapped() {
-        print("사진 인증 터치")
-    }
-    
-    @objc private func addTodoButtonTapped() {
-        print("TO DO LIST 추가 버튼 터치")
     }
 }

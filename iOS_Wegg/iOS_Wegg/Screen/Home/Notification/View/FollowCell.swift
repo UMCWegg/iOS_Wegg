@@ -25,12 +25,12 @@ class FollowCell: UITableViewCell {
     }
     
     private let usernameLabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        $0.font = .notoSans(.regular, size: 16)
         $0.textColor = .black
     }
     
     private let realNameLabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.font = .notoSans(.regular, size: 14)
         $0.textColor = .gray
     }
     
@@ -44,7 +44,7 @@ class FollowCell: UITableViewCell {
     private let actionLabel = UILabel().then {
         $0.text = "확인"
         $0.textColor = .secondary
-        $0.font = UIFont(name: "NotoSansKR-Regular", size: 13)
+        $0.font = .notoSans(.regular, size: 13)
     }
     
     // 취소 버튼 뷰
@@ -56,7 +56,7 @@ class FollowCell: UITableViewCell {
     private let deleteLabel = UILabel().then {
         $0.text = "취소"
         $0.textColor = .secondary
-        $0.font = UIFont(name: "NotoSansKR-Regular", size: 13)
+        $0.font = .notoSans(.regular, size: 13)
     }
     
     // 팔로우 버튼 뷰
@@ -69,7 +69,7 @@ class FollowCell: UITableViewCell {
     private let followLabel = UILabel().then {
         $0.text = "팔로우"
         $0.textColor = .secondary
-        $0.font = UIFont(name: "NotoSansKR-Regular", size: 13)
+        $0.font = .notoSans(.regular, size: 13)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

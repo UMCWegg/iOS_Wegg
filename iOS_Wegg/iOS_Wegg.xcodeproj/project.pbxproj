@@ -20,8 +20,6 @@
 		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
 		0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */; };
 		0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */; };
-		0EAFD8072D4BB73000E96CB0 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 0EAFD8062D4BB73000E96CB0 /* FloatingPanel */; };
-		7B302D6A2D4CC29A00BE1850 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B302D692D4CC29A00BE1850 /* MainTabBarController.swift */; };
 		DE0020B92D3F75E6003A273F /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020B82D3F75E6003A273F /* KakaoSDK */; };
 		DE0020BB2D3F75E6003A273F /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020BA2D3F75E6003A273F /* KakaoSDKAuth */; };
 		DE0020BD2D3F75E6003A273F /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020BC2D3F75E6003A273F /* KakaoSDKCommon */; };
@@ -37,6 +35,9 @@
 		DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020DC2D420F3B003A273F /* FirebaseFirestore */; };
 		DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = DE00212C2D433D7F003A273F /* NMapsMap */; };
 		DE00217A2D439F3F003A273F /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */; };
+		DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85E2772D4623BB0055C78C /* MainTabBarController.swift */; };
+		FFC8DAFB2D50DDE30094B687 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = FFC8DAFA2D50DDE30094B687 /* FloatingPanel */; };
+		FFC8DBF42D50E3970094B687 /* HotPlaceSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,9 +51,10 @@
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
-		7B302D692D4CC29A00BE1850 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
+		DE85E2772D4623BB0055C78C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceSectionModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -75,6 +77,7 @@
 			membershipExceptions = (
 				"Extensions/UIColor+extensions.swift",
 				"Extensions/UIFont+extensions.swift",
+				"Extensions/UIViewController+extension.swift",
 				Formatters/DateFormatterUtility.swift,
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
@@ -82,8 +85,11 @@
 		FF3CC4262D4D5A7000006955 /* Exceptions for "Browse" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				PostDetail/ViewController/CommentViewController.swift,
 				PostDetail/ViewController/PostDetailViewController.swift,
+				PostDetail/Views/Cell/CommentCell.swift,
 				PostDetail/Views/Cell/EmojiCell.swift,
+				PostDetail/Views/CommentView.swift,
 				PostDetail/Views/EmojiPopupView.swift,
 				PostDetail/Views/PlusEmojiView.swift,
 				PostDetail/Views/PostDetailView.swift,
@@ -142,6 +148,11 @@
 			path = HotPlaceModel;
 			sourceTree = "<group>";
 		};
+		7BF71FD92D4DFA5E00695782 /* Home */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Home;
+			sourceTree = "<group>";
+		};
 		DE001E912D3BDF71003A273F /* Button */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Button;
@@ -180,9 +191,9 @@
 			path = SignUp;
 			sourceTree = "<group>";
 		};
-		DE85E2822D4623BB0055C78C /* Time */ = {
+		DE85E2822D4623BB0055C78C /* Schedule */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Time;
+			path = Schedule;
 			sourceTree = "<group>";
 		};
 		DEEB72322D4D211C001C3880 /* Label */ = {
@@ -205,6 +216,16 @@
 			path = EmojiModel;
 			sourceTree = "<group>";
 		};
+		FFC8E52F2D5605100094B687 /* Map */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Map;
+			sourceTree = "<group>";
+		};
+		FFC8E8992D574C990094B687 /* Map */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Map;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,7 +239,7 @@
 				0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */,
 				DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */,
 				DE0020CD2D414BD9003A273F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
-				0EAFD8072D4BB73000E96CB0 /* FloatingPanel in Frameworks */,
+				FFC8DAFB2D50DDE30094B687 /* FloatingPanel in Frameworks */,
 				0E98EB802D38E554006F25EF /* KakaoMapsSDK-SPM in Frameworks */,
 				DE0020DB2D420F0E003A273F /* FirebaseCore in Frameworks */,
 				0E98E9F52D2E336F006F25EF /* Moya in Frameworks */,
@@ -242,6 +263,7 @@
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
 				0E98E9D62D2D009D006F25EF /* Products */,
+				FFC8E7792D574BC10094B687 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -265,6 +287,8 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				FFC8E8992D574C990094B687 /* Map */,
+				7BF71FD92D4DFA5E00695782 /* Home */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE001E912D3BDF71003A273F /* Button */,
@@ -285,7 +309,7 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
+				FFC8DBF32D50E3970094B687 /* HotPlaceModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
@@ -309,14 +333,14 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
-				7B302D692D4CC29A00BE1850 /* MainTabBarController.swift */,
 				DE85E2742D4623BB0055C78C /* Browse */,
 				DE85E2762D4623BB0055C78C /* Home */,
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
-				DE85E2822D4623BB0055C78C /* Time */,
+				DE85E2822D4623BB0055C78C /* Schedule */,
 				0E98EAC62D2FB789006F25EF /* Login */,
+				DE85E2772D4623BB0055C78C /* MainTabBarController.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -363,6 +387,23 @@
 			path = NotoSans;
 			sourceTree = "<group>";
 		};
+		FFC8DBF32D50E3970094B687 /* HotPlaceModel */ = {
+			isa = PBXGroup;
+			children = (
+				FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */,
+			);
+			path = HotPlaceModel;
+			sourceTree = "<group>";
+		};
+		FFC8E7792D574BC10094B687 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
+				FFC8E52F2D5605100094B687 /* Map */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -387,17 +428,20 @@
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
 				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
+				7BF71FD92D4DFA5E00695782 /* Home */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE85E2762D4623BB0055C78C /* Home */,
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
-				DE85E2822D4623BB0055C78C /* Time */,
+				DE85E2822D4623BB0055C78C /* Schedule */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FFC8E52F2D5605100094B687 /* Map */,
+				FFC8E8992D574C990094B687 /* Map */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
@@ -419,7 +463,7 @@
 				DE0020DA2D420F0E003A273F /* FirebaseCore */,
 				DE0020DC2D420F3B003A273F /* FirebaseFirestore */,
 				DE00212C2D433D7F003A273F /* NMapsMap */,
-				0EAFD8062D4BB73000E96CB0 /* FloatingPanel */,
+				FFC8DAFA2D50DDE30094B687 /* FloatingPanel */,
 			);
 			productName = iOS_Wegg;
 			productReference = 0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */;
@@ -460,7 +504,7 @@
 				DE0020C42D3F942B003A273F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				DE0020C92D414BD9003A273F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				DE00212B2D433D7F003A273F /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
-				0EAFD8052D4BB73000E96CB0 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
+				FFC8DAF92D50DDE30094B687 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0E98E9D62D2D009D006F25EF /* Products */;
@@ -519,7 +563,8 @@
 			files = (
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
-				7B302D6A2D4CC29A00BE1850 /* MainTabBarController.swift in Sources */,
+				DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */,
+				FFC8DBF42D50E3970094B687 /* HotPlaceSectionModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,14 +835,6 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		0EAFD8052D4BB73000E96CB0 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/scenee/FloatingPanel";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.8.6;
-			};
-		};
 		DE0020B72D3F75E6003A273F /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk.git";
@@ -828,6 +865,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.20.0;
+			};
+		};
+		FFC8DAF92D50DDE30094B687 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scenee/FloatingPanel";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.6;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -862,11 +907,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0E98EB7E2D38E554006F25EF /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
 			productName = "KakaoMapsSDK-SPM";
-		};
-		0EAFD8062D4BB73000E96CB0 /* FloatingPanel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0EAFD8052D4BB73000E96CB0 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
-			productName = FloatingPanel;
 		};
 		DE0020B82D3F75E6003A273F /* KakaoSDK */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -932,6 +972,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DE00212B2D433D7F003A273F /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
 			productName = NMapsMap;
+		};
+		FFC8DAFA2D50DDE30094B687 /* FloatingPanel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFC8DAF92D50DDE30094B687 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
+			productName = FloatingPanel;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

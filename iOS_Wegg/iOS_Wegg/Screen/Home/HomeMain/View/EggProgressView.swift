@@ -28,7 +28,7 @@ class EggProgressView: UIView {
     
     private let percentageLabel = UILabel().then {
         $0.textAlignment = .center
-        $0.font = UIFont.boldSystemFont(ofSize: 18)
+        $0.font = .notoSans(.bold, size: 15)
         $0.textColor = UIColor.systemYellow
     }
     
@@ -54,8 +54,8 @@ class EggProgressView: UIView {
         layer.addSublayer(progressLayer)
         addSubview(percentageLabel)
         
-        percentageLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        percentageLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 
