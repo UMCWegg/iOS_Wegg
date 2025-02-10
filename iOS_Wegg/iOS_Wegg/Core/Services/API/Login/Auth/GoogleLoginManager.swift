@@ -34,7 +34,7 @@ final class GoogleLoginManager {
                             .store(in: &self.cancellables)
                     case .failure(let error):
                         promise(.failure(error))
-                }
+                    }
         }
     }.eraseToAnyPublisher()}
 }

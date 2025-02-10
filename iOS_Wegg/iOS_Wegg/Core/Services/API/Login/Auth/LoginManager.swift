@@ -62,10 +62,10 @@ final class LoginManager {
         case .email:
             guard let email = email, let password = password else { return }
             let request = LoginRequest(
-                type: .email,
-                accessToken: nil,
                 email: email,
-                password: password
+                password: password,
+                socialType: .email,
+                oauthID: nil
             )
             
             authService.login(with: request)

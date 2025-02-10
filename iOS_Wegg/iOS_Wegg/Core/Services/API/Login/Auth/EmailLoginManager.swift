@@ -19,10 +19,10 @@ final class EmailLoginManager {
    
     func login(email: String, password: String) {
         let request = LoginRequest(
-            type: .email,
-            accessToken: nil,
             email: email,
-            password: password
+            password: password,
+            socialType: .email,
+            oauthID: nil
         )
         
         AuthService.shared.login(with: request)
