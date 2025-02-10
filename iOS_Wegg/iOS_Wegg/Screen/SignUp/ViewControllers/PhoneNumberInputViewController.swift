@@ -31,13 +31,21 @@ class PhoneNumberInputViewController: UIViewController {
         phoneNumberInputView
             .sendVerificationButton
             .addTarget(self,
-                                                              action: #selector(nextButtonTapped),
-                                                              for: .touchUpInside)
+                       action: #selector(nextButtonTapped),
+                       for: .touchUpInside)
     }
     
     // MARK: - Actions
     
     @objc private func nextButtonTapped() {
+        let phoneNumber = "\(phoneNumberInputView.firstTextField.text ?? "")" +
+            "\(phoneNumberInputView.secondTextField.text ?? "")" +
+                "\(phoneNumberInputView.thirdTextField.text ?? "")"
+        
+        UserSignUpStorage.shared.update { data in
+            data.phoneNumber = phoneNumber
+        }
+        
         let phoneNumberVerificationVC = PhoneNumberVerificationViewController()
         navigationController?.pushViewController(phoneNumberVerificationVC, animated: true)
     }

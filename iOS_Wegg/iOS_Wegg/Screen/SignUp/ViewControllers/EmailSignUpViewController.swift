@@ -42,6 +42,14 @@ class EmailSignUpViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func signUpButtonTapped() {
+        guard let email = emailSignUpView.email,
+              let password = emailSignUpView.password else { return }
+        
+        UserSignUpStorage.shared.update { data in
+            data.email = email
+            data.password = password
+        }
+        
         let serviceAgreementVC = ServiceAgreementViewController()
         navigationController?.pushViewController(serviceAgreementVC, animated: true)
     }

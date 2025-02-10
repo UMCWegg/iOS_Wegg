@@ -49,30 +49,9 @@ class OccupationInputViewController: UIViewController {
     private func handleOccupationSelection(_ occupation: String) {
         guard let occupationType = UserOccupation(rawValue: occupation) else { return }
         
-        // 선택된 직업 처리
-        switch occupationType {
-        case .employee:
-            // 직장인 관련 처리
-            break
-        case .university:
-            // 대학생 관련 처리
-            break
-        case .elementary:
-            // 초등학생 관련 처리
-            break
-        case .secondary:
-            // 중・고등학생 관련 처리
-            break
-        case .unemployed:
-            // 무직 관련 처리
-            break
-        case .other:
-            // 기타 관련 처리
-            break
+        UserSignUpStorage.shared.update { data in
+            data.occupation = occupationType
         }
-        
-        // 다음 화면으로 이동하거나 데이터 저장
-        // moveToNextScreen()
     }
     
     @objc private func nextButtonTapped() {

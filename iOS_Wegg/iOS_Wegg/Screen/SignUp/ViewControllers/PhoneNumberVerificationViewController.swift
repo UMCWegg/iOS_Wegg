@@ -38,7 +38,6 @@ class PhoneNumberVerificationViewController: UIViewController {
                                                          for: .touchUpInside)
     }
     
-    
     // MARK: - Actions
     
     @objc private func nextButtonTapped() {

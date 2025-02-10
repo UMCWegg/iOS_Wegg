@@ -36,6 +36,12 @@ class NickNameInputViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func nextButtonTapped() {
+        guard let nickName = nickNameInputView.nickNameTextField.text else { return }
+        
+        UserSignUpStorage.shared.update { data in
+            data.nickname = nickName
+        }
+        
         let occupationInputVC = OccupationInputViewController()
         navigationController?.pushViewController(occupationInputVC, animated: true)
     }

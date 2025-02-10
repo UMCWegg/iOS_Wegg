@@ -49,24 +49,9 @@ class ReasonInputViewController: UIViewController {
     private func handlereasonSelection(_ reason: String) {
         guard let reasonType = UserReason(rawValue: reason) else { return }
         
-        switch reasonType {
-        case .formHabits:
-            
-            break
-        case .followFriends:
-            
-            break
-        case .recordStudy:
-            
-            break
-        case .shareKnowledge:
-            
-            break
-        case .other:
-            
-            break
+        UserSignUpStorage.shared.update { data in
+            data.reason = reasonType
         }
-        
     }
     
     @objc private func nextButtonTapped() {

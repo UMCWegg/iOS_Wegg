@@ -30,10 +30,9 @@ class GetAlertPermissionViewController: UIViewController {
         super.viewDidAppear(animated)
     }
     
-    // MAKR: - Functions
+    // MARK: - Functions
     
     private func setupActions() {
-        
         getAlertPermissionView.nextButton.addTarget(
             self,
             action: #selector(nextButtonTapped),
@@ -46,36 +45,17 @@ class GetAlertPermissionViewController: UIViewController {
             options: [.alert, .sound, .badge]
         ) { [weak self] granted, _ in
             DispatchQueue.main.async {
-                if granted {
-                    self?.handlePermissionGranted()
-                } else {
-                    self?.handlePermissionDenied()
+                UserSignUpStorage.shared.update { data in
+                    data.alert = granted
                 }
-                self?.navigateToNextScreen()
+                self?.nextButtonTapped()
             }
         }
     }
     
-    private func handlePermissionGranted() {
-        UserDefaults.standard.set(true, forKey: "notificationEnabled")
-        updateUserAlertStatus(enabled: true)
-    }
-    
-    private func handlePermissionDenied() {
-        UserDefaults.standard.set(false, forKey: "notificationEnabled")
-        updateUserAlertStatus(enabled: false)
-    }
-    
-    private func updateUserAlertStatus(enabled: Bool) {
-    }
-    
-    private func navigateToNextScreen() {
+    @objc private func nextButtonTapped() {
         let signUpCompleteViewController = SignUpCompleteViewController()
         navigationController?.pushViewController(signUpCompleteViewController, animated: true)
-    }
-    
-    @objc private func nextButtonTapped() {
-        requestNotificationPermission()
     }
     
 }

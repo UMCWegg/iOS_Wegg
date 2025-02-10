@@ -92,6 +92,10 @@ class ServiceAgreementViewController: UIViewController {
     }
     
     @objc private func nextButtonTapped() {
+        UserSignUpStorage.shared.update { data in
+            data.marketingAgreed = serviceAgreementView.marketingToggleButton.getChecked()
+        }
+        
         let phoneNumberInputVC = PhoneNumberInputViewController()
         navigationController?.pushViewController(phoneNumberInputVC, animated: true)
     }

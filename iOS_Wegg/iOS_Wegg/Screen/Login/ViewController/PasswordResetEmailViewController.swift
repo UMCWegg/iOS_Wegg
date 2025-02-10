@@ -32,10 +32,9 @@ class PasswordResetEmailViewController: UIViewController {
     // MARK: - Setup
     
     private func setupActions() {
-        passwordResetEmailView.sendNumberButton.addTarget(
-            self,
-            action: #selector(nextButtonTapped),
-            for: .touchUpInside)
+        passwordResetEmailView.sendNumberButton.addTarget(self,
+                                                          action: #selector(nextButtonTapped),
+                                                          for: .touchUpInside)
         
         passwordResetEmailView.backButton.addTarget(self,
                                                     action: #selector(backButtonTapped),
