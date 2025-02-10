@@ -66,14 +66,7 @@
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
-		0E98EAA62D2FB56A006F25EF /* Exceptions for "ResponseModel" folder in "iOS_Wegg" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				.gitkeep,
-			);
-			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
-		};
-		0E98EAA72D2FB56C006F25EF /* Exceptions for "Secrets" folder in "iOS_Wegg" target */ = {
+		0E98EAA62D2FB56A006F25EF /* Exceptions for "NetworkModel" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				.gitkeep,
@@ -119,11 +112,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0E0237B92D51F38000A55E45 /* Map */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Map;
-			sourceTree = "<group>";
-		};
 		0E98EA322D2F8F8F006F25EF /* Services */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Services;
@@ -137,19 +125,16 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
-		0E98EA3A2D2F9630006F25EF /* ResponseModel */ = {
+		0E98EA3A2D2F9630006F25EF /* NetworkModel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				0E98EAA62D2FB56A006F25EF /* Exceptions for "ResponseModel" folder in "iOS_Wegg" target */,
+				0E98EAA62D2FB56A006F25EF /* Exceptions for "NetworkModel" folder in "iOS_Wegg" target */,
 			);
-			path = ResponseModel;
+			path = NetworkModel;
 			sourceTree = "<group>";
 		};
 		0E98EA3C2D2F976E006F25EF /* Secrets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0E98EAA72D2FB56C006F25EF /* Exceptions for "Secrets" folder in "iOS_Wegg" target */,
-			);
 			path = Secrets;
 			sourceTree = "<group>";
 		};
@@ -164,6 +149,16 @@
 		0E98EAC62D2FB789006F25EF /* Login */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Login;
+			sourceTree = "<group>";
+		};
+		0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = HotPlaceModel;
+			sourceTree = "<group>";
+		};
+		7BF71FD92D4DFA5E00695782 /* Home */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		DE001E912D3BDF71003A273F /* Button */ = {
@@ -204,9 +199,9 @@
 			path = SignUp;
 			sourceTree = "<group>";
 		};
-		DE85E2822D4623BB0055C78C /* Time */ = {
+		DE85E2822D4623BB0055C78C /* Schedule */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Time;
+			path = Schedule;
 			sourceTree = "<group>";
 		};
 		DEEB72322D4D211C001C3880 /* Label */ = {
@@ -230,6 +225,16 @@
 		FF3CC3402D4B41FD00006955 /* EmojiModel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = EmojiModel;
+			sourceTree = "<group>";
+		};
+		FFC8E52F2D5605100094B687 /* Map */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Map;
+			sourceTree = "<group>";
+		};
+		FFC8E8992D574C990094B687 /* Map */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Map;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -270,6 +275,7 @@
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
 				0E98E9D62D2D009D006F25EF /* Products */,
+				FFC8E7792D574BC10094B687 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -293,7 +299,8 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				0E0237B92D51F38000A55E45 /* Map */,
+				FFC8E8992D574C990094B687 /* Map */,
+				7BF71FD92D4DFA5E00695782 /* Home */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE001E912D3BDF71003A273F /* Button */,
@@ -318,7 +325,7 @@
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
-				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
+				0E98EA3A2D2F9630006F25EF /* NetworkModel */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
 			);
 			path = Models;
@@ -340,12 +347,12 @@
 			children = (
 				DE85E2742D4623BB0055C78C /* Browse */,
 				DE85E2762D4623BB0055C78C /* Home */,
-				DE85E2772D4623BB0055C78C /* MainTabBarController.swift */,
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
-				DE85E2822D4623BB0055C78C /* Time */,
+				DE85E2822D4623BB0055C78C /* Schedule */,
 				0E98EAC62D2FB789006F25EF /* Login */,
+				DE85E2772D4623BB0055C78C /* MainTabBarController.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -400,6 +407,15 @@
 			path = HotPlaceModel;
 			sourceTree = "<group>";
 		};
+		FFC8E7792D574BC10094B687 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
+				FFC8E52F2D5605100094B687 /* Map */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -418,22 +434,25 @@
 				0E98EA062D2E5FDB006F25EF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0E0237B92D51F38000A55E45 /* Map */,
 				0E98EA322D2F8F8F006F25EF /* Services */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
-				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
+				0E98EA3A2D2F9630006F25EF /* NetworkModel */,
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
+				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
+				7BF71FD92D4DFA5E00695782 /* Home */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE85E2762D4623BB0055C78C /* Home */,
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
-				DE85E2822D4623BB0055C78C /* Time */,
+				DE85E2822D4623BB0055C78C /* Schedule */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FFC8E52F2D5605100094B687 /* Map */,
+				FFC8E8992D574C990094B687 /* Map */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (

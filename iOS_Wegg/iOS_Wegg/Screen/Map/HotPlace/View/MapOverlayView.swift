@@ -63,6 +63,13 @@ class MapOverlayView: UIView {
             return currentLocation
         }
         
+        if let placeDetailBackButton = placeDetailBackButton.hitTest(
+            convert(point, to: placeDetailBackButton),
+            with: event
+        ) {
+            return placeDetailBackButton
+        }
+        
         // 지도 외의 터치 이벤트는 nil을 반환
         return nil
     }
@@ -79,6 +86,10 @@ class MapOverlayView: UIView {
         gestureDelegate?.didTapPlaceSearchBar()
     }
     
+    @objc private func handlePlaceDetailBackButton() {
+        gestureDelegate?.didTapPlaceDetailBackButton()
+    }
+    
     // MARK: - Property
     
     /// `MapSearchView`에서 검색 결과 반환시 보여줄 검색바
@@ -87,8 +98,12 @@ class MapOverlayView: UIView {
         $0.isHidden = true
     }
     
+    lazy var placeDetailBackButton = createImageView(imageName: "place_back_button").then {
+        $0.isHidden = true
+        $0.image?.withRenderingMode(.alwaysTemplate)
+        $0.tintColor = .secondary
+    }
     lazy var placeSearchButton = createImageView(imageName: "map_search_icon")
-    
     private lazy var currentLocationImageButton = createImageView(
         imageName: "current_position_icon"
     )
@@ -142,10 +157,17 @@ private extension MapOverlayView {
             action: #selector(handlePlaceSearchBar)
         )
         placeSearchBar.addGestureRecognizer(placeSearchBarTapGesture)
+        
+        let placeDetailBackButtonTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handlePlaceDetailBackButton)
+        )
+        placeDetailBackButton.addGestureRecognizer(placeDetailBackButtonTapGesture)
     }
     
     func addComponents() {
         [
+            placeDetailBackButton,
             placeSearchButton,
             placeSearchBar,
             currentLocationImageButton
@@ -155,6 +177,13 @@ private extension MapOverlayView {
     }
     
     func constraints() {
+        placeDetailBackButton.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(
+                MapViewLayout.PlaceSearch.topOffset
+            )
+            make.leading.lessThanOrEqualToSuperview().offset(21)
+        }
+        
         placeSearchBar.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()

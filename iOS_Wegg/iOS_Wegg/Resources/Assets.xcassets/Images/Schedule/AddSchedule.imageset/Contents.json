@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "add.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Map.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
