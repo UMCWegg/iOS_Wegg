@@ -105,7 +105,8 @@ extension ScheduleViewController: UITableViewDelegate {
 
 extension ScheduleViewController: ScheduleViewGestureDelegate {
     func didTapAddScheduleButton() {
-        print("didTapAddScheduleButton")
+        let addScheduleVC = AddScheduleViewController()
+        navigationController?.pushViewController(addScheduleVC, animated: true)
     }
     
 }
