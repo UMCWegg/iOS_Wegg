@@ -48,7 +48,7 @@ class ScheduleView: UIView {
         $0.isUserInteractionEnabled = true
     }
     
-    private lazy var headerStackView = makeStackView(108, .horizontal)
+    private lazy var headerStackView = makeStackView(90, .horizontal)
     
     lazy var studyCardTableView = UITableView().then {
         $0.register(
@@ -140,6 +140,10 @@ private extension ScheduleView {
             headerStackView,
             studyCardTableView
         ].forEach(addSubview)
+        
+        editLabel.snp.makeConstraints { make in
+            make.width.equalTo(30)
+        }
         
         createEggLabel.snp.makeConstraints { make in
             make.width.equalTo(80)
