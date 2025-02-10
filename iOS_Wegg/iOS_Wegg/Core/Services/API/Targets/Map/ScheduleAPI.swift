@@ -9,11 +9,11 @@ import Foundation
 import Moya
 
 /// 장소 검색 API 정의
-enum ScheduleTargetType {
+enum ScheduleAPI {
     case searchPlace(request: ScheduleSearchRequest)
 }
 
-extension ScheduleTargetType: TargetType {
+extension ScheduleAPI: TargetType {
     var baseURL: URL {
         guard let url = URL(string: APIConstants.baseURL) else {
             fatalError("❌ [ScheduleTargetType] 유효하지 않은 URL: \(APIConstants.baseURL)")
@@ -61,7 +61,7 @@ extension APIManager {
         completion: @escaping (Result<ScheduleSearchResponse, APIError>) -> Void
     ) {
         self.request(
-            target: ScheduleTargetType.searchPlace(request: request),
+            target: ScheduleAPI.searchPlace(request: request),
             completion: completion
         )
     }
