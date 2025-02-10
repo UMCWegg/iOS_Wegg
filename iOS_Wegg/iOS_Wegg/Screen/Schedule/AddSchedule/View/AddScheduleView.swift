@@ -9,6 +9,8 @@ import UIKit
 import Then
 
 class AddScheduleView: UIView {
+    
+    weak var gestureDelegate: AddScheduleGestureDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,11 +89,12 @@ class AddScheduleView: UIView {
         .customGray
     )
 
-    private lazy var startTimeButton = makeButton("00:00", color: .gray1)
-    private lazy var timeRangeSymbol = makeLabel("~", .notoSans(.medium, size: 16), .gray1)
-    private lazy var finishTimeButton = makeButton("00:00", color: .gray1)
-
-    private lazy var timeRangeStackView = makeStackView(30, .horizontal)
+    private lazy var timeRangeButton = makeButton(
+        "00:00     ~    00:00",
+        color: .gray1
+    ).then {
+        $0.contentHorizontalAlignment = .right // 우측 정렬
+    }
 
     private lazy var lateAllowanceLabel = makeLabel(
         "지각 허용",
@@ -173,24 +176,52 @@ class AddScheduleView: UIView {
             $0.layer.cornerRadius = 25
         }
     }
+    
+    // MARK: - Action Handler
+    
+    @objc private func handleCalendarButton() {
+        gestureDelegate?.didTapCalendarButton()
+    }
+    
+    @objc private func handleDoneButton() {
+        gestureDelegate?.didTapDoneButton()
+    }
+    
+    @objc private func handleCancelButton() {
+        gestureDelegate?.didTapCancelButton()
+    }
+    
+    @objc private func handleChangeDateButton() {
+        gestureDelegate?.didChangeDate(Date())
+    }
 }
 
 // MARK: - Setup UI
+
 private extension AddScheduleView {
     func setupView() {
         setupStackView()
+        setupGestures()
         addComponents()
         constraints()
         constraintsDetailSettingView()
     }
     
+    func setupGestures() {
+        calenderImageButton.addTarget(
+            self,
+            action: #selector(handleCalendarButton),
+            for: .touchUpInside
+        )
+        timeRangeButton.addTarget(
+            self,
+            action: #selector(handleChangeDateButton),
+            for: .touchUpInside
+        )
+    }
+    
     func setupStackView() {
         [cancelLabel, createEggLabel, saveLabel].forEach { headerStackView.addArrangedSubview($0) }
-        [
-            startTimeButton,
-            timeRangeSymbol,
-            finishTimeButton
-        ].forEach { timeRangeStackView.addArrangedSubview($0) }
     }
     
     func addComponents() {
@@ -209,7 +240,7 @@ private extension AddScheduleView {
             calenderImageButton,
             dividedLine,
             randomVerificationLabel,
-            timeRangeStackView,
+            timeRangeButton,
             dividedLine2,
             lateAllowanceLabel,
             toggleSwitch
@@ -290,14 +321,14 @@ private extension AddScheduleView {
             make.width.equalTo(labelWidth)
         }
         
-        timeRangeStackView.snp.makeConstraints { make in
+        timeRangeButton.snp.makeConstraints { make in
             make.top.equalTo(randomVerificationLabel)
             make.trailing.equalToSuperview().offset(-sideInset)
             make.width.equalTo(170)
         }
         
         dividedLine2.snp.makeConstraints { make in
-            make.top.equalTo(timeRangeStackView.snp.bottom).offset(verticalSpacing)
+            make.top.equalTo(timeRangeButton.snp.bottom).offset(verticalSpacing)
             make.leading.trailing.equalToSuperview().inset(sideInset)
         }
         
