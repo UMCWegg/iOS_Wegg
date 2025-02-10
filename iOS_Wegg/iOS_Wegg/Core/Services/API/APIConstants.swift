@@ -11,7 +11,7 @@ import Foundation
 struct APIConstants {
     static let baseURL = "https://weggserver.store"
     
-    struct User {
-        static let signup = "/users/signup"
+    struct Map {
+        static let schedulePlaceSearchURL = "/maps/plans/search"
     }
 }
