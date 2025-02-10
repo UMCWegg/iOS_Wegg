@@ -8,12 +8,6 @@
 import UIKit
 import AVFoundation
 
-// MARK: - CameraSessionManagerDelegate
-/// 사진 촬영이 완료되었을 때 호출되는 델리게이트 프로토콜
-protocol CameraSessionManagerDelegate: AnyObject {
-    func didCapturePhoto(_ image: UIImage) // 촬영된 사진을 전달하는 메서드
-}
-
 // MARK: - CameraSessionManager
 /// 카메라 세션을 관리하는 클래스
 final class CameraSessionManager: NSObject {
