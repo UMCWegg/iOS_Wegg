@@ -30,6 +30,7 @@ class ScheduleViewController: UIViewController {
 
     lazy var scheduleView = ScheduleView().then {
         $0.studyCardTableView.delegate = self
+        $0.gestureDelegate = self
     }
 
     private func setupDataSource() {
@@ -100,4 +101,11 @@ extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 138 // 셀 높이를 138로 고정
     }
+}
+
+extension ScheduleViewController: ScheduleViewGestureDelegate {
+    func didTapAddScheduleButton() {
+        print("didTapAddScheduleButton")
+    }
+    
 }

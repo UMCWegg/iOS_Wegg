@@ -8,7 +8,13 @@
 import UIKit
 import Then
 
+protocol ScheduleViewGestureDelegate: AnyObject {
+    func didTapAddScheduleButton()
+}
+
 class ScheduleView: UIView {
+    
+    weak var gestureDelegate: ScheduleViewGestureDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,7 +44,9 @@ class ScheduleView: UIView {
     lazy var addScheduleImageButton = makeImageView(
         "AddSchedule",
         contentMode: .scaleAspectFit
-    )
+    ).then {
+        $0.isUserInteractionEnabled = true
+    }
     
     private lazy var headerStackView = makeStackView(108, .horizontal)
     
@@ -90,6 +98,12 @@ class ScheduleView: UIView {
             $0.distribution = distribution
         }
     }
+    
+    // MARK: - Handler
+    
+    @objc private func handleAddScheduleImageButton() {
+        gestureDelegate?.didTapAddScheduleButton()
+    }
 }
 
 // MARK: - Set Up Extension
@@ -97,8 +111,17 @@ class ScheduleView: UIView {
 private extension ScheduleView {
     func setupView() {
         setupStackView()
+        setupGestures()
         addComponents()
         constraints()
+    }
+    
+    func setupGestures() {
+        let addButtonTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handleAddScheduleImageButton)
+        )
+        addScheduleImageButton.addGestureRecognizer(addButtonTapGesture)
     }
     
     func setupStackView() {
