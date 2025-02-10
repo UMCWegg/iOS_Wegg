@@ -12,8 +12,11 @@ import Then
 
 // MARK: - CameraView (카메라 관련 UI를 포함하는 뷰)
 class CameraView: UIView {
+    
+    // MARK: - ProPerties
+    
     /// 카메라 미리보기 Layer층 선언
-    private let previewView = PreviewView().then {
+    lazy var previewView = PreviewView().then {
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = true
     }
@@ -31,6 +34,27 @@ class CameraView: UIView {
         $0.imageView?.contentMode = .scaleAspectFit
     }
     
+    /// 인증하기 버튼
+    let confirmButton = UIButton().then {
+        $0.setTitle("인증하기", for: .normal)
+        $0.backgroundColor = .customColor(.primary)
+        $0.setTitleColor(.customColor(.secondary), for: .normal)
+        $0.layer.cornerRadius = 15
+        $0.isHidden = true
+    }
+    
+    /// 촬영 후 표시할 이미지 컨테이너 뷰
+    private let capturedImageContainer = UIView().then {
+        $0.layer.cornerRadius = 20
+        $0.clipsToBounds = true
+        $0.isHidden = true
+    }
+    
+    /// 촬영후 사진 프로퍼티
+    private var capturedImageView: UIImageView?
+    
+    // MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
@@ -44,8 +68,10 @@ class CameraView: UIView {
     // UI 설정 메서드
     private func setupUI() {
         addSubview(previewView)
+        addSubview(capturedImageContainer)
         addSubview(logoImageView)
         addSubview(captureButton)
+        addSubview(confirmButton)
         setupConstraints()
     }
     
@@ -69,10 +95,49 @@ class CameraView: UIView {
             make.centerX.equalToSuperview()
             make.height.width.equalTo(50)
         }
+        
+        capturedImageContainer.snp.makeConstraints { make in
+            make.top.equalTo(logoImageView.snp.bottom).offset(20)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.72)
+        }
+        
+        confirmButton.snp.makeConstraints { make in
+            make.top.equalTo(previewView.snp.bottom).offset(20)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(200)
+            make.height.equalTo(50)
+        }
     }
     
     /// 카메라 미리보기 뷰 가져오기
     func getPreviewView() -> PreviewView {
         return previewView
+    }
+    
+    /// 촬영된 이미지를 표시 및 촬영전 UI 숨김처리
+    /// 촬영된 이미지를 표시하고 기존 UI 숨김 처리
+    func displayCapturedImage(_ image: UIImage) {
+        // 기존 촬영된 이미지가 있으면 제거
+        capturedImageView?.removeFromSuperview()
+        
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFill // 화면을 꽉 채우도록 설정해야 모서리 잘리는거 적용
+        imageView.layer.cornerRadius = 20
+        imageView.clipsToBounds = true
+        
+        capturedImageContainer.addSubview(imageView)
+        
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview() // 부모 뷰(capturedImageContainer)와 동일한 크기로 설정
+        }
+        
+        capturedImageView = imageView
+        
+        previewView.isHidden = true
+        captureButton.isHidden = true
+        
+        capturedImageContainer.isHidden = false
+        confirmButton.isHidden = false
     }
 }
