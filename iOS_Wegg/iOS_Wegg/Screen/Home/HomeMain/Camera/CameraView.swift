@@ -67,11 +67,10 @@ class CameraView: UIView {
     
     // UI 설정 메서드
     private func setupUI() {
-        addSubview(previewView)
-        addSubview(capturedImageContainer)
-        addSubview(logoImageView)
-        addSubview(captureButton)
-        addSubview(confirmButton)
+        [previewView,
+         capturedImageContainer,
+         logoImageView,
+         captureButton, confirmButton].forEach { addSubview($0) }
         setupConstraints()
     }
     
@@ -115,7 +114,6 @@ class CameraView: UIView {
         return previewView
     }
     
-    /// 촬영된 이미지를 표시 및 촬영전 UI 숨김처리
     /// 촬영된 이미지를 표시하고 기존 UI 숨김 처리
     func displayCapturedImage(_ image: UIImage) {
         // 기존 촬영된 이미지가 있으면 제거
