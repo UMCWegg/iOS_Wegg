@@ -13,6 +13,7 @@ struct APIConstants {
     
     struct Map {
         static let hotplacesURL = "/maps/hotplaces"
-        static let schedulePlaceSearchURL = "/maps/plans/search"
+        static let schedulePlaceURL = "/maps/plans"
+        static let schedulePlaceSearchURL = schedulePlaceURL + "/search"
     }
 }
