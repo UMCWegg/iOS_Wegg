@@ -65,14 +65,7 @@
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
-		0E98EAA62D2FB56A006F25EF /* Exceptions for "ResponseModel" folder in "iOS_Wegg" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				.gitkeep,
-			);
-			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
-		};
-		0E98EAA72D2FB56C006F25EF /* Exceptions for "Secrets" folder in "iOS_Wegg" target */ = {
+		0E98EAA62D2FB56A006F25EF /* Exceptions for "NetworkModel" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				.gitkeep,
@@ -124,19 +117,16 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
-		0E98EA3A2D2F9630006F25EF /* ResponseModel */ = {
+		0E98EA3A2D2F9630006F25EF /* NetworkModel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				0E98EAA62D2FB56A006F25EF /* Exceptions for "ResponseModel" folder in "iOS_Wegg" target */,
+				0E98EAA62D2FB56A006F25EF /* Exceptions for "NetworkModel" folder in "iOS_Wegg" target */,
 			);
-			path = ResponseModel;
+			path = NetworkModel;
 			sourceTree = "<group>";
 		};
 		0E98EA3C2D2F976E006F25EF /* Secrets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0E98EAA72D2FB56C006F25EF /* Exceptions for "Secrets" folder in "iOS_Wegg" target */,
-			);
 			path = Secrets;
 			sourceTree = "<group>";
 		};
@@ -323,7 +313,7 @@
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
-				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
+				0E98EA3A2D2F9630006F25EF /* NetworkModel */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
 			);
 			path = Models;
@@ -434,7 +424,7 @@
 			fileSystemSynchronizedGroups = (
 				0E98EA322D2F8F8F006F25EF /* Services */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
-				0E98EA3A2D2F9630006F25EF /* ResponseModel */,
+				0E98EA3A2D2F9630006F25EF /* NetworkModel */,
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
 				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
