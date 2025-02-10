@@ -9,7 +9,7 @@ import UIKit
 import Then
 
 class AddScheduleView: UIView {
-    
+
     weak var gestureDelegate: AddScheduleGestureDelegate?
 
     override init(frame: CGRect) {
