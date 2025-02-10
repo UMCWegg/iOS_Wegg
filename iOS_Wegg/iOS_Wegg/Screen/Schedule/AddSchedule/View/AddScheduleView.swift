@@ -79,6 +79,71 @@ class AddScheduleView: UIView {
         $0.layer.shadowOpacity = 0.2
     }
     
+    lazy var detailSettingLabel = makeLabel(
+        "세부 설정",
+        .notoSans(.medium, size: 15),
+        .customGray
+    )
+    
+    lazy var detailSettingCardView = UIView().then {
+        $0.backgroundColor = .white
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.secondaryLabel.cgColor
+        $0.layer.cornerRadius = 25
+    }
+    
+    lazy var dateLabel = makeLabel(
+        "날짜",
+        .notoSans(.medium, size: 16),
+        .customGray
+    )
+    
+    lazy var calenderImageButton = UIButton().then {
+        $0.setImage(UIImage(named: "calendar"), for: .normal)
+    }
+    
+    lazy var randomVerificationLabel = makeLabel(
+        "랜던 인증",
+        .notoSans(.medium, size: 16),
+        .customGray
+    )
+    
+    lazy var startTimeButton = makeButton("00:00", color: .gray1)
+    
+    lazy var timeRangeSymbol = makeLabel(
+        "~",
+        .notoSans(.medium, size: 16),
+        .gray1
+    )
+    
+    lazy var finishTimeButton = makeButton("00:00", color: .gray1)
+    
+    private lazy var timeRangeStackView = makeStackView(38, .horizontal)
+    
+    lazy var lateAllowanceLabel = makeLabel(
+        "지각 허용",
+        .notoSans(.medium, size: 16),
+        .customGray
+    )
+    
+    lazy var toggleSwitch = UISwitch().then {
+        $0.onTintColor = .primary
+    }
+    
+    lazy var dividedLine = UIView().then {
+        $0.backgroundColor = .customGray2
+        $0.snp.makeConstraints { make in
+            make.height.equalTo(1)
+        }
+    }
+    
+    lazy var dividedLine2 = UIView().then {
+        $0.backgroundColor = .customGray2
+        $0.snp.makeConstraints { make in
+            make.height.equalTo(1)
+        }
+    }
+    
     // MARK: - Utility Functions
     
     /// UILabel 생성 함수
@@ -119,18 +184,25 @@ class AddScheduleView: UIView {
         }
     }
     
+    func makeButton(
+        _ title: String = "",
+        color: UIColor = .black
+    ) -> UIButton {
+        return UIButton().then {
+            $0.setTitle(title, for: .normal)
+            $0.setTitleColor(color, for: .normal)
+            $0.titleLabel?.font = .notoSans(.medium, size: 16)
+        }
+    }
+    
 }
 
 private extension AddScheduleView {
     func setupView() {
         setupStackView()
-        setupGestures()
         addComponents()
         constraints()
-    }
-    
-    func setupGestures() {
-        
+        setupDetailSettingCardView()
     }
     
     func setupStackView() {
@@ -142,6 +214,14 @@ private extension AddScheduleView {
             headerStackView.addArrangedSubview($0)
         }
         
+        [
+            startTimeButton,
+            timeRangeSymbol,
+            finishTimeButton
+        ].forEach {
+            timeRangeStackView.addArrangedSubview($0)
+        }
+        
     }
     
     func addComponents() {
@@ -150,7 +230,9 @@ private extension AddScheduleView {
             placeSettingLabel,
             placeSearchBar,
             createPlaceImageView,
-            yellowLogoIcon
+            yellowLogoIcon,
+            detailSettingLabel,
+            detailSettingCardView
         ].forEach(addSubview)
         
         createEggLabel.snp.makeConstraints { make in
@@ -194,6 +276,81 @@ private extension AddScheduleView {
         yellowLogoIcon.snp.makeConstraints { make in
             make.center.equalTo(createPlaceImageView)
             make.width.height.equalTo(20)
+        }
+        
+        detailSettingLabel.snp.makeConstraints { make in
+            make.top.equalTo(createPlaceImageView.snp.bottom).offset(20)
+            make.leading.equalTo(placeSearchBar.snp.leading)
+            make.trailing.equalTo(placeSearchBar.snp.trailing)
+            make.width.equalTo(50)
+        }
+        
+        detailSettingCardView.snp.makeConstraints { make in
+            make.top.equalTo(detailSettingLabel.snp.bottom).offset(14)
+            make.leading.equalTo(placeSearchBar.snp.leading)
+            make.trailing.equalTo(placeSearchBar.snp.trailing)
+            make.height.equalTo(174)
+        }
+        
+    }
+    
+    func setupDetailSettingCardView() {
+        [
+            dateLabel,
+            calenderImageButton,
+            dividedLine,
+            randomVerificationLabel,
+            timeRangeStackView,
+            dividedLine2,
+            lateAllowanceLabel,
+            toggleSwitch
+        ].forEach(detailSettingCardView.addSubview)
+        
+        dateLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.leading.lessThanOrEqualToSuperview().offset(17)
+            make.width.equalTo(70)
+        }
+        
+        calenderImageButton.snp.makeConstraints { make in
+            make.top.equalTo(dateLabel.snp.top)
+            make.trailing.lessThanOrEqualToSuperview().offset(-17)
+            make.width.height.equalTo(20)
+        }
+        
+        dividedLine.snp.makeConstraints { make in
+            make.top.equalTo(dateLabel.snp.bottom).offset(14)
+            make.leading.trailing.equalToSuperview().inset(17)
+        }
+        
+        randomVerificationLabel.snp.makeConstraints { make in
+            make.top.equalTo(dividedLine.snp.bottom).offset(14)
+            make.leading.lessThanOrEqualToSuperview().offset(17)
+            make.width.equalTo(70)
+        }
+        
+        timeRangeStackView.snp.makeConstraints { make in
+            make.top.equalTo(randomVerificationLabel.snp.top)
+            make.trailing.lessThanOrEqualToSuperview().offset(-17)
+            make.width.equalTo(180)
+        }
+        
+        dividedLine2.snp.makeConstraints { make in
+            make.top.equalTo(timeRangeStackView.snp.bottom).offset(14)
+            make.leading.trailing.equalToSuperview().inset(17)
+        }
+        
+        lateAllowanceLabel.snp.makeConstraints { make in
+            make.top.equalTo(dividedLine2.snp.top).offset(14)
+            make.leading.lessThanOrEqualToSuperview().offset(17)
+            make.bottom.equalToSuperview().offset(-20)
+            make.width.equalTo(70)
+        }
+        
+        toggleSwitch.snp.makeConstraints { make in
+            make.top.equalTo(lateAllowanceLabel.snp.top)
+            make.trailing.lessThanOrEqualToSuperview().offset(-17)
+            make.bottom.equalTo(lateAllowanceLabel.snp.bottom)
         }
         
     }
