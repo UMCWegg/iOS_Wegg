@@ -42,7 +42,7 @@ class ScheduleView: UIView {
     }
     
     lazy var addScheduleImageButton = makeImageView(
-        "AddSchedule",
+        "AddScheduleIcon",
         contentMode: .scaleAspectFit
     ).then {
         $0.isUserInteractionEnabled = true

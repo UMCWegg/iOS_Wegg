@@ -45,6 +45,40 @@ class AddScheduleView: UIView {
     
     private lazy var headerStackView = makeStackView(90, .horizontal)
     
+    lazy var placeSettingLabel = makeLabel(
+        "장소 설정",
+        .notoSans(.medium, size: 15),
+        .customGray
+    )
+    
+    lazy var placeSearchBar = UISearchBar().then {
+        $0.placeholder = "지명, 도로명, 건물명으로 검색"
+        $0.barTintColor = .white
+        $0.backgroundColor = .clear
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 12
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.secondary.cgColor
+        $0.backgroundImage = UIImage()
+        // 텍스트 필드의 배경을 제거(기본 회색 색상 제거)
+        let textField = $0.searchTextField
+        textField.backgroundColor = .clear // 배경 투명화
+        textField.layer.cornerRadius = 12
+        textField.layer.masksToBounds = true
+    }
+    
+    lazy var createPlaceImageView = makeImageView(
+        "CreatePlace",
+        contentMode: .scaleAspectFit
+    )
+    
+    lazy var yellowLogoIcon = makeImageView("yellow_wegg_icon").then {
+        $0.layer.shadowColor = UIColor.secondary.cgColor
+        $0.layer.shadowOffset = CGSize(width: 0, height: 3)
+        $0.layer.shadowRadius = 2.5
+        $0.layer.shadowOpacity = 0.2
+    }
+    
     // MARK: - Utility Functions
     
     /// UILabel 생성 함수
@@ -112,7 +146,11 @@ private extension AddScheduleView {
     
     func addComponents() {
         [
-            headerStackView
+            headerStackView,
+            placeSettingLabel,
+            placeSearchBar,
+            createPlaceImageView,
+            yellowLogoIcon
         ].forEach(addSubview)
         
         createEggLabel.snp.makeConstraints { make in
@@ -133,5 +171,30 @@ private extension AddScheduleView {
             make.leading.trailing.equalToSuperview().inset(21)
             make.height.equalTo(30)
         }
+        
+        placeSettingLabel.snp.makeConstraints { make in
+            make.top.equalTo(headerStackView.snp.bottom).offset(18)
+            make.leading.lessThanOrEqualToSuperview().offset(21)
+            make.width.equalTo(80)
+        }
+        
+        placeSearchBar.snp.makeConstraints { make in
+            make.top.equalTo(placeSettingLabel.snp.bottom).offset(14)
+            make.leading.trailing.equalToSuperview().inset(21)
+            make.height.equalTo(44)
+        }
+        
+        createPlaceImageView.snp.makeConstraints { make in
+            make.top.equalTo(placeSearchBar.snp.bottom).offset(14)
+            make.leading.equalTo(placeSearchBar.snp.leading)
+            make.trailing.equalTo(placeSearchBar.snp.trailing)
+            make.height.equalTo(120)
+        }
+        
+        yellowLogoIcon.snp.makeConstraints { make in
+            make.center.equalTo(createPlaceImageView)
+            make.width.height.equalTo(20)
+        }
+        
     }
 }
