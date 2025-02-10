@@ -6,13 +6,24 @@
 //
 
 import UIKit
+import FloatingPanel
 
 class PlaceDetailViewController: UIViewController {
+    weak var mapVC: MapViewController?
     var targetSectionIndex: Int = 3 // 모델에서 원하는 인덱스 설정
     private var collectionHandler: PlaceDetailCollectionHandler?
     private let sampleSections = HotPlaceSectionModel.sampleSections
     private var detailData: HotPlaceDetailModel?
-    private lazy var placeDetailView = PlaceDetailView()
+    lazy var placeDetailView = PlaceDetailView()
+    
+    init(mapVC: MapViewController?) { // 생성자에서 의존성 주입
+        self.mapVC = mapVC
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +79,8 @@ class PlaceDetailViewController: UIViewController {
         
         // TODO: [25.02.05] UI 업데이트 작업 - 작성자: 이재원
         let info = [
+            placeDetailView.titleLabel: "스타벅스 신용산점",
+            placeDetailView.categoryLabel: "카페",
             placeDetailView.verificationCount: "인증 99+",
             placeDetailView.saveCount: "저장 34",
             placeDetailView.addressLabel: "서울특별시 강남구 강남대로101길 101",
