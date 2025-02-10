@@ -18,12 +18,12 @@ class NotiCell: UITableViewCell {
     }
 
     private let messageLabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.font = .notoSans(.regular, size: 15)
         $0.numberOfLines = 2
     }
 
     private let timeLabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.font = .notoSans(.regular, size: 13)
         $0.textColor = .gray
     }
 

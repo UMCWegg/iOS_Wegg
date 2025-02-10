@@ -22,6 +22,9 @@ protocol MapOverlayGestureDelegate: AnyObject {
     
     /// 장소 검색 바를 탭했을 때 호출.
     func didTapPlaceSearchBar()
+    
+    /// 뒤로 가기 버튼을 탭했을 때 호출
+    func didTapPlaceDetailBackButton()
 }
 
 protocol PlaceDetailViewGestureDelegate: AnyObject {

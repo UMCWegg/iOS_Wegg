@@ -28,7 +28,7 @@ class EggProgressView: UIView {
     
     private let percentageLabel = UILabel().then {
         $0.textAlignment = .center
-        $0.font = UIFont.boldSystemFont(ofSize: 18)
+        $0.font = .notoSans(.bold, size: 15)
         $0.textColor = UIColor.systemYellow
     }
     

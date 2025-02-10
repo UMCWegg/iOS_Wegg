@@ -24,6 +24,19 @@ class PlaceDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private lazy var contentView = UIView()
+    lazy var scrollView = UIScrollView()
+    
+    lazy var titleLabel = makeLabel(
+        UIFont.notoSans(.bold, size: 16), .secondary
+    )
+    
+    lazy var categoryLabel = makeLabel(
+        .notoSans(.medium, size: 14), .gray1
+    )
+    
+    private lazy var headerTitleStack = makeStackView(8, .horizontal)
+    
     // MARK: - ImageViews
     
     lazy var yellowIconImageView = makeImageView("yellow_wegg_icon")
@@ -99,6 +112,7 @@ class PlaceDetailView: UIView {
         frame: bounds,
         collectionViewLayout: PlaceDetailCollectionLayout.createCompositionalLayout()
     ).then {
+        $0.backgroundColor = .white
         $0.register(
             PlaceDetailImageCell.self,
             forCellWithReuseIdentifier: PlaceDetailImageCell.identifier
@@ -218,6 +232,8 @@ class PlaceDetailView: UIView {
 private extension PlaceDetailView {
     
     func setupView() {
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
         setupGestures()
         setupStackView()
         addComponents()
@@ -242,6 +258,7 @@ private extension PlaceDetailView {
     func setupStackView() {
         // 스택뷰와 추가할 서브뷰를 매핑한 배열 생성
         let stackViewMappings: [(UIStackView, [UIView])] = [
+            (headerTitleStack, [titleLabel, categoryLabel]),
             (styledVisitorTextStack, [yellowIconImageView, styledVisitorCountLabel]),
             (statusStack, [verificationCount, saveCount]),
             (addressStack, [addressIconImageView, addressLabel]),
@@ -257,8 +274,10 @@ private extension PlaceDetailView {
     }
     
     func addComponents() {
-        // MARK: - addSubview
+        addSubview(scrollView)
+        // MARK: - scrollView.addSubview
         [
+            headerTitleStack,
             styledVisitorTextStack,
             statusStack,
             studyImageCollectionView,
@@ -270,7 +289,7 @@ private extension PlaceDetailView {
             bottomBackgorundView,
             placeCreateButton,
             dividedLine
-        ].forEach(addSubview)
+        ].forEach(contentView.addSubview)
         
         // MARK: - 레이아웃 크기 설정
         
@@ -293,6 +312,7 @@ private extension PlaceDetailView {
         
         // 라벨 및 스택뷰 높이 설정
         let labelViews = [
+            headerTitleStack,
             styledVisitorTextStack,
             statusStack,
             favoriteStarImageView,
@@ -310,8 +330,25 @@ private extension PlaceDetailView {
     }
     
     func constraints() {
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide) // 가로 길이 맞춤
+            make.bottom.equalTo(placeCreateButton.snp.bottom).offset(20) // 스크롤 가능하도록 마지막 요소에 맞춤
+        }
+        
+        headerTitleStack.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(
+                MapViewLayout.BottomSheetHeader.topOffset
+            )
+            make.leading.lessThanOrEqualToSuperview().inset(21)
+        }
+        
         styledVisitorTextStack.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide)
+            make.top.equalTo(headerTitleStack.snp.bottom).offset(12)
             make.leading.equalToSuperview().offset(21)
             make.trailing.greaterThanOrEqualToSuperview().inset(100)
         }
@@ -348,13 +385,14 @@ private extension PlaceDetailView {
         }
         
         bottomBackgorundView.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalToSuperview()
+            make.top.equalTo(webUrlStack.snp.bottom).offset(20)
+            make.leading.trailing.equalToSuperview()
             make.height.equalTo(157)
         }
         
         placeCreateButton.snp.makeConstraints { make in
+            make.top.equalTo(dividedLine.snp.bottom).offset(35)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(73)
             make.width.equalTo(170)
             make.height.equalTo(37)
         }

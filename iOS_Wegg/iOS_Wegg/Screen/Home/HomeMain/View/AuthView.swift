@@ -19,20 +19,20 @@ final class AuthView: UIView {
     
     private let locationLabel = UILabel().then {
         $0.text = "스타벅스 미아점"
-        $0.font = .systemFont(ofSize: 12, weight: .bold)
+        $0.font = .gmarketSans(.bold, size: 12)
         $0.textColor = .black
     }
     
     private let titleLabel = UILabel().then {
         $0.text = "곧 공부할 시간이에요!"
-        $0.font = .systemFont(ofSize: 20, weight: .bold)
+        $0.font = .gmarketSans(.bold, size: 20)
         $0.textColor = .black
     }
     
     private let subtitleLabel = UILabel().then {
         $0.text = "🚨서둘러 인증을 진행해주세요"
-        $0.font = .systemFont(ofSize: 10)
-        $0.textColor = .gray
+        $0.font = .notoSans(.bold, size: 10)
+        $0.textColor = .secondary
     }
     
     private let authStackView = UIStackView().then {
@@ -144,7 +144,7 @@ private extension UIButton {
         let label = UILabel().then {
             $0.text = title
             $0.textColor = .secondary
-            $0.font = .systemFont(ofSize: 10, weight: .bold)
+            $0.font = .notoSans(.bold, size: 10)
             $0.textAlignment = .center
             $0.isUserInteractionEnabled = false
         }

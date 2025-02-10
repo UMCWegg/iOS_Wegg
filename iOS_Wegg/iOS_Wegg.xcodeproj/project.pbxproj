@@ -65,20 +65,6 @@
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
-		0E98EAA62D2FB56A006F25EF /* Exceptions for "ResponseModel" folder in "iOS_Wegg" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				.gitkeep,
-			);
-			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
-		};
-		0E98EAA72D2FB56C006F25EF /* Exceptions for "Secrets" folder in "iOS_Wegg" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				.gitkeep,
-			);
-			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
-		};
 		DE0021782D4398A7003A273F /* Exceptions for "Utilities" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -126,17 +112,11 @@
 		};
 		0E98EA3A2D2F9630006F25EF /* ResponseModel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0E98EAA62D2FB56A006F25EF /* Exceptions for "ResponseModel" folder in "iOS_Wegg" target */,
-			);
 			path = ResponseModel;
 			sourceTree = "<group>";
 		};
 		0E98EA3C2D2F976E006F25EF /* Secrets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0E98EAA72D2FB56C006F25EF /* Exceptions for "Secrets" folder in "iOS_Wegg" target */,
-			);
 			path = Secrets;
 			sourceTree = "<group>";
 		};
