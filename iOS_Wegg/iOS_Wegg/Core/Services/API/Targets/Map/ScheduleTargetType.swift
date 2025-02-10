@@ -8,30 +8,9 @@
 import Foundation
 import Moya
 
-struct SearchRequest: Encodable {
-    let keyword: String
-    let latitude: String
-    let longitude: String
-}
-
-struct SearchResponse: Decodable {
-    let isSuccess: Bool
-    let code: String
-    let message: String
-    let result: PlaceListResult
-    
-    struct PlaceListResult: Decodable {
-        let placeList: [Place]
-        
-        struct Place: Decodable {
-            let placeName: String
-        }
-    }
-}
-
 /// 장소 검색 API 정의
 enum ScheduleTargetType {
-    case searchPlace(request: SearchRequest)
+    case searchPlace(request: ScheduleSearchRequest)
 }
 
 extension ScheduleTargetType: TargetType {
@@ -78,8 +57,8 @@ extension ScheduleTargetType: TargetType {
 // 장소 검색 API 호출 함수
 extension APIManager {
     func searchPlace(
-        request: SearchRequest,
-        completion: @escaping (Result<SearchResponse, APIError>) -> Void
+        request: ScheduleSearchRequest,
+        completion: @escaping (Result<ScheduleSearchResponse, APIError>) -> Void
     ) {
         self.request(
             target: ScheduleTargetType.searchPlace(request: request),

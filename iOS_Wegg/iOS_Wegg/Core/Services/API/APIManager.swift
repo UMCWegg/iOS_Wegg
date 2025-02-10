@@ -84,7 +84,7 @@ class APIManager: APIManagerProtocol {
                     // JSON 데이터를 Decodable 타입으로 디코딩
                     let decodedResponse = try JSONDecoder().decode(T.self, from: response.data)
                     
-                    // 서버 응답에서 쿠키 저장 (필요 시 추가)
+                    // 서버 응답에서 쿠키 자동 저장
                     self.saveCookies(from: response.response)
                     // 요청 헤더에 쿠키가 포함되었는지 로그 확인
                     if let requestCookies = HTTPCookieStorage.shared.cookies {
