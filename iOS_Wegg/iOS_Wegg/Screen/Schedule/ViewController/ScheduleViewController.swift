@@ -117,6 +117,7 @@ extension ScheduleViewController: UITableViewDelegate {
 extension ScheduleViewController: ScheduleViewGestureDelegate {
     func didTapAddScheduleButton() {
         let addScheduleVC = AddScheduleViewController()
+        addScheduleVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(addScheduleVC, animated: true)
     }
     
