@@ -41,6 +41,14 @@
 		FF7980B92D5A7FED0055B370 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */; };
 		FF7980BA2D5A7FED0055B370 /* AddScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980AC2D5A7FED0055B370 /* AddScheduleView.swift */; };
 		FF7980BB2D5A7FED0055B370 /* AddScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */; };
+		FF7985682D5A86510055B370 /* ScheduleSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985602D5A86510055B370 /* ScheduleSearch.swift */; };
+		FF7985692D5A86510055B370 /* UserOccupation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985632D5A86510055B370 /* UserOccupation.swift */; };
+		FF79856A2D5A86510055B370 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79855D2D5A86510055B370 /* LoginRequest.swift */; };
+		FF79856B2D5A86510055B370 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79855E2D5A86510055B370 /* LoginResponse.swift */; };
+		FF79856C2D5A86510055B370 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985622D5A86510055B370 /* UserModel.swift */; };
+		FF79856D2D5A86510055B370 /* UserReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985642D5A86510055B370 /* UserReason.swift */; };
+		FF79856E2D5A86510055B370 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = FF7985662D5A86510055B370 /* .gitkeep */; };
+		FF7985732D5A86A40055B370 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985712D5A86A40055B370 /* HeaderView.swift */; };
 		FFC8DAFB2D50DDE30094B687 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = FFC8DAFA2D50DDE30094B687 /* FloatingPanel */; };
 		FFC8DBF42D50E3970094B687 /* HotPlaceSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */; };
 /* End PBXBuildFile section */
@@ -64,6 +72,14 @@
 		FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCardCell.swift; sourceTree = "<group>"; };
 		FF7980B22D5A7FED0055B370 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
+		FF79855D2D5A86510055B370 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		FF79855E2D5A86510055B370 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		FF7985602D5A86510055B370 /* ScheduleSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearch.swift; sourceTree = "<group>"; };
+		FF7985622D5A86510055B370 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		FF7985632D5A86510055B370 /* UserOccupation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOccupation.swift; sourceTree = "<group>"; };
+		FF7985642D5A86510055B370 /* UserReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReason.swift; sourceTree = "<group>"; };
+		FF7985662D5A86510055B370 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		FF7985712D5A86A40055B370 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceSectionModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -261,6 +277,7 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				FF7985722D5A86A40055B370 /* Home */,
 				FFC8E52F2D5605100094B687 /* Map */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
@@ -282,6 +299,7 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FF7985672D5A86510055B370 /* NetworkModel */,
 				FFC8DBF32D50E3970094B687 /* HotPlaceModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
@@ -411,6 +429,52 @@
 			path = Schedule;
 			sourceTree = "<group>";
 		};
+		FF79855F2D5A86510055B370 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				FF79855D2D5A86510055B370 /* LoginRequest.swift */,
+				FF79855E2D5A86510055B370 /* LoginResponse.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		FF7985612D5A86510055B370 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				FF7985602D5A86510055B370 /* ScheduleSearch.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		FF7985652D5A86510055B370 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				FF7985622D5A86510055B370 /* UserModel.swift */,
+				FF7985632D5A86510055B370 /* UserOccupation.swift */,
+				FF7985642D5A86510055B370 /* UserReason.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		FF7985672D5A86510055B370 /* NetworkModel */ = {
+			isa = PBXGroup;
+			children = (
+				FF79855F2D5A86510055B370 /* Login */,
+				FF7985612D5A86510055B370 /* Schedule */,
+				FF7985652D5A86510055B370 /* User */,
+				FF7985662D5A86510055B370 /* .gitkeep */,
+			);
+			path = NetworkModel;
+			sourceTree = "<group>";
+		};
+		FF7985722D5A86A40055B370 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FF7985712D5A86A40055B370 /* HeaderView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		FFC8DBF32D50E3970094B687 /* HotPlaceModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -534,6 +598,7 @@
 				0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */,
 				0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */,
 				0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */,
+				FF79856E2D5A86510055B370 /* .gitkeep in Resources */,
 				0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */,
 				0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */,
 				0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */,
@@ -573,6 +638,13 @@
 			files = (
 				FF7980B72D5A7FED0055B370 /* ScheduleCardCell.swift in Sources */,
 				FF7980B82D5A7FED0055B370 /* ScheduleView.swift in Sources */,
+				FF7985732D5A86A40055B370 /* HeaderView.swift in Sources */,
+				FF7985682D5A86510055B370 /* ScheduleSearch.swift in Sources */,
+				FF7985692D5A86510055B370 /* UserOccupation.swift in Sources */,
+				FF79856A2D5A86510055B370 /* LoginRequest.swift in Sources */,
+				FF79856B2D5A86510055B370 /* LoginResponse.swift in Sources */,
+				FF79856C2D5A86510055B370 /* UserModel.swift in Sources */,
+				FF79856D2D5A86510055B370 /* UserReason.swift in Sources */,
 				FF7980B92D5A7FED0055B370 /* ScheduleViewController.swift in Sources */,
 				FF7980BA2D5A7FED0055B370 /* AddScheduleView.swift in Sources */,
 				FF7980BB2D5A7FED0055B370 /* AddScheduleViewController.swift in Sources */,
