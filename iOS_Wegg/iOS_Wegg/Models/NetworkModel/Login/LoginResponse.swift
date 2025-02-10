@@ -5,7 +5,7 @@
 //  Created by 이건수 on 2025.01.21.
 //
 
-struct LoginResponse: Codable {
+struct LoginResponse: AuthResponse {
     let accessToken: String
     let refreshToken: String?
     let oauthID: String?
