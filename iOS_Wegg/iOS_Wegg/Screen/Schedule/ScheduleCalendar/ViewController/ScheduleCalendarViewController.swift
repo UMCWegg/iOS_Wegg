@@ -25,6 +25,7 @@ class ScheduleCalendarViewController: UIViewController {
     lazy var scheduleCalendarView = ScheduleCalendarView().then {
         $0.calendarCollectionView.dataSource = self
         $0.calendarCollectionView.delegate = self
+        $0.updateCalendar(date: calendarManager.getFormattedDate())
     }
 
     private func setupDates(for year: Int, month: Int) {

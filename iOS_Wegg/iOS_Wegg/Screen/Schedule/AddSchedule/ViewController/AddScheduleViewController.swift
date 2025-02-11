@@ -32,7 +32,11 @@ extension AddScheduleViewController: AddScheduleGestureDelegate {
     func didTapCalendarButton() {
         let scheduleCalendarVC = ScheduleCalendarViewController()
         if let sheet = scheduleCalendarVC.sheetPresentationController {
-            sheet.detents = [.medium()]
+            sheet.detents = [
+                .custom(resolver: { context in
+                // 화면 최대 높이의 66%
+                return context.maximumDetentValue * 0.64
+            })]
         }
         present(scheduleCalendarVC, animated: true)
     }

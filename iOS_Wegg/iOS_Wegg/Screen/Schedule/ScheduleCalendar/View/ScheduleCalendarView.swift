@@ -20,11 +20,27 @@ class ScheduleCalendarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var weekdayStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.distribution = .fillEqually
-        $0.spacing = 25
+    // MARK: - Property
+    
+    private lazy var previousButton = UIButton().then {
+        $0.setImage(UIImage(named: "previous"), for: .normal)
+        $0.tintColor = .secondary
     }
+    
+    private lazy var yearMonthLabel = UILabel().then {
+        $0.font = .notoSans(.medium, size: 20)
+        $0.textColor = .secondary
+        $0.textAlignment = .center
+    }
+    
+    private lazy var nextButton = UIButton().then {
+        $0.setImage(UIImage(named: "next"), for: .normal)
+        $0.tintColor = .secondary
+    }
+    
+    // previousButton + yearMonthLabel + yearMonthLabel
+    private lazy var headerStackView = makeStackView(15, .horizontal, .equalSpacing)
+    private lazy var weekdayStackView = makeStackView(25, .horizontal, .fillEqually)
     
     lazy var calendarCollectionView = UICollectionView(
         frame: .zero,
@@ -33,11 +49,17 @@ class ScheduleCalendarView: UIView {
         }
     ).then {
         $0.backgroundColor = .clear
+        $0.isScrollEnabled = false
         $0.register(
             ScheduleCalendarCell.self,
             forCellWithReuseIdentifier: ScheduleCalendarCell.identifier
         )
     }
+    
+    private lazy var doneButton = makeButton("확인")
+    private lazy var cancelButton = makeButton("취소")
+    
+    // MARK: - Function
     
     private func createCalendarLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
@@ -48,7 +70,7 @@ class ScheduleCalendarView: UIView {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(70)
+            heightDimension: .absolute(65)
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
@@ -58,10 +80,39 @@ class ScheduleCalendarView: UIView {
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(
-            top: 20, leading: 21, bottom: 25, trailing: 21
+            top: 0, leading: 21, bottom: 0, trailing: 21
         )
 
         return section
+    }
+    
+    public func updateCalendar(date: String) {
+        yearMonthLabel.text = date
+    }
+    
+    // MARK: - Utility Functions
+    
+    /// UIStackView 생성 함수
+    private func makeStackView(
+        _ spacing: CGFloat,
+        _ axis: NSLayoutConstraint.Axis,
+        _ distribution: UIStackView.Distribution = .fill
+    ) -> UIStackView {
+        return UIStackView().then {
+            $0.axis = axis
+            $0.spacing = spacing
+            $0.distribution = distribution
+        }
+    }
+    
+    private func makeButton(
+        _ title: String
+    ) -> UIButton {
+        return UIButton().then {
+            $0.setTitle(title, for: .normal)
+            $0.setTitleColor(.secondary, for: .normal)
+            $0.titleLabel?.font = .notoSans(.medium, size: 16)
+        }
     }
 }
 
@@ -73,21 +124,60 @@ private extension ScheduleCalendarView {
     }
     
     func addComponents() {
-        [weekdayStackView, calendarCollectionView].forEach(addSubview)
+        [
+            headerStackView,
+            weekdayStackView,
+            calendarCollectionView,
+            doneButton,
+            cancelButton
+        ].forEach(addSubview)
+        
+        [previousButton, yearMonthLabel, nextButton].forEach {
+            if $0 == yearMonthLabel {
+                $0.snp.makeConstraints { make in
+                    make.width.equalTo(105)
+                }
+            } else {
+                $0.snp.makeConstraints { make in
+                    make.width.equalTo(25)
+                }
+            }
+            headerStackView.addArrangedSubview($0)
+        }
+        
     }
     
     func constraints() {
+        headerStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(19)
+            make.leading.trailing.equalToSuperview().inset(93)
+            make.height.equalTo(25)
+        }
+        
         weekdayStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalTo(headerStackView.snp.bottom).offset(19)
             make.leading.trailing.equalToSuperview().inset(35)
-            make.height.equalTo(30)
+            make.height.equalTo(17)
         }
         
         calendarCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(weekdayStackView.snp.bottom).offset(35)
+            make.top.equalTo(weekdayStackView.snp.bottom).offset(19)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.height.equalTo(313)
         }
+        
+        [doneButton, cancelButton].forEach { button in
+            button.snp.makeConstraints { make in
+                if button == doneButton {
+                    make.trailing.lessThanOrEqualToSuperview().offset(-21)
+                } else {
+                    make.leading.lessThanOrEqualToSuperview().offset(21)
+                }
+                make.top.equalTo(calendarCollectionView.snp.bottom).offset(22)
+                make.width.equalTo(30)
+            }
+        }
+        
     }
     
     func setupWeekdays() {
