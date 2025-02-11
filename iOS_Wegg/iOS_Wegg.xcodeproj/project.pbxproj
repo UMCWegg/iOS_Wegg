@@ -102,6 +102,7 @@
 			membershipExceptions = (
 				"Extensions/UIColor+extensions.swift",
 				"Extensions/UIFont+extensions.swift",
+				"Extensions/UIImage+extentions.swift",
 				"Extensions/UIViewController+extension.swift",
 				Formatters/DateFormatterUtility.swift,
 			);

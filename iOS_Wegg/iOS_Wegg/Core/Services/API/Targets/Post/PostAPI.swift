@@ -32,35 +32,11 @@ extension PostAPI: TargetType {
     }
     
     var task: Task {
-        switch self {
-        case .uploadRandomPost(let request):
-            var multipartData: [MultipartFormData] = []
-            
-            // 📌 1. 이미지 데이터 추가 (postImage)
-            let imageData = MultipartFormData(
-                provider: .data(request.imageData),
-                name: "postImage",
-                fileName: "image.jpg",
-                mimeType: "image/jpeg"
-            )
-            multipartData.append(imageData)
-            
-            // 📌 2. JSON 데이터 추가 (requestDTO)
-            let jsonData = try? JSONSerialization.data(
-                withJSONObject: ["planId": request.planId],
-                options: [])
-            if let jsonData = jsonData {
-                let requestDTO = MultipartFormData(
-                    provider: .data(jsonData),
-                    name: "requestDTO",
-                    mimeType: "application/json"
-                )
-                multipartData.append(requestDTO)
+            switch self {
+            case .uploadRandomPost(let request):
+                return .uploadMultipart(request.toMultipartFormData()) // MultipartFormData로 추가
             }
-            
-            return .uploadMultipart(multipartData)
         }
-    }
     
     var headers: [String: String]? {
         return [
