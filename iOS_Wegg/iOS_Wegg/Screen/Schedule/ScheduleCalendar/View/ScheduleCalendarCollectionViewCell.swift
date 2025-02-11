@@ -33,6 +33,7 @@ class ScheduleCalendarCell: UICollectionViewCell {
     private lazy var label = UILabel().then {
         $0.textAlignment = .center
         $0.font = .notoSans(.medium, size: 16)
+        $0.textColor = .secondary
     }
     
     private lazy var fillEggImageView = UIImageView().then {
