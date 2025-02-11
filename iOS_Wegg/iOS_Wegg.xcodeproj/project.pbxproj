@@ -206,6 +206,11 @@
 			path = SignUp;
 			sourceTree = "<group>";
 		};
+		DE8D5EFC2D5BDFB20099B5BC /* ResponseModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
 		DEEB72322D4D211C001C3880 /* Label */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Label;
@@ -326,6 +331,7 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DE8D5EFC2D5BDFB20099B5BC /* ResponseModel */,
 				FF7985672D5A86510055B370 /* NetworkModel */,
 				FFC8DBF32D50E3970094B687 /* HotPlaceModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
@@ -540,6 +546,7 @@
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
+				DE8D5EFC2D5BDFB20099B5BC /* ResponseModel */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
