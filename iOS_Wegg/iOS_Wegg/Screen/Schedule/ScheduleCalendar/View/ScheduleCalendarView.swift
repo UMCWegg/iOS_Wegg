@@ -20,6 +20,12 @@ class ScheduleCalendarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private lazy var weekdayStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.distribution = .fillEqually
+        $0.spacing = 25
+    }
+    
     lazy var calendarCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewCompositionalLayout { _, _ in
@@ -63,15 +69,37 @@ private extension ScheduleCalendarView {
     func setupView() {
         addComponents()
         constraints()
+        setupWeekdays()
     }
     
     func addComponents() {
-        addSubview(calendarCollectionView)
+        [weekdayStackView, calendarCollectionView].forEach(addSubview)
     }
     
     func constraints() {
+        weekdayStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(35)
+            make.height.equalTo(30)
+        }
+        
         calendarCollectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(weekdayStackView.snp.bottom).offset(35)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    func setupWeekdays() {
+        let weekdays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
+        
+        weekdays.forEach { day in
+            let label = UILabel()
+            label.text = day
+            label.textAlignment = .center
+            label.font = .notoSans(.bold, size: 14)
+            label.textColor = .secondary
+            weekdayStackView.addArrangedSubview(label)
         }
     }
 }
