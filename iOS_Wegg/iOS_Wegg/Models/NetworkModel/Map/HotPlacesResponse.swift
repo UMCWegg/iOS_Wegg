@@ -26,6 +26,11 @@ struct HotPlacesResponse: Codable {
         let authCount: Int
         let saveCount: Int
         let distance: Double
-        let postList: [String] // 현재 postList는 비어 있으므로 String 배열로 처리
+        let postList: [Post]
+    }
+    
+    struct Post: Codable {
+        let postId: Int
+        let imageUrl: String
     }
 }
