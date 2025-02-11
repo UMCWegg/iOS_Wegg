@@ -83,21 +83,24 @@ class CameraViewController: UIViewController {
             return
         }
         
-        let planId = "1"  // 🔹 실제 사용 시 필요한 planId 값을 설정해야 함
+        let planId = 1  // 실제 사용 시 필요한 planId 값을 설정해야하므로 Get/Plan API 호출해야함
         print("📸 인증 요청 - API 호출 준비 중... (planId: \(planId))")
         
         uploadCapturedImage(image, planId: planId)
     }
 
     /// 🔹 API 호출을 실행하는 함수
-    private func uploadCapturedImage(_ image: UIImage, planId: String) {
+    private func uploadCapturedImage(_ image: UIImage, planId: Int) {
         let postService = PostService()
         
         Task {
             do {
                 let response = try await postService.uploadPost(image: image, planId: planId)
-                print("✅ 업로드 성공: postId = \(response.result.postId)")
-                print("📅 생성 시간: \(response.result.createdAt)")
+                if let postId = response.result?.postId {
+                    print("✅ 업로드 성공: postId = \(postId)")
+                } else {
+                    print("⚠️ result가 nil입니다. 서버 응답을 확인하세요.")
+                }
                 
                 DispatchQueue.main.async {
                     self.showUploadResultAlert(isSuccess: true, message: "게시물이 등록되었습니다!")

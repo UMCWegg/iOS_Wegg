@@ -15,9 +15,9 @@ import Moya
 /// 게시물 업로드 요청 모델
 struct UploadRequest {
     let imageData: Data
-    let planId: String
+    let planId: Int
 
-    init(image: UIImage, planId: String) {
+    init(image: UIImage, planId: Int) {
         // 1. 이미지 리사이징 (가로 800px)
         let resizedImage = image.resized(toWidth: 800) ?? image
         

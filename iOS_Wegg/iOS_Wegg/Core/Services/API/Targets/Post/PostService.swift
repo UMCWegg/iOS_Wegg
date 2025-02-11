@@ -12,7 +12,7 @@ class PostService {
     private let apiManager = APIManager()
 
     /// 📌 게시물 업로드 API 호출
-    func uploadPost(image: UIImage, planId: String) async throws -> UploadResponse {
+    func uploadPost(image: UIImage, planId: Int) async throws -> UploadResponse {
         let request = UploadRequest(image: image, planId: planId) // 📌 planId 추가
         return try await apiManager.request(target: PostAPI.uploadRandomPost(request: request))
     }
