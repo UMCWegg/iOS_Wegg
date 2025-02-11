@@ -37,7 +37,7 @@ extension APIEndpoint: TargetType {
         case .signUp:
             return "/users/signup"
         case .socialSignUp:
-            return "/users/oauth/signup"
+            return "/users/oauth2/signup"
         case .login:
             return "/users/login"
         case .socialLogin:
@@ -55,7 +55,7 @@ extension APIEndpoint: TargetType {
         case .verificationNum:
             return "/users/verifinum-check"
         case .idCheck:
-            return "/users/id-check?accountId={accountId}"
+            return "/users/id-check"
         }
     }
     
@@ -79,7 +79,7 @@ extension APIEndpoint: TargetType {
         case .socialLogin(let type, let token, let oauthID):
             return .requestParameters(
                 parameters: ["type": type.rawValue, "token": token, "oauth_id": oauthID],
-                encoding: JSONEncoding.default)
+                encoding: URLEncoding.queryString)
         case .signUp(let request):
             return .requestJSONEncodable(request)
         case .socialSignUp(let type, let token, let oauthID):

@@ -8,6 +8,8 @@
 import UIKit
 import Combine
 
+import Moya
+
 class SignUpCompleteViewController: UIViewController {
 
     // MARK: - Properties
@@ -41,6 +43,8 @@ class SignUpCompleteViewController: UIViewController {
         guard let signUpData = UserSignUpStorage.shared.get() else { return }
         let request = signUpData.toSignUpRequest()
         
+        print(request)
+        
         AuthService.shared.signUp(with: request)
             .receive(on: DispatchQueue.main)
             .sink { completion in
@@ -49,6 +53,9 @@ class SignUpCompleteViewController: UIViewController {
                     break
                 case .failure(let error):
                     print("Sign up failed: \(error)")
+                    if let moyaError = error as? MoyaError {
+                        print(moyaError)
+                    }
                 }
             } receiveValue: { response in
                 // 회원가입 성공 처리

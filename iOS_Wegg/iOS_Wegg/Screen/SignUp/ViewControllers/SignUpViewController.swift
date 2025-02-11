@@ -42,7 +42,7 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func googleLoginButtonTapped() {
-        GoogleLoginManager.shared.requestLogin(from: self)
+        GoogleLoginManager.shared.requestSignUp(from: self)
             .sink { completion in
                 switch completion {
                 case .finished:
@@ -55,6 +55,7 @@ class SignUpViewController: UIViewController {
                 UserSignUpStorage.shared.update { data in
                     data.socialType = .google
                     data.email = email
+                    data.oauthID = email
                 }
                 
                 // 서비스 동의 화면으로 이동
@@ -65,7 +66,7 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func kakaoLoginButtonTapped() {
-        KakaoLoginManager.shared.requestLogin()
+        KakaoLoginManager.shared.requestSignUp()
             .sink { completion in
                 switch completion {
                 case .finished:
