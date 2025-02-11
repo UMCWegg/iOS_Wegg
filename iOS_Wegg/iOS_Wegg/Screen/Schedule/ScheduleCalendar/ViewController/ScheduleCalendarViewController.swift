@@ -10,11 +10,16 @@ import UIKit
 class ScheduleCalendarViewController: UIViewController {
     private var dates: [String?] = [] // 날짜 배열 (요일 포함)
     private var selectedDates = Set<Int>() // 선택된 날짜 저장
+    private let calendarManager: CalendarManager = CalendarManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDates(for: 2025, month: 2) // 2025년 2월 날짜 계산
         view = scheduleCalendarView
+        
+        setupDates(
+            for: calendarManager.getYear(),
+            month: calendarManager.getMonth()
+        )
     }
     
     lazy var scheduleCalendarView = ScheduleCalendarView().then {
