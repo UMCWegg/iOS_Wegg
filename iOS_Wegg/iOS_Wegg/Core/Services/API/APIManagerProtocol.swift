@@ -14,9 +14,5 @@ protocol APIManagerProtocol {
     /// 제네릭을 사용하여 다양한 Decodable 응답 처리
     /// - Parameters:
     ///   - target: 요청할 API의 TargetType
-    ///   - completion: 요청 결과를 반환하는 클로저 (Result 타입으로 성공/실패 구분)
-    func request<T: Decodable>(
-        target: TargetType,
-        completion: @escaping (Result<T, APIError>) -> Void
-    )
+    func request<T: Decodable>(target: any TargetType) async throws -> T
 }
