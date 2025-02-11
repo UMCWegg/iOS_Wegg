@@ -53,16 +53,3 @@ extension ScheduleAPI: TargetType {
         return .successCodes
     }
 }
-
-// 장소 검색 API 호출 함수
-extension APIManager {
-    func searchPlace(
-        request: ScheduleSearchRequest,
-        completion: @escaping (Result<ScheduleSearchResponse, APIError>) -> Void
-    ) {
-        self.request(
-            target: ScheduleAPI.searchPlace(request: request),
-            completion: completion
-        )
-    }
-}

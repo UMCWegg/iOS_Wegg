@@ -182,11 +182,13 @@ class MapViewController:
         // 지도 경계 좌표 가져오기
         let request = mapManager.getVisibleBounds(sortBy: "distance")
         
-        apiManager.fetchHotPlaces(request: request) { result in
-            switch result {
-            case .success(let response):
+        Task {
+            do {
+                let response: HotPlacesResponse = try await apiManager.request(
+                    target: HotPlacesAPI.getHotPlaces(request: request)
+                )
                 print("✅ 성공: \(response.result.hotPlaceList)")
-            case .failure(let error):
+            } catch {
                 print("❌ 실패: \(error)")
             }
         }

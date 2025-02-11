@@ -54,15 +54,3 @@ extension HotPlacesAPI: TargetType {
         return ["Content-Type": "application/json"]
     }
 }
-
-extension APIManager {
-    func fetchHotPlaces(
-        request: HotPlaceRequest,
-        completion: @escaping (Result<HotPlacesResponse, APIError>) -> Void
-    ) {
-        self.request(
-            target: HotPlacesAPI.getHotPlaces(request: request),
-            completion: completion
-        )
-    }
-}
