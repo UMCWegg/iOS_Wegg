@@ -77,6 +77,5 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
         let cameraVC = CameraViewController()
         cameraVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(cameraVC, animated: true)
-        
     }
 }
