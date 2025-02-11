@@ -37,7 +37,7 @@ class HomeView: UIView {
     
     private let contentView = UIView()
     
-    private let authView = AuthView()
+    let authView = AuthView()
     private let toDoListView = ToDoListView()
     private let swipeView = SwipeView()
     private let timerView = TimerView()

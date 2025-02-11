@@ -36,6 +36,19 @@
 		DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = DE00212C2D433D7F003A273F /* NMapsMap */; };
 		DE00217A2D439F3F003A273F /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */; };
 		DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85E2772D4623BB0055C78C /* MainTabBarController.swift */; };
+		FF7980B72D5A7FED0055B370 /* ScheduleCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */; };
+		FF7980B82D5A7FED0055B370 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980B22D5A7FED0055B370 /* ScheduleView.swift */; };
+		FF7980B92D5A7FED0055B370 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */; };
+		FF7980BA2D5A7FED0055B370 /* AddScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980AC2D5A7FED0055B370 /* AddScheduleView.swift */; };
+		FF7980BB2D5A7FED0055B370 /* AddScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */; };
+		FF7985682D5A86510055B370 /* ScheduleSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985602D5A86510055B370 /* ScheduleSearch.swift */; };
+		FF7985692D5A86510055B370 /* UserOccupation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985632D5A86510055B370 /* UserOccupation.swift */; };
+		FF79856A2D5A86510055B370 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79855D2D5A86510055B370 /* LoginRequest.swift */; };
+		FF79856B2D5A86510055B370 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79855E2D5A86510055B370 /* LoginResponse.swift */; };
+		FF79856C2D5A86510055B370 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985622D5A86510055B370 /* UserModel.swift */; };
+		FF79856D2D5A86510055B370 /* UserReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985642D5A86510055B370 /* UserReason.swift */; };
+		FF79856E2D5A86510055B370 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = FF7985662D5A86510055B370 /* .gitkeep */; };
+		FF7985732D5A86A40055B370 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985712D5A86A40055B370 /* HeaderView.swift */; };
 		FFC8DAFB2D50DDE30094B687 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = FFC8DAFA2D50DDE30094B687 /* FloatingPanel */; };
 		FFC8DBF42D50E3970094B687 /* HotPlaceSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */; };
 /* End PBXBuildFile section */
@@ -54,18 +67,24 @@
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
 		DE85E2772D4623BB0055C78C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		FF7980AC2D5A7FED0055B370 /* AddScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleView.swift; sourceTree = "<group>"; };
+		FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleViewController.swift; sourceTree = "<group>"; };
+		FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCardCell.swift; sourceTree = "<group>"; };
+		FF7980B22D5A7FED0055B370 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
+		FF79855D2D5A86510055B370 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		FF79855E2D5A86510055B370 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		FF7985602D5A86510055B370 /* ScheduleSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearch.swift; sourceTree = "<group>"; };
+		FF7985622D5A86510055B370 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		FF7985632D5A86510055B370 /* UserOccupation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOccupation.swift; sourceTree = "<group>"; };
+		FF7985642D5A86510055B370 /* UserReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReason.swift; sourceTree = "<group>"; };
+		FF7985662D5A86510055B370 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		FF7985712D5A86A40055B370 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceSectionModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		0E98EAA52D2FB568006F25EF /* Exceptions for "Protocol" folder in "iOS_Wegg" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				.gitkeep,
-			);
-			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
-		};
-		0E98EAA62D2FB56A006F25EF /* Exceptions for "NetworkModel" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				.gitkeep,
@@ -117,14 +136,6 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
-		0E98EA3A2D2F9630006F25EF /* NetworkModel */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0E98EAA62D2FB56A006F25EF /* Exceptions for "NetworkModel" folder in "iOS_Wegg" target */,
-			);
-			path = NetworkModel;
-			sourceTree = "<group>";
-		};
 		0E98EA3C2D2F976E006F25EF /* Secrets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Secrets;
@@ -141,16 +152,6 @@
 		0E98EAC62D2FB789006F25EF /* Login */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Login;
-			sourceTree = "<group>";
-		};
-		0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = HotPlaceModel;
-			sourceTree = "<group>";
-		};
-		7BF71FD92D4DFA5E00695782 /* Home */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Home;
 			sourceTree = "<group>";
 		};
 		DE001E912D3BDF71003A273F /* Button */ = {
@@ -191,11 +192,6 @@
 			path = SignUp;
 			sourceTree = "<group>";
 		};
-		DE85E2822D4623BB0055C78C /* Schedule */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Schedule;
-			sourceTree = "<group>";
-		};
 		DEEB72322D4D211C001C3880 /* Label */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Label;
@@ -217,11 +213,6 @@
 			sourceTree = "<group>";
 		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Map;
-			sourceTree = "<group>";
-		};
-		FFC8E8992D574C990094B687 /* Map */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Map;
 			sourceTree = "<group>";
@@ -263,7 +254,6 @@
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
 				0E98E9D62D2D009D006F25EF /* Products */,
-				FFC8E7792D574BC10094B687 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -287,8 +277,8 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				FFC8E8992D574C990094B687 /* Map */,
-				7BF71FD92D4DFA5E00695782 /* Home */,
+				FF7985722D5A86A40055B370 /* Home */,
+				FFC8E52F2D5605100094B687 /* Map */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE001E912D3BDF71003A273F /* Button */,
@@ -309,11 +299,11 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FF7985672D5A86510055B370 /* NetworkModel */,
 				FFC8DBF32D50E3970094B687 /* HotPlaceModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
-				0E98EA3A2D2F9630006F25EF /* NetworkModel */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
 			);
 			path = Models;
@@ -333,14 +323,14 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				FF7980B62D5A7FED0055B370 /* Schedule */,
 				DE85E2742D4623BB0055C78C /* Browse */,
 				DE85E2762D4623BB0055C78C /* Home */,
+				DE85E2772D4623BB0055C78C /* MainTabBarController.swift */,
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
-				DE85E2822D4623BB0055C78C /* Schedule */,
 				0E98EAC62D2FB789006F25EF /* Login */,
-				DE85E2772D4623BB0055C78C /* MainTabBarController.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -387,21 +377,110 @@
 			path = NotoSans;
 			sourceTree = "<group>";
 		};
+		FF7980AD2D5A7FED0055B370 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FF7980AC2D5A7FED0055B370 /* AddScheduleView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FF7980AF2D5A7FED0055B370 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		FF7980B02D5A7FED0055B370 /* AddSchedule */ = {
+			isa = PBXGroup;
+			children = (
+				FF7980AD2D5A7FED0055B370 /* View */,
+				FF7980AF2D5A7FED0055B370 /* ViewController */,
+			);
+			path = AddSchedule;
+			sourceTree = "<group>";
+		};
+		FF7980B32D5A7FED0055B370 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */,
+				FF7980B22D5A7FED0055B370 /* ScheduleView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FF7980B52D5A7FED0055B370 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		FF7980B62D5A7FED0055B370 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				FF7980B02D5A7FED0055B370 /* AddSchedule */,
+				FF7980B32D5A7FED0055B370 /* View */,
+				FF7980B52D5A7FED0055B370 /* ViewController */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		FF79855F2D5A86510055B370 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				FF79855D2D5A86510055B370 /* LoginRequest.swift */,
+				FF79855E2D5A86510055B370 /* LoginResponse.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		FF7985612D5A86510055B370 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				FF7985602D5A86510055B370 /* ScheduleSearch.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		FF7985652D5A86510055B370 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				FF7985622D5A86510055B370 /* UserModel.swift */,
+				FF7985632D5A86510055B370 /* UserOccupation.swift */,
+				FF7985642D5A86510055B370 /* UserReason.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		FF7985672D5A86510055B370 /* NetworkModel */ = {
+			isa = PBXGroup;
+			children = (
+				FF79855F2D5A86510055B370 /* Login */,
+				FF7985612D5A86510055B370 /* Schedule */,
+				FF7985652D5A86510055B370 /* User */,
+				FF7985662D5A86510055B370 /* .gitkeep */,
+			);
+			path = NetworkModel;
+			sourceTree = "<group>";
+		};
+		FF7985722D5A86A40055B370 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FF7985712D5A86A40055B370 /* HeaderView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		FFC8DBF32D50E3970094B687 /* HotPlaceModel */ = {
 			isa = PBXGroup;
 			children = (
 				FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */,
 			);
 			path = HotPlaceModel;
-			sourceTree = "<group>";
-		};
-		FFC8E7792D574BC10094B687 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
-				FFC8E52F2D5605100094B687 /* Map */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -424,24 +503,19 @@
 			fileSystemSynchronizedGroups = (
 				0E98EA322D2F8F8F006F25EF /* Services */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
-				0E98EA3A2D2F9630006F25EF /* NetworkModel */,
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
-				0EAFD7862D49AB1600E96CB0 /* HotPlaceModel */,
-				7BF71FD92D4DFA5E00695782 /* Home */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE85E2762D4623BB0055C78C /* Home */,
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
-				DE85E2822D4623BB0055C78C /* Schedule */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 				FFC8E52F2D5605100094B687 /* Map */,
-				FFC8E8992D574C990094B687 /* Map */,
 			);
 			name = iOS_Wegg;
 			packageProductDependencies = (
@@ -524,6 +598,7 @@
 				0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */,
 				0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */,
 				0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */,
+				FF79856E2D5A86510055B370 /* .gitkeep in Resources */,
 				0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */,
 				0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */,
 				0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */,
@@ -561,6 +636,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF7980B72D5A7FED0055B370 /* ScheduleCardCell.swift in Sources */,
+				FF7980B82D5A7FED0055B370 /* ScheduleView.swift in Sources */,
+				FF7985732D5A86A40055B370 /* HeaderView.swift in Sources */,
+				FF7985682D5A86510055B370 /* ScheduleSearch.swift in Sources */,
+				FF7985692D5A86510055B370 /* UserOccupation.swift in Sources */,
+				FF79856A2D5A86510055B370 /* LoginRequest.swift in Sources */,
+				FF79856B2D5A86510055B370 /* LoginResponse.swift in Sources */,
+				FF79856C2D5A86510055B370 /* UserModel.swift in Sources */,
+				FF79856D2D5A86510055B370 /* UserReason.swift in Sources */,
+				FF7980B92D5A7FED0055B370 /* ScheduleViewController.swift in Sources */,
+				FF7980BA2D5A7FED0055B370 /* AddScheduleView.swift in Sources */,
+				FF7980BB2D5A7FED0055B370 /* AddScheduleViewController.swift in Sources */,
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
 				DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */,
@@ -585,9 +672,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6H8Y6F23HB;
+				DEVELOPMENT_TEAM = D3H79AF44W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -605,6 +693,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "UMC-7th.iOS-Wegg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -618,9 +707,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6H8Y6F23HB;
+				DEVELOPMENT_TEAM = D3H79AF44W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -638,6 +728,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "UMC-7th.iOS-Wegg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

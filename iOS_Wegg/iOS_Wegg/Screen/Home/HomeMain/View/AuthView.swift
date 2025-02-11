@@ -46,7 +46,7 @@ final class AuthView: UIView {
         $0.setupAuthButton(imageName: "locCert", title: "장소 인증하기")
     }
     
-    private let photoAuthButton = UIButton().then {
+    let photoAuthButton = UIButton().then {
         $0.setupAuthButton(imageName: "photoCert", title: "사진 인증하기")
     }
 
@@ -102,21 +102,17 @@ final class AuthView: UIView {
         }
     }
 
+    /// 사진 인증 버튼 탭 액션 설정
     private func setupActions() {
         locationAuthButton.addTarget(
             self,
             action: #selector(locationAuthTapped),
             for: .touchUpInside
         )
-        photoAuthButton.addTarget(self, action: #selector(photoAuthTapped), for: .touchUpInside)
     }
     
     @objc private func locationAuthTapped() {
         print("장소 인증 터치 ✅")
-    }
-
-    @objc private func photoAuthTapped() {
-        print("사진 인증 터치 ✅")
     }
 }
 
