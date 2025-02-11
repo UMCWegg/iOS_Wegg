@@ -34,20 +34,14 @@ class ScheduleCalendarView: UIView {
     
     private func createCalendarLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(1.0)
+            widthDimension: .absolute(50),
+            heightDimension: .absolute(55)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(
-            top: 5,
-            leading: 5,
-            bottom: 5,
-            trailing: 5
-        )
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalWidth(0.14)
+            heightDimension: .absolute(70)
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
@@ -57,10 +51,7 @@ class ScheduleCalendarView: UIView {
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(
-            top: 10,
-            leading: 10,
-            bottom: 10,
-            trailing: 10
+            top: 20, leading: 21, bottom: 25, trailing: 21
         )
 
         return section

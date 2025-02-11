@@ -10,38 +10,63 @@ import SnapKit
 
 class ScheduleCalendarCell: UICollectionViewCell {
     static let identifier = "ScheduleCalendarCell"
-    
-    private let label = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .primary
-        contentView.layer.cornerRadius = contentView.bounds.width / 2
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.brown.cgColor
-
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        
+        contentView.backgroundColor = .clear
         setupView()
+    }
+    
+    /// 셀이 재사용 될 때 이전 상태를 초기화하여 불필요한 UI 잔상 방지
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        label.text = nil
+        fillEggImageView.isHidden = true
+        emptyEggImageView.isHidden = true
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private lazy var label = UILabel().then {
+        $0.textAlignment = .center
+        $0.font = .notoSans(.medium, size: 16)
+    }
+    
+    private lazy var fillEggImageView = UIImageView().then {
+        $0.image = UIImage(named: "fillEgg")
+        $0.contentMode = .scaleAspectFit
+    }
+    
+    private lazy var emptyEggImageView = UIImageView().then {
+        $0.image = UIImage(named: "emptyEgg")
+        $0.contentMode = .scaleAspectFit
     }
 
     func configure(date: Int?, isSelected: Bool) {
         label.text = date.map { "\($0)" }
         if date == nil {
             contentView.isHidden = true
-            label.isHidden = true
+            fillEggImageView.isHidden = true
         } else {
             contentView.isHidden = false
-            contentView.backgroundColor = isSelected ? .red : .blue
+            fillEggImageView.isHidden = !isSelected
+            emptyEggImageView.isHidden = isSelected
         }
     }
     
     private func setupView() {
+        [fillEggImageView, emptyEggImageView].forEach { image in
+            contentView.addSubview(image)
+            image.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.width.equalTo(42)
+                make.height.equalTo(47)
+            }
+        }
+        
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.center.equalToSuperview()
