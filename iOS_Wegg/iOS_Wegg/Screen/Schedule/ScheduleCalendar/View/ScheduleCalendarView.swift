@@ -26,6 +26,7 @@ class ScheduleCalendarView: UIView {
             self.createCalendarLayout()
         }
     ).then {
+        $0.backgroundColor = .clear
         $0.register(
             ScheduleCalendarCell.self,
             forCellWithReuseIdentifier: ScheduleCalendarCell.identifier

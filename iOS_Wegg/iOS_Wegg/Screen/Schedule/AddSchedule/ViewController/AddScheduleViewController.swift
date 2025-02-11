@@ -30,39 +30,11 @@ class AddScheduleViewController: UIViewController {
 
 extension AddScheduleViewController: AddScheduleGestureDelegate {
     func didTapCalendarButton() {
-        let alert = UIAlertController(
-            title: "\n\n\n\n\n\n\n\n\n",
-            message: nil,
-            preferredStyle: .actionSheet
-        )
-        
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.preferredDatePickerStyle = .inline
-        datePicker.frame = CGRect(
-            x: 0, y: 0,
-            width: alert.view.bounds.width - 20,
-            height: 450
-        )
-        
-        alert.view.snp.makeConstraints { make in
-            make.height.equalTo(600)
+        let scheduleCalendarVC = ScheduleCalendarViewController()
+        if let sheet = scheduleCalendarVC.sheetPresentationController {
+            sheet.detents = [.medium()]
         }
-        alert.view.addSubview(datePicker)
-        
-        let selectAction = UIAlertAction(title: "확인", style: .default) { _ in
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd" // 요일
-            let selectedTime = formatter.string(from: datePicker.date)
-            print(selectedTime)
-        }
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        
-        alert.addAction(selectAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+        present(scheduleCalendarVC, animated: true)
     }
     
     func didTapDoneButton() {
