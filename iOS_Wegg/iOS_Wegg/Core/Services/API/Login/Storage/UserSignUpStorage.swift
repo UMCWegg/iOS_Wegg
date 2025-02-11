@@ -63,7 +63,7 @@ extension UserSignUpStorage.SignUpData {
             email: email,
             password: password,
             socialType: socialType,
-            oauthID: oauthID,
+            oauthToken: oauthID,
             name: name ?? "",
             nickname: nickname ?? "",
             phoneNumber: phoneNumber ?? "",
