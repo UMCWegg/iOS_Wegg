@@ -36,12 +36,15 @@
 		DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = DE00212C2D433D7F003A273F /* NMapsMap */; };
 		DE00217A2D439F3F003A273F /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */; };
 		DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85E2772D4623BB0055C78C /* MainTabBarController.swift */; };
+		FF2E3C932D5B1C2900A09A16 /* ScheduleSearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2E3C922D5B1C2900A09A16 /* ScheduleSearchRequest.swift */; };
+		FF2E3C952D5B1C3100A09A16 /* ScheduleSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2E3C942D5B1C3100A09A16 /* ScheduleSearchResponse.swift */; };
+		FF2E3C992D5B1CB300A09A16 /* HotPlacesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2E3C972D5B1CB300A09A16 /* HotPlacesResponse.swift */; };
+		FF2E3C9A2D5B1CB300A09A16 /* HotPlaceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2E3C962D5B1CB300A09A16 /* HotPlaceRequest.swift */; };
 		FF7980B72D5A7FED0055B370 /* ScheduleCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */; };
 		FF7980B82D5A7FED0055B370 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980B22D5A7FED0055B370 /* ScheduleView.swift */; };
 		FF7980B92D5A7FED0055B370 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */; };
 		FF7980BA2D5A7FED0055B370 /* AddScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980AC2D5A7FED0055B370 /* AddScheduleView.swift */; };
 		FF7980BB2D5A7FED0055B370 /* AddScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */; };
-		FF7985682D5A86510055B370 /* ScheduleSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985602D5A86510055B370 /* ScheduleSearch.swift */; };
 		FF7985692D5A86510055B370 /* UserOccupation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985632D5A86510055B370 /* UserOccupation.swift */; };
 		FF79856A2D5A86510055B370 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79855D2D5A86510055B370 /* LoginRequest.swift */; };
 		FF79856B2D5A86510055B370 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79855E2D5A86510055B370 /* LoginResponse.swift */; };
@@ -67,6 +70,10 @@
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
 		DE85E2772D4623BB0055C78C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		FF2E3C922D5B1C2900A09A16 /* ScheduleSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearchRequest.swift; sourceTree = "<group>"; };
+		FF2E3C942D5B1C3100A09A16 /* ScheduleSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearchResponse.swift; sourceTree = "<group>"; };
+		FF2E3C962D5B1CB300A09A16 /* HotPlaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceRequest.swift; sourceTree = "<group>"; };
+		FF2E3C972D5B1CB300A09A16 /* HotPlacesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlacesResponse.swift; sourceTree = "<group>"; };
 		FF7980AC2D5A7FED0055B370 /* AddScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleView.swift; sourceTree = "<group>"; };
 		FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleViewController.swift; sourceTree = "<group>"; };
 		FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCardCell.swift; sourceTree = "<group>"; };
@@ -74,7 +81,6 @@
 		FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		FF79855D2D5A86510055B370 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		FF79855E2D5A86510055B370 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
-		FF7985602D5A86510055B370 /* ScheduleSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearch.swift; sourceTree = "<group>"; };
 		FF7985622D5A86510055B370 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		FF7985632D5A86510055B370 /* UserOccupation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOccupation.swift; sourceTree = "<group>"; };
 		FF7985642D5A86510055B370 /* UserReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReason.swift; sourceTree = "<group>"; };
@@ -195,6 +201,11 @@
 		DEEB72322D4D211C001C3880 /* Label */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Label;
+			sourceTree = "<group>";
+		};
+		FF2E3C9B2D5B2B9100A09A16 /* Post */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Post;
 			sourceTree = "<group>";
 		};
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
@@ -377,6 +388,15 @@
 			path = NotoSans;
 			sourceTree = "<group>";
 		};
+		FF2E3C982D5B1CB300A09A16 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				FF2E3C962D5B1CB300A09A16 /* HotPlaceRequest.swift */,
+				FF2E3C972D5B1CB300A09A16 /* HotPlacesResponse.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
 		FF7980AD2D5A7FED0055B370 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,7 +461,8 @@
 		FF7985612D5A86510055B370 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
-				FF7985602D5A86510055B370 /* ScheduleSearch.swift */,
+				FF2E3C942D5B1C3100A09A16 /* ScheduleSearchResponse.swift */,
+				FF2E3C922D5B1C2900A09A16 /* ScheduleSearchRequest.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -459,6 +480,8 @@
 		FF7985672D5A86510055B370 /* NetworkModel */ = {
 			isa = PBXGroup;
 			children = (
+				FF2E3C9B2D5B2B9100A09A16 /* Post */,
+				FF2E3C982D5B1CB300A09A16 /* Map */,
 				FF79855F2D5A86510055B370 /* Login */,
 				FF7985612D5A86510055B370 /* Schedule */,
 				FF7985652D5A86510055B370 /* User */,
@@ -512,6 +535,7 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DEEB72322D4D211C001C3880 /* Label */,
+				FF2E3C9B2D5B2B9100A09A16 /* Post */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
@@ -639,14 +663,17 @@
 				FF7980B72D5A7FED0055B370 /* ScheduleCardCell.swift in Sources */,
 				FF7980B82D5A7FED0055B370 /* ScheduleView.swift in Sources */,
 				FF7985732D5A86A40055B370 /* HeaderView.swift in Sources */,
-				FF7985682D5A86510055B370 /* ScheduleSearch.swift in Sources */,
 				FF7985692D5A86510055B370 /* UserOccupation.swift in Sources */,
 				FF79856A2D5A86510055B370 /* LoginRequest.swift in Sources */,
 				FF79856B2D5A86510055B370 /* LoginResponse.swift in Sources */,
 				FF79856C2D5A86510055B370 /* UserModel.swift in Sources */,
 				FF79856D2D5A86510055B370 /* UserReason.swift in Sources */,
+				FF2E3C952D5B1C3100A09A16 /* ScheduleSearchResponse.swift in Sources */,
 				FF7980B92D5A7FED0055B370 /* ScheduleViewController.swift in Sources */,
 				FF7980BA2D5A7FED0055B370 /* AddScheduleView.swift in Sources */,
+				FF2E3C992D5B1CB300A09A16 /* HotPlacesResponse.swift in Sources */,
+				FF2E3C9A2D5B1CB300A09A16 /* HotPlaceRequest.swift in Sources */,
+				FF2E3C932D5B1C2900A09A16 /* ScheduleSearchRequest.swift in Sources */,
 				FF7980BB2D5A7FED0055B370 /* AddScheduleViewController.swift in Sources */,
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,

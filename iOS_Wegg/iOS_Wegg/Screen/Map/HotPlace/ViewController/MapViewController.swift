@@ -79,18 +79,25 @@ class MapViewController:
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        setupMap()
+        mapManager.setupMap(in: view)
         setupMapManagerGestures()
         setupOverlayView()
         setupFloatingPanel()
     }
     
-    // MARK: - Set Up
-    
-    private func setupMap() {
-        mapManager.setupMap(in: view)
-        mapManager.setupLocationManager()
+    /// 지도가 메모리에 완전히 로드된 직후 API 호출
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        mapManager.requestCurrentLocation()
+        
+        // 약간의 지연을 주고 API 호출
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.fetchHotPlacesFromVisibleBounds()
+        }
     }
+    
+    // MARK: - Set Up
     
     private func setupOverlayView() {
         overlayView.setupOverlayConstraints(in: view)
@@ -163,6 +170,28 @@ class MapViewController:
 
         // 네비게이션 스택 설정
         navigationController.setViewControllers(viewControllers, animated: false)
+    }
+    
+    private func fetchHotPlacesFromVisibleBounds() {
+        let apiManager = APIManager()
+        // 쿠키를 직접 저장
+        apiManager.setCookie(
+            value: "871F290DD58CF91959E169A08F4B706D"
+        )
+        
+        // 지도 경계 좌표 가져오기
+        let request = mapManager.getVisibleBounds(sortBy: "distance")
+        
+        Task {
+            do {
+                let response: HotPlacesResponse = try await apiManager.request(
+                    target: HotPlacesAPI.getHotPlaces(request: request)
+                )
+                print("✅ 성공: \(response.result.hotPlaceList)")
+            } catch {
+                print("❌ 실패: \(error)")
+            }
+        }
     }
 }
 

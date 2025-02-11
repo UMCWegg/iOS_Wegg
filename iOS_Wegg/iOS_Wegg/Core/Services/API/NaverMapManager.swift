@@ -45,30 +45,47 @@ class NaverMapManager:
         locationOverlay?.hidden = false
         
         view.addSubview(mapView)
+        
+        // 먼저 기존 위치 정보를 빠르게 가져와서 카메라 이동
+        if let lastLocation = locationManager?.location {
+            moveCameraToLocation(lastLocation)
+        } else {
+            // 위치 정보가 없으면 위치 요청 후 업데이트
+            requestCurrentLocation()
+        }
+        
+        setupLocationManager() // 위치 관리 초기화
     }
     
     func setupLocationManager() {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.requestWhenInUseAuthorization()
+        locationManager?.requestLocation() // 현재 위치 요청
+    }
+    
+    /// 현재 위치 업데이트
+    func requestCurrentLocation() {
+        locationManager?.startUpdatingLocation()
     }
     
     /// 지도 중심을 특정 위치로 업데이트
     ///
     /// - Parameters:
     ///   - location: 업데이트할 `CLLocation` 객체
-    func updateLocation(_ location: CLLocation) {
+    func moveCameraToLocation(_ location: CLLocation) {
         guard let mapView = mapView else { return }
-        let cameraUpdate = NMFCameraUpdate(
-            scrollTo: NMGLatLng(
-                lat: location.coordinate.latitude,
-                lng: location.coordinate.longitude
-            ))
-        mapView.moveCamera(cameraUpdate)
-        locationOverlay?.location = NMGLatLng(
+        
+        let currentPosition = NMGLatLng(
             lat: location.coordinate.latitude,
             lng: location.coordinate.longitude
         )
+        
+        let cameraUpdate = NMFCameraUpdate(scrollTo: currentPosition)
+        mapView.moveCamera(cameraUpdate)
+        
+        locationOverlay?.location = currentPosition
     }
     
     /// 탭 제스처 핸들러 설정
@@ -106,11 +123,6 @@ class NaverMapManager:
         mapView?.isIndoorMapEnabled = isEnabled
     }
     
-    /// 현재 위치 업데이트
-    func requestCurrentLocation() {
-        locationManager?.requestLocation()
-    }
-    
     /// Wegg 아이콘 마커 생성
     ///
     /// - Parameters:
@@ -128,6 +140,28 @@ class NaverMapManager:
         marker.width = 28
         marker.height = 40
         marker.mapView = mapView // 마커 지도에 추가
+    }
+    
+    /// 지도의 카메라 기준으로 경계값 가져옴
+    func getVisibleBounds(
+        sortBy: String?
+    ) -> HotPlaceRequest {
+        guard let mapView = mapView else {
+            fatalError("getVisibleBounds: 지도 로드 실패")
+        }
+        let bounds = mapView.contentBounds
+        let southWest = bounds.southWest // 남서쪽 좌표
+        let northEast = bounds.northEast // 북동쪽 좌표
+        print("southWest: \(southWest)")
+        print("northEast: \(northEast)")
+        
+        return HotPlaceRequest(
+            minX: southWest.lng,
+            maxX: northEast.lng,
+            minY: southWest.lat,
+            maxY: northEast.lat,
+            sortBy: sortBy ?? "distance"
+        )
     }
 }
 
@@ -166,9 +200,12 @@ extension NaverMapManager:
     // MARK: - CLLocationManagerDelegate
     
     // CLLocationManager에서 수집된 위치 정보를 처리하는 메서드
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(
+        _ manager: CLLocationManager,
+        didUpdateLocations locations: [CLLocation]
+    ) {
         guard let location = locations.first else { return }
-        updateLocation(location)
+        moveCameraToLocation(location)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

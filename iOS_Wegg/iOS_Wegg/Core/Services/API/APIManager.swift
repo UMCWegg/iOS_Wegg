@@ -69,39 +69,43 @@ class APIManager: APIManagerProtocol {
     /// - Parameters:
     ///   - target: 요청할 API의 TargetType
     ///   - completion: 요청 결과를 반환하는 클로저 (Result 타입)
-    func request<T: Decodable>(
-        target: any TargetType,
-        completion: @escaping (Result<T, APIError>) -> Void
-    ) {
-        // MoyaProvider를 통해 요청 실행
-        provider.request(MultiTarget(target)) { result in
-            switch result {
-            case .success(let response):
-                // 응답 코드 디버깅용 출력
-                print("🔍 [APIManager] 응답 코드: \(response.statusCode)")
-
-                do {
-                    // JSON 데이터를 Decodable 타입으로 디코딩
-                    let decodedResponse = try JSONDecoder().decode(T.self, from: response.data)
+    func request<T: Decodable>(target: any TargetType) async throws -> T {
+        return try await withCheckedThrowingContinuation { continuation in
+            provider.request(MultiTarget(target)) { result in
+                switch result {
+                case .success(let response):
+                    print("🔍 [APIManager] 응답 코드: \(response.statusCode)")
                     
-                    // 서버 응답에서 쿠키 자동 저장
-                    self.saveCookies(from: response.response)
-                    // 요청 헤더에 쿠키가 포함되었는지 로그 확인
-                    if let requestCookies = HTTPCookieStorage.shared.cookies {
-                        print("🍪 [APIManager] 요청에 포함된 쿠키: \(requestCookies)")
+                    do {
+                        // JSON 데이터를 Decodable 타입으로 디코딩
+                        let decodedResponse = try JSONDecoder().decode(
+                            T.self, from: response.data
+                        )
+                        
+                        // 서버 응답에서 쿠키 자동 저장
+                        self.saveCookies(from: response.response)
+                        
+                        // 요청 헤더에 쿠키가 포함되었는지 로그 확인
+                        if let requestCookies = HTTPCookieStorage.shared.cookies {
+                            print("🍪 [APIManager] 요청에 포함된 쿠키: \(requestCookies)")
+                        }
+                        
+                        continuation.resume(returning: decodedResponse)
+                    } catch {
+                        print("❌ [APIManager] 디코딩 실패: \(error)")
+                        continuation.resume(throwing: APIError.decodingError)
                     }
                     
-                    completion(.success(decodedResponse))
-                } catch {
-                    completion(.failure(.decodingError))
+                case .failure(let error):
+                    if let response = error.response {
+                        print("❌ [APIManager] 요청 실패 - 응답 코드: \(response.statusCode)")
+                    } else {
+                        print("❌ [APIManager] 네트워크 연결 오류: \(error.localizedDescription)")
+                    }
+                    continuation.resume(
+                        throwing: APIError.networkError(error.localizedDescription)
+                    )
                 }
-            case .failure(let error):
-                if let response = error.response {
-                    print("❌ [APIManager] 요청 실패 - 응답 코드: \(response.statusCode)")
-                } else {
-                    print("❌ [APIManager] 네트워크 연결 오류: \(error.localizedDescription)")
-                }
-                completion(.failure(.networkError(error.localizedDescription)))
             }
         }
     }
