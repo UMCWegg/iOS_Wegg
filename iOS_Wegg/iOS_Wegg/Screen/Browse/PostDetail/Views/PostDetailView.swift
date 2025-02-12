@@ -199,11 +199,11 @@ class PostDetailView: UIView {
         profileImageView.image = UIImage(named: detail.profileImage)
         
         // 닉네임 설정
-        nicknameLabel.text = detail.nickName
+        nicknameLabel.text = detail.nickname
         
-        // 게시물 이미지 설정 (첫 번째 이미지만 표시, 없으면 placeholder 사용)
-        postImageView.image = UIImage(named: detail.postImages.first ?? "placeholder")
-        
+        // 게시물 이미지 설정
+        postImageView.image = UIImage(
+            named: detail.postImages.isEmpty ? "placeholder" : detail.postImages)
         // 게시 시간 레이블 설정 (formattedDate 메서드로 날짜 형식 변환)
         postTimeLabel.text = "게시시간:  \(formattedDate(detail.postTime))"
         

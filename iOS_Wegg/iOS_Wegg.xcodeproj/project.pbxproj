@@ -227,6 +227,11 @@
 			path = EmojiModel;
 			sourceTree = "<group>";
 		};
+		FF4BFFAE2D5CBB7200457861 /* Browse */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Browse;
+			sourceTree = "<group>";
+		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Map;
@@ -495,6 +500,7 @@
 		FF7985672D5A86510055B370 /* NetworkModel */ = {
 			isa = PBXGroup;
 			children = (
+				FF4BFFAE2D5CBB7200457861 /* Browse */,
 				FF2E3C9B2D5B2B9100A09A16 /* Post */,
 				0E46AD642D5B25D800529B35 /* Map */,
 				FF79855F2D5A86510055B370 /* Login */,
@@ -554,6 +560,7 @@
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FF4BFFAE2D5CBB7200457861 /* Browse */,
 				FFC8E52F2D5605100094B687 /* Map */,
 			);
 			name = iOS_Wegg;

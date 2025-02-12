@@ -20,4 +20,8 @@ struct APIConstants {
     struct Post {
         static let uploadRandomPost = "/posts"
     }
+    
+    struct Browse {
+        static let fetchBrowsePosts = "/posts/view"
+    }
 }

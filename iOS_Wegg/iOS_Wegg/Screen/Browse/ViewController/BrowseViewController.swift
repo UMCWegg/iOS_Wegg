@@ -14,11 +14,19 @@ class BrowseViewController: UIViewController {
     
     /// 둘러보기 커스텀 뷰
     private let browseView = BrowseView()
+    private let browseService = BrowseService()
     
-    /// Mock 데이터를 담을 배열
-    private var browseItems: [BrowseItem] = []
+    /// API에서 받아온 게시물 데이터
+    private var browsePosts: [[BrowsePost]] = []
     
-    /// 리프레쉬 버튼 생성
+    /*/// Mock 데이터를 담을 배열
+     private var browseItems: [BrowseItem] = []
+     */
+    
+    /// API 중복 요청 방지 변수
+    private var isFetching = false
+    
+    /// 리프레쉬 버튼
     private lazy var refreshControl = UIRefreshControl().then {
         $0.addTarget(
             self,
@@ -35,7 +43,7 @@ class BrowseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        fetchMockData()
+        fetchBrowsePosts() // BrowseVC 탭 최초 API 호출
         setupRefreshControl()
     }
     
@@ -52,36 +60,68 @@ class BrowseViewController: UIViewController {
     }
     
     /// 리프레시 컨트롤 설정 (UICollectionView에 추가)
-        private func setupRefreshControl() {
-            browseView.browseCollectionView.refreshControl = refreshControl
-        }
+    private func setupRefreshControl() {
+        browseView.browseCollectionView.refreshControl = refreshControl
+    }
     
     /// 1.0초 동안 리프레시 버튼 실행 후 데이터 리로드
-       @objc private func pullRefresh() {
-           DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-               self.fetchMockData()  // 새 데이터 로드
-               self.refreshControl.endRefreshing()
-           }
-       }
+    @objc private func pullRefresh() {
+        fetchBrowsePosts() // API 호출
+    }
     
-    // MARK: - Data Methods
+    // MARK: - Data Methods, API Methods
     
-    /// Mock데이터 호출하는 메서드
-    private func fetchMockData() {
-        browseItems = BrowseItem.mockData()
-        browseView.browseCollectionView.reloadData()
+    /*/// Mock데이터 호출하는 메서드
+     private func fetchMockData() {
+     browseItems = BrowseItem.mockData()
+     browseView.browseCollectionView.reloadData()
+     }
+     */
+    
+    /// API 호출하여 최신 게시물 가져오기
+    private func fetchBrowsePosts() {
+        guard !isFetching else { return } // 중복 요청 방지
+        isFetching = true
+        
+        Task {
+            do {
+                let posts = try await browseService.fetchBrowsePosts(page: 0, size: 20)
+                DispatchQueue.main.async {
+                    self.browsePosts = posts // API에서 받아온 데이터 저장
+                    self.browseView.browseCollectionView.reloadData() // 컬렉션 뷰 갱신
+                    self.refreshControl.endRefreshing() // 리프레시 종료
+                    self.isFetching = false // API 중복 요청 방지 위해 토글
+                }
+            } catch {
+                print("API 호출 실패: \(error)")
+                DispatchQueue.main.async {
+                    self.refreshControl.endRefreshing()
+                    self.isFetching = false
+                }
+            }
+        }
     }
 }
 
 // MARK: - Extensions
 
-/// UICollectionViewDataSource: 콜렉션 뷰의 데이터 개수와 내용을 담는 확장자
+/*
+ ex) result [[BrowsePost]] 2차원 배열임 -> result[0] = 내가 팔로우한 사람 게시물, result[1] = 내가 팔로우하지 않은 사람
+ ✔ numberOfSections(in:) → 섹션 마다 개수를 browsePosts.count로 반환 (2개, 팔로우 O/X)
+ ✔ numberOfItemsInSection → 각 섹션별 게시물 개수를 반환 (browsePosts[section].count)
+ ✔ cellForItemAt → 2차원 배열(browsePosts[indexPath.section][indexPath.row])을 처리하도록 변경
+ */
+/// UICollectionViewDataSource: 섹션마다 데이터 소스를 분리하여 처리
 extension BrowseViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return browsePosts.count // ✅ 섹션 개수는 팔로우 O / 팔로우 X
+    }
+    
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return browseItems.count // 배열의 데이터 개수를 반환
+        return browsePosts[section].count // ✅ 각 섹션별 게시물 개수
     }
     
     func collectionView(
@@ -92,30 +132,29 @@ extension BrowseViewController: UICollectionViewDataSource {
             withReuseIdentifier: "BrowseCell",
             for: indexPath
         ) as? BrowseCell else {
-            fatalError("Unable to dequeue BrowseCell") // 디버그용 오류 로그
+            fatalError("Unable to dequeue BrowseCell")
         }
         
-        let item = browseItems[indexPath.row]
-        cell.configure(with: item) // 데이터 설정
+        let item = browsePosts[indexPath.section][indexPath.row] // ✅ 2차원 배열 처리
+        cell.configure(with: item)
         return cell
     }
 }
-
 /// UICollectionViewDelegate: 사용자 반응 처리(아이템 클릭시 처리)하기 위한 프로토콜
 extension BrowseViewController: UICollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        // 선택된 BrowseItem 가져오기
-        let selectedItems = browseItems[indexPath.row]
-        print(selectedItems)
+        // ✅ 2차원 배열에서 올바른 `BrowsePost` 가져오기
+        let selectedPost = browsePosts[indexPath.section][indexPath.row]
         
-        // 선택된 아이템 셀을 MockData 메서드를 활용해 Model에 전달
-        let detail = PostDetailModel.mockData(for: selectedItems)
+        // ✅ BrowsePost → PostDetailModel 변환
+        let detailModel = PostDetailModel(from: selectedPost)
         
-        // 네비게이션 방식으로 게시물 상세 페이지 표시, 의존성 주입
-        let detailVC = PostDetailViewController(postDetailModel: detail)
+        // ✅ PostDetailViewController에 올바른 데이터 전달
+        let detailVC = PostDetailViewController(postDetailModel: detailModel)
+        
         // 탭바 숨겨서 컨트롤러 push하기
         detailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailVC, animated: true)
