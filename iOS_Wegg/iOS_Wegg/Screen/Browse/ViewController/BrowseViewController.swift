@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Then
 
 class BrowseViewController: UIViewController {
     
@@ -17,6 +18,14 @@ class BrowseViewController: UIViewController {
     /// Mock 데이터를 담을 배열
     private var browseItems: [BrowseItem] = []
     
+    /// 리프레쉬 버튼 생성
+    private lazy var refreshControl = UIRefreshControl().then {
+        $0.addTarget(
+            self,
+            action: #selector(pullRefresh),
+            for: .valueChanged)
+    }
+    
     // MARK: - LifeCycle
     
     override func loadView() {
@@ -27,6 +36,7 @@ class BrowseViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         fetchMockData()
+        setupRefreshControl()
     }
     
     // MARK: - Methods
@@ -40,6 +50,19 @@ class BrowseViewController: UIViewController {
         browseView.browseCollectionView.dataSource = self
         browseView.browseCollectionView.delegate = self
     }
+    
+    /// 리프레시 컨트롤 설정 (UICollectionView에 추가)
+        private func setupRefreshControl() {
+            browseView.browseCollectionView.refreshControl = refreshControl
+        }
+    
+    /// 1.0초 동안 리프레시 버튼 실행 후 데이터 리로드
+       @objc private func pullRefresh() {
+           DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+               self.fetchMockData()  // 새 데이터 로드
+               self.refreshControl.endRefreshing()
+           }
+       }
     
     // MARK: - Data Methods
     

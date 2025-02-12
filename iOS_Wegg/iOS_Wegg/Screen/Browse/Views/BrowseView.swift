@@ -35,7 +35,7 @@ class BrowseView: UIView {
     
     /// 검색바 헤더 뷰 추가
     public lazy var searchView: SearchView = SearchView()
-    
+
     // MARK: - Methods
     
     /// UI 구성 요소 추가
