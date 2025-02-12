@@ -96,6 +96,8 @@ extension ScheduleCalendarViewController: UICollectionViewDelegate {
 }
 
 extension ScheduleCalendarViewController: ScheduleCalendarViewDelegate {
+    
+    /// 이전 달 버튼이 눌렸을 때 호출
     func didTapPrevMonthButton() {
         selectedDates.removeAll()
         calendarManager.goToPreviousMonth()
@@ -105,11 +107,12 @@ extension ScheduleCalendarViewController: ScheduleCalendarViewDelegate {
         )
         DispatchQueue.main.async { [weak self] in
             guard let date = self?.calendarManager.getFormattedDate() else { return }
-            self?.scheduleCalendarView.updateCalendar(date: date)
+            self?.scheduleCalendarView.updateCalendar(date: date) // 연/월 라벨 업데이트
             self?.scheduleCalendarView.calendarCollectionView.reloadData()
         }
     }
     
+    /// 다음 달 버튼이 눌렸을 때 호출
     func didTapNextMonthButton() {
         selectedDates.removeAll()
         calendarManager.goToNextMonth()
@@ -119,43 +122,47 @@ extension ScheduleCalendarViewController: ScheduleCalendarViewDelegate {
         )
         DispatchQueue.main.async { [weak self] in
             guard let date = self?.calendarManager.getFormattedDate() else { return }
-            self?.scheduleCalendarView.updateCalendar(date: date)
+            self?.scheduleCalendarView.updateCalendar(date: date) // 연/월 라벨 업데이트
             self?.scheduleCalendarView.calendarCollectionView.reloadData()
         }
     }
     
+    /// 취소 버튼이 눌렸을 때 호출
     func didTapCancelButton() {
         selectedDates.removeAll()
         dismiss(animated: true)
     }
     
+    /// 확인 버튼이 눌렸을 때 호출
     func didTapConfirmButton() {
-        // 23, 34, 30 과 같은 형태로 문자열 변환
+        // 선택된 날짜들을 콤마(", ")로 구분된 문자열로 변환
         let translateSelectedDate = selectedDates.isEmpty ? ""
             : selectedDates.map { "\($0)" }.joined(separator: ", ")
-        let confirmAction = UIAlertAction(title: "확인", style: .default)
-        let alertVC = UIAlertController(
-            title: "날짜를 선택해 주세요!",
-            message: nil,
-            preferredStyle: .alert
-        )
-        alertVC.addAction(confirmAction)
         
-        // 날짜 선택하지 않았다면 alert 실행
+        // 날짜를 선택하지 않았다면 경고(Alert) 메시지 표시
         if selectedDates.isEmpty {
+            let confirmAction = UIAlertAction(title: "확인", style: .default)
+            let alertVC = UIAlertController(
+                title: "날짜를 선택해 주세요!",
+                message: nil,
+                preferredStyle: .alert
+            )
+            alertVC.addAction(confirmAction)
             present(alertVC, animated: true)
         } else {
+            // 부모 뷰 컨트롤러 (`AddScheduleViewController`)에 선택한 날짜 전달
             guard let parentVC = parentVC else {
                 print("Error: parentVC is nil")
                 return
             }
             DispatchQueue.main.async {
                 parentVC.addScheduleView.updateDateLabel(
-                    isHidden: false,
-                    date: translateSelectedDate
+                    isHidden: false, // 날짜가 선택되었으므로 라벨 보이게 설정
+                    date: translateSelectedDate // 선택한 날짜 전달
                 )
             }
-            dismiss(animated: true)
+            
+            dismiss(animated: true) // 바텀 시트 닫기
         }
     }
     
