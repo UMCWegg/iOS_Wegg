@@ -83,7 +83,7 @@ class BrowseCell: UICollectionViewCell {
         nickNameLabel.text = item.nickname // ✅ 속성명 `nickname` 확인
         
         // 프로필 이미지 설정 (URL이므로 다운로드 필요)
-        if let url = URL(string: item.profileImageUrl) {
+        if let url = URL(string: item.profileImageUrl ?? "") {
             userProfile.loadImage(from: url) // ✅ 네트워크 이미지 로드 필요
         }
 
