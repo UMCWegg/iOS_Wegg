@@ -31,6 +31,7 @@ class AddScheduleViewController: UIViewController {
 extension AddScheduleViewController: AddScheduleGestureDelegate {
     func didTapCalendarButton() {
         let scheduleCalendarVC = ScheduleCalendarViewController()
+        scheduleCalendarVC.parentVC = self
         if let sheet = scheduleCalendarVC.sheetPresentationController {
             sheet.detents = [
                 .custom(resolver: { context in

@@ -8,6 +8,9 @@
 import UIKit
 
 class ScheduleCalendarViewController: UIViewController {
+    
+    weak var parentVC: AddScheduleViewController? // 부모 뷰 컨트롤러 저장
+    
     private var dates: [String?] = [] // 날짜 배열 (요일 포함)
     private var selectedDates = Set<Int>() // 선택된 날짜 저장
     private let calendarManager: CalendarManager = CalendarManager()
@@ -94,19 +97,66 @@ extension ScheduleCalendarViewController: UICollectionViewDelegate {
 
 extension ScheduleCalendarViewController: ScheduleCalendarViewDelegate {
     func didTapPrevMonthButton() {
-        print("didTapPrevMonthButton")
+        selectedDates.removeAll()
+        calendarManager.goToPreviousMonth()
+        setupDates(
+            for: calendarManager.getYear(),
+            month: calendarManager.getMonth()
+        )
+        DispatchQueue.main.async { [weak self] in
+            guard let date = self?.calendarManager.getFormattedDate() else { return }
+            self?.scheduleCalendarView.updateCalendar(date: date)
+            self?.scheduleCalendarView.calendarCollectionView.reloadData()
+        }
     }
     
     func didTapNextMonthButton() {
-        print("didTapNextMonthButton")
+        selectedDates.removeAll()
+        calendarManager.goToNextMonth()
+        setupDates(
+            for: calendarManager.getYear(),
+            month: calendarManager.getMonth()
+        )
+        DispatchQueue.main.async { [weak self] in
+            guard let date = self?.calendarManager.getFormattedDate() else { return }
+            self?.scheduleCalendarView.updateCalendar(date: date)
+            self?.scheduleCalendarView.calendarCollectionView.reloadData()
+        }
     }
     
     func didTapCancelButton() {
-        print("didTapCancelButton")
+        selectedDates.removeAll()
+        dismiss(animated: true)
     }
     
     func didTapConfirmButton() {
-        print("didTapConfirmButton")
+        // 23, 34, 30 과 같은 형태로 문자열 변환
+        let translateSelectedDate = selectedDates.isEmpty ? ""
+            : selectedDates.map { "\($0)" }.joined(separator: ", ")
+        let confirmAction = UIAlertAction(title: "확인", style: .default)
+        let alertVC = UIAlertController(
+            title: "날짜를 선택해 주세요!",
+            message: nil,
+            preferredStyle: .alert
+        )
+        alertVC.addAction(confirmAction)
+        
+        // 날짜 선택하지 않았다면 alert 실행
+        if selectedDates.isEmpty {
+            present(alertVC, animated: true)
+        } else {
+            guard let parentVC = parentVC else {
+                print("Error: parentVC is nil")
+                return
+            }
+            DispatchQueue.main.async {
+                parentVC.addScheduleView.updateDateLabel(
+                    isHidden: false,
+                    date: translateSelectedDate
+                )
+            }
+            dismiss(animated: true)
+        }
     }
     
 }

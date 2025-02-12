@@ -82,6 +82,17 @@ class AddScheduleView: UIView {
 
     private lazy var dateLabel = makeLabel("날짜", .notoSans(.medium, size: 16), .customGray)
     private lazy var calenderImageButton = makeImageButton("calendar")
+    
+    // 날짜 선택 후 보여줄 라벨
+    private lazy var updatedDateLabel = makeLabel(
+        nil,
+        .notoSans(.medium, size: 16),
+        .customGray
+    ).then {
+        $0.isHidden = true
+        $0.textAlignment = .right
+        $0.numberOfLines = 1
+    }
 
     private lazy var randomVerificationLabel = makeLabel(
         "랜덤 인증",
@@ -109,7 +120,7 @@ class AddScheduleView: UIView {
     // MARK: - Utility Functions
 
     private func makeLabel(
-        _ title: String,
+        _ title: String?,
         _ font: UIFont?,
         _ color: UIColor
     ) -> UILabel {
@@ -177,6 +188,17 @@ class AddScheduleView: UIView {
         }
     }
     
+    /// 캘린더에서 날짜 선택 후 업데이트하는 함수
+    /// - Parameters:
+    ///     - isHidden: `updatedDateLabel`을 보여줄지 여부
+    ///     - date: 선택된 날짜
+    public func updateDateLabel(isHidden: Bool, date: String?) {
+        updatedDateLabel.isHidden = isHidden
+        if !isHidden {
+            updatedDateLabel.text = date
+        }
+    }
+    
     // MARK: - Action Handler
     
     @objc private func handleCalendarButton() {
@@ -237,6 +259,7 @@ private extension AddScheduleView {
 
         [
             dateLabel,
+            updatedDateLabel,
             calenderImageButton,
             dividedLine,
             randomVerificationLabel,
@@ -308,6 +331,12 @@ private extension AddScheduleView {
             make.top.equalTo(dateLabel)
             make.trailing.equalToSuperview().offset(-sideInset)
             make.width.height.equalTo(20)
+        }
+        
+        updatedDateLabel.snp.makeConstraints { make in
+            make.top.equalTo(calenderImageButton)
+            make.trailing.lessThanOrEqualTo(calenderImageButton.snp.leading).offset(-5)
+            make.width.equalTo(labelWidth + 70)
         }
         
         dividedLine.snp.makeConstraints { make in

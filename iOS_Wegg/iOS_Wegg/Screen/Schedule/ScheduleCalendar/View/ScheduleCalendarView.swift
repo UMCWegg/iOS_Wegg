@@ -207,7 +207,7 @@ private extension ScheduleCalendarView {
         [prevMonthButton, currentMonthLabel, nextMonthButton].forEach {
             if $0 == currentMonthLabel {
                 $0.snp.makeConstraints { make in
-                    make.width.equalTo(105)
+                    make.width.equalTo(115)
                 }
             } else {
                 $0.snp.makeConstraints { make in
@@ -221,7 +221,7 @@ private extension ScheduleCalendarView {
     func constraints() {
         headerStackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(19)
-            make.leading.trailing.equalToSuperview().inset(93)
+            make.leading.trailing.equalToSuperview().inset(90)
             make.height.equalTo(25)
         }
         
