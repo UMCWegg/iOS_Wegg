@@ -7,7 +7,6 @@
 
 import Foundation
 
-import Combine
 import Moya
 
 enum APIEndpoint {
@@ -22,6 +21,11 @@ enum APIEndpoint {
     case verificationNum(String)
     case idCheck(String)
     case resign
+}
+
+enum NetworkError: Error {
+    case serverError
+    case invalidData
 }
 
 extension APIEndpoint: TargetType {
@@ -118,5 +122,34 @@ extension APIEndpoint: TargetType {
             headers["Authorization"] = "Bearer \(token)"
         }
         return headers
+    }
+}
+
+protocol NetworkServiceProtocol {
+    func request<T: Decodable>(_ endpoint: APIEndpoint,
+                               completion: @escaping (Result<T, NetworkError>) -> Void)
+}
+
+final class NetworkService: NetworkServiceProtocol {
+    static let shared = NetworkService()
+    private let provider = MoyaProvider<APIEndpoint>()
+    
+    func request<T: Decodable>(_ endpoint: APIEndpoint,
+                               completion: @escaping (Result<T, NetworkError>) -> Void) {
+        provider.request(endpoint) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    let decodedResponse = try JSONDecoder().decode(T.self, from: response.data)
+                    completion(.success(decodedResponse))
+                } catch {
+                    print("Decoding error:", error)
+                    completion(.failure(.invalidData))
+                }
+            case .failure(let error):
+                print("Network error:", error)
+                completion(.failure(.serverError))
+            }
+        }
     }
 }
