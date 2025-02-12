@@ -17,7 +17,6 @@ class BrowseView: UIView {
         super.init(frame: frame)
         addcomponents()
         setupConstraints()
-        self.backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
@@ -31,7 +30,7 @@ class BrowseView: UIView {
         frame: .zero,
         collectionViewLayout: createLayout()
     ).then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .yellowWhite
     }
     
     /// 검색바 헤더 뷰 추가

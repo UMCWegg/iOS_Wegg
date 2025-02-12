@@ -13,7 +13,7 @@ class SearchView: UIView, UISearchBarDelegate {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = .yellowWhite
         addComponents()
         setupConstraints()
     }
