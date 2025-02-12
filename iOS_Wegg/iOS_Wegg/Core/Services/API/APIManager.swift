@@ -75,7 +75,7 @@ class APIManager: APIManagerProtocol {
                 switch result {
                 case .success(let response):
                     print("🔍 [APIManager] 응답 코드: \(response.statusCode)")
-                    
+
                     do {
                         // JSON 데이터를 Decodable 타입으로 디코딩
                         let decodedResponse = try JSONDecoder().decode(

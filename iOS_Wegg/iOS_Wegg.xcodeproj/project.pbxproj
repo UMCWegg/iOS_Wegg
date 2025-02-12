@@ -74,6 +74,9 @@
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
 		DE85E2772D4623BB0055C78C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		FF2E3C922D5B1C2900A09A16 /* ScheduleSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearchRequest.swift; sourceTree = "<group>"; };
+		FF2E3C962D5B1CB300A09A16 /* HotPlaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceRequest.swift; sourceTree = "<group>"; };
+		FF2E3C972D5B1CB300A09A16 /* HotPlacesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlacesResponse.swift; sourceTree = "<group>"; };
 		FF7980AC2D5A7FED0055B370 /* AddScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleView.swift; sourceTree = "<group>"; };
 		FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleViewController.swift; sourceTree = "<group>"; };
 		FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCardCell.swift; sourceTree = "<group>"; };
@@ -102,6 +105,7 @@
 			membershipExceptions = (
 				"Extensions/UIColor+extensions.swift",
 				"Extensions/UIFont+extensions.swift",
+				"Extensions/UIImage+extentions.swift",
 				"Extensions/UIViewController+extension.swift",
 				Formatters/DateFormatterUtility.swift,
 			);
@@ -203,6 +207,11 @@
 			path = Label;
 			sourceTree = "<group>";
 		};
+		FF2E3C9B2D5B2B9100A09A16 /* Post */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Post;
+			sourceTree = "<group>";
+		};
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BrowseItem;
@@ -269,6 +278,7 @@
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
 				0E98E9D62D2D009D006F25EF /* Products */,
+				FF4BFB2B2D5BCDC400457861 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -392,6 +402,16 @@
 			path = NotoSans;
 			sourceTree = "<group>";
 		};
+		FF4BFB2B2D5BCDC400457861 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				FF2E3C972D5B1CB300A09A16 /* HotPlacesResponse.swift */,
+				FF2E3C962D5B1CB300A09A16 /* HotPlaceRequest.swift */,
+				FF2E3C922D5B1C2900A09A16 /* ScheduleSearchRequest.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		FF7980AD2D5A7FED0055B370 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,6 +495,7 @@
 		FF7985672D5A86510055B370 /* NetworkModel */ = {
 			isa = PBXGroup;
 			children = (
+				FF2E3C9B2D5B2B9100A09A16 /* Post */,
 				0E46AD642D5B25D800529B35 /* Map */,
 				FF79855F2D5A86510055B370 /* Login */,
 				FF7985612D5A86510055B370 /* Schedule */,
@@ -529,6 +550,7 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DEEB72322D4D211C001C3880 /* Label */,
+				FF2E3C9B2D5B2B9100A09A16 /* Post */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,

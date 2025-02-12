@@ -16,4 +16,8 @@ struct APIConstants {
         static let schedulePlaceURL = "/maps/plans"
         static let schedulePlaceSearchURL = schedulePlaceURL + "/search"
     }
+    
+    struct Post {
+        static let uploadRandomPost = "/posts"
+    }
 }
