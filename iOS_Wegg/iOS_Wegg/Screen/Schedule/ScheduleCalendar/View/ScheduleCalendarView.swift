@@ -8,7 +8,16 @@
 import UIKit
 import Then
 
+protocol ScheduleCalendarViewDelegate: AnyObject {
+    func didTapPrevMonthButton()
+    func didTapNextMonthButton()
+    func didTapCancelButton()
+    func didTapConfirmButton()
+}
+
 class ScheduleCalendarView: UIView {
+    
+    weak var gestureDelegate: ScheduleCalendarViewDelegate?
 
     // MARK: - Init
     
@@ -71,7 +80,7 @@ class ScheduleCalendarView: UIView {
 
     // MARK: - Public Functions
     
-    /// 📌 현재 연/월 라벨을 업데이트하는 함수
+    /// 현재 연/월 라벨을 업데이트하는 함수
     /// - Parameter date: "yyyy년 M월" 형식의 문자열
     public func updateCalendar(date: String) {
         currentMonthLabel.text = date
@@ -79,7 +88,7 @@ class ScheduleCalendarView: UIView {
     
     // MARK: - Private Functions
     
-    /// 📌 캘린더 컬렉션 뷰의 레이아웃을 설정하는 함수
+    /// 캘린더 컬렉션 뷰의 레이아웃을 설정하는 함수
     private func createCalendarLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .absolute(50),
@@ -128,6 +137,24 @@ class ScheduleCalendarView: UIView {
             $0.titleLabel?.font = .notoSans(.medium, size: 16)
         }
     }
+    
+    // MARK: - Action Handler
+    
+    @objc private func prevMonthButtonHandler() {
+        gestureDelegate?.didTapPrevMonthButton()
+    }
+    
+    @objc private func nextMonthButtonHandler() {
+        gestureDelegate?.didTapNextMonthButton()
+    }
+    
+    @objc private func cancelButtonHandler() {
+        gestureDelegate?.didTapCancelButton()
+    }
+    
+    @objc private func confirmButtonHandler() {
+        gestureDelegate?.didTapConfirmButton()
+    }
 }
 
 // MARK: - Set UP Extension
@@ -136,8 +163,36 @@ private extension ScheduleCalendarView {
     
     func setupView() {
         addComponents()
+        setupGestures()
         constraints()
         setupWeekdayLabels()
+    }
+    
+    func setupGestures() {
+        prevMonthButton.addTarget(
+            self,
+            action: #selector(prevMonthButtonHandler),
+            for: .touchUpInside
+        )
+        
+        nextMonthButton.addTarget(
+            self,
+            action: #selector(nextMonthButtonHandler),
+            for: .touchUpInside
+        )
+        
+        cancelButton.addTarget(
+            self,
+            action: #selector(cancelButtonHandler),
+            for: .touchUpInside
+        )
+        
+        confirmButton.addTarget(
+            self,
+            action: #selector(confirmButtonHandler),
+            for: .touchUpInside
+        )
+        
     }
     
     func addComponents() {

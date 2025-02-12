@@ -25,6 +25,7 @@ class ScheduleCalendarViewController: UIViewController {
     lazy var scheduleCalendarView = ScheduleCalendarView().then {
         $0.calendarCollectionView.dataSource = self
         $0.calendarCollectionView.delegate = self
+        $0.gestureDelegate = self
         $0.updateCalendar(date: calendarManager.getFormattedDate())
     }
 
@@ -89,4 +90,23 @@ extension ScheduleCalendarViewController: UICollectionViewDelegate {
         }
         collectionView.reloadItems(at: [indexPath])
     }
+}
+
+extension ScheduleCalendarViewController: ScheduleCalendarViewDelegate {
+    func didTapPrevMonthButton() {
+        print("didTapPrevMonthButton")
+    }
+    
+    func didTapNextMonthButton() {
+        print("didTapNextMonthButton")
+    }
+    
+    func didTapCancelButton() {
+        print("didTapCancelButton")
+    }
+    
+    func didTapConfirmButton() {
+        print("didTapConfirmButton")
+    }
+    
 }
