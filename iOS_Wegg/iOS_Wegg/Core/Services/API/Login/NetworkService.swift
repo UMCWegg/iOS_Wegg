@@ -12,7 +12,7 @@ import Moya
 
 enum APIEndpoint {
     case signUp(SignUpRequest)
-    case socialSignUp(SocialType, String, String)
+    case socialSignUp(SignUpRequest)
     case login(LoginRequest)
     case socialLogin(SocialType, String, String)
     case logout
@@ -82,10 +82,8 @@ extension APIEndpoint: TargetType {
                 encoding: URLEncoding.queryString)
         case .signUp(let request):
             return .requestJSONEncodable(request)
-        case .socialSignUp(let type, let token, let oauthID):
-            return .requestParameters(
-                parameters: ["type": type.rawValue, "token": token, "oauth_id": oauthID],
-                encoding: JSONEncoding.default)
+        case .socialSignUp(let request):
+            return .requestJSONEncodable(request)
         case .logout:
             return .requestPlain
         case .verifyPhone(let phone):

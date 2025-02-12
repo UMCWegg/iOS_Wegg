@@ -60,18 +60,17 @@ final class UserSignUpStorage {
 extension UserSignUpStorage.SignUpData {
     func toSignUpRequest() -> SignUpRequest {
         return SignUpRequest(
-            email: email,
-            password: password,
-            socialType: socialType,
-            oauthToken: oauthID,
+            oauthId: socialType == .email ? nil : oauthID,
+            email: socialType == .email ? email : nil,
+            password: socialType == .email ? password : nil,
+            marketingAgree: marketingAgreed ?? false,
+            accountId: nickname ?? "",
             name: name ?? "",
-            nickname: nickname ?? "",
-            phoneNumber: phoneNumber ?? "",
-            occupation: occupation ?? .other,
-            reason: reason ?? .other,
-            marketingAgreed: marketingAgreed ?? false,
-            contact: contact ?? [],
-            alert: alert ?? false
+            job: (occupation ?? .employee).rawValue,
+            reason: (reason ?? .formHabits).rawValue,
+            phone: phoneNumber ?? "",
+            alarm: alert ?? false,
+            contact: contact ?? []
         )
     }
 }

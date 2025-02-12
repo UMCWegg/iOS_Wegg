@@ -6,31 +6,34 @@
 //
 
 struct SignUpRequest: Codable {
+    // 소셜 로그인용
+    let oauthId: String?
+    
+    // 이메일 로그인용
     let email: String?
     let password: String?
-    let socialType: SocialType?
-    let oauthToken: String?
+    
+    // 공통 필드
+    let marketingAgree: Bool
+    let accountId: String
     let name: String
-    let nickname: String
-    let phoneNumber: String
-    let occupation: UserOccupation
-    let reason: UserReason
-    let marketingAgreed: Bool
+    let job: String
+    let reason: String
+    let phone: String
+    let alarm: Bool
     let contact: [Contact]
-    let alert: Bool?
     
     enum CodingKeys: String, CodingKey {
+        case oauthId
         case email
         case password
-        case socialType = "social_type"
-        case oauthToken = "oauth_token"
+        case marketingAgree
+        case accountId
         case name
-        case nickname
-        case phoneNumber = "phone_number"
-        case occupation = "occupation"
+        case job
         case reason
-        case marketingAgreed = "marketing_agreed"
-        case contact = "contact"
-        case alert
+        case phone
+        case alarm
+        case contact
     }
 }
