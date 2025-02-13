@@ -43,7 +43,9 @@ class HotPlaceCellHeader: UICollectionReusableView {
     lazy var categoryLabel = makeLabel(
         font: .notoSans(.medium, size: 14),
         .gray1
-    )
+    ).then {
+        $0.textAlignment = .left
+    }
     
     lazy var verificationCount = makeLabel(
         font: .notoSans(.medium, size: 14),
@@ -137,7 +139,6 @@ private extension HotPlaceCellHeader {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.width.greaterThanOrEqualTo(122)
             make.height.equalTo(labelHeight)
         }
         

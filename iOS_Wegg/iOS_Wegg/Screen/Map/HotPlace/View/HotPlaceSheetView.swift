@@ -8,7 +8,14 @@
 import UIKit
 import SnapKit
 
+protocol HotPlaceSheetViewDelegate: AnyObject {
+    func didTapDistanceButton()
+    func didTapVerificationButton()
+}
+
 class HotPlaceSheetView: UIView {
+    
+    weak var delegate: HotPlaceSheetViewDelegate?
     
     // MARK: - init
 
@@ -88,12 +95,60 @@ class HotPlaceSheetView: UIView {
         $0.backgroundColor = .gray
     }
     
-    private lazy var distanceButtonView = makeButtonView(title: "거리순", backgroundColor: .primary)
-    private lazy var verficationButtonView = makeButtonView(title: "인증순")
+    private lazy var distanceButtonView = makeButtonView(
+        title: "거리순",
+        backgroundColor: .primary
+    ).then {
+        $0.addTarget(
+            self,
+            action: #selector(distanceButtonHandler),
+            for: .touchUpInside
+        )
+    }
+    private lazy var verficationButtonView = makeButtonView(title: "인증순").then {
+        $0.addTarget(
+            self,
+            action: #selector(verificationButtonHandler),
+            for: .touchUpInside
+        )
+    }
     lazy var bottomSheetTitleStack = makeStackView(spacing: 8, axis: .horizontal)
     lazy var bottomSheetButtonStack = makeStackView(spacing: 8, axis: .horizontal)
     
-    // MARK: - Function
+    // MARK: - Functions
+    
+    public func updateCollectionViewLayout() {
+        hotPlaceCollectionView.snp.remakeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            
+            if dividedLineView.isHidden {
+                // dividedLineView가 숨겨지면 최상단으로 이동
+                make.top.equalToSuperview().offset(
+                    MapViewLayout.BottomSheetHeader.topOffset
+                )
+            } else {
+                make.top.equalTo(dividedLineView.snp.bottom) // 기존 레이아웃 유지
+            }
+        }
+        layoutIfNeeded() // 레이아웃 변경 즉시 적용
+    }
+    
+    public func showBottomSheetComponents(isHidden: Bool) {
+        bottomSheetTitleStack.isHidden = isHidden
+        bottomSheetButtonStack.isHidden = isHidden
+        dividedLineView.isHidden = isHidden
+        updateCollectionViewLayout()
+    }
+    
+    @objc private func distanceButtonHandler() {
+        delegate?.didTapDistanceButton()
+    }
+    
+    @objc private func verificationButtonHandler() {
+        delegate?.didTapVerificationButton()
+    }
+    
+    // MARK: - Uitlity Function
     
     func makeStackView(
         spacing: CGFloat,
@@ -122,29 +177,6 @@ class HotPlaceSheetView: UIView {
         button.clipsToBounds = true // 테두리와 배경이 버튼의 경계에 맞도록 설정
         button.backgroundColor = backgroundColor
         return button
-    }
-    
-    func updateCollectionViewLayout() {
-        hotPlaceCollectionView.snp.remakeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
-            
-            if dividedLineView.isHidden {
-                // dividedLineView가 숨겨지면 최상단으로 이동
-                make.top.equalToSuperview().offset(
-                    MapViewLayout.BottomSheetHeader.topOffset
-                )
-            } else {
-                make.top.equalTo(dividedLineView.snp.bottom) // 기존 레이아웃 유지
-            }
-        }
-        layoutIfNeeded() // 레이아웃 변경 즉시 적용
-    }
-    
-    func showBottomSheetComponents(isHidden: Bool) {
-        bottomSheetTitleStack.isHidden = isHidden
-        bottomSheetButtonStack.isHidden = isHidden
-        dividedLineView.isHidden = isHidden
-        updateCollectionViewLayout()
     }
 }
 

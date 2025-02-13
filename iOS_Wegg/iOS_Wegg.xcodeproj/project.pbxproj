@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E68CE572D5E018F00CFDA8D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0E68CE562D5E018F00CFDA8D /* Kingfisher */; };
 		0E98E9EF2D2E3265006F25EF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9EE2D2E3265006F25EF /* SnapKit */; };
 		0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9F12D2E331D006F25EF /* Alamofire */; };
 		0E98E9F52D2E336F006F25EF /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9F42D2E336F006F25EF /* Moya */; };
@@ -76,6 +77,7 @@
 				"Extensions/UIColor+extensions.swift",
 				"Extensions/UIFont+extensions.swift",
 				"Extensions/UIImage+extentions.swift",
+				"Extensions/UIImageView+extensions.swift",
 				"Extensions/UIViewController+extension.swift",
 				Formatters/DateFormatterUtility.swift,
 			);
@@ -218,6 +220,7 @@
 				DE0020D92D420F0E003A273F /* FirebaseAuth in Frameworks */,
 				DE0020D12D414BD9003A273F /* FirebaseAppCheck in Frameworks */,
 				0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */,
+				0E68CE572D5E018F00CFDA8D /* Kingfisher in Frameworks */,
 				DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */,
 				DE0020CD2D414BD9003A273F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				FFC8DAFB2D50DDE30094B687 /* FloatingPanel in Frameworks */,
@@ -451,6 +454,7 @@
 				DE0020DC2D420F3B003A273F /* FirebaseFirestore */,
 				DE00212C2D433D7F003A273F /* NMapsMap */,
 				FFC8DAFA2D50DDE30094B687 /* FloatingPanel */,
+				0E68CE562D5E018F00CFDA8D /* Kingfisher */,
 			);
 			productName = iOS_Wegg;
 			productReference = 0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */;
@@ -492,6 +496,7 @@
 				DE0020C92D414BD9003A273F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				DE00212B2D433D7F003A273F /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
 				FFC8DAF92D50DDE30094B687 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
+				0E68CE552D5E018F00CFDA8D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0E98E9D62D2D009D006F25EF /* Products */;
@@ -576,7 +581,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D3H79AF44W;
+				DEVELOPMENT_TEAM = 6H8Y6F23HB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -611,7 +616,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D3H79AF44W;
+				DEVELOPMENT_TEAM = 6H8Y6F23HB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -779,6 +784,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0E68CE552D5E018F00CFDA8D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
 		0E98E9ED2D2E3265006F25EF /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -870,6 +883,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0E68CE562D5E018F00CFDA8D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E68CE552D5E018F00CFDA8D /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		0E98E9EE2D2E3265006F25EF /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0E98E9ED2D2E3265006F25EF /* XCRemoteSwiftPackageReference "SnapKit" */;
