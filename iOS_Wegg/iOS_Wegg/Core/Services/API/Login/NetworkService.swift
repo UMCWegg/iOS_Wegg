@@ -139,6 +139,17 @@ final class NetworkService: NetworkServiceProtocol {
         provider.request(endpoint) { result in
             switch result {
             case .success(let response):
+                // 요청 데이터 출력
+                if let requestData = try? JSONEncoder().encode(endpoint),
+                   let requestJson = String(data: requestData, encoding: .utf8) {
+                    print("Request JSON:", requestJson)
+                }
+                
+                // 응답 데이터 출력
+                if let responseJson = String(data: response.data, encoding: .utf8) {
+                    print("Response JSON:", responseJson)
+                }
+                
                 do {
                     let decodedResponse = try JSONDecoder().decode(T.self, from: response.data)
                     completion(.success(decodedResponse))
@@ -151,5 +162,12 @@ final class NetworkService: NetworkServiceProtocol {
                 completion(.failure(.serverError))
             }
         }
+    }
+}
+
+extension APIEndpoint: Encodable {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(String(describing: self))
     }
 }

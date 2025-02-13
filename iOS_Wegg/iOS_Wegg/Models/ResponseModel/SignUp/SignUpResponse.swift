@@ -6,13 +6,16 @@
 //
 
 struct SignUpResponse: Codable {
-    let accessToken: String
-    let refreshToken: String?
-    let user: BaseUser
+    let isSuccess: Bool
+    let code: String
+    let message: String
+    let result: String
     
     enum CodingKeys: String, CodingKey {
-        case accessToken = "access_token"
-        case refreshToken = "refresh_token"
-        case user
+        case isSuccess
+        case code = "code"
+        case message = "message"
+        case result = "result"
+        
     }
 }
