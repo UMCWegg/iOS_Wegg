@@ -581,7 +581,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D3H79AF44W;
+				DEVELOPMENT_TEAM = 6H8Y6F23HB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -616,7 +616,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D3H79AF44W;
+				DEVELOPMENT_TEAM = 6H8Y6F23HB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";

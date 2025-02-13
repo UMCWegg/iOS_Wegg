@@ -32,7 +32,13 @@ class MapViewController:
     UIViewController,
     FloatingPanelControllerDelegate,
     UIGestureRecognizerDelegate {
+    
     private let mapManager: MapManagerProtocol
+    private var apiManager: APIManager
+    private var hotplaceList: [HotPlacesResponse.HotPlace] = []
+    
+    // MARK: - 의존성 주입 위한 Property
+    
     /// `MapSearchViewController`도 의존성 주입하여 재사용 (옵셔널로 선언)
     private var mapSearchVC: MapSearchViewController?
     /// FloatingPanelController를 `MapViewController`에서 직접 관리하여 중복 생성을 방지
@@ -41,16 +47,14 @@ class MapViewController:
     let hotPlaceSheetVC: HotPlaceSheetViewController
     /// `PlaceDetailViewController`도 한 번만 생성하여 FloatingPanel 내에서 재사용
     let placeDetailVC: PlaceDetailViewController
-    private var hotplaceList: [HotPlacesResponse.HotPlace] = []
     
-    lazy var overlayView = MapOverlayView().then {
-        $0.placeSearchBar.searchTextFieldView.isUserInteractionEnabled = false
-    }
+    // MARK: - Init
     
     /// 의존성 주입
     /// `MapViewController`에서 모든 뷰 컨트롤러를 한 번만 생성하여 유지하도록 함
     init(mapManager: MapManagerProtocol) {
         self.mapManager = mapManager
+        self.apiManager = APIManager()
         self.mapSearchVC = MapSearchViewController(mapVC: nil)
         self.floatingPanel = FloatingPanelController()
         self.hotPlaceSheetVC = HotPlaceSheetViewController(mapVC: nil)
@@ -92,6 +96,12 @@ class MapViewController:
         
         mapManager.requestCurrentLocation()
         fetchHotPlacesFromVisibleBounds() // API 호출
+    }
+    
+    // MARK: - Property
+    
+    lazy var overlayView = MapOverlayView().then {
+        $0.placeSearchBar.searchTextFieldView.isUserInteractionEnabled = false
     }
     
     // MARK: - Set Up
@@ -170,8 +180,25 @@ class MapViewController:
         navigationController.setViewControllers(viewControllers, animated: false)
     }
     
-    private func fetchHotPlacesFromVisibleBounds() {
-        let apiManager = APIManager()
+    /// API에서 가져온 hotplaceList의 좌표를 기반으로 지도에 마커를 추가하는 함수
+    /// - `hotplaceList`가 비어 있으면 실행되지 않음
+    /// - API 호출 후 데이터가 로드된 뒤 실행해야 함
+    /// - `mapManager.addMarker(at:)`를 사용하여 지도에 마커 추가
+    private func setupMapPin() {
+        guard !hotplaceList.isEmpty else {
+            print("Error: hotplaceList가 비어 있음")
+            return
+        }
+        
+        hotplaceList.forEach { list in
+            let coordinate = Coordinate(latitude: list.latitude, longitude: list.longitude)
+            mapManager.addMarker(at: coordinate)
+        }
+    }
+    
+    // MARK: - API 관련 함수
+    
+    func fetchHotPlacesFromVisibleBounds(sortBy: String = "distance") {
         // 쿠키를 직접 저장
         apiManager.setCookie(
             value: "871F290DD58CF91959E169A08F4B706D"
@@ -187,7 +214,7 @@ class MapViewController:
             maxX: 128.00,
             minY: 36.00,
             maxY: 38.00,
-            sortBy: "distance"
+            sortBy: sortBy
         )
         
         Task {
@@ -204,22 +231,6 @@ class MapViewController:
             } catch {
                 print("❌ 실패: \(error)")
             }
-        }
-    }
-    
-    /// API에서 가져온 hotplaceList의 좌표를 기반으로 지도에 마커를 추가하는 함수
-    /// - `hotplaceList`가 비어 있으면 실행되지 않음
-    /// - API 호출 후 데이터가 로드된 뒤 실행해야 함
-    /// - `mapManager.addMarker(at:)`를 사용하여 지도에 마커 추가
-    private func setupMapPin() {
-        guard !hotplaceList.isEmpty else {
-            print("Error: hotplaceList가 비어 있음")
-            return
-        }
-        
-        hotplaceList.forEach { list in
-            let coordinate = Coordinate(latitude: list.latitude, longitude: list.longitude)
-            mapManager.addMarker(at: coordinate)
         }
     }
     

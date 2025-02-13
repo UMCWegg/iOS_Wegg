@@ -178,11 +178,19 @@ extension HotPlaceSheetViewController:
     }
     
     func didTapDistanceButton() {
-        print("didTapDistanceButton")
+        guard let mapVC = mapVC else {
+            print("Error: HotPlaceSheetVC's mapVC is nil")
+            return
+        }
+        mapVC.fetchHotPlacesFromVisibleBounds()
     }
     
     func didTapVerificationButton() {
-        print("didTapVerificationButton")
+        guard let mapVC = mapVC else {
+            print("Error: HotPlaceSheetVC's mapVC is nil")
+            return
+        }
+        mapVC.fetchHotPlacesFromVisibleBounds(sortBy: "authCount")
     }
     
 }
