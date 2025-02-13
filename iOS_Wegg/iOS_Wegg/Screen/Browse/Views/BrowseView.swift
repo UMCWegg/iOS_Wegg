@@ -22,7 +22,7 @@ class BrowseView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Properties
     
     /// 게시물과 사용자 정보를 보여주는 둘러보기 CollectionView
@@ -31,6 +31,7 @@ class BrowseView: UIView {
         collectionViewLayout: createLayout()
     ).then {
         $0.backgroundColor = .yellowWhite
+        $0.contentInsetAdjustmentBehavior = .never // 자동 인셋 해제시키기
     }
     
     /// 검색바 헤더 뷰 추가
@@ -52,15 +53,15 @@ class BrowseView: UIView {
     /// UI 제약 조건 설정
     private func setupConstraints() {
         searchView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(60)
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
             $0.left.right.equalToSuperview()
             $0.height.equalTo(50)
         }
         
         browseCollectionView.snp.makeConstraints {
-            $0.top.equalTo(searchView.snp.bottom).offset(10) // 검색바 아래에 위치하도록 수정
+            $0.top.equalTo(searchView.snp.bottom) // 검색바 아래에 위치하도록 수정
             $0.left.right.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview()
         }
     }
     

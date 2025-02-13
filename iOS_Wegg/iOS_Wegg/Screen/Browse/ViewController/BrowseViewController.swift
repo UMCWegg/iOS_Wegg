@@ -36,15 +36,25 @@ class BrowseViewController: UIViewController {
     
     // MARK: - LifeCycle
     
-    override func loadView() {
-        self.view = browseView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view = browseView
+        view.backgroundColor = .yellowWhite
         setupCollectionView()
         fetchBrowsePosts() // BrowseVC 탭 최초 API 호출
         setupRefreshControl()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // 이 화면에 들어올 때 네비게이션 바 숨김
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // 이 화면을 벗어날 때 네비게이션 바 다시 표시
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     // MARK: - Methods
