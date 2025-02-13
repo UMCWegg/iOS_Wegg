@@ -25,6 +25,11 @@ class PlaceVerificationViewController: UIViewController {
         super.viewDidLoad()
         mapManager.setupMap(in: view)
         setupOverlayView()
+        // 임시 데이터 초기화
+        placeVerificationOverlayView.configuration(
+            title: "스타벅스 신용산점",
+            subTitle: "시간이 다 되었습니다! 인증을 진행해주세요"
+        )
     }
     
     private func setupOverlayView() {
