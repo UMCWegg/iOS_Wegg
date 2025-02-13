@@ -34,7 +34,9 @@ class HotPlaceSheetViewController: UIViewController {
     
     func updateHotPlaceList(_ list: [HotPlaceSectionModel]) {
         hotPlaceSectionList = list
-        print(hotPlaceSectionList[0])
+        DispatchQueue.main.async {
+            self.hotPlaceView.hotPlaceCollectionView.reloadData()
+        }
     }
 }
 
@@ -46,7 +48,7 @@ extension HotPlaceSheetViewController:
     
     /// 섹션 갯수
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return HotPlaceSectionModel.sampleSections.count
+        return hotPlaceSectionList.count
     }
     
     /// 셀 아이템 갯수
@@ -54,7 +56,7 @@ extension HotPlaceSheetViewController:
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return HotPlaceSectionModel.sampleSections[section].items.count
+        return hotPlaceSectionList[section].items.count
     }
     
     /// 셀 아이템 데이터 설정
@@ -70,7 +72,7 @@ extension HotPlaceSheetViewController:
         }
         
         // 데이터 접근 시 범위 확인
-        let section = HotPlaceSectionModel.sampleSections[indexPath.section]
+        let section = hotPlaceSectionList[indexPath.section]
         guard indexPath.row < section.items.count else {
             fatalError("Index out of range for section items")
         }
@@ -129,7 +131,7 @@ extension HotPlaceSheetViewController {
             }
             header.gestureDelegate = self
             /// HotPlaceCellHeader의 각 섹션마다 데이터 주입
-            let section = HotPlaceSectionModel.sampleSections[indexPath.section]
+            let section = hotPlaceSectionList[indexPath.section]
             header.configure(model: section.header)
             return header
             
