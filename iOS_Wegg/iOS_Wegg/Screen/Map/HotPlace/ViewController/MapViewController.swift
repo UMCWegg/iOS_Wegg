@@ -41,6 +41,7 @@ class MapViewController:
     let hotPlaceSheetVC: HotPlaceSheetViewController
     /// `PlaceDetailViewController`도 한 번만 생성하여 FloatingPanel 내에서 재사용
     let placeDetailVC: PlaceDetailViewController
+    private var hotplaceList: [HotPlacesResponse.HotPlace] = []
     
     lazy var overlayView = MapOverlayView().then {
         $0.placeSearchBar.searchTextFieldView.isUserInteractionEnabled = false
@@ -90,11 +91,7 @@ class MapViewController:
         super.viewDidAppear(animated)
         
         mapManager.requestCurrentLocation()
-        
-        // 약간의 지연을 주고 API 호출
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.fetchHotPlacesFromVisibleBounds()
-        }
+        fetchHotPlacesFromVisibleBounds() // API 호출
     }
     
     // MARK: - Set Up
@@ -106,14 +103,15 @@ class MapViewController:
     }
     
     private func setupMapManagerGestures() {
-        mapManager.setTapGestureHandler { latlng in
-            // 지도 탭하면 Wegg 아이콘 마커 생성(추후 변경될 예정)
-            self.mapManager.addMarker(at: latlng)
-        }
-        
-        mapManager.setLongTapGestureHandler { latlng in
-            print("롱탭한 위치: \(latlng.latitude), \(latlng.longitude)")
-        }
+        // [25.02.13] 현재 시점 탭 제스처 불필요 - 작성자: 이재원
+//        mapManager.setTapGestureHandler { latlng in
+//            // 지도 탭하면 Wegg 아이콘 마커 생성(추후 변경될 예정)
+//            self.mapManager.addMarker(at: latlng)
+//        }
+//        
+//        mapManager.setLongTapGestureHandler { latlng in
+//            print("롱탭한 위치: \(latlng.latitude), \(latlng.longitude)")
+//        }
     }
     
     /// 바텀 시트 초기 설정
@@ -180,17 +178,46 @@ class MapViewController:
         )
         
         // 지도 경계 좌표 가져오기
-        let request = mapManager.getVisibleBounds(sortBy: "distance")
+//        let request = mapManager.getVisibleBounds(sortBy: "distance")
+        
+        // 서버측에 DB에 저장된 좌표값
+        // 테스트 완료 후에는 제거 후 `request` 사용
+        let testRequest = HotPlaceRequest(
+            minX: 127.00,
+            maxX: 128.00,
+            minY: 36.00,
+            maxY: 38.00,
+            sortBy: "distance"
+        )
         
         Task {
             do {
                 let response: HotPlacesResponse = try await apiManager.request(
-                    target: HotPlacesAPI.getHotPlaces(request: request)
+                    target: HotPlacesAPI.getHotPlaces(request: testRequest)
                 )
-                print("✅ 성공: \(response.result.hotPlaceList)")
+                hotplaceList = response.result.hotPlaceList
+                DispatchQueue.main.async {
+                    self.setupMapPin()
+                }
             } catch {
                 print("❌ 실패: \(error)")
             }
+        }
+    }
+    
+    /// API에서 가져온 hotplaceList의 좌표를 기반으로 지도에 마커를 추가하는 함수
+    /// - `hotplaceList`가 비어 있으면 실행되지 않음
+    /// - API 호출 후 데이터가 로드된 뒤 실행해야 함
+    /// - `mapManager.addMarker(at:)`를 사용하여 지도에 마커 추가
+    private func setupMapPin() {
+        guard !hotplaceList.isEmpty else {
+            print("Error: hotplaceList가 비어 있음")
+            return
+        }
+        
+        hotplaceList.forEach { list in
+            let coordinate = Coordinate(latitude: list.latitude, longitude: list.longitude)
+            mapManager.addMarker(at: coordinate)
         }
     }
 }

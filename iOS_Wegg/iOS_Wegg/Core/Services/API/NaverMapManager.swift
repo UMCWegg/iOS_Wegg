@@ -136,7 +136,7 @@ class NaverMapManager:
         )
         // 마커 생성
         let marker = NMFMarker(position: markerPosition)
-        marker.iconImage = NMFOverlayImage(name: "wegg_icon")
+        marker.iconImage = NMFOverlayImage(name: "list_brown_icon")
         marker.width = 28
         marker.height = 40
         marker.mapView = mapView // 마커 지도에 추가
@@ -173,29 +173,29 @@ extension NaverMapManager:
     
     // MARK: - NMFMapViewTouchDelegate
     
-    /// Tap 이벤트
-    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        let coordinate = Coordinate(latitude: latlng.lat, longitude: latlng.lng)
-        tapGestureHandler?(coordinate)
-    }
+//    /// Tap 이벤트
+//    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+//        let coordinate = Coordinate(latitude: latlng.lat, longitude: latlng.lng)
+//        tapGestureHandler?(coordinate)
+//    }
+//    
+//    /// Long Tab 이벤트
+//    func mapView(_ mapView: NMFMapView, didLongTapMap latlng: NMGLatLng, point: CGPoint) {
+//        let coordinate = Coordinate(latitude: latlng.lat, longitude: latlng.lng)
+//        longTapGestureHandler?(coordinate)
+//    }
     
-    /// Long Tab 이벤트
-    func mapView(_ mapView: NMFMapView, didLongTapMap latlng: NMGLatLng, point: CGPoint) {
-        let coordinate = Coordinate(latitude: latlng.lat, longitude: latlng.lng)
-        longTapGestureHandler?(coordinate)
-    }
-    
-    /// 심벌 탭 이벤트
-    func mapView(_ mapView: NMFMapView, didTap symbol: NMFSymbol) -> Bool {
-        if symbol.caption == "한성대학교" {
-            print("한성대학교 탭")
-            return true
-            
-        } else {
-            print("symbol 탭")
-            return false
-        }
-    }
+//    /// 심벌 탭 이벤트
+//    func mapView(_ mapView: NMFMapView, didTap symbol: NMFSymbol) -> Bool {
+//        if symbol.caption == "한성대학교" {
+//            print("한성대학교 탭")
+//            return true
+//            
+//        } else {
+//            print("symbol 탭")
+//            return false
+//        }
+//    }
     
     // MARK: - CLLocationManagerDelegate
     
