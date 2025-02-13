@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E46AD602D5B25D100529B35 /* ScheduleSearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E46AD5E2D5B25D100529B35 /* ScheduleSearchRequest.swift */; };
-		0E46AD612D5B25D100529B35 /* ScheduleSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E46AD5F2D5B25D100529B35 /* ScheduleSearchResponse.swift */; };
-		0E46AD652D5B25D800529B35 /* HotPlacesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E46AD632D5B25D800529B35 /* HotPlacesResponse.swift */; };
-		0E46AD662D5B25D800529B35 /* HotPlaceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E46AD622D5B25D800529B35 /* HotPlaceRequest.swift */; };
 		0E98E9EF2D2E3265006F25EF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9EE2D2E3265006F25EF /* SnapKit */; };
 		0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9F12D2E331D006F25EF /* Alamofire */; };
 		0E98E9F52D2E336F006F25EF /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9F42D2E336F006F25EF /* Moya */; };
@@ -40,27 +36,12 @@
 		DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = DE00212C2D433D7F003A273F /* NMapsMap */; };
 		DE00217A2D439F3F003A273F /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */; };
 		DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85E2772D4623BB0055C78C /* MainTabBarController.swift */; };
-		FF7980B72D5A7FED0055B370 /* ScheduleCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */; };
-		FF7980B82D5A7FED0055B370 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980B22D5A7FED0055B370 /* ScheduleView.swift */; };
-		FF7980B92D5A7FED0055B370 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */; };
-		FF7980BA2D5A7FED0055B370 /* AddScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980AC2D5A7FED0055B370 /* AddScheduleView.swift */; };
-		FF7980BB2D5A7FED0055B370 /* AddScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */; };
-		FF7985692D5A86510055B370 /* UserOccupation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985632D5A86510055B370 /* UserOccupation.swift */; };
-		FF79856A2D5A86510055B370 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79855D2D5A86510055B370 /* LoginRequest.swift */; };
-		FF79856B2D5A86510055B370 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79855E2D5A86510055B370 /* LoginResponse.swift */; };
-		FF79856C2D5A86510055B370 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985622D5A86510055B370 /* UserModel.swift */; };
-		FF79856D2D5A86510055B370 /* UserReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985642D5A86510055B370 /* UserReason.swift */; };
-		FF79856E2D5A86510055B370 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = FF7985662D5A86510055B370 /* .gitkeep */; };
 		FF7985732D5A86A40055B370 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985712D5A86A40055B370 /* HeaderView.swift */; };
 		FFC8DAFB2D50DDE30094B687 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = FFC8DAFA2D50DDE30094B687 /* FloatingPanel */; };
 		FFC8DBF42D50E3970094B687 /* HotPlaceSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0E46AD5E2D5B25D100529B35 /* ScheduleSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearchRequest.swift; sourceTree = "<group>"; };
-		0E46AD5F2D5B25D100529B35 /* ScheduleSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearchResponse.swift; sourceTree = "<group>"; };
-		0E46AD622D5B25D800529B35 /* HotPlaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceRequest.swift; sourceTree = "<group>"; };
-		0E46AD632D5B25D800529B35 /* HotPlacesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlacesResponse.swift; sourceTree = "<group>"; };
 		0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Wegg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E98EA272D2F8AE8006F25EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E98EA282D2F8AE8006F25EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,17 +58,6 @@
 		FF2E3C922D5B1C2900A09A16 /* ScheduleSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearchRequest.swift; sourceTree = "<group>"; };
 		FF2E3C962D5B1CB300A09A16 /* HotPlaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceRequest.swift; sourceTree = "<group>"; };
 		FF2E3C972D5B1CB300A09A16 /* HotPlacesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlacesResponse.swift; sourceTree = "<group>"; };
-		FF7980AC2D5A7FED0055B370 /* AddScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleView.swift; sourceTree = "<group>"; };
-		FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleViewController.swift; sourceTree = "<group>"; };
-		FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCardCell.swift; sourceTree = "<group>"; };
-		FF7980B22D5A7FED0055B370 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
-		FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
-		FF79855D2D5A86510055B370 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
-		FF79855E2D5A86510055B370 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
-		FF7985622D5A86510055B370 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		FF7985632D5A86510055B370 /* UserOccupation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOccupation.swift; sourceTree = "<group>"; };
-		FF7985642D5A86510055B370 /* UserReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReason.swift; sourceTree = "<group>"; };
-		FF7985662D5A86510055B370 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		FF7985712D5A86A40055B370 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceSectionModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,6 +103,16 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0E68CB982D5DB2CE00CFDA8D /* Schedule */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		0E68CBB32D5DB2E700CFDA8D /* NetworkModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NetworkModel;
+			sourceTree = "<group>";
+		};
 		0E98EA322D2F8F8F006F25EF /* Services */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Services;
@@ -207,11 +187,6 @@
 			path = Label;
 			sourceTree = "<group>";
 		};
-		FF2E3C9B2D5B2B9100A09A16 /* Post */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Post;
-			sourceTree = "<group>";
-		};
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BrowseItem;
@@ -264,15 +239,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0E46AD642D5B25D800529B35 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				0E46AD622D5B25D800529B35 /* HotPlaceRequest.swift */,
-				0E46AD632D5B25D800529B35 /* HotPlacesResponse.swift */,
-			);
-			path = Map;
-			sourceTree = "<group>";
-		};
 		0E98E9CC2D2D009D006F25EF = {
 			isa = PBXGroup;
 			children = (
@@ -324,7 +290,7 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FF7985672D5A86510055B370 /* NetworkModel */,
+				0E68CBB32D5DB2E700CFDA8D /* NetworkModel */,
 				FFC8DBF32D50E3970094B687 /* HotPlaceModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
@@ -348,7 +314,7 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
-				FF7980B62D5A7FED0055B370 /* Schedule */,
+				0E68CB982D5DB2CE00CFDA8D /* Schedule */,
 				DE85E2742D4623BB0055C78C /* Browse */,
 				DE85E2762D4623BB0055C78C /* Home */,
 				DE85E2772D4623BB0055C78C /* MainTabBarController.swift */,
@@ -412,99 +378,6 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		FF7980AD2D5A7FED0055B370 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				FF7980AC2D5A7FED0055B370 /* AddScheduleView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		FF7980AF2D5A7FED0055B370 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		FF7980B02D5A7FED0055B370 /* AddSchedule */ = {
-			isa = PBXGroup;
-			children = (
-				FF7980AD2D5A7FED0055B370 /* View */,
-				FF7980AF2D5A7FED0055B370 /* ViewController */,
-			);
-			path = AddSchedule;
-			sourceTree = "<group>";
-		};
-		FF7980B32D5A7FED0055B370 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */,
-				FF7980B22D5A7FED0055B370 /* ScheduleView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		FF7980B52D5A7FED0055B370 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		FF7980B62D5A7FED0055B370 /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-				FF7980B02D5A7FED0055B370 /* AddSchedule */,
-				FF7980B32D5A7FED0055B370 /* View */,
-				FF7980B52D5A7FED0055B370 /* ViewController */,
-			);
-			path = Schedule;
-			sourceTree = "<group>";
-		};
-		FF79855F2D5A86510055B370 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				FF79855D2D5A86510055B370 /* LoginRequest.swift */,
-				FF79855E2D5A86510055B370 /* LoginResponse.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		FF7985612D5A86510055B370 /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-				0E46AD5E2D5B25D100529B35 /* ScheduleSearchRequest.swift */,
-				0E46AD5F2D5B25D100529B35 /* ScheduleSearchResponse.swift */,
-			);
-			path = Schedule;
-			sourceTree = "<group>";
-		};
-		FF7985652D5A86510055B370 /* User */ = {
-			isa = PBXGroup;
-			children = (
-				FF7985622D5A86510055B370 /* UserModel.swift */,
-				FF7985632D5A86510055B370 /* UserOccupation.swift */,
-				FF7985642D5A86510055B370 /* UserReason.swift */,
-			);
-			path = User;
-			sourceTree = "<group>";
-		};
-		FF7985672D5A86510055B370 /* NetworkModel */ = {
-			isa = PBXGroup;
-			children = (
-				FF2E3C9B2D5B2B9100A09A16 /* Post */,
-				0E46AD642D5B25D800529B35 /* Map */,
-				FF79855F2D5A86510055B370 /* Login */,
-				FF7985612D5A86510055B370 /* Schedule */,
-				FF7985652D5A86510055B370 /* User */,
-				FF7985662D5A86510055B370 /* .gitkeep */,
-			);
-			path = NetworkModel;
-			sourceTree = "<group>";
-		};
 		FF7985722D5A86A40055B370 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,6 +412,8 @@
 				0E98EA062D2E5FDB006F25EF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				0E68CB982D5DB2CE00CFDA8D /* Schedule */,
+				0E68CBB32D5DB2E700CFDA8D /* NetworkModel */,
 				0E98EA322D2F8F8F006F25EF /* Services */,
 				0E98EA392D2F94AE006F25EF /* Protocol */,
 				0E98EA3C2D2F976E006F25EF /* Secrets */,
@@ -550,7 +425,6 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DEEB72322D4D211C001C3880 /* Label */,
-				FF2E3C9B2D5B2B9100A09A16 /* Post */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
@@ -637,7 +511,6 @@
 				0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */,
 				0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */,
 				0E98EB882D3A274B006F25EF /* GmarketSansTTFMedium.ttf in Resources */,
-				FF79856E2D5A86510055B370 /* .gitkeep in Resources */,
 				0E98EB892D3A274B006F25EF /* GmarketSansTTFBold.ttf in Resources */,
 				0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */,
 				0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */,
@@ -675,21 +548,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF7980B72D5A7FED0055B370 /* ScheduleCardCell.swift in Sources */,
-				FF7980B82D5A7FED0055B370 /* ScheduleView.swift in Sources */,
 				FF7985732D5A86A40055B370 /* HeaderView.swift in Sources */,
-				FF7985692D5A86510055B370 /* UserOccupation.swift in Sources */,
-				FF79856A2D5A86510055B370 /* LoginRequest.swift in Sources */,
-				FF79856B2D5A86510055B370 /* LoginResponse.swift in Sources */,
-				FF79856C2D5A86510055B370 /* UserModel.swift in Sources */,
-				FF79856D2D5A86510055B370 /* UserReason.swift in Sources */,
-				0E46AD652D5B25D800529B35 /* HotPlacesResponse.swift in Sources */,
-				0E46AD662D5B25D800529B35 /* HotPlaceRequest.swift in Sources */,
-				0E46AD602D5B25D100529B35 /* ScheduleSearchRequest.swift in Sources */,
-				0E46AD612D5B25D100529B35 /* ScheduleSearchResponse.swift in Sources */,
-				FF7980B92D5A7FED0055B370 /* ScheduleViewController.swift in Sources */,
-				FF7980BA2D5A7FED0055B370 /* AddScheduleView.swift in Sources */,
-				FF7980BB2D5A7FED0055B370 /* AddScheduleViewController.swift in Sources */,
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
 				DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */,
