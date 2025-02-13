@@ -28,6 +28,7 @@ class HotPlaceSheetViewController: UIViewController {
     }
     
     lazy var hotPlaceView = HotPlaceSheetView().then {
+        $0.delegate = self
         $0.hotPlaceCollectionView.delegate = self
         $0.hotPlaceCollectionView.dataSource = self
     }
@@ -161,7 +162,10 @@ extension HotPlaceSheetViewController {
 
 // MARK: - Delegate Extension
 
-extension HotPlaceSheetViewController: HotPlaceCellGestureDelegate {
+extension HotPlaceSheetViewController:
+    HotPlaceCellGestureDelegate,
+    HotPlaceSheetViewDelegate {
+    
     func didTapHotPlaceCellHeader() {
         guard let mapVC = mapVC else { return }
         let hotPlaceView = mapVC.hotPlaceSheetVC.hotPlaceView
@@ -171,6 +175,14 @@ extension HotPlaceSheetViewController: HotPlaceCellGestureDelegate {
         mapVC.floatingPanel.set(contentViewController: mapVC.placeDetailVC)
         mapVC.floatingPanel.move(to: .full, animated: true)
         mapVC.overlayView.placeDetailBackButton.isHidden = false
+    }
+    
+    func didTapDistanceButton() {
+        print("didTapDistanceButton")
+    }
+    
+    func didTapVerificationButton() {
+        print("didTapVerificationButton")
     }
     
 }
