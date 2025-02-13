@@ -77,36 +77,19 @@ class BrowseCell: UICollectionViewCell {
         }
     }
     
+    /*
+    서버에 있는 이미지를 로드하기 위해 UIImageView확장자를 통해 이미지 url을 로드
+    만약 값이 null일시, 로컬에 있는 기본 이미지 사용
+    */
     /// 셀에 데이터를 설정하는 메서드
     func configure(with item: BrowsePost) { // ✅ BrowsePost를 받도록 변경
         // 닉네임 설정
         nickNameLabel.text = item.nickname // ✅ 속성명 `nickname` 확인
         
-        // 프로필 이미지 설정 (URL이므로 다운로드 필요)
-        if let url = URL(string: item.profileImageUrl ?? "") {
-            userProfile.loadImage(from: url) // ✅ 네트워크 이미지 로드 필요
-        }
-
-        // 게시물 이미지 설정 (URL이므로 다운로드 필요)
-        if let url = URL(string: item.postImageUrl) {
-            postImage.loadImage(from: url) // ✅ 네트워크 이미지 로드 필요
-        }
-    }
-}
-
-/*
- UIImageView에 네트워크 이미지를 로드하는 메서드를 추가해야 함
- UIImage(named:)는 로컬 이미지용이므로 URL 기반 이미지 로드 방식으로 변경
- */
-extension UIImageView {
-    func loadImage(from url: URL) {
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url),
-               let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.image = image
-                }
-            }
-        }
+        // 프로필 이미지 로드 (기본값: profile_placeholder)
+        userProfile.loadImage(from: item.profileImageUrl, placeholder: "profile_placeholder")
+        
+        // 게시물 이미지 로드 (기본값: post_placeholder)
+        postImage.loadImage(from: item.postImageUrl, placeholder: "post_placeholder")
     }
 }
