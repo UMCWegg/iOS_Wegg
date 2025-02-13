@@ -67,7 +67,7 @@ class NaverMapManager:
     
     /// 현재 위치 업데이트
     func requestCurrentLocation() {
-        locationManager?.startUpdatingLocation()
+        locationManager?.requestLocation()
     }
     
     /// 지도 중심을 특정 위치로 업데이트
