@@ -196,8 +196,10 @@ class MapViewController:
                     target: HotPlacesAPI.getHotPlaces(request: testRequest)
                 )
                 hotplaceList = response.result.hotPlaceList
+                let section = convertToSectionModel(from: hotplaceList)
                 DispatchQueue.main.async {
                     self.setupMapPin()
+                    self.hotPlaceSheetVC.updateHotPlaceList(section)
                 }
             } catch {
                 print("❌ 실패: \(error)")
@@ -218,6 +220,26 @@ class MapViewController:
         hotplaceList.forEach { list in
             let coordinate = Coordinate(latitude: list.latitude, longitude: list.longitude)
             mapManager.addMarker(at: coordinate)
+        }
+    }
+    
+    /// `HotPlacesResponse.HotPlace` 데이터를 `HotPlaceSectionModel`로 변환하는 함수
+    private func convertToSectionModel(
+        from hotplaces: [HotPlacesResponse.HotPlace]
+    ) -> [HotPlaceSectionModel] {
+        return hotplaces.map { hotplace in
+            HotPlaceSectionModel(
+                header: HotPlaceHeaderModel(
+                    title: hotplace.placeName,
+                    category: hotplace.placeLabel,
+                    verificationCount: "인증 \(hotplace.authCount)",
+                    saveCount: "저장 \(hotplace.saveCount)"
+                ),
+                items: hotplace.postList.map { post in
+                    HotPlaceImageModel(imageName: post.imageUrl)
+                },
+                details: nil // 현재 API에서 추가적인 상세 정보 없음
+            )
         }
     }
 }

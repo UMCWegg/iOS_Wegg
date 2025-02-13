@@ -11,6 +11,7 @@ import Then
 class HotPlaceSheetViewController: UIViewController {
     /// `MapViewController`를 참조하도록 설정하여 FloatingPanel에 접근할 수 있도록 함
     weak var mapVC: MapViewController?
+    private var hotPlaceSectionList: [HotPlaceSectionModel] = []
     
     init(mapVC: MapViewController?) { // 생성자에서 의존성 주입
         self.mapVC = mapVC
@@ -29,6 +30,11 @@ class HotPlaceSheetViewController: UIViewController {
     lazy var hotPlaceView = HotPlaceSheetView().then {
         $0.hotPlaceCollectionView.delegate = self
         $0.hotPlaceCollectionView.dataSource = self
+    }
+    
+    func updateHotPlaceList(_ list: [HotPlaceSectionModel]) {
+        hotPlaceSectionList = list
+        print(hotPlaceSectionList[0])
     }
 }
 
