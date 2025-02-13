@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class HotPlaceCell: UICollectionViewCell {
     static let identifier = "HotPlaceCell"
@@ -32,7 +33,7 @@ class HotPlaceCell: UICollectionViewCell {
     
     /// 이미지 셀 주입 함수
     public func configure(model: HotPlaceImageModel) {
-        imageView.image = UIImage(named: model.imageName)
+        imageView.setImage(from: model.imageName)
     }
     
     // MARK: Set up
