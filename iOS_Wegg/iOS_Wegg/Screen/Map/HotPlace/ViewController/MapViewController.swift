@@ -186,7 +186,7 @@ class MapViewController:
     /// - `mapManager.addMarker(at:)`를 사용하여 지도에 마커 추가
     private func setupMapPin() {
         guard !hotplaceList.isEmpty else {
-            print("Error: hotplaceList가 비어 있음")
+            print("MapViewController Error: hotplaceList가 비어 있음")
             return
         }
         
@@ -205,22 +205,12 @@ class MapViewController:
         )
         
         // 지도 경계 좌표 가져오기
-//        let request = mapManager.getVisibleBounds(sortBy: "distance")
-        
-        // 서버측에 DB에 저장된 좌표값
-        // 테스트 완료 후에는 제거 후 `request` 사용
-        let testRequest = HotPlaceRequest(
-            minX: 127.00,
-            maxX: 128.00,
-            minY: 36.00,
-            maxY: 38.00,
-            sortBy: sortBy
-        )
+        let request = mapManager.getVisibleBounds(sortBy: "distance")
         
         Task {
             do {
                 let response: HotPlacesResponse = try await apiManager.request(
-                    target: HotPlacesAPI.getHotPlaces(request: testRequest)
+                    target: HotPlacesAPI.getHotPlaces(request: request)
                 )
                 hotplaceList = response.result.hotPlaceList
                 let section = convertToSectionModel(from: hotplaceList)
