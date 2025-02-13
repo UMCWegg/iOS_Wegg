@@ -28,10 +28,9 @@ final class AuthService {
         publisher(.signUp(request))
     }
     
-    func socialSignUp(request: SignUpRequest) -> AnyPublisher<SignUpResponse, Error> {
+    func socialSignUp(request: SocialSignUpRequest) -> AnyPublisher<SignUpResponse, Error> {
         publisher(.socialSignUp(request))
     }
-    
     func login(with request: LoginRequest) -> AnyPublisher<LoginResponse, Error> {
         publisher(.login(request))
     }

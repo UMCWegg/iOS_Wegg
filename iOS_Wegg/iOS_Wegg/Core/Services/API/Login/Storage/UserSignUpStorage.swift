@@ -60,7 +60,7 @@ final class UserSignUpStorage {
 extension UserSignUpStorage.SignUpData {
     func toSignUpRequest() -> SignUpRequest {
         return SignUpRequest(
-            oauthId: socialType == .email ? nil : oauthID,
+            oauthId: oauthID ?? "",
             email: socialType == .email ? email : nil,
             password: socialType == .email ? password : nil,
             marketingAgree: marketingAgreed ?? false,
@@ -70,7 +70,7 @@ extension UserSignUpStorage.SignUpData {
             reason: (reason ?? .formHabits).rawValue,
             phone: phoneNumber ?? "",
             alarm: alert ?? false,
-            contact: contact ?? []
+            contact: contact?.map { Contact(phone: $0.phone) } ?? []
         )
     }
 }

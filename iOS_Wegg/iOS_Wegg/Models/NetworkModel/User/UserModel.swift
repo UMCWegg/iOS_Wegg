@@ -34,7 +34,6 @@ enum SocialType: String, Codable {
 }
 
 struct Contact: Codable {
-    let name: String
     let phone: String
 }
 

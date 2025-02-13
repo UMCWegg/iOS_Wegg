@@ -11,7 +11,7 @@ import Moya
 
 enum APIEndpoint {
     case signUp(SignUpRequest)
-    case socialSignUp(SignUpRequest)
+    case socialSignUp(SocialSignUpRequest)
     case login(LoginRequest)
     case socialLogin(SocialType, String, String)
     case logout
@@ -139,22 +139,24 @@ final class NetworkService: NetworkServiceProtocol {
         provider.request(endpoint) { result in
             switch result {
             case .success(let response):
-                // 요청 데이터 출력
-                if let requestData = try? JSONEncoder().encode(endpoint),
-                   let requestJson = String(data: requestData, encoding: .utf8) {
-                    print("Request JSON:", requestJson)
+                print("Request Endpoint: \(endpoint)")
+                
+                // 상태 코드 확인 추가
+                guard (200...299).contains(response.statusCode) else {
+                    print("Error status code: \(response.statusCode)")
+                    completion(.failure(.serverError))
+                    return
                 }
                 
-                // 응답 데이터 출력
                 if let responseJson = String(data: response.data, encoding: .utf8) {
-                    print("Response JSON:", responseJson)
+                    print("Full Response JSON:", responseJson)
                 }
                 
                 do {
                     let decodedResponse = try JSONDecoder().decode(T.self, from: response.data)
                     completion(.success(decodedResponse))
                 } catch {
-                    print("Decoding error:", error)
+                    print("Detailed Decoding error:", error)
                     completion(.failure(.invalidData))
                 }
             case .failure(let error):

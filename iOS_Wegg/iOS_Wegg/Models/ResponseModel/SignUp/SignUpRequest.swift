@@ -24,11 +24,11 @@ struct SignUpRequest: Codable {
     let contact: [Contact]
     
     enum CodingKeys: String, CodingKey {
-        case oauthId
+        case oauthId = "oauth_id"
         case email
         case password
-        case marketingAgree
-        case accountId
+        case marketingAgree = "marketing_agree"
+        case accountId = "account_id"
         case name
         case job
         case reason
@@ -36,4 +36,17 @@ struct SignUpRequest: Codable {
         case alarm
         case contact
     }
+}
+
+struct SocialSignUpRequest: Codable {
+    let oauthId: String
+    let type: SocialType  // google/kakao 구분 필요
+    let name: String
+    let accountId: String
+    let marketingAgree: Bool
+    let phone: String
+    let alarm: Bool
+    let job: String
+    let reason: String
+    let contact: [Contact]
 }

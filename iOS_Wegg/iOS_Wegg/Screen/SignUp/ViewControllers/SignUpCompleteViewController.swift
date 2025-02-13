@@ -14,7 +14,7 @@ class SignUpCompleteViewController: UIViewController {
     // MARK: - Properties
     
     private let signUpCompleteView = SignUpCompleteView()
-    private let networkService = NetworkService.shared
+    private let apiManager = APIManager()
     
     // MARK: - Lifecycle
     
@@ -37,43 +37,83 @@ class SignUpCompleteViewController: UIViewController {
     }
     
     // MARK: - Actions
-    
     @objc private func nextButtonTapped() {
         guard let signUpData = UserSignUpStorage.shared.get() else { return }
-        let request = signUpData.toSignUpRequest()
         
         if let socialType = signUpData.socialType,
            (socialType == .google || socialType == .kakao) {
-            networkService.request(.socialSignUp(request))
+            // 소셜 회원가입
+            let socialRequest = SocialSignUpRequest(
+                oauthId: signUpData.oauthID ?? "",
+                type: socialType,
+                name: signUpData.name ?? "",
+                accountId: signUpData.nickname ?? "",
+                marketingAgree: signUpData.marketingAgreed ?? false,
+                phone: signUpData.phoneNumber ?? "",
+                alarm: signUpData.alert ?? false,
+                job: (signUpData.occupation ?? .employee).rawValue,
+                reason: (signUpData.reason ?? .formHabits).rawValue,
+                contact: signUpData.contact?.map { Contact(phone: $0.phone) } ?? []
+            )
+            
+            NetworkService.shared.request(.socialSignUp(socialRequest))
             { [weak self] (result: Result<SignUpResponse, NetworkError>) in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let response):
-                        self?.handleSignUpSuccess(response)
+                        if response.isSuccess {
+                            self?.handleSignUpSuccess()
+                        } else {
+                            print("Social sign up failed:", response.message)
+                            // 에러 처리 (alert 등)
+                        }
                     case .failure(let error):
-                        print("Sign up failed:", error)
+                        print("Social sign up error:", error)
+                        // 에러 처리 (alert 등)
                     }
                 }
             }
         } else {
-            networkService.request(.signUp(request))
+            // 일반 회원가입
+            let request = signUpData.toSignUpRequest()
+            NetworkService.shared.request(.signUp(request))
             { [weak self] (result: Result<SignUpResponse, NetworkError>) in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let response):
-                        self?.handleSignUpSuccess(response)
+                        if response.isSuccess {
+                            self?.handleSignUpSuccess()
+                        } else {
+                            print("Sign up failed:", response.message)
+                            // 에러 처리 (alert 등)
+                        }
                     case .failure(let error):
-                        print("Sign up failed:", error)
+                        print("Sign up error:", error)
+                        // 에러 처리 (alert 등)
                     }
                 }
             }
         }
     }
-    
-    private func handleSignUpSuccess(_ response: SignUpResponse) {
-        UserDefaultsManager.shared.saveToken(response.accessToken)
+
+    private func handleSignUpSuccess() {
         let mainTabBarController = MainTabBarController()
         navigationController?.setViewControllers([mainTabBarController], animated: true)
         UserSignUpStorage.shared.clear()
+    }
+    
+    private func showError(_ message: String) {
+        let alert = UIAlertController(
+            title: "회원가입 실패",
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "확인",
+            style: .default
+        ))
+        
+        present(alert, animated: true)
     }
 }
