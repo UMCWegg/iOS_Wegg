@@ -18,9 +18,10 @@ struct Coordinate {
 protocol MapManagerProtocol {
     func setupMap(in view: UIView)
     func setupLocationManager()
-    func updateLocation(_ location: CLLocation)
+    func moveCameraToLocation(_ location: CLLocation)
     func setTapGestureHandler(_ handler: @escaping (Coordinate) -> Void)
     func setLongTapGestureHandler(_ handler: @escaping (Coordinate) -> Void)
     func requestCurrentLocation()
     func addMarker(at coordinate: Coordinate)
+    func getVisibleBounds(sortBy: String?) -> HotPlaceRequest
 }

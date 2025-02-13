@@ -12,6 +12,12 @@ struct APIConstants {
     static let baseURL = "https://weggserver.store"
     
     struct Map {
-        static let schedulePlaceSearchURL = "/maps/plans/search"
+        static let hotplacesURL = "/maps/hotplaces"
+        static let schedulePlaceURL = "/maps/plans"
+        static let schedulePlaceSearchURL = schedulePlaceURL + "/search"
+    }
+    
+    struct Post {
+        static let uploadRandomPost = "/posts"
     }
 }
