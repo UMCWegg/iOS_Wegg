@@ -95,6 +95,8 @@ extension ScheduleCalendarViewController: UICollectionViewDelegate {
     }
 }
 
+// MARK: - ScheduleCalendarViewDelegate
+
 extension ScheduleCalendarViewController: ScheduleCalendarViewDelegate {
     
     /// 이전 달 버튼이 눌렸을 때 호출
@@ -137,7 +139,7 @@ extension ScheduleCalendarViewController: ScheduleCalendarViewDelegate {
     func didTapConfirmButton() {
         // 선택된 날짜들을 콤마(", ")로 구분된 문자열로 변환
         let translateSelectedDate = selectedDates.isEmpty ? ""
-            : selectedDates.map { "\($0)" }.joined(separator: ", ")
+        : Array(selectedDates).sorted().map { "\($0)" }.joined(separator: ", ")
         
         // 날짜를 선택하지 않았다면 경고(Alert) 메시지 표시
         if selectedDates.isEmpty {
