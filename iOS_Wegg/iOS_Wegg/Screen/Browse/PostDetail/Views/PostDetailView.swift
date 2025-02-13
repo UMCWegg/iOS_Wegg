@@ -195,15 +195,15 @@ class PostDetailView: UIView {
     
     /// 상세 페이지 데이터 설정
     func configure(with detail: PostDetailModel) {
-        // 프로필 이미지 설정
-        profileImageView.image = UIImage(named: detail.profileImage)
+        // 프로필 이미지 설정, 서버에 있는 url 이미지 확장자 적용
+        profileImageView.loadImage(from: detail.profileImage, placeholder: "profile_placeholder")
         
         // 닉네임 설정
         nicknameLabel.text = detail.nickname
         
-        // 게시물 이미지 설정
-        postImageView.image = UIImage(
-            named: detail.postImages.isEmpty ? "placeholder" : detail.postImages)
+        // 게시물 이미지 설정, 서버에 있는 url 이미지 확장자 적용
+        postImageView.loadImage(from: detail.postImages, placeholder: "post_placeholder")
+        
         // 게시 시간 레이블 설정 (formattedDate 메서드로 날짜 형식 변환)
         postTimeLabel.text = "게시시간:  \(formattedDate(detail.postTime))"
         
