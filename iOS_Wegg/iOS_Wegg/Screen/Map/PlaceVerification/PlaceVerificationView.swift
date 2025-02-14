@@ -8,7 +8,13 @@
 import UIKit
 import Then
 
+protocol PlaceVerificationOverlayViewDelegate: AnyObject {
+    func didTapVerificationButton()
+}
+
 class PlaceVerificationOverlayView: UIView {
+    
+    weak var delegate: PlaceVerificationOverlayViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,6 +30,13 @@ class PlaceVerificationOverlayView: UIView {
     /// - 지도 위에서 제스처 필요한 버튼 추가
     /// - Returns: 터치 이벤트를 처리할 UIView(없을 경우 nil 반한)
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if let verificationButton = verificationButton.hitTest(
+            convert(point, to: verificationButton),
+            with: event
+        ) {
+            return verificationButton
+        }
+        
         return nil
     }
     
@@ -48,6 +61,11 @@ class PlaceVerificationOverlayView: UIView {
         $0.layer.cornerRadius = 26
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.secondary.cgColor
+        $0.addTarget(
+            self,
+            action: #selector(verificationButtonHandler),
+            for: .touchUpInside
+        )
     }
     
     // MARK: - Functions
@@ -69,6 +87,10 @@ class PlaceVerificationOverlayView: UIView {
             $0.titleLabel?.font = .notoSans(.medium, size: 16)
             $0.backgroundColor = backgroundColor
         }
+    }
+    
+    @objc private func verificationButtonHandler() {
+        delegate?.didTapVerificationButton()
     }
     
 }

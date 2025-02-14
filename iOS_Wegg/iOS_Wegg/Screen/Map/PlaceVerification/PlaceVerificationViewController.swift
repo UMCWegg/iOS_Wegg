@@ -53,6 +53,7 @@ class PlaceVerificationViewController: UIViewController {
             title: "스타벅스 신용산점",
             subTitle: "시간이 다 되었습니다! 인증을 진행해주세요"
         )
+        placeVerificationOverlayView.delegate = self
     }
     
     private func setupInfoMarker(image: UIImage) {
@@ -65,6 +66,18 @@ class PlaceVerificationViewController: UIViewController {
             height: image.size.height,
             at: coordinate
         )
+    }
+    
+}
+
+// MARK: - Delegate
+
+extension PlaceVerificationViewController: PlaceVerificationOverlayViewDelegate {
+    // 인증하기 버튼 누르면 인증 성공 여부 검사 후 메인으로 이동
+    func didTapVerificationButton() {
+        let mainVC = MainTabBarController()
+        mainVC.modalPresentationStyle = .fullScreen
+        present(mainVC, animated: true)
     }
     
 }
