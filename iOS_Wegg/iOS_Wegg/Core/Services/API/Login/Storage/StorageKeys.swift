@@ -2,8 +2,10 @@
 //  StorageKeys.swift
 //  iOS_Wegg
 //
-//  Created by 이건수 on 2025.02.02.
+//  Created by 이건수 on 2025.02.15.
 //
+
+import Foundation
 
 enum StorageKeys {
     enum SignUp {

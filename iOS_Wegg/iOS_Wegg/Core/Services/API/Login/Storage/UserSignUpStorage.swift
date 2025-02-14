@@ -15,19 +15,18 @@ final class UserSignUpStorage {
     private init() {}
     
     struct SignUpData: Codable {
-        // 기본 사용자 정보
-        var phoneNumber: String?
-        var name: String?
-        var nickname: String?
-        var occupation: UserOccupation?
-        var reason: UserReason?
-        var marketingAgreed: Bool?
-        var alert: Bool?
-        var contact: [Contact]?
-        
-        // 소셜/로그인 구분
         var email: String?
         var password: String?
+        var name: String?
+        var accountId: String?
+        var job: UserOccupation? 
+        var reason: UserReason?
+        var phone: String?
+        var marketingAgree: Bool?
+        var alarm: Bool?
+        var contact: [Contact]?
+        
+        // 소셜 로그인 구분용
         var socialType: SocialType?
     }
     
@@ -58,16 +57,17 @@ final class UserSignUpStorage {
 
 extension UserSignUpStorage.SignUpData {
     func toSignUpRequest() -> SignUpRequest {
+        
         return SignUpRequest(
             email: email,
-            password: socialType == .email ? password : "",
-            marketingAgree: marketingAgreed ?? false,
-            accountId: nickname ?? "",
+            password: socialType == .email ? password : nil,
+            marketingAgree: marketingAgree ?? false,
+            accountId: accountId ?? "",
             name: name ?? "",
-            job: (occupation ?? .employee).rawValue,
-            reason: (reason ?? .formHabits).rawValue,
-            phone: phoneNumber ?? "",
-            alarm: alert ?? false,
+            job: job ?? UserOccupation.employee,
+            reason: reason ?? UserReason.formHabits,
+            phone: phone ?? "",
+            alarm: alarm ?? false,
             contact: contact?.map { Contact(phone: $0.phone) } ?? []
         )
     }
