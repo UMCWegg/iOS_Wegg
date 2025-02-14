@@ -24,11 +24,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let loginViewController = LoginViewController()
         let navigationController = UINavigationController(rootViewController: loginViewController)
         navigationController.setNavigationBarHidden(true, animated: false)
-        
-        // 원하는 뷰 컨트롤러 파일의 이름을 작성
-        window?.rootViewController = PlaceVerificationViewController(
+        let verificationVC = PlaceVerificationViewController(
             mapManager: NaverMapManager()
         )
+        
+        // 원하는 뷰 컨트롤러 파일의 이름을 작성
+        window?.rootViewController = verificationVC
         window?.makeKeyAndVisible()
     }
     

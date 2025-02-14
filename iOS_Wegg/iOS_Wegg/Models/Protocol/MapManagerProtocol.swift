@@ -22,6 +22,18 @@ protocol MapManagerProtocol {
     func setTapGestureHandler(_ handler: @escaping (Coordinate) -> Void)
     func setLongTapGestureHandler(_ handler: @escaping (Coordinate) -> Void)
     func requestCurrentLocation()
-    func addMarker(at coordinate: Coordinate)
+    /// Wegg 아이콘 마커 생성
+    ///
+    /// - Parameters:
+    ///     - imageName: 커스텀 마커 이미지
+    ///     - width: 너비
+    ///     - height: 높이
+    ///     - coordinate: 좌표값
+    func addMarker(
+        imageName: String,
+        width: CGFloat,
+        height: CGFloat,
+        at coordinate: Coordinate
+    )
     func getVisibleBounds(sortBy: String?) -> HotPlaceRequest
 }

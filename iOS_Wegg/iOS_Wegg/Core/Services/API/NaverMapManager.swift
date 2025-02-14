@@ -123,11 +123,12 @@ class NaverMapManager:
         mapView?.isIndoorMapEnabled = isEnabled
     }
     
-    /// Wegg 아이콘 마커 생성
-    ///
-    /// - Parameters:
-    ///     - coordinate: 좌표값
-    func addMarker(at coordinate: Coordinate) {
+    func addMarker(
+        imageName: String,
+        width: CGFloat,
+        height: CGFloat,
+        at coordinate: Coordinate
+    ) {
         guard let mapView = mapView else { return }
         // 마커 위치 설정
         let markerPosition = NMGLatLng(
@@ -136,9 +137,9 @@ class NaverMapManager:
         )
         // 마커 생성
         let marker = NMFMarker(position: markerPosition)
-        marker.iconImage = NMFOverlayImage(name: "list_brown_icon")
-        marker.width = 28
-        marker.height = 40
+        marker.iconImage = NMFOverlayImage(name: imageName)
+        marker.width = width
+        marker.height = height
         marker.mapView = mapView // 마커 지도에 추가
     }
     
