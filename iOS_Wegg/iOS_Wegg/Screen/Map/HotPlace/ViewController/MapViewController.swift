@@ -232,8 +232,7 @@ class MapViewController:
             HotPlaceSectionModel(
                 header: HotPlaceHeaderModel(
                     title: hotplace.placeName,
-                    // TODO: 서버 측에서 카테고리 내용 업데이트 하면 `hotplace.placeLabel`로 변경
-                    category: "카페",
+                    category: hotplace.placeLabel,
                     verificationCount: "인증 \(hotplace.authCount)",
                     saveCount: "저장 \(hotplace.saveCount)"
                 ),

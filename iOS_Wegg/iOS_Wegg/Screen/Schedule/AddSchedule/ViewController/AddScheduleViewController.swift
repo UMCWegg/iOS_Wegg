@@ -20,6 +20,32 @@ class AddScheduleViewController: UIViewController {
         super.viewDidLoad()
 
         view = addScheduleView
+        
+        let apiManager = APIManager()
+        
+        apiManager.setCookie(
+            value: "871F290DD58CF91959E169A08F4B706D"
+        )
+        
+        // 지도 경계 좌표 가져오기
+        let request = ScheduleSearchRequest(
+            keyword: "스타벅스",
+            latitude: "37.60635",
+            longitude: "127.04425",
+            page: 0,
+            size: 15
+        )
+        
+        Task {
+            do {
+                let response: ScheduleSearchResponse = try await apiManager.request(
+                    target: ScheduleAPI.searchPlace(request: request)
+                )
+                print(response.result.placeList)
+            } catch {
+                print("❌ 실패: \(error)")
+            }
+        }
     }
     
     lazy var addScheduleView = AddScheduleView().then {
