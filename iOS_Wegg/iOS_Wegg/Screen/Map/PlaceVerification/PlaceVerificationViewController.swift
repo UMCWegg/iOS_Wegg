@@ -56,7 +56,8 @@ class PlaceVerificationViewController: UIViewController {
     }
     
     private func setupInfoMarker(image: UIImage) {
-        let coordinate = Coordinate(latitude: 37.604134, longitude: 127.039999)
+        // TODO: [25.02.14] 추후 공부 일정에 등록된 장소 위치로 변경 필요 - 작성자: 이재원
+        guard let coordinate = mapManager.getCurrentLocation() else { return }
 
         mapManager.addMarker(
             image: image,

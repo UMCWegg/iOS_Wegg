@@ -23,6 +23,7 @@ class NaverMapManager:
     private var locationManager: CLLocationManager?
     private var tapGestureHandler: ((Coordinate) -> Void)?
     private var longTapGestureHandler: ((Coordinate) -> Void)?
+    private var currentLocation: Coordinate?
     
     /// 지도 뷰를 특정 UIView에 초기화
     ///
@@ -202,6 +203,11 @@ class NaverMapManager:
             sortBy: sortBy ?? "distance"
         )
     }
+    
+    /// 현재 위치 getter
+    func getCurrentLocation() -> Coordinate? {
+        return currentLocation
+    }
 }
 
 // MARK: - Extension
@@ -245,6 +251,11 @@ extension NaverMapManager:
     ) {
         guard let location = locations.first else { return }
         moveCameraToLocation(location)
+        // 현재 위치 저장
+        currentLocation = Coordinate(
+            latitude: location.coordinate.latitude,
+            longitude: location.coordinate.longitude
+        )
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

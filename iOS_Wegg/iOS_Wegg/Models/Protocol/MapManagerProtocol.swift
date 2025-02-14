@@ -36,5 +36,8 @@ protocol MapManagerProtocol {
         height: CGFloat,
         at coordinate: Coordinate
     )
+    /// 지도의 카메라 기준으로 경계값 가져옴
     func getVisibleBounds(sortBy: String?) -> HotPlaceRequest
+    /// 현재 위치 getter
+    func getCurrentLocation() -> Coordinate?
 }
