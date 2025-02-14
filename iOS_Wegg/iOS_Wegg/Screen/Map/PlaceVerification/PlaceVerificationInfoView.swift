@@ -111,14 +111,14 @@ class PlaceVerificationInfoView: UIView {
         
         verificationInfoView.addSubview(titleStackView)
         verificationInfoView.addSubview(subtitleLabel)
-        
-        verificationInfoView.snp.makeConstraints { make in
-            make.width.equalTo(300)
-            make.height.equalTo(77)
-        }
     }
     
     private func constraints() {
+        verificationInfoView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.width.equalTo(300)
+            make.height.equalTo(77)
+        }
         titleStackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(19)
             make.centerX.equalToSuperview()

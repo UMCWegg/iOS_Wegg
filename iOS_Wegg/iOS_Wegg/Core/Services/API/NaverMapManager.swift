@@ -130,17 +130,55 @@ class NaverMapManager:
         at coordinate: Coordinate
     ) {
         guard let mapView = mapView else { return }
-        // 마커 위치 설정
-        let markerPosition = NMGLatLng(
+        
+        let marker = createMarker(
+            icon: NMFOverlayImage(name: imageName),
+            width: width,
+            height: height,
+            at: coordinate
+        )
+        
+        marker.mapView = mapView
+    }
+    
+    func addMarker(
+        image: UIImage,
+        width: CGFloat,
+        height: CGFloat,
+        at coordinate: Coordinate
+    ) {
+        guard let mapView = mapView else {
+            print("NaverMapManager's addMarker: 지도 로드 실패")
+            return
+        }
+        
+        let marker = createMarker(
+            icon: NMFOverlayImage(image: image),
+            width: width,
+            height: height,
+            at: coordinate
+        )
+        
+        marker.mapView = mapView
+        print("✅ 마커 추가됨: \(coordinate.latitude), \(coordinate.longitude)")
+    }
+    
+    /// 내부적으로 마커 생성하는 공통 함수
+    private func createMarker(
+        icon: NMFOverlayImage,
+        width: CGFloat,
+        height: CGFloat,
+        at coordinate: Coordinate
+    ) -> NMFMarker {
+        let marker = NMFMarker()
+        marker.position = NMGLatLng(
             lat: coordinate.latitude,
             lng: coordinate.longitude
         )
-        // 마커 생성
-        let marker = NMFMarker(position: markerPosition)
-        marker.iconImage = NMFOverlayImage(name: imageName)
+        marker.iconImage = icon
         marker.width = width
         marker.height = height
-        marker.mapView = mapView // 마커 지도에 추가
+        return marker
     }
     
     /// 지도의 카메라 기준으로 경계값 가져옴
@@ -148,7 +186,7 @@ class NaverMapManager:
         sortBy: String?
     ) -> HotPlaceRequest {
         guard let mapView = mapView else {
-            fatalError("getVisibleBounds: 지도 로드 실패")
+            fatalError("NaverMapManager: 지도 로드 실패")
         }
         let bounds = mapView.contentBounds
         let southWest = bounds.southWest // 남서쪽 좌표

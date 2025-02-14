@@ -37,7 +37,12 @@ class PlaceVerificationOverlayView: UIView {
     
     // MARK: - Property
     
-    private lazy var placeVerificationInfoView = PlaceVerificationInfoView()
+    lazy var placeVerificationInfoView = PlaceVerificationInfoView().then {
+        $0.snp.makeConstraints { make in
+            make.width.equalTo(300)
+            make.height.equalTo(140)
+        }
+    }
     
     private lazy var verificationButton = makeButton("인증하기").then {
         $0.layer.cornerRadius = 26
@@ -75,6 +80,7 @@ private extension PlaceVerificationOverlayView {
     }
     
     func addComponenets() {
+        addSubview(placeVerificationInfoView)
         addSubview(verificationButton)
     }
     
