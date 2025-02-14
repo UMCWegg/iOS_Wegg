@@ -50,7 +50,7 @@ class OccupationInputViewController: UIViewController {
         guard let occupationType = UserOccupation(rawValue: occupation) else { return }
         
         UserSignUpStorage.shared.update { data in
-            data.occupation = occupationType
+            data.job = occupationType
         }
     }
     

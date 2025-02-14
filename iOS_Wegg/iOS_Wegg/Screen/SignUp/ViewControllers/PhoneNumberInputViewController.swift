@@ -43,7 +43,7 @@ class PhoneNumberInputViewController: UIViewController {
                 "\(phoneNumberInputView.thirdTextField.text ?? "")"
         
         UserSignUpStorage.shared.update { data in
-            data.phoneNumber = phoneNumber
+            data.phone = phoneNumber
         }
         
         let phoneNumberVerificationVC = PhoneNumberVerificationViewController()

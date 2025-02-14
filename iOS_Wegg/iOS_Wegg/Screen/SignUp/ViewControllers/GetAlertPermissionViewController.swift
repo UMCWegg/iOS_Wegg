@@ -46,7 +46,7 @@ class GetAlertPermissionViewController: UIViewController {
         ) { [weak self] granted, _ in
             DispatchQueue.main.async {
                 UserSignUpStorage.shared.update { data in
-                    data.alert = granted
+                    data.alarm = granted
                 }
                 self?.nextButtonTapped()
             }

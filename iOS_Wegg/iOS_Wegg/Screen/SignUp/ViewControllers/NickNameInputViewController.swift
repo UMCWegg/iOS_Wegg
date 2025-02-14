@@ -39,7 +39,7 @@ class NickNameInputViewController: UIViewController {
         guard let nickName = nickNameInputView.nickNameTextField.text else { return }
         
         UserSignUpStorage.shared.update { data in
-            data.nickname = nickName
+            data.accountId = nickName
         }
         
         let occupationInputVC = OccupationInputViewController()

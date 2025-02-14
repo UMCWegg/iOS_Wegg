@@ -12,8 +12,8 @@ struct SignUpRequest: Codable {
     let marketingAgree: Bool
     let accountId: String
     let name: String
-    let job: String
-    let reason: String
+    let job: UserOccupation
+    let reason: UserReason
     let phone: String
     let alarm: Bool
     let contact: [Contact]?
