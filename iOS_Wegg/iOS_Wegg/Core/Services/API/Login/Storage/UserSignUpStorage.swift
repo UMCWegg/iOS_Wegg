@@ -28,7 +28,6 @@ final class UserSignUpStorage {
         // 소셜/로그인 구분
         var email: String?
         var password: String?
-        var oauthID: String?
         var socialType: SocialType?
     }
     
@@ -60,9 +59,8 @@ final class UserSignUpStorage {
 extension UserSignUpStorage.SignUpData {
     func toSignUpRequest() -> SignUpRequest {
         return SignUpRequest(
-            oauthId: oauthID ?? "",
-            email: socialType == .email ? email : nil,
-            password: socialType == .email ? password : nil,
+            email: email,
+            password: socialType == .email ? password : "",
             marketingAgree: marketingAgreed ?? false,
             accountId: nickname ?? "",
             name: name ?? "",

@@ -55,7 +55,6 @@ class SignUpViewController: UIViewController {
                 UserSignUpStorage.shared.update { data in
                     data.socialType = .google
                     data.email = email
-                    data.oauthID = email
                 }
                 
                 // 서비스 동의 화면으로 이동
@@ -74,11 +73,11 @@ class SignUpViewController: UIViewController {
                 case .failure(let error):
                     print("Kakao login failed: \(error)")
                 }
-            } receiveValue: { id in
+            } receiveValue: { email in
                 // 회원가입 데이터 저장
                 UserSignUpStorage.shared.update { data in
                     data.socialType = .kakao
-                    data.oauthID = "K\(id)"  // K prefix 추가
+                    data.email = "K\(email)@daum.net"
                 }
                 
                 // 서비스 동의 화면으로 이동

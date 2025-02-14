@@ -21,7 +21,7 @@ struct SignUpRequest: Codable {
     let reason: String
     let phone: String
     let alarm: Bool
-    let contact: [Contact]
+    let contact: [Contact]?
     
     enum CodingKeys: String, CodingKey {
         case oauthId = "oauth_id"
@@ -39,8 +39,7 @@ struct SignUpRequest: Codable {
 }
 
 struct SocialSignUpRequest: Codable {
-    let oauthId: String
-    let type: SocialType  // google/kakao 구분 필요
+    let email: String
     let name: String
     let accountId: String
     let marketingAgree: Bool
@@ -48,5 +47,22 @@ struct SocialSignUpRequest: Codable {
     let alarm: Bool
     let job: String
     let reason: String
-    let contact: [Contact]
+    let contact: [Contact]?
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(email, forKey: .email)
+        try container.encode(name, forKey: .name)
+        try container.encode(accountId, forKey: .accountId)
+        try container.encode(marketingAgree, forKey: .marketingAgree)
+        try container.encode(phone, forKey: .phone)
+        try container.encode(alarm, forKey: .alarm)
+        try container.encode(job, forKey: .job)
+        try container.encode(reason, forKey: .reason)
+        
+        // contact가 비어있으면 null로 인코딩
+        if let contact = contact, !contact.isEmpty {
+            try container.encode(contact, forKey: .contact)
+        }
+    }
 }
