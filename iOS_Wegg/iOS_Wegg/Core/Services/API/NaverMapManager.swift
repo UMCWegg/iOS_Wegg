@@ -161,7 +161,6 @@ class NaverMapManager:
         )
         
         marker.mapView = mapView
-        print("✅ 마커 추가됨: \(coordinate.latitude), \(coordinate.longitude)")
     }
     
     /// 내부적으로 마커 생성하는 공통 함수

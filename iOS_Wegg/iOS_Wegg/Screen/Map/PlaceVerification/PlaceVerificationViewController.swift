@@ -75,9 +75,23 @@ class PlaceVerificationViewController: UIViewController {
 extension PlaceVerificationViewController: PlaceVerificationOverlayViewDelegate {
     // 인증하기 버튼 누르면 인증 성공 여부 검사 후 메인으로 이동
     func didTapVerificationButton() {
-        let mainVC = MainTabBarController()
-        mainVC.modalPresentationStyle = .fullScreen
-        present(mainVC, animated: true)
+        // [25.02.14] 추후 공부 일정에 등록된 장소 위치와 현재 위치 비교하는 로직 추가 필요
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+            // alertVC가 닫힌 후 실행되도록 수정
+            self.dismiss(animated: true) {
+                let mainVC = MainTabBarController()
+                mainVC.modalPresentationStyle = .fullScreen
+                self.present(mainVC, animated: true)
+            }
+        }
+        
+        let alertVC = UIAlertController(
+            title: "인증 성공!!",
+            message: nil,
+            preferredStyle: .alert
+        )
+        alertVC.addAction(confirmAction)
+        present(alertVC, animated: true)
     }
     
 }
