@@ -22,74 +22,55 @@ final class AuthService {
     
     // MARK: - Functions
     
-    func signUp(with request: SignUpRequest) -> AnyPublisher<SignUpResponse, Error> {
-        publisher(.signUp(request))
+    func signUp(with request: SignUpRequest) async throws -> SignUpResponse {
+        try await request(.signUp(request))
     }
     
-    func login(with request: LoginRequest) -> AnyPublisher<LoginResponse, Error> {
-        publisher(.login(request))
+    func login(with request: LoginRequest) async throws -> LoginResponse {
+        try await request(.login(request))
     }
     
-    func socialLogin(
-        type: SocialType,
-        token: String,
-        oauthID: String) -> AnyPublisher<LoginResponse, Error> {
+    func socialLogin(type: SocialType, token: String, oauthID: String) async throws -> LoginResponse {
         let processedToken = type == .kakao ? "K\(token)" : token
-        return publisher(.socialLogin(type, processedToken, oauthID))
+        return try await request(.socialLogin(type, processedToken, oauthID))
     }
     
-    func logout() -> AnyPublisher<Void, Error> {
-        provider.requestPublisher(.logout)
-            .filterSuccessfulStatusCodes()
-            .map { _ in }
-            .mapError { error in
-                if let moyaError = error as? MoyaError {
-                    switch moyaError {
-                    case .statusCode:
-                        return AuthError.serverError
-                    default:
-                        return error
-                    }
-                }
-                return error
-            }
-            .eraseToAnyPublisher()
+    func logout() async throws {
+        try await request(.logout)
     }
     
-    func verifyEmail(_ email: String) -> AnyPublisher<VerificationResponse, Error> {
-        publisher(.verifyEmail(email))
+    func verifyEmail(_ email: String) async throws -> VerificationResponse {
+        try await request(.verifyEmail(email))
     }
     
-    func verifyPhone(_ phone: String) -> AnyPublisher<VerificationResponse, Error> {
-        publisher(.verifyPhone(phone))
+    func verifyPhone(_ phone: String) async throws -> VerificationResponse {
+        try await request(.verifyPhone(phone))
     }
     
-    func checkVerificationNumber(_ number: String) -> AnyPublisher<VerificationResponse, Error> {
-        publisher(.verificationNum(number))
+    func checkVerificationNumber(_ number: String) async throws -> VerificationResponse {
+        try await request(.verificationNum(number))
     }
     
-    func checkAccountId(_ id: String) -> AnyPublisher<VerificationResponse, Error> {
-        publisher(.idCheck(id))
+    func checkAccountId(_ id: String) async throws -> VerificationResponse {
+        try await request(.idCheck(id))
     }
 
-    private func publisher<T: Decodable>(_ target: APIEndpoint) -> AnyPublisher<T, Error> {
-        return provider.requestPublisher(target)
-            .filterSuccessfulStatusCodes()
-            .tryMap { response -> T in
-                try response.map(T.self, using: JSONDecoder())
-            }
-            .mapError { error in
-                if let moyaError = error as? MoyaError {
-                    switch moyaError {
-                    case .statusCode:
-                        return AuthError.serverError
-                    default:
-                        return error
+    private func request<T: Decodable>(_ target: APIEndpoint) async throws -> T {
+        return try await withCheckedThrowingContinuation { continuation in
+            provider.request(target) { result in
+                switch result {
+                case .success(let response):
+                    do {
+                        let decodedResponse = try response.map(T.self)
+                        continuation.resume(returning: decodedResponse)
+                    } catch {
+                        continuation.resume(throwing: AuthError.serverError)
                     }
+                case .failure:
+                    continuation.resume(throwing: AuthError.serverError)
                 }
-                return error
             }
-            .eraseToAnyPublisher()
+        }
     }
 
 }

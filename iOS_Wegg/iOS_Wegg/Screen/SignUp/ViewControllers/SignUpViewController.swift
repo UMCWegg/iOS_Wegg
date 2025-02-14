@@ -42,56 +42,39 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func googleLoginButtonTapped() {
-        GoogleLoginManager.shared.requestSignUp(from: self)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("Google login failed: \(error)")
-                }
-            } receiveValue: { email in
-                // 회원가입 데이터 저장
+        Task {
+            do {
+                let email = try await GoogleLoginManager.shared.requestSignUp(from: self)
                 UserSignUpStorage.shared.update { data in
-                    data.socialType = .google
                     data.email = email
                 }
                 
-                // 서비스 동의 화면으로 이동
                 let serviceAgreementVC = ServiceAgreementViewController()
-                self.navigationController?.pushViewController(serviceAgreementVC, animated: true)
+                navigationController?.pushViewController(serviceAgreementVC, animated: true)
+            } catch {
+                print("Google signup failed: \(error)")
             }
-            .store(in: &cancellables)
+        }
     }
     
     @objc private func kakaoLoginButtonTapped() {
-        KakaoLoginManager.shared.requestSignUp()
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("Kakao login failed: \(error)")
-                }
-            } receiveValue: { email in
-                // 회원가입 데이터 저장
+        Task {
+            do {
+                let email = try await KakaoLoginManager.shared.requestSignUp()
                 UserSignUpStorage.shared.update { data in
                     data.socialType = .kakao
                     data.email = "K\(email)@daum.net"
                 }
                 
-                // 서비스 동의 화면으로 이동
                 let serviceAgreementVC = ServiceAgreementViewController()
-                self.navigationController?.pushViewController(serviceAgreementVC, animated: true)
+                navigationController?.pushViewController(serviceAgreementVC, animated: true)
+            } catch {
+                print("Kakao signup failed: \(error)")
             }
-            .store(in: &cancellables)
+        }
     }
     
     @objc private func emailLoginButtonTapped() {
-        UserSignUpStorage.shared.update { data in
-            data.socialType = .email
-        }
-        
         let emailSignUpVC = EmailSignUpViewController()
         navigationController?.pushViewController(emailSignUpVC, animated: true)
     }

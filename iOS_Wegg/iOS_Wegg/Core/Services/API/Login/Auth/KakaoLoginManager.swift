@@ -7,85 +7,54 @@
 
 import Foundation
 
-import Combine
 import KakaoSDKAuth
 import KakaoSDKUser
 
 final class KakaoLoginManager {
     static let shared = KakaoLoginManager()
-
-    // 회원가입
-    func requestSignUp() -> AnyPublisher<String, Error> {
-        Future { promise in
-            if UserApi.isKakaoTalkLoginAvailable() {
-                self.signUpWithApp { result in
-                    promise(result)
-                }
-            } else {
-                self.signUpWithWeb { result in
-                    promise(result)
-                }
-            }
-        }.eraseToAnyPublisher()
-    }
     
-    // 로그인
-    func requestLogin() -> AnyPublisher<String, Error> {
-        Future { promise in
-            if UserApi.isKakaoTalkLoginAvailable() {
-                self.loginWithApp { result in
-                    promise(result)
-                }
-            } else {
-                self.loginWithWeb { result in
-                    promise(result)
-                }
-            }
-        }.eraseToAnyPublisher()
-    }
-    
-    private func signUpWithApp(completion: @escaping (Result<String, Error>) -> Void) {
-        UserApi.shared.loginWithKakaoTalk { oauthToken, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            self.getSignUpUserInfo(oauthToken: oauthToken, completion: completion)
+    func requestSignUp() async throws -> String {
+        if UserApi.isKakaoTalkLoginAvailable() {
+            return try await signUpWithApp()
+        } else {
+            return try await signUpWithWeb()
         }
     }
     
-    private func signUpWithWeb(completion: @escaping (Result<String, Error>) -> Void) {
-        UserApi.shared.loginWithKakaoAccount { oauthToken, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            self.getSignUpUserInfo(oauthToken: oauthToken, completion: completion)
-        }
-    }
-    
-    private func loginWithApp(completion: @escaping (Result<String, Error>) -> Void) {
-        UserApi.shared.loginWithKakaoTalk { oauthToken, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            self.getUserInfo(oauthToken: oauthToken) { result in
-                completion(result)
+    private func signUpWithApp() async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            UserApi.shared.loginWithKakaoTalk { [weak self] oauthToken, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                self?.getSignUpUserInfo(oauthToken: oauthToken) { result in
+                    switch result {
+                    case .success(let email):
+                        continuation.resume(returning: email)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                }
             }
         }
     }
     
-    private func loginWithWeb(completion: @escaping (Result<String, Error>) -> Void) {
-        UserApi.shared.loginWithKakaoAccount { oauthToken, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            self.getUserInfo(oauthToken: oauthToken) { result in
-                completion(result)
+    private func signUpWithWeb() async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            UserApi.shared.loginWithKakaoAccount { [weak self] oauthToken, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                self?.getSignUpUserInfo(oauthToken: oauthToken) { result in
+                    switch result {
+                    case .success(let email):
+                        continuation.resume(returning: email)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                }
             }
         }
     }

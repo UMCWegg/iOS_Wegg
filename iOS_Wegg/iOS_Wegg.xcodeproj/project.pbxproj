@@ -76,6 +76,7 @@
 		DED22CEB2D5F7F7F003245C8 /* UploadResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadResponse.swift; sourceTree = "<group>"; };
 		DED22CFD2D5FA108003245C8 /* SignUpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRequest.swift; sourceTree = "<group>"; };
 		DED22CFE2D5FA108003245C8 /* SignUpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpResponse.swift; sourceTree = "<group>"; };
+		DED22D022D5FA9F4003245C8 /* VerificationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationResponse.swift; sourceTree = "<group>"; };
 		FF2E3C922D5B1C2900A09A16 /* ScheduleSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearchRequest.swift; sourceTree = "<group>"; };
 		FF79855D2D5A86510055B370 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		FF79855E2D5A86510055B370 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
@@ -444,6 +445,7 @@
 		DED22CFF2D5FA108003245C8 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				DED22D022D5FA9F4003245C8 /* VerificationResponse.swift */,
 				DED22CFD2D5FA108003245C8 /* SignUpRequest.swift */,
 				DED22CFE2D5FA108003245C8 /* SignUpResponse.swift */,
 			);

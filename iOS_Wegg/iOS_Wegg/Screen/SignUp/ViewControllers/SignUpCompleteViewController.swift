@@ -40,56 +40,19 @@ class SignUpCompleteViewController: UIViewController {
     @objc private func nextButtonTapped() {
         guard let signUpData = UserSignUpStorage.shared.get() else { return }
         
-        if let socialType = signUpData.socialType,
-           (socialType == .google || socialType == .kakao) {
-            // 소셜 회원가입
-            let socialRequest = SocialSignUpRequest(
-                email: signUpData.email ?? "",
-                name: signUpData.name ?? "",
-                accountId: signUpData.nickname ?? "",
-                marketingAgree: signUpData.marketingAgreed ?? false,
-                phone: signUpData.phoneNumber ?? "",
-                alarm: signUpData.alert ?? false,
-                job: (signUpData.occupation ?? .employee).rawValue,
-                reason: (signUpData.reason ?? .formHabits).rawValue,
-                contact: [Contact(phone: "00000000000")]
-            )
-            
-            NetworkService.shared.request(.socialSignUp(socialRequest))
-            { [weak self] (result: Result<SignUpResponse, NetworkError>) in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let response):
-                        if response.isSuccess {
-                            self?.handleSignUpSuccess()
-                        } else {
-                            print("Social sign up failed:", response.message)
-                            // 에러 처리 (alert 등)
-                        }
-                    case .failure(let error):
-                        print("Social sign up error:", error)
-                        // 에러 처리 (alert 등)
+        Task {
+            do {
+                let request = signUpData.toSignUpRequest()
+                let response = try await AuthService.shared.signUp(with: request)
+                if response.isSuccess {
+                    await MainActor.run {
+                        handleSignUpSuccess()
                     }
                 }
-            }
-        } else {
-            // 일반 회원가입
-            let request = signUpData.toSignUpRequest()
-            NetworkService.shared.request(.signUp(request))
-            { [weak self] (result: Result<SignUpResponse, NetworkError>) in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let response):
-                        if response.isSuccess {
-                            self?.handleSignUpSuccess()
-                        } else {
-                            print("Sign up failed:", response.message)
-                            // 에러 처리 (alert 등)
-                        }
-                    case .failure(let error):
-                        print("Sign up error:", error)
-                        // 에러 처리 (alert 등)
-                    }
+            } catch {
+                print("Sign up error: \(error)")
+                await MainActor.run {
+                    showError(error.localizedDescription)
                 }
             }
         }
