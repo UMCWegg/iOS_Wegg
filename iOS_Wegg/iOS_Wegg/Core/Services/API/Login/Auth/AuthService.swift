@@ -8,8 +8,6 @@
 import Foundation
 
 import Alamofire
-import Combine
-import CombineMoya
 import Moya
 
 final class AuthService {
@@ -28,9 +26,6 @@ final class AuthService {
         publisher(.signUp(request))
     }
     
-    func socialSignUp(request: SocialSignUpRequest) -> AnyPublisher<SignUpResponse, Error> {
-        publisher(.socialSignUp(request))
-    }
     func login(with request: LoginRequest) -> AnyPublisher<LoginResponse, Error> {
         publisher(.login(request))
     }

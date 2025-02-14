@@ -99,12 +99,12 @@ final class KakaoLoginManager {
                     return
                 }
                 
-                guard let id = user?.id else {
+                guard let email = user?.kakaoAccount?.email else {
                     completion(.failure(LoginError.userNotFound))
                     return
                 }
                 
-                completion(.success(String(id)))
+                completion(.success(email))
         }
     }
 
@@ -123,8 +123,7 @@ final class KakaoLoginManager {
                 }
                 
                 UserDefaultsManager.shared.saveKakaoData(
-                    token: oauthToken?.accessToken ?? "",
-                    id: String(id)
+                    email: String(id)
                 )
                 completion(.success(String(id)))
             }

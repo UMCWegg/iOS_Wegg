@@ -2,19 +2,25 @@
 //  SignUpResponse.swift
 //  iOS_Wegg
 //
-//  Created by 이건수 on 2025.02.10.
+//  Created by 이건수 on 2025.02.01.
 //
 
-import Foundation
-
-struct SignUpResponse: AuthResponse {
-    let accessToken: String
-    let refreshToken: String?
-    let user: BaseUser
+struct SignUpResponse: Codable {
+    let isSuccess: Bool
+    let code: String
+    let message: String
+    let result: [String]
     
     enum CodingKeys: String, CodingKey {
-        case accessToken = "access_token"
-        case refreshToken = "refresh_token"
-        case user
+        case isSuccess
+        case code
+        case message
+        case result
     }
+}
+
+struct SignUpResult: Codable {
+    let userId: Int
+    let createdAt: String
+    let contactFriends: [String]
 }

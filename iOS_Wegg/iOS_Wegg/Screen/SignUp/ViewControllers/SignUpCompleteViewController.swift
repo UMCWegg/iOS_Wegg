@@ -44,7 +44,7 @@ class SignUpCompleteViewController: UIViewController {
            (socialType == .google || socialType == .kakao) {
             // 소셜 회원가입
             let socialRequest = SocialSignUpRequest(
-                oauthId: signUpData.oauthID ?? "",
+                email: signUpData.email ?? "",
                 name: signUpData.name ?? "",
                 accountId: signUpData.nickname ?? "",
                 marketingAgree: signUpData.marketingAgreed ?? false,
@@ -52,8 +52,7 @@ class SignUpCompleteViewController: UIViewController {
                 alarm: signUpData.alert ?? false,
                 job: (signUpData.occupation ?? .employee).rawValue,
                 reason: (signUpData.reason ?? .formHabits).rawValue,
-                contact: [Contact(phone: "00000000000")],
-                password: ""
+                contact: [Contact(phone: "00000000000")]
             )
             
             NetworkService.shared.request(.socialSignUp(socialRequest))
