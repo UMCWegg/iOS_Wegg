@@ -95,16 +95,6 @@ final class LoginManager {
         return try await authService.login(request: request)
     }
     
-    private func handleEmailLogin(email: String?, password: String?) async throws -> LoginResponse {
-        guard let email = email, let password = password else {
-            throw NSError(domain: "LoginError",
-                          code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "Email and password are required"])
-        }
-        
-        return try await emailLoginManager.login(email: email, password: password)
-    }
-    
     private func handleLoginResponse(_ response: LoginResponse) {
         switch response.type {
         case .google:
