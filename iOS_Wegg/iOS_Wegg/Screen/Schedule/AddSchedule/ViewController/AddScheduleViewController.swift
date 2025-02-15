@@ -23,14 +23,11 @@ class AddScheduleViewController: UIViewController {
         view = addScheduleView
         
         apiManager = APIManager()
-        fetchSearchPlace(
-            keyword: "스타벅스",
-            at: Coordinate(latitude: 37.60635, longitude: 127.04425)
-        )
     }
     
     lazy var addScheduleView = AddScheduleView().then {
         $0.gestureDelegate = self
+        $0.placeSearchBar.delegate = self
     }
     
     /// 장소 검색 API 가져오는 함수
@@ -72,6 +69,25 @@ class AddScheduleViewController: UIViewController {
         }
     }
 
+}
+
+extension AddScheduleViewController: UISearchBarDelegate {
+    
+    /// 검색 내용 리턴
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
+        print("searchBarText: \(searchText)")
+        fetchSearchPlace(
+            keyword: searchText,
+            at: Coordinate(latitude: 37.60635, longitude: 127.04425)
+        )
+        searchBar.text = ""
+    }
+    
+//    /// 검색 내용 변화 리턴
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        print("현재 검색어: \(searchText)")
+//    }
 }
 
 extension AddScheduleViewController: AddScheduleGestureDelegate {
