@@ -234,6 +234,12 @@ class AddScheduleView: UIView {
     @objc private func handleChangeDateButton() {
         gestureDelegate?.didChangeDate(Date())
     }
+    
+    /// 키보드 내리는 핸들러
+    @objc private func handleDismissKeyboard() {
+        endEditing(true)
+        toggleSearchResultList(true)
+    }
 }
 
 // MARK: - Setup UI
@@ -258,6 +264,15 @@ private extension AddScheduleView {
             action: #selector(handleChangeDateButton),
             for: .touchUpInside
         )
+        
+        // 키보드 내리는 제스처 추가
+        let dismissKeyboardGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handleDismissKeyboard)
+        )
+        dismissKeyboardGesture.cancelsTouchesInView = false
+        addGestureRecognizer(dismissKeyboardGesture)
+        
     }
     
     func setupStackView() {

@@ -43,6 +43,14 @@ class AddScheduleViewController: UIViewController {
         $0.gestureDelegate = self
         $0.placeSearchBar.delegate = self
         $0.searchResultListView.tableView.delegate = addScheduleSearchTableHandler
+        // 뷰에서 만든 제스처의 딜리게이트를 컨트롤러에서 설정
+        if let gestures = $0.gestureRecognizers {
+            for gesture in gestures {
+                if let tapGesture = gesture as? UITapGestureRecognizer {
+                    tapGesture.delegate = self
+                }
+            }
+        }
     }
     
     /// 장소 검색 API 가져오는 함수
@@ -147,4 +155,17 @@ extension AddScheduleViewController: AddScheduleGestureDelegate {
         print("didChangeDate")
     }
     
+}
+
+extension AddScheduleViewController: UIGestureRecognizerDelegate {
+    // 특정 뷰(예: 검색 결과 테이블 뷰)를 탭할 때 키보드가 내려가지 않도록 예외 처리
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch
+    ) -> Bool {
+        if touch.view is UITableView {
+            return false // 검색 결과 테이블 뷰를 탭할 경우 키보드 유지
+        }
+        return true
+    }
 }
