@@ -14,12 +14,13 @@ final class GoogleLoginManager {
     static let shared = GoogleLoginManager()
     private let googleService = GoogleService.shared
     
-    func requestSignUp(from viewController: UIViewController) async throws -> String {
+    func requestSignUp(from viewController: UIViewController) async throws
+    -> (email: String, token: String) {
         try await withCheckedThrowingContinuation { continuation in
             self.googleService.signIn(presenting: viewController) { result in
                 switch result {
-                case .success((let email, _)):
-                    continuation.resume(returning: email)
+                case .success((let email, let token)):
+                    continuation.resume(returning: (email: email, token: token))
                 case .failure(let error):
                     continuation.resume(throwing: error)
                 }

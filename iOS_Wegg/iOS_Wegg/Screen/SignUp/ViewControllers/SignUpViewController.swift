@@ -44,9 +44,12 @@ class SignUpViewController: UIViewController {
     @objc private func googleLoginButtonTapped() {
         Task {
             do {
-                let email = try await GoogleLoginManager.shared.requestSignUp(from: self)
+                let (email, token) = try await GoogleLoginManager.shared.requestSignUp(from: self)
+                
                 UserSignUpStorage.shared.update { data in
+                    data.socialType = .google
                     data.email = email
+                    data.accessToken = token
                 }
                 
                 let serviceAgreementVC = ServiceAgreementViewController()
@@ -60,10 +63,12 @@ class SignUpViewController: UIViewController {
     @objc private func kakaoLoginButtonTapped() {
         Task {
             do {
-                let email = try await KakaoLoginManager.shared.requestSignUp()
+                let (id, token) = try await KakaoLoginManager.shared.requestSignUp()
+                
                 UserSignUpStorage.shared.update { data in
                     data.socialType = .kakao
-                    data.email = "K\(email)@daum.net"
+                    data.email = "K\(id)@daum.net"
+                    data.accessToken = token
                 }
                 
                 let serviceAgreementVC = ServiceAgreementViewController()

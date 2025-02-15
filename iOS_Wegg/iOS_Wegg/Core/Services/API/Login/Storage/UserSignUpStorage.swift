@@ -28,6 +28,7 @@ final class UserSignUpStorage {
         
         // 소셜 로그인 구분용
         var socialType: SocialType?
+        var accessToken: String?
     }
     
     func save(_ data: SignUpData) {
@@ -67,7 +68,9 @@ extension UserSignUpStorage.SignUpData {
             reason: reason ?? UserReason.formHabits,
             phone: phone ?? "",
             alarm: alarm ?? false,
-            contact: contact?.map { Contact(phone: $0.phone) } ?? []
+            contact: contact?.map { Contact(phone: $0.phone) } ?? [],
+            socialType: socialType,
+            accessToken: accessToken
         )
     }
 }

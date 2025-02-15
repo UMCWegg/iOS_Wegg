@@ -11,9 +11,9 @@ import KakaoSDKAuth
 import KakaoSDKUser
 
 final class KakaoLoginManager {
-    static let shared = KakaoLoginManager()
+    @MainActor static let shared = KakaoLoginManager()
     
-    func requestSignUp() async throws -> String {
+    func requestSignUp() async throws -> (id: String, token: String) {
         if UserApi.isKakaoTalkLoginAvailable() {
             return try await signUpWithApp()
         } else {
@@ -21,7 +21,7 @@ final class KakaoLoginManager {
         }
     }
     
-    private func signUpWithApp() async throws -> String {
+    private func signUpWithApp() async throws -> (id: String, token: String) {
         try await withCheckedThrowingContinuation { continuation in
             UserApi.shared.loginWithKakaoTalk { [weak self] oauthToken, error in
                 if let error = error {
@@ -30,8 +30,8 @@ final class KakaoLoginManager {
                 }
                 self?.getSignUpUserInfo(oauthToken: oauthToken) { result in
                     switch result {
-                    case .success(let email):
-                        continuation.resume(returning: email)
+                    case .success((let id, let token)):
+                        continuation.resume(returning: (id: id, token: token))
                     case .failure(let error):
                         continuation.resume(throwing: error)
                     }
@@ -40,7 +40,7 @@ final class KakaoLoginManager {
         }
     }
     
-    private func signUpWithWeb() async throws -> String {
+    private func signUpWithWeb() async throws -> (id: String, token: String) {
         try await withCheckedThrowingContinuation { continuation in
             UserApi.shared.loginWithKakaoAccount { [weak self] oauthToken, error in
                 if let error = error {
@@ -49,8 +49,8 @@ final class KakaoLoginManager {
                 }
                 self?.getSignUpUserInfo(oauthToken: oauthToken) { result in
                     switch result {
-                    case .success(let email):
-                        continuation.resume(returning: email)
+                    case .success((let id, let token)):
+                        continuation.resume(returning: (id: id, token: token))
                     case .failure(let error):
                         continuation.resume(throwing: error)
                     }
@@ -61,25 +61,7 @@ final class KakaoLoginManager {
     
     private func getSignUpUserInfo(
         oauthToken: OAuthToken?,
-        completion: @escaping (Result<String, Error>) -> Void) {
-            UserApi.shared.me { user, error in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-                
-                guard let email = user?.kakaoAccount?.email else {
-                    completion(.failure(LoginError.userNotFound))
-                    return
-                }
-                
-                completion(.success(email))
-        }
-    }
-
-    private func getUserInfo(
-        oauthToken: OAuthToken?,
-        completion: @escaping (Result<String, Error>) -> Void) {
+        completion: @escaping (Result<(String, String), Error>) -> Void) {
             UserApi.shared.me { user, error in
                 if let error = error {
                     completion(.failure(error))
@@ -91,20 +73,25 @@ final class KakaoLoginManager {
                     return
                 }
                 
-                UserDefaultsManager.shared.saveKakaoData(
-                    email: String(id)
-                )
-                completion(.success(String(id)))
+                guard let token = oauthToken?.accessToken else {
+                    completion(.failure(LoginError.tokenNotFound))
+                    return
+                }
+                
+                completion(.success((String(id), token)))
             }
-        }
+    }
     
     enum LoginError: LocalizedError {
         case userNotFound
+        case tokenNotFound
         
         var errorDescription: String? {
             switch self {
             case .userNotFound:
                 return "사용자를 찾을 수 없습니다"
+            case .tokenNotFound:
+                return "토큰을 찾을 수 없습니다"
             }
         }
     }
