@@ -17,7 +17,17 @@ protocol AddScheduleGestureDelegate: AnyObject {
 class AddScheduleViewController: UIViewController {
     
     private var apiManager: APIManager?
-
+    private var mapManager: MapManagerProtocol?
+    
+    init(mapManager: MapManagerProtocol) {
+        self.mapManager = mapManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = addScheduleView
@@ -77,17 +87,20 @@ extension AddScheduleViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
         print("searchBarText: \(searchText)")
-        fetchSearchPlace(
-            keyword: searchText,
-            at: Coordinate(latitude: 37.60635, longitude: 127.04425)
-        )
         searchBar.text = ""
     }
     
-//    /// 검색 내용 변화 리턴
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        print("현재 검색어: \(searchText)")
-//    }
+    /// 검색 내용 변화 리턴
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // 실시간 검색
+        print("현재 검색어: \(searchText)")
+        // TODO: [25.02.15] 실제 현재 위치 mapManager 통해서 가져오기 - 작성자: 이재원
+        let currentLocation: Coordinate = Coordinate(latitude: 37.60635, longitude: 127.04425)
+        fetchSearchPlace(
+            keyword: searchText,
+            at: currentLocation
+        )
+    }
 }
 
 extension AddScheduleViewController: AddScheduleGestureDelegate {
