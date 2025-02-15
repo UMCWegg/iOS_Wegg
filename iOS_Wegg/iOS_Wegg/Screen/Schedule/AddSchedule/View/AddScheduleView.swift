@@ -60,7 +60,7 @@ class AddScheduleView: UIView {
         $0.searchTextField.layer.masksToBounds = true
     }
     
-    private lazy var searchResultListView = ScheduleSearchListView().then {
+    private lazy var searchResultListView = AddScheduleSearchListView().then {
         $0.backgroundColor = .white
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.secondary.cgColor

@@ -1,5 +1,5 @@
 //
-//  ScheduleSearchListTableViewCell.swift
+//  AddScheduleSearchTableViewCell.swift
 //  iOS_Wegg
 //
 //  Created by jaewon Lee on 2/15/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ScheduleSearchListTableViewCell: UITableViewCell {
+class AddScheduleSearchTableViewCell: UITableViewCell {
     static let reuseIdentifier = "ScheduleSearchListTableViewCell"
 
     override init(

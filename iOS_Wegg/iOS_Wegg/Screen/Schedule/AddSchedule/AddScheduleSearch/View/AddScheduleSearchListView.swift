@@ -1,5 +1,5 @@
 //
-//  ScheduleSearchListView.swift
+//  AddScheduleSearchListView.swift
 //  iOS_Wegg
 //
 //  Created by jaewon Lee on 2/15/25.
@@ -9,7 +9,7 @@ import UIKit
 import Then
 import SnapKit
 
-class ScheduleSearchListView: UIView {
+class AddScheduleSearchListView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,15 +26,15 @@ class ScheduleSearchListView: UIView {
         style: .plain
     ).then {
         $0.register(
-            ScheduleSearchListTableViewCell.self,
-            forCellReuseIdentifier: ScheduleSearchListTableViewCell.reuseIdentifier)
+            AddScheduleSearchTableViewCell.self,
+            forCellReuseIdentifier: AddScheduleSearchTableViewCell.reuseIdentifier)
         $0.separatorStyle = .none
         $0.rowHeight = 60
         $0.backgroundColor = .white
     }
 }
 
-private extension ScheduleSearchListView {
+private extension AddScheduleSearchListView {
     func setupView() {
         addComponents()
         constraints()
