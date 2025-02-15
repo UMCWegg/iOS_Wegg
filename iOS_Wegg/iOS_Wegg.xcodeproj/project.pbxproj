@@ -285,7 +285,6 @@
 			isa = PBXGroup;
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
-				0E98E9D62D2D009D006F25EF /* Products */,
 				DED22B802D5F7C8B003245C8 /* Recovered References */,
 			);
 			sourceTree = "<group>";
@@ -345,6 +344,7 @@
 		0E98EA252D2F8AE8006F25EF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0E98E9D62D2D009D006F25EF /* Products */,
 				0E98EB842D3A2603006F25EF /* Fonts */,
 				0E98EA282D2F8AE8006F25EF /* Assets.xcassets */,
 				0E98EA292D2F8AE8006F25EF /* Info.plist */,
@@ -364,6 +364,7 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				0E98EAC62D2FB789006F25EF /* Login */,
+				0E98EA242D2F8AE8006F25EF /* Models */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -375,7 +376,6 @@
 				0E98EA222D2F8AE8006F25EF /* Component */,
 				0E98EA232D2F8AE8006F25EF /* Core */,
 				0E98EA262D2F8AE8006F25EF /* Screen */,
-				0E98EA242D2F8AE8006F25EF /* Models */,
 				0E98EA252D2F8AE8006F25EF /* Resources */,
 			);
 			path = iOS_Wegg;

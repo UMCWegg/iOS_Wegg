@@ -8,9 +8,11 @@
 struct LoginResponse: Codable {
     let email: String?
     let type: SocialType
+    let accessToken: String?
     
     enum CodingKeys: String, CodingKey {
         case email
         case type = "social_type"
+        case accessToken = "access_token"
     }
 }

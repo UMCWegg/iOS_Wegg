@@ -8,9 +8,13 @@
 struct LoginRequest: Codable {
     let email: String
     let password: String?
+    let socialType: SocialType
+    let accessToken: String?
     
     enum CodingKeys: String, CodingKey {
         case email
         case password
+        case socialType = "social_type"
+        case accessToken = "access_token"
     }
 }
