@@ -11,7 +11,7 @@ import GoogleSignIn
 import FirebaseAuth
 
 final class GoogleLoginManager {
-    static let shared = GoogleLoginManager()
+    @MainActor static let shared = GoogleLoginManager()
     private let googleService = GoogleService.shared
     
     func requestSignUp(from viewController: UIViewController) async throws

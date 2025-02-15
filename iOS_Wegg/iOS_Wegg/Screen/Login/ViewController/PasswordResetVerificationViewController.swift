@@ -78,7 +78,6 @@ class PasswordResetVerificationViewController: UIViewController {
         Task {
             do {
                 let _ = try await AuthService.shared.verifyEmail(email)
-                // TODO: 재전송 성공 알림
             } catch {
                 print("Resend verification failed: \(error)")
             }

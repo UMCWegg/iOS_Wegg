@@ -26,10 +26,6 @@ class GetAlertPermissionViewController: UIViewController {
         setupActions()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     // MARK: - Functions
     
     private func setupActions() {

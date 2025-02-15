@@ -10,7 +10,7 @@ import Foundation
 import GoogleSignIn
 
 final class GoogleService {
-    static let shared = GoogleService()
+    @MainActor static let shared = GoogleService()
     private let clientID = APIKeys.googleClientId
     private init() {
         setupGoogleSignIn()

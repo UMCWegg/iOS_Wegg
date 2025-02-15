@@ -8,15 +8,16 @@
 import Foundation
 import UIKit
 
+@MainActor
 final class LoginManager {
     
     // MARK: - Properties
     
-    static let shared = LoginManager()
+    @MainActor static let shared = LoginManager()
     
-    private let googleLoginManager = GoogleLoginManager.shared
-    private let kakaoLoginManager = KakaoLoginManager.shared
-    private let emailLoginManager = EmailLoginManager.shared
+    @MainActor private let googleLoginManager = GoogleLoginManager.shared
+    @MainActor private let kakaoLoginManager = KakaoLoginManager.shared
+    @MainActor private let emailLoginManager = EmailLoginManager.shared
     private let userDefaultsManager = UserDefaultsManager.shared
     private let authService = AuthService.shared
     

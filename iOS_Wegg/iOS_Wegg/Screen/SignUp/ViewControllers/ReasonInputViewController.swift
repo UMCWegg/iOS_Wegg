@@ -47,7 +47,7 @@ class ReasonInputViewController: UIViewController {
     // MARK: - Actions
     
     private func handlereasonSelection(_ reason: String) {
-        guard let reasonType = UserReason(rawValue: reason) else { return }
+        guard let reasonType = UserReason(from: reason) else { return }
         
         UserSignUpStorage.shared.update { data in
             data.reason = reasonType

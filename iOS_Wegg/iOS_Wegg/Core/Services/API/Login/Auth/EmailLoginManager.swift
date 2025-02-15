@@ -7,12 +7,11 @@
 
 import Foundation
 
-
 final class EmailLoginManager {
     
     // MARK: - Properties
     
-    static let shared = EmailLoginManager()
+    @MainActor static let shared = EmailLoginManager()
     private let authService = AuthService.shared
    
     private init() {}
@@ -22,7 +21,9 @@ final class EmailLoginManager {
     func login(email: String, password: String) async throws -> LoginResponse {
         let request = LoginRequest(
             email: email,
-            password: password
+            password: password,
+            socialType: .email,
+            accessToken: nil
         )
         
         return try await authService.login(request: request)

@@ -47,7 +47,7 @@ class OccupationInputViewController: UIViewController {
     // MARK: - Actions
     
     private func handleOccupationSelection(_ occupation: String) {
-        guard let occupationType = UserOccupation(rawValue: occupation) else { return }
+        guard let occupationType = UserOccupation(from: occupation) else { return }
         
         UserSignUpStorage.shared.update { data in
             data.job = occupationType
