@@ -46,7 +46,12 @@ class EmailLoginViewController: UIViewController {
     @objc private func emailLoginButtonTapped() {
         guard let email = emailLoginView.email,
               let password = emailLoginView.password else { return }
-        LoginManager.shared.login(type: .email, email: email, password: password)
+        
+        Task {
+            await LoginManager.shared.login(type: .email,
+                                          email: email,
+                                          password: password)
+        }
     }
     
     @objc private func findPasswordButtonTapped() {

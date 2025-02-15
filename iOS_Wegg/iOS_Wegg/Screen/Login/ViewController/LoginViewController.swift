@@ -56,13 +56,15 @@ class LoginViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func googleLoginButtonTapped() {
-        print("Google Login Started")
-        LoginManager.shared.login(type: .google, from: self)
+        Task {
+            await LoginManager.shared.login(type: .google, from: self)
+        }
     }
     
     @objc private func kakaoLoginButtonTapped() {
-        print("Kakao Login Started")
-        LoginManager.shared.login(type: .kakao)
+        Task {
+            await LoginManager.shared.login(type: .kakao)
+        }
     }
     
     @objc private func emailLoginButtonTapped() {
@@ -79,8 +81,5 @@ class LoginViewController: UIViewController {
 
     @objc private func handleLoginSuccess() {
         print("Login Success!")
-        // TODO: 메인 화면으로 이동
-        // let mainVC = MainViewController()
-        // navigationController?.setViewControllers([mainVC], animated: true)
     }
 }

@@ -7,14 +7,12 @@
 
 import UIKit
 
-import Moya
-
 class SignUpCompleteViewController: UIViewController {
 
     // MARK: - Properties
     
     private let signUpCompleteView = SignUpCompleteView()
-    private let apiManager = APIManager()
+    private let authService = AuthService.shared
     
     // MARK: - Lifecycle
     
@@ -38,44 +36,26 @@ class SignUpCompleteViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func nextButtonTapped() {
-        guard let signUpData = UserSignUpStorage.shared.get() else { return }
-        
         Task {
             do {
+                guard let signUpData = UserSignUpStorage.shared.get() else { return }
                 let request = signUpData.toSignUpRequest()
-                let response = try await AuthService.shared.signUp(with: request)
+                
+                let response = try await authService.signUp(request: request)
                 if response.isSuccess {
-                    await MainActor.run {
-                        handleSignUpSuccess()
-                    }
+                    let mainTabBarController = MainTabBarController()
+                    navigationController?.setViewControllers([mainTabBarController], animated: true)
+                    UserSignUpStorage.shared.clear()
                 }
             } catch {
-                print("Sign up error: \(error)")
-                await MainActor.run {
-                    showError(error.localizedDescription)
-                }
+                print("❌ 실패: \(error)")
             }
         }
     }
-
+    
     private func handleSignUpSuccess() {
         let mainTabBarController = MainTabBarController()
         navigationController?.setViewControllers([mainTabBarController], animated: true)
         UserSignUpStorage.shared.clear()
-    }
-    
-    private func showError(_ message: String) {
-        let alert = UIAlertController(
-            title: "회원가입 실패",
-            message: message,
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(UIAlertAction(
-            title: "확인",
-            style: .default
-        ))
-        
-        present(alert, animated: true)
     }
 }

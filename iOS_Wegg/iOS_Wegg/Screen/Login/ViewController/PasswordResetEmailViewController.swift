@@ -46,24 +46,19 @@ class PasswordResetEmailViewController: UIViewController {
     @objc private func nextButtonTapped() {
         guard let email = passwordResetEmailView.emailTextField.text else { return }
         
-        AuthService.shared.verifyEmail(email)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("Email verification failed: \(error)")
-                }
-            } receiveValue: { response in
+        Task {
+            do {
+                let response = try await AuthService.shared.verifyEmail(email)
                 if response.isSuccess {
                     let verificationVC = PasswordResetVerificationViewController()
                     verificationVC.userEmail = email
-                    self.navigationController?.pushViewController(verificationVC, animated: true)
+                    navigationController?.pushViewController(verificationVC, animated: true)
                 }
+            } catch {
+                print("Email verification failed: \(error)")
             }
-            .store(in: &cancellables)
+        }
     }
-    
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }

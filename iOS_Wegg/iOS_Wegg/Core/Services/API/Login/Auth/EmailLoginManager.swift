@@ -7,36 +7,24 @@
 
 import Foundation
 
-import Combine
-import Dispatch
 
 final class EmailLoginManager {
+    
+    // MARK: - Properties
+    
     static let shared = EmailLoginManager()
+    private let authService = AuthService.shared
    
     private init() {}
     
-    private var cancellables: Set<AnyCancellable> = []
+    // MARK: - Functions
    
-    func login(email: String, password: String) {
+    func login(email: String, password: String) async throws -> LoginResponse {
         let request = LoginRequest(
             email: email,
-            password: password,
-            socialType: .email,
-            oauthID: nil
+            password: password
         )
         
-        AuthService.shared.login(with: request)
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("로그인 실패: \(error)")
-                }
-            } receiveValue: { response in
-                print("로그인 성공: \(response)")
-            }
-            .store(in: &cancellables)
+        return try await authService.login(request: request)
     }
 }

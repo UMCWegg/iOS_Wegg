@@ -6,13 +6,11 @@
 //
 
 import UIKit
-import Combine
 
 class PasswordResetVerificationViewController: UIViewController {
 
     // MARK: - Properties
     
-    private var cancellables = Set<AnyCancellable>()
     var userEmail: String?
     
     private let passwordResetVerificationView = PasswordResetVerificationView()
@@ -60,39 +58,31 @@ class PasswordResetVerificationViewController: UIViewController {
     @objc private func confirmButtonTapped() {
         let verificationCode = passwordResetVerificationView.verificationTextField.verificationCode
         
-        AuthService.shared.checkVerificationNumber(verificationCode)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("Verification failed: \(error)")
-                }
-            } receiveValue: { response in
+        Task {
+            do {
+                let response = try await AuthService
+                    .shared.checkVerificationNumber(verificationCode)
                 if response.isSuccess {
                     let mainTabBarController = MainTabBarController()
-                    self.navigationController?
-                        .setViewControllers([mainTabBarController], animated: true)
+                    navigationController?.setViewControllers([mainTabBarController], animated: true)
                 }
+            } catch {
+                print("Verification failed: \(error)")
             }
-            .store(in: &cancellables)
+        }
     }
     
     @objc private func resendButtonTapped() {
         guard let email = userEmail else { return }
         
-        AuthService.shared.verifyEmail(email)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("Resend verification failed: \(error)")
-                }
-            } receiveValue: { _ in
+        Task {
+            do {
+                let _ = try await AuthService.shared.verifyEmail(email)
                 // TODO: 재전송 성공 알림
+            } catch {
+                print("Resend verification failed: \(error)")
             }
-            .store(in: &cancellables)
+        }
     }
     
     @objc private func backButtonTapped() {

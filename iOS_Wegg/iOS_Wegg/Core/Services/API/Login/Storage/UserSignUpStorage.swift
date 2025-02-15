@@ -14,7 +14,7 @@ final class UserSignUpStorage {
     
     private init() {}
     
-    struct SignUpData: Codable {
+    public struct SignUpData: Codable {
         var email: String?
         var password: String?
         var name: String?
@@ -57,7 +57,6 @@ final class UserSignUpStorage {
 
 extension UserSignUpStorage.SignUpData {
     func toSignUpRequest() -> SignUpRequest {
-        
         return SignUpRequest(
             email: email,
             password: socialType == .email ? password : nil,

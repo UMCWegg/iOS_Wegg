@@ -8,14 +8,11 @@
 import Foundation
 import UIKit
 
-import Combine
-
 final class LoginManager {
     
     // MARK: - Properties
     
     static let shared = LoginManager()
-    private var cancellables = Set<AnyCancellable>()
     
     private let googleLoginManager = GoogleLoginManager.shared
     private let kakaoLoginManager = KakaoLoginManager.shared
@@ -28,113 +25,74 @@ final class LoginManager {
     func login(type: SocialType,
                from viewController: UIViewController? = nil,
                email: String? = nil,
-               password: String? = nil) {
-        switch type {
-        case .google:
-            guard let viewController else { return }
-            googleLoginManager.requestLogin(from: viewController)
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        break
-                    case .failure(let error):
-                        print("Google login failed: \(error)")
-                    }
-                } receiveValue: { token in
-                    self.handleSocialLogin(type: .google, token: token)
-                }
-                .store(in: &cancellables)
+               password: String? = nil) async {
+        do {
+            let response: LoginResponse
             
-        case .kakao:
-            kakaoLoginManager.requestLogin()
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        break
-                    case .failure(let error):
-                        print("Kakao login failed: \(error)")
-                    }
-                } receiveValue: { token in
-                    self.handleSocialLogin(type: .kakao, token: token)
-                }
-                .store(in: &cancellables)
-            
-        case .email:
-            guard let email = email, let password = password else { return }
-            let request = LoginRequest(
-                email: email,
-                password: password,
-                socialType: .email,
-                oauthID: nil
-            )
-            
-            authService.login(with: request)
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        break
-                    case .failure(let error):
-                        print("Email login failed: \(error)")
-                    }
-                } receiveValue: { response in
-                    self.handleLoginResponse(response)
-                }
-                .store(in: &cancellables)
-        }
-        
-    }
-    func handleSocialLogin(type: SocialType, token: String) {
-        
-        let processedToken = switch type {
-        case .google:
-            token
-        case .kakao:
-            "K\(token)"
-        case .email:
-            token
-        }
-        
-        let oauthID: String = switch type {
+            switch type {
             case .google:
-                userDefaultsManager.getGoogleData().email ?? ""
+                response = try await handleGoogleLogin(from: viewController)
             case .kakao:
-                userDefaultsManager.getKakaoData().id ?? ""
+                response = try await handleKakaoLogin()
             case .email:
-                ""
+                response = try await handleEmailLogin(email: email, password: password)
             }
+            
+            handleLoginResponse(response)
+            
+        } catch {
+            print("\(type) login failed: \(error)")
+        }
+    }
         
-        authService.socialLogin(type: type, token: token, oauthID: oauthID)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("Social login failed: \(error)")
-                }
-            } receiveValue: { response in
-                self.handleLoginResponse(response)
-            }
-            .store(in: &cancellables)
+    private func handleGoogleLogin(
+        from viewController: UIViewController?) async throws -> LoginResponse {
+        guard let viewController else {
+            throw NSError(domain: "LoginError",
+                          code: -1,
+                          userInfo:
+                            [NSLocalizedDescriptionKey: "ViewController is required"]
+            )
+        }
+        
+        let email = try await googleLoginManager.requestSignUp(from: viewController)
+        let request = LoginRequest(
+            email: email,
+            password: nil
+        )
+        
+        return try await authService.login(request: request)
+    }
+    
+    private func handleKakaoLogin() async throws -> LoginResponse {
+        let oauthID = try await kakaoLoginManager.requestSignUp()
+        let request = LoginRequest(
+            email: "K\(oauthID)@daum.net",
+            password: nil
+        )
+        
+        return try await authService.login(request: request)
+    }
+    
+    private func handleEmailLogin(email: String?, password: String?) async throws -> LoginResponse {
+        guard let email = email, let password = password else {
+            throw NSError(domain: "LoginError",
+                          code: -1,
+                          userInfo: [NSLocalizedDescriptionKey: "Email and password are required"])
+        }
+        
+        return try await emailLoginManager.login(email: email, password: password)
     }
     
     private func handleLoginResponse(_ response: LoginResponse) {
-        userDefaultsManager.saveToken(response.accessToken)
-        
         switch response.type {
         case .google:
             if let email = response.email {
-                userDefaultsManager.saveGoogleData(
-                    token: response.accessToken,
-                    email: email
-                )
+                userDefaultsManager.saveGoogleData(email: email)
             }
         case .kakao:
-            if let oauthID = response.oauthID {
-                // 카카오는 이미 'K'가 붙은 ID가 올 것임
-                userDefaultsManager.saveKakaoData(
-                    token: response.accessToken,
-                    id: oauthID
-                )
+            if let email = response.email {
+                userDefaultsManager.saveKakaoData(email: email)
             }
         case .email:
             break
