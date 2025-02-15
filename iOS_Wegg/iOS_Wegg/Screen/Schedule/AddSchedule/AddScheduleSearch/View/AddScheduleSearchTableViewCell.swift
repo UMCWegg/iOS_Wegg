@@ -67,7 +67,7 @@ class AddScheduleSearchTableCell: UITableViewCell {
         
         dividedLine.snp.makeConstraints { make in
             make.top.equalTo(resultLabel.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().offset(10)
+            make.leading.trailing.equalToSuperview().inset(10)
         }
     }
     

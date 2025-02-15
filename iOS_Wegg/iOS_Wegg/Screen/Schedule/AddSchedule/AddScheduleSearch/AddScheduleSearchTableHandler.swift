@@ -12,24 +12,9 @@ class AddScheduleSearchTableHandler:
     UITableViewDelegate {
     
     private var dataSource: UITableViewDiffableDataSource<Int, String>?
-    private var tableView: UITableView?
-    private var placeList: [String] = [
-        "스타벅스 월곡역점",
-        "스타벅스 종암점"
-    ]
-    
-    init(tableView: UITableView) {
-        super.init()
-        self.tableView = tableView
-        setupDataSource()
-        applayInitialSnapshot()
-    }
-    
-    private func setupDataSource() {
-        guard let tableView = tableView else {
-            print("tableView is nil")
-            return
-        }
+
+    /// 데이터 소스를 설정하는 함수
+    func setupDataSource(for tableView: UITableView) {
         dataSource = UITableViewDiffableDataSource<Int, String>(
             tableView: tableView
         ) { tableView, indexPath, placeName in
@@ -39,26 +24,24 @@ class AddScheduleSearchTableHandler:
             ) as? AddScheduleSearchTableCell else {
                 return UITableViewCell()
             }
-            
             cell.configure(with: placeName)
             return cell
         }
     }
-    
-    private func applayInitialSnapshot() {
+
+    /// 검색 결과를 업데이트하는 함수
+    /// - Parameters:
+    ///     - _ result: api 호출 응답 배열
+    func updateSearchResults(_ results: [String]) {
         var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
         snapshot.appendSections([0])
-        snapshot.appendItems(placeList)
-        guard let dataSource = dataSource else {
-            return
-        }
-        dataSource.apply(snapshot, animatingDifferences: true)
+        snapshot.appendItems(results)
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
-    
+
     // MARK: - UITableViewDelegate
-    
-    // 각 셀의 높이를 설정하는 메서드
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 20 // 셀 높이 고정
+        return 50 // 셀 높이 설정
     }
 }

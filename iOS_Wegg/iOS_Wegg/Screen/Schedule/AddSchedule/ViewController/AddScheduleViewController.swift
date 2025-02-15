@@ -18,14 +18,11 @@ class AddScheduleViewController: UIViewController {
     
     private var apiManager: APIManager?
     private var mapManager: MapManagerProtocol?
-    private var addScheduleSearchTableHandler: AddScheduleSearchTableHandler?
+    private var addScheduleSearchTableHandler = AddScheduleSearchTableHandler()
     
     init(mapManager: MapManagerProtocol) {
         self.mapManager = mapManager
         super.init(nibName: nil, bundle: nil)
-        self.addScheduleSearchTableHandler = AddScheduleSearchTableHandler(
-            tableView: self.addScheduleView.searchResultListView.tableView
-        )
     }
     
     required init?(coder: NSCoder) {
@@ -37,6 +34,13 @@ class AddScheduleViewController: UIViewController {
         view = addScheduleView
         
         apiManager = APIManager()
+        addScheduleSearchTableHandler.setupDataSource(
+            for: addScheduleView.searchResultListView.tableView
+        )
+        addScheduleSearchTableHandler.updateSearchResults([
+            "스타벅스 월곡역점",
+            "스타벅스 종암점"
+        ])
     }
     
     lazy var addScheduleView = AddScheduleView().then {
