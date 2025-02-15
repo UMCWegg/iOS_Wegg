@@ -18,10 +18,14 @@ class AddScheduleViewController: UIViewController {
     
     private var apiManager: APIManager?
     private var mapManager: MapManagerProtocol?
+    private var addScheduleSearchTableHandler: AddScheduleSearchTableHandler?
     
     init(mapManager: MapManagerProtocol) {
         self.mapManager = mapManager
         super.init(nibName: nil, bundle: nil)
+        self.addScheduleSearchTableHandler = AddScheduleSearchTableHandler(
+            tableView: self.addScheduleView.searchResultListView.tableView
+        )
     }
     
     required init?(coder: NSCoder) {
@@ -38,6 +42,7 @@ class AddScheduleViewController: UIViewController {
     lazy var addScheduleView = AddScheduleView().then {
         $0.gestureDelegate = self
         $0.placeSearchBar.delegate = self
+        $0.searchResultListView.tableView.delegate = addScheduleSearchTableHandler
     }
     
     /// 장소 검색 API 가져오는 함수

@@ -9,6 +9,7 @@ import UIKit
 import Then
 import SnapKit
 
+/// 일정 추가 페이지에서 검색 결과 리스트 드롭다운 할 뷰
 class AddScheduleSearchListView: UIView {
 
     override init(frame: CGRect) {
@@ -21,13 +22,14 @@ class AddScheduleSearchListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var tableView = UITableView(
+    lazy var tableView = UITableView(
         frame: .zero,
         style: .plain
     ).then {
         $0.register(
-            AddScheduleSearchTableViewCell.self,
-            forCellReuseIdentifier: AddScheduleSearchTableViewCell.reuseIdentifier)
+            AddScheduleSearchTableCell.self,
+            forCellReuseIdentifier: AddScheduleSearchTableCell.reuseIdentifier
+        )
         $0.separatorStyle = .none
         $0.rowHeight = 60
         $0.backgroundColor = .white
