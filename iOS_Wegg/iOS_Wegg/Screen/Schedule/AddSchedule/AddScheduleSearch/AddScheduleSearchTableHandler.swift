@@ -44,4 +44,8 @@ class AddScheduleSearchTableHandler:
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50 // 셀 높이 설정
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("✅ 선택된 셀: \(indexPath.row)")
+    }
 }

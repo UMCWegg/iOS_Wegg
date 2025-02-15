@@ -62,6 +62,7 @@ class AddScheduleView: UIView {
     
     lazy var searchResultListView = AddScheduleSearchListView().then {
         $0.backgroundColor = .white
+        $0.isHidden = true
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.secondary.cgColor
         $0.layer.cornerRadius = 12
@@ -205,6 +206,15 @@ class AddScheduleView: UIView {
         if !isHidden {
             updatedDateLabel.text = date
         }
+    }
+    
+    /// 검색 결과 드롭다운
+    public func toggleSearchResultList(_ isHidden: Bool) {
+        searchResultListView.isHidden = isHidden
+    }
+    
+    public func getSearchResultListView() -> UIView {
+        return searchResultListView
     }
     
     // MARK: - Action Handler

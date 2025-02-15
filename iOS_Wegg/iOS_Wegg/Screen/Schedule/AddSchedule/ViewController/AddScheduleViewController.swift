@@ -89,13 +89,19 @@ class AddScheduleViewController: UIViewController {
 
 }
 
+// MARK: - Delegate Extension
+
 extension AddScheduleViewController: UISearchBarDelegate {
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        addScheduleView.toggleSearchResultList(false)
+    }
     
     /// 검색 내용 리턴
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
-        print("searchBarText: \(searchText)")
         searchBar.text = ""
+        addScheduleView.toggleSearchResultList(true)
     }
     
     /// 검색 내용 변화 리턴
@@ -110,6 +116,7 @@ extension AddScheduleViewController: UISearchBarDelegate {
             )
         } else {
             addScheduleSearchTableHandler.updateSearchResults([])
+            addScheduleView.toggleSearchResultList(true)
         }
     }
 }
