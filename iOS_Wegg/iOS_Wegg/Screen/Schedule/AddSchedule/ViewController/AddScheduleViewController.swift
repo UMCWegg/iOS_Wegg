@@ -37,10 +37,6 @@ class AddScheduleViewController: UIViewController {
         addScheduleSearchTableHandler.setupDataSource(
             for: addScheduleView.searchResultListView.tableView
         )
-        addScheduleSearchTableHandler.updateSearchResults([
-            "스타벅스 월곡역점",
-            "스타벅스 종암점"
-        ])
     }
     
     lazy var addScheduleView = AddScheduleView().then {
@@ -81,7 +77,10 @@ class AddScheduleViewController: UIViewController {
                 let response: ScheduleSearchResponse = try await apiManager.request(
                     target: ScheduleAPI.searchPlace(request: request)
                 )
-                print(response.result.placeList)
+                let placeList: [String] = response.result.placeList.map {
+                    $0.placeName
+                }
+                addScheduleSearchTableHandler.updateSearchResults(placeList)
             } catch {
                 print("❌ 실패: \(error)")
             }
@@ -102,13 +101,16 @@ extension AddScheduleViewController: UISearchBarDelegate {
     /// 검색 내용 변화 리턴
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // 실시간 검색
-        print("현재 검색어: \(searchText)")
         // TODO: [25.02.15] 실제 현재 위치 mapManager 통해서 가져오기 - 작성자: 이재원
         let currentLocation: Coordinate = Coordinate(latitude: 37.60635, longitude: 127.04425)
-        fetchSearchPlace(
-            keyword: searchText,
-            at: currentLocation
-        )
+        if !searchText.isEmpty {
+            fetchSearchPlace(
+                keyword: searchText,
+                at: currentLocation
+            )
+        } else {
+            addScheduleSearchTableHandler.updateSearchResults([])
+        }
     }
 }
 
