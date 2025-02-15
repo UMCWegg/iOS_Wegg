@@ -59,6 +59,14 @@ class AddScheduleView: UIView {
         $0.searchTextField.layer.cornerRadius = 12
         $0.searchTextField.layer.masksToBounds = true
     }
+    
+    private lazy var searchResultListView = ScheduleSearchListView().then {
+        $0.backgroundColor = .white
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.secondary.cgColor
+        $0.layer.cornerRadius = 12
+        $0.clipsToBounds = true
+    }
 
     private lazy var createPlaceImageView = makeImageView(
         "CreatePlace",
@@ -251,11 +259,13 @@ private extension AddScheduleView {
             headerStackView,
             placeSettingLabel,
             placeSearchBar,
+            searchResultListView,
             createPlaceImageView,
             yellowLogoIcon,
             detailSettingLabel,
             detailSettingCardView
         ].forEach(addSubview)
+        bringSubviewToFront(searchResultListView) // 최상위로 배치
 
         [
             dateLabel,
@@ -286,6 +296,12 @@ private extension AddScheduleView {
             make.top.equalTo(placeSettingLabel.snp.bottom).offset(14)
             make.leading.trailing.equalToSuperview().inset(21)
             make.height.equalTo(44)
+        }
+        
+        searchResultListView.snp.makeConstraints { make in
+            make.top.equalTo(placeSearchBar.snp.bottom).offset(5)
+            make.leading.trailing.equalTo(placeSearchBar)
+            make.height.equalTo(200)
         }
         
         createPlaceImageView.snp.makeConstraints { make in
