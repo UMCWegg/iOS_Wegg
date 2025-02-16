@@ -23,6 +23,7 @@ class NaverMapManager:
     private var locationManager: CLLocationManager?
     private var tapGestureHandler: ((Coordinate) -> Void)?
     private var longTapGestureHandler: ((Coordinate) -> Void)?
+    private var currentLocation: Coordinate?
     
     /// 지도 뷰를 특정 UIView에 초기화
     ///
@@ -123,23 +124,61 @@ class NaverMapManager:
         mapView?.isIndoorMapEnabled = isEnabled
     }
     
-    /// Wegg 아이콘 마커 생성
-    ///
-    /// - Parameters:
-    ///     - coordinate: 좌표값
-    func addMarker(at coordinate: Coordinate) {
+    func addMarker(
+        imageName: String,
+        width: CGFloat,
+        height: CGFloat,
+        at coordinate: Coordinate
+    ) {
         guard let mapView = mapView else { return }
-        // 마커 위치 설정
-        let markerPosition = NMGLatLng(
+        
+        let marker = createMarker(
+            icon: NMFOverlayImage(name: imageName),
+            width: width,
+            height: height,
+            at: coordinate
+        )
+        
+        marker.mapView = mapView
+    }
+    
+    func addMarker(
+        image: UIImage,
+        width: CGFloat,
+        height: CGFloat,
+        at coordinate: Coordinate
+    ) {
+        guard let mapView = mapView else {
+            print("NaverMapManager's addMarker: 지도 로드 실패")
+            return
+        }
+        
+        let marker = createMarker(
+            icon: NMFOverlayImage(image: image),
+            width: width,
+            height: height,
+            at: coordinate
+        )
+        
+        marker.mapView = mapView
+    }
+    
+    /// 내부적으로 마커 생성하는 공통 함수
+    private func createMarker(
+        icon: NMFOverlayImage,
+        width: CGFloat,
+        height: CGFloat,
+        at coordinate: Coordinate
+    ) -> NMFMarker {
+        let marker = NMFMarker()
+        marker.position = NMGLatLng(
             lat: coordinate.latitude,
             lng: coordinate.longitude
         )
-        // 마커 생성
-        let marker = NMFMarker(position: markerPosition)
-        marker.iconImage = NMFOverlayImage(name: "list_brown_icon")
-        marker.width = 28
-        marker.height = 40
-        marker.mapView = mapView // 마커 지도에 추가
+        marker.iconImage = icon
+        marker.width = width
+        marker.height = height
+        return marker
     }
     
     /// 지도의 카메라 기준으로 경계값 가져옴
@@ -147,7 +186,7 @@ class NaverMapManager:
         sortBy: String?
     ) -> HotPlaceRequest {
         guard let mapView = mapView else {
-            fatalError("getVisibleBounds: 지도 로드 실패")
+            fatalError("NaverMapManager: 지도 로드 실패")
         }
         let bounds = mapView.contentBounds
         let southWest = bounds.southWest // 남서쪽 좌표
@@ -162,6 +201,11 @@ class NaverMapManager:
             maxY: northEast.lat,
             sortBy: sortBy ?? "distance"
         )
+    }
+    
+    /// 현재 위치 getter
+    func getCurrentLocation() -> Coordinate? {
+        return currentLocation
     }
 }
 
@@ -206,6 +250,11 @@ extension NaverMapManager:
     ) {
         guard let location = locations.first else { return }
         moveCameraToLocation(location)
+        // 현재 위치 저장
+        currentLocation = Coordinate(
+            latitude: location.coordinate.latitude,
+            longitude: location.coordinate.longitude
+        )
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
