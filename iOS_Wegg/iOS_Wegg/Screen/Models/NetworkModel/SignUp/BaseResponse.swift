@@ -23,5 +23,5 @@ struct SendVerification: Decodable {
 }
 
 struct CheckVerification: Decodable {
-    let valid: String
+    let valid: Bool
 }

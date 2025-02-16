@@ -12,8 +12,8 @@ class PasswordResetVerificationViewController: UIViewController {
     // MARK: - Properties
     
     var userEmail: String?
-    
     private let passwordResetVerificationView = PasswordResetVerificationView()
+    private let authService = AuthService.shared
     
     // MARK: - Lifecycle
     
@@ -60,29 +60,54 @@ class PasswordResetVerificationViewController: UIViewController {
         
         Task {
             do {
+                let request = CheckVerificationRequest(
+                    type: "EMAIL",
+                    target: userEmail ?? "",
+                    number: verificationCode
+                )
+                
                 let response = try await AuthService
-                    .shared.checkVerificationNumber(verificationCode)
-                if response.isSuccess {
+                    .shared.checkVerificationNumber(request: request)
+                
+                if response.isSuccess && response.result.valid {
                     let mainTabBarController = MainTabBarController()
                     navigationController?.setViewControllers([mainTabBarController], animated: true)
+                } else {
+                    // 실패 처리
+                    showAlert(message: "인증번호가 올바르지 않습니다")
                 }
             } catch {
-                print("Verification failed: \(error)")
+                print("❌ 인증번호 확인 실패: \(error)")
+                showAlert(message: "인증에 실패했습니다")
             }
         }
     }
     
-    @objc private func resendButtonTapped() {
-        guard let email = userEmail else { return }
-        
-        Task {
-            do {
-                let _ = try await AuthService.shared.verifyEmail(email)
-            } catch {
-                print("Resend verification failed: \(error)")
+        @objc private func resendButtonTapped() {
+            guard let userEmail = userEmail else { return }
+            
+            Task {
+                do {
+                    let response = try await authService.verifyEmail(userEmail)
+                    if response.isSuccess {
+                        showAlert(message: "인증번호가 재전송되었습니다")
+                    }
+                } catch {
+                    print("❌ 인증번호 재전송 실패: \(error)")
+                    showAlert(message: "인증번호 재전송에 실패했습니다")
+                }
             }
         }
-    }
+        
+        private func showAlert(message: String) {
+            let alert = UIAlertController(
+                title: "알림",
+                message: message,
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "확인", style: .default))
+            present(alert, animated: true)
+        }
     
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)

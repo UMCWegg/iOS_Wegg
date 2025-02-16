@@ -62,31 +62,31 @@ class PhoneNumberInputViewController: UIViewController {
                 showAlert(message: "전화번호 인증 요청에 실패했습니다")
             }
         }
+    }
         
-        // MARK: - Functions
-        
-        func formatPhoneNumber() -> String? {
-            guard let first = phoneNumberInputView.firstTextField.text,
-                  let second = phoneNumberInputView.secondTextField.text,
-                  let third = phoneNumberInputView.thirdTextField.text,
-                  !first.isEmpty && !second.isEmpty && !third.isEmpty else {
-                return nil
-            }
-            return first + second + third
+    // MARK: - Functions
+    
+    func formatPhoneNumber() -> String? {
+        guard let first = phoneNumberInputView.firstTextField.text,
+              let second = phoneNumberInputView.secondTextField.text,
+              let third = phoneNumberInputView.thirdTextField.text,
+              !first.isEmpty && !second.isEmpty && !third.isEmpty else {
+            return nil
         }
-        
-        func isValidPhoneNumber(_ number: String) -> Bool {
-            return number.count == 11 && number.allSatisfy { $0.isNumber }
-        }
-        
-        func showAlert(message: String) {
-            let alert = UIAlertController(
-                title: "알림",
-                message: message,
-                preferredStyle: .alert
-            )
-            alert.addAction(UIAlertAction(title: "확인", style: .default))
-            present(alert, animated: true)
-        }
+        return first + second + third
+    }
+    
+    func isValidPhoneNumber(_ number: String) -> Bool {
+        return number.count == 11 && number.allSatisfy { $0.isNumber }
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(
+            title: "알림",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
 }

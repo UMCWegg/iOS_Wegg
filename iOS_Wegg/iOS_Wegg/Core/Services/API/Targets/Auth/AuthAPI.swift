@@ -16,7 +16,7 @@ enum AuthAPI {
     case socialLogin(request: LoginRequest)
     case verifyEmail(email: String)
     case verifyPhone(phone: String)
-    case verificationNum(code: String)
+    case verificationNum(request: CheckVerificationRequest)
     case idCheck(id: String)
     case resign
 }
@@ -82,10 +82,8 @@ extension AuthAPI: TargetType {
             return .requestParameters(
                 parameters: ["phone": phone],
                 encoding: JSONEncoding.default)
-        case .verificationNum(let code):
-            return .requestParameters(
-                parameters: ["code": code],
-                encoding: JSONEncoding.default)
+        case .verificationNum(let request):
+            return .requestJSONEncodable(request)
         case .idCheck(let id):
             return .requestParameters(
                 parameters: ["accountId": id],
