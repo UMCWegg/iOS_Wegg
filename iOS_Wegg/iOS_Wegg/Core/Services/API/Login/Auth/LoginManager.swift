@@ -89,7 +89,7 @@ final class LoginManager {
         let request = LoginRequest(
             email: email,
             password: password,
-            socialType: .email,
+            socialType: nil,
             accessToken: nil
         )
         
@@ -97,16 +97,22 @@ final class LoginManager {
     }
     
     private func handleLoginResponse(_ response: LoginResponse) {
-        guard response.result.success else {
-            print("❌ 로그인 실패: \(response.message)")
-            return
+        if response.result.success {
+            // 로그인 성공시 UserID 저장
+            UserDefaultsManager.shared.saveUserID(response.result.userID)
+            
+            // 메인 화면으로 이동
+            NotificationCenter.default.post(
+                name: NSNotification.Name("LoginSuccess"),
+                object: nil
+            )
+        } else {
+            // 로그인 실패시 회원가입 확인 알림
+            NotificationCenter.default.post(
+                name: NSNotification.Name("ShowSignUpAlert"),
+                object: nil
+                // userInfo: ["socialType": response.result.socialType]
+            )
         }
-        
-        // 로그인 성공시 메인 화면으로 이동
-        NotificationCenter.default.post(
-            name: NSNotification.Name("LoginSuccess"),
-            object: nil,
-            userInfo: ["userId": response.result.userID]
-        )
     }
 }

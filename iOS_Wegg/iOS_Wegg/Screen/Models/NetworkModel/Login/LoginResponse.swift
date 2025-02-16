@@ -21,5 +21,10 @@ struct LoginResponse: Decodable {
 
 struct LoginResult: Decodable {
     let success: Bool
-    let userID: String
+    let userID: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case success
+        case userID = "userId"
+    }
 }

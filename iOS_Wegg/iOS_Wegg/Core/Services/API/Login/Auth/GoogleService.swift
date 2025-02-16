@@ -31,7 +31,7 @@ final class GoogleService {
             }
             
             guard let email = signInResult?.user.profile?.email,
-                  let token = signInResult?.user.accessToken.tokenString else {
+                  let token = signInResult?.user.idToken?.tokenString else {
                 let error = NSError(
                     domain: "GoogleSignIn",
                     code: -1,

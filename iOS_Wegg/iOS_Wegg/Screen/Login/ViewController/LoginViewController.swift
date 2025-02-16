@@ -24,13 +24,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .primary
         setupActions()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleLoginSuccess),
-            name: NSNotification.Name("LoginSuccess"),
-            object: nil
-        )
+        setupNotifications()
     }
     
     // MARK: - Setup
@@ -80,6 +74,56 @@ class LoginViewController: UIViewController {
     }
 
     @objc private func handleLoginSuccess() {
-        print("Login Success!")
+        let mainTabBarController = MainTabBarController()
+        navigationController?.setViewControllers([mainTabBarController], animated: true)
+    }
+    
+    @objc private func showSignUpAlert(_ notification: Notification) {
+        let alert = UIAlertController(
+            title: "회원 정보 없음",
+            message: "회원 정보가 없습니다. 가입하시겠습니까?",
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.handleSignUpConfirm(notification)
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
+    }
+    
+    // MARK: - Functions
+    
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleLoginSuccess),
+            name: NSNotification.Name("LoginSuccess"),
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showSignUpAlert),
+            name: NSNotification.Name("ShowSignUpAlert"),
+            object: nil
+        )
+    }
+    
+    private func handleSignUpConfirm(_ notification: Notification) {
+        if let socialType = notification.userInfo?["socialType"] as? SocialType {
+            if socialType == .email {
+                let emailSignUpVC = EmailSignUpViewController()
+                navigationController?.pushViewController(emailSignUpVC, animated: true)
+            } else {
+                let serviceAgreementVC = ServiceAgreementViewController()
+                navigationController?.pushViewController(serviceAgreementVC, animated: true)
+            }
+        }
     }
 }

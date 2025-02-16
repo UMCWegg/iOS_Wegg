@@ -43,4 +43,14 @@ final class UserDefaultsManager {
         defaults.removeObject(forKey: StorageKeys.Social.googleToken)
         defaults.removeObject(forKey: StorageKeys.Social.kakaoToken)
     }
+    
+    // UserID 데이터
+    func saveUserID(_ userID: Int) {
+        defaults.set(userID, forKey: StorageKeys.Login.userID)
+    }
+    
+    // UserID 조회 (Int64 타입)
+    func getUserID() -> Int? {
+        return defaults.object(forKey: StorageKeys.Login.userID) as? Int
+    }
 }
