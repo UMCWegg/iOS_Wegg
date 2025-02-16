@@ -97,34 +97,16 @@ final class LoginManager {
     }
     
     private func handleLoginResponse(_ response: LoginResponse) {
-        switch response.type {
-        case .google:
-            if let email = response.email {
-                userDefaultsManager.saveGoogleData(email: email)
-            }
-            // 토큰 저장
-            if let token = response.accessToken {
-                UserDefaults.standard.set(token, forKey: StorageKeys.Social.googleToken)
-            }
-            
-        case .kakao:
-            if let email = response.email {
-                userDefaultsManager.saveKakaoData(email: email)
-            }
-            // 토큰 저장
-            if let token = response.accessToken {
-                UserDefaults.standard.set(token, forKey: StorageKeys.Social.kakaoToken)
-            }
-            
-        case .email:
-            if let token = response.accessToken {
-                UserDefaults.standard.set(token, forKey: StorageKeys.Login.accessToken)
-            }
+        guard response.result.success else {
+            print("❌ 로그인 실패: \(response.message)")
+            return
         }
         
+        // 로그인 성공시 메인 화면으로 이동
         NotificationCenter.default.post(
             name: NSNotification.Name("LoginSuccess"),
-            object: nil
+            object: nil,
+            userInfo: ["userId": response.result.userID]
         )
     }
 }

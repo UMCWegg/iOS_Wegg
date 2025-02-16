@@ -9,7 +9,7 @@ struct SignUpResponse: Decodable {
     let isSuccess: Bool
     let code: String
     let message: String
-    let result: EmptyResponse
+    let result: SignUpResult
     
     enum CodingKeys: String, CodingKey {
         case isSuccess
@@ -20,7 +20,13 @@ struct SignUpResponse: Decodable {
 }
 
 struct SignUpResult: Decodable {
-    let userId: Int
+    let userID: Int64
     let createdAt: String
-    let contactFriends: [String]
+    let contact: [Contact]?
+    
+    enum CodingKeys: String, CodingKey {
+        case userID = "userId"
+        case createdAt
+        case contact = "contactFriends"
+    }
 }

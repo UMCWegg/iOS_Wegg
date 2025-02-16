@@ -12,8 +12,8 @@ struct SignUpRequest: Encodable {
     let marketingAgree: Bool
     let accountId: String
     let name: String
-    let job: UserOccupation
-    let reason: UserReason
+    let job: UserOccupation?
+    let reason: UserReason?
     let phone: String
     let alarm: Bool
     let contact: [Contact]?
@@ -23,15 +23,25 @@ struct SignUpRequest: Encodable {
     enum CodingKeys: String, CodingKey {
         case email
         case password
-        case marketingAgree = "marketing_agree"
-        case accountId = "account_id"
+        case marketingAgree
+        case accountId
         case name
         case job
         case reason
         case phone
         case alarm
         case contact
-        case socialType = "social_type"
-        case accessToken = "access_token"
+        case socialType = "type"
+        case accessToken = "token"
     }
+}
+
+enum SocialType: String, Codable {
+    case google
+    case kakao
+    case email
+}
+
+struct Contact: Codable {
+    let phone: String
 }

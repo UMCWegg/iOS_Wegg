@@ -38,4 +38,9 @@ final class UserDefaultsManager {
         guard let domain = Bundle.main.bundleIdentifier else { return }
         defaults.removePersistentDomain(forName: domain)
     }
+    
+    func clearAuthTokens() {
+        defaults.removeObject(forKey: StorageKeys.Social.googleToken)
+        defaults.removeObject(forKey: StorageKeys.Social.kakaoToken)
+    }
 }

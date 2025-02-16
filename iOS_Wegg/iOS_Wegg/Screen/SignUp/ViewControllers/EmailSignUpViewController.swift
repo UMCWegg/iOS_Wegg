@@ -90,6 +90,7 @@ class EmailSignUpViewController: UIViewController {
             data.email = email
             data.password = password
             data.socialType = .email
+            data.accessToken = nil
         }
         
         let serviceAgreementVC = ServiceAgreementViewController()

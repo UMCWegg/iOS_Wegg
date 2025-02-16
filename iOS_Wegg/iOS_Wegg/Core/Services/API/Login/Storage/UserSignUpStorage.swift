@@ -60,7 +60,7 @@ extension UserSignUpStorage.SignUpData {
     func toSignUpRequest() -> SignUpRequest {
         return SignUpRequest(
             email: email,
-            password: socialType == .email ? password : nil,
+            password: socialType == .email ? password : "-",
             marketingAgree: marketingAgree ?? false,
             accountId: accountId ?? "",
             name: name ?? "",
@@ -69,8 +69,8 @@ extension UserSignUpStorage.SignUpData {
             phone: phone ?? "",
             alarm: alarm ?? false,
             contact: contact?.map { Contact(phone: $0.phone) } ?? [],
-            socialType: socialType,
-            accessToken: accessToken
+            socialType: socialType == .email ? nil : socialType,
+            accessToken: socialType == .email ? nil : accessToken
         )
     }
 }

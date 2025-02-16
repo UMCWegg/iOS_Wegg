@@ -6,13 +6,20 @@
 //
 
 struct LoginResponse: Decodable {
-    let email: String?
-    let type: SocialType
-    let accessToken: String?
+    let isSuccess: Bool
+    let code: String
+    let message: String
+    let result: LoginResult
     
     enum CodingKeys: String, CodingKey {
-        case email
-        case type = "social_type"
-        case accessToken = "access_token"
+        case isSuccess
+        case code
+        case message
+        case result
     }
+}
+
+struct LoginResult: Decodable {
+    let success: Bool
+    let userID: String
 }
