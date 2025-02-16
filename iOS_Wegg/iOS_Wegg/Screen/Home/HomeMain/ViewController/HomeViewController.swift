@@ -25,58 +25,14 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
         homeView.headerView.viewController = self
         homeView.headerView.updateHeaderMode(isHomeMode: true)
         
-        apiManager.setCookie(value: "AE3F6CD09797F075AA60D69FACB0B68C")
+        apiManager.setCookie(value: "36B7C543C34C3D968184B2CC1D801475")
         print("[HomeVC] JSESSIONID 쿠키 설정 완료")
-        
-        // 강제 세션 인증 요청
-        triggerSessionAuthentication()
         
         // 쿠키 디버그 로그 출력
         let cookies = HTTPCookieStorage.shared.cookies ?? []
         cookies.forEach { cookie in
             print("[debug] 쿠키: \(cookie.name)=\(cookie.value); Domain: \(cookie.domain)")
         }
-    }
-
-    // 세션 강제 인증 요청 (POST 방식으로 변경)
-    func triggerSessionAuthentication() {
-        guard let url = URL(string: "https://weggserver.store/todo/add") else {
-            print("❌ [DEBUG] 잘못된 URL 형식")
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        // 요청 바디 설정
-        let body: [String: String] = [
-            "status": "YET",
-            "content": "세션 활성화 테스트"
-        ]
-        
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-        } catch {
-            print("❌ [DEBUG] 요청 바디 생성 실패: \(error.localizedDescription)")
-            return
-        }
-
-        let session = URLSession.shared
-        session.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("❌ [DEBUG] 세션 강제 요청 실패: \(error.localizedDescription)")
-                return
-            }
-            
-            if let response = response as? HTTPURLResponse {
-                print("🔍 [DEBUG] 세션 강제 요청 응답 코드: \(response.statusCode)")
-            }
-
-            if let data = data, let responseString = String(data: data, encoding: .utf8) {
-                print("📦 [DEBUG] 세션 강제 요청 응답: \(responseString)")
-            }
-        }.resume()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,7 +46,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
     
     // MARK: - 쿠키 설정
     private func applySessionCookie() {
-        let sessionId = "AE3F6CD09797F075AA60D69FACB0B68C"
+        let sessionId = "36B7C543C34C3D968184B2CC1D801475"
         apiManager.setCookie(value: sessionId)
         print("✅ [HomeViewController] 쿠키 설정 완료: JSESSIONID=\(sessionId)")
     }
