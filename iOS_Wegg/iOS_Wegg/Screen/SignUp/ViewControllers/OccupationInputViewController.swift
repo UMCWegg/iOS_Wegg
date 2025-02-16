@@ -25,6 +25,8 @@ class OccupationInputViewController: UIViewController {
         view.backgroundColor = .white
         setupActions()
         setupNameText()
+        
+        handleOccupationSelection(UserOccupation.employee.displayName)
     }
     
     // MARK: - Setup
@@ -44,6 +46,10 @@ class OccupationInputViewController: UIViewController {
         occupationInputView.occupationDropdown.didSelectOption = { [weak self] selectedOption in
             self?.handleOccupationSelection(selectedOption)
         }
+        
+        occupationInputView.passButton.addTarget(self,
+                                                 action: #selector(passButtonTapped),
+                                                 for: .touchUpInside)
     }
     
     private func setupNameText() {
@@ -61,6 +67,15 @@ class OccupationInputViewController: UIViewController {
         }
     }
     
+    @objc private func passButtonTapped() {
+        // 건너뛰기 시 기본값 설정
+        UserSignUpStorage.shared.update { data in
+            data.job = nil
+        }
+        let reasonInputVC = ReasonInputViewController()
+        navigationController?.pushViewController(reasonInputVC, animated: true)
+    }
+    
     @objc private func nextButtonTapped() {
         let reasonInputVC = ReasonInputViewController()
         navigationController?.pushViewController(reasonInputVC, animated: true)
@@ -68,6 +83,16 @@ class OccupationInputViewController: UIViewController {
     
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(
+            title: "알림",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
 
 }

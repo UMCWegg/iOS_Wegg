@@ -6,14 +6,12 @@
 //
 
 import UIKit
-import Combine
 
 class SignUpViewController: UIViewController {
 
     // MARK: - Properties
     
     private let signUpView = SignUpView()
-    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Lifecycle
     
