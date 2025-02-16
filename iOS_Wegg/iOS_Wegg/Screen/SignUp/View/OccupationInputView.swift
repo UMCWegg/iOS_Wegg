@@ -47,7 +47,7 @@ class OccupationInputView: UIView {
     let occupationDropdown = DropdownButton().then {
         $0.configure(
             options: UserOccupation.allCases,
-            placeholder: UserOccupation.employee.rawValue
+            placeholder: UserOccupation.employee.displayName
         )
     }
     

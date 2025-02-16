@@ -41,6 +41,15 @@ class EmailSignUpView: UIView {
         type: .email
     )
     
+    private let duplicateButton = UIButton().then {
+        $0.setTitle("중복확인", for: .normal)
+        $0.setTitleColor(UIColor.LoginColor.labelColor, for: .normal)
+        $0.titleLabel?.font = UIFont.notoSans(.medium, size: 14)
+        $0.layer.cornerRadius = 18
+        $0.layer.borderColor = UIColor.black.cgColor
+        $0.layer.borderWidth = 1
+    }
+    
     private let passwordLabel = UILabel().then {
         $0.text = "비밀번호"
         $0.font = UIFont.LoginFont.label
@@ -87,6 +96,7 @@ class EmailSignUpView: UIView {
             mainLabel,
             emailLabel,
             emailTextField,
+            duplicateButton,
             passwordLabel,
             passwordTextField,
             passwordCheckLabel,
@@ -125,6 +135,12 @@ class EmailSignUpView: UIView {
             make.top.equalTo(emailLabel.snp.bottom).offset(9)
             make.leading.equalTo(backButton)
             make.trailing.equalToSuperview().offset(-17)
+        }
+        
+        duplicateButton.snp.makeConstraints { make in
+            make.top.bottom.equalTo(emailTextField).inset(4)
+            make.trailing.equalTo(emailTextField).inset(4)
+            make.width.equalTo(74)
         }
         
         passwordLabel.snp.makeConstraints { make in

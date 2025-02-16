@@ -24,6 +24,7 @@ class PhoneNumberVerificationViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupActions()
+        setupSubLabel()
     }
     
     // MARK: - Setup
