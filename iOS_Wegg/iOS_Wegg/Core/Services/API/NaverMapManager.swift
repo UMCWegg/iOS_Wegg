@@ -23,6 +23,7 @@ class NaverMapManager:
     private var locationManager: CLLocationManager?
     private var tapGestureHandler: ((Coordinate) -> Void)?
     private var longTapGestureHandler: ((Coordinate) -> Void)?
+    private var locationUpdateHandler: ((Coordinate?) -> Void)?
     private var currentLocation: Coordinate?
     
     /// 지도 뷰를 특정 UIView에 초기화
@@ -204,8 +205,14 @@ class NaverMapManager:
     }
     
     /// 현재 위치 getter
-    func getCurrentLocation() -> Coordinate? {
-        return currentLocation
+    func getCurrentLocation(completion: @escaping (Coordinate?) -> Void) {
+        if let location = currentLocation {
+            completion(location)
+        } else {
+            print("위치 정보가 아직 없음, 업데이트 대기...")
+            locationUpdateHandler = completion // 위치 업데이트 후 실행할 핸들러 저장
+            requestCurrentLocation() // 현재 위치 요청 (필요할 경우)
+        }
     }
 }
 
@@ -249,7 +256,7 @@ extension NaverMapManager:
         didUpdateLocations locations: [CLLocation]
     ) {
         guard let location = locations.first else {
-            print("위치 정보 없음")
+            locationUpdateHandler?(nil) // 업데이트 실패시 nil 반환
             return
         }
         
@@ -259,6 +266,9 @@ extension NaverMapManager:
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude
         )
+        
+        locationUpdateHandler?(currentLocation) // 업데이트 완료 후 핸들러 실행
+        locationUpdateHandler = nil // 핸들러 해제 (다음 요청을 위해)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

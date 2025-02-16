@@ -125,18 +125,20 @@ extension AddScheduleViewController: UISearchBarDelegate {
         // 실시간 검색
         guard let mapManager = mapManager else { return }
         // 현재 위치 기반 장소 검색
-        guard let currentLocation = mapManager.getCurrentLocation() else { return }
-        
-        if !searchText.isEmpty {
-            // REFACT: API 호출 중복 개선하기 - 작성자: 이재원
-            fetchSearchPlace(
-                keyword: searchText,
-                at: currentLocation
-            )
-        } else {
-            addScheduleSearchTableHandler.updateSearchResults([])
-            addScheduleView.toggleSearchResultList(true)
+        mapManager.getCurrentLocation { [weak self] coordinate in
+            guard let currentLocation = coordinate else { return }
+            if !searchText.isEmpty {
+                // REFACT: API 호출 중복 개선하기 - 작성자: 이재원
+                self?.fetchSearchPlace(
+                    keyword: searchText,
+                    at: currentLocation
+                )
+            } else {
+                self?.addScheduleSearchTableHandler.updateSearchResults([])
+                self?.addScheduleView.toggleSearchResultList(true)
+            }
         }
+        
     }
 }
 
