@@ -29,19 +29,19 @@ final class AuthService {
         try await apiManager.request(target: AuthAPI.socialLogin(request: request))
     }
     
-    func verifyEmail(_ email: String) async throws -> VerificationResponse {
+    func verifyEmail(_ email: String) async throws -> BaseResponse<SendVerification> {
         try await apiManager.request(target: AuthAPI.verifyEmail(email: email))
     }
     
-    func verifyPhone(_ phone: String) async throws -> VerificationResponse {
+    func verifyPhone(_ phone: String) async throws -> BaseResponse<SendVerification> {
         try await apiManager.request(target: AuthAPI.verifyPhone(phone: phone))
     }
     
-    func checkVerificationNumber(_ code: String) async throws -> VerificationResponse {
+    func checkVerificationNumber(_ code: String) async throws -> BaseResponse<CheckVerification> {
         try await apiManager.request(target: AuthAPI.verificationNum(code: code))
     }
     
-    func checkAccountId(_ id: String) async throws -> VerificationResponse {
+    func checkAccountId(_ id: String) async throws -> BaseResponse<IDCheckResult> {
         try await apiManager.request(target: AuthAPI.idCheck(id: id))
     }
     

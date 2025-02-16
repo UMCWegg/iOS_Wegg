@@ -49,9 +49,10 @@
 		DED22CF02D5F7FBA003245C8 /* HotPlacesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED22CE82D5F7F70003245C8 /* HotPlacesResponse.swift */; };
 		DED22CF12D5F7FBA003245C8 /* ScheduleSearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED22CE42D5F7F62003245C8 /* ScheduleSearchRequest.swift */; };
 		DED22CF22D5F7FBA003245C8 /* ScheduleSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED22CE52D5F7F62003245C8 /* ScheduleSearchResponse.swift */; };
-		DED22D032D5FC27C003245C8 /* VerificationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED22D022D5FA9F4003245C8 /* VerificationResponse.swift */; };
+		DED22D032D5FC27C003245C8 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED22D022D5FA9F4003245C8 /* BaseResponse.swift */; };
 		DED22D042D5FC27C003245C8 /* SignUpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED22CFD2D5FA108003245C8 /* SignUpRequest.swift */; };
 		DED22D052D5FC27C003245C8 /* SignUpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED22CFE2D5FA108003245C8 /* SignUpResponse.swift */; };
+		DED22E672D61A142003245C8 /* VerificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED22E662D61A135003245C8 /* VerificationRequest.swift */; };
 		FF7985732D5A86A40055B370 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985712D5A86A40055B370 /* HeaderView.swift */; };
 		FFC8DAFB2D50DDE30094B687 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = FFC8DAFA2D50DDE30094B687 /* FloatingPanel */; };
 		FFC8DBF42D50E3970094B687 /* HotPlaceSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */; };
@@ -79,7 +80,8 @@
 		DED22CEB2D5F7F7F003245C8 /* UploadResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadResponse.swift; sourceTree = "<group>"; };
 		DED22CFD2D5FA108003245C8 /* SignUpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRequest.swift; sourceTree = "<group>"; };
 		DED22CFE2D5FA108003245C8 /* SignUpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpResponse.swift; sourceTree = "<group>"; };
-		DED22D022D5FA9F4003245C8 /* VerificationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationResponse.swift; sourceTree = "<group>"; };
+		DED22D022D5FA9F4003245C8 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
+		DED22E662D61A135003245C8 /* VerificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationRequest.swift; sourceTree = "<group>"; };
 		FF2E3C922D5B1C2900A09A16 /* ScheduleSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearchRequest.swift; sourceTree = "<group>"; };
 		FF79855D2D5A86510055B370 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		FF79855E2D5A86510055B370 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
@@ -448,7 +450,8 @@
 		DED22CFF2D5FA108003245C8 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				DED22D022D5FA9F4003245C8 /* VerificationResponse.swift */,
+				DED22E662D61A135003245C8 /* VerificationRequest.swift */,
+				DED22D022D5FA9F4003245C8 /* BaseResponse.swift */,
 				DED22CFD2D5FA108003245C8 /* SignUpRequest.swift */,
 				DED22CFE2D5FA108003245C8 /* SignUpResponse.swift */,
 			);
@@ -669,12 +672,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DED22D032D5FC27C003245C8 /* VerificationResponse.swift in Sources */,
+				DED22D032D5FC27C003245C8 /* BaseResponse.swift in Sources */,
 				DED22D042D5FC27C003245C8 /* SignUpRequest.swift in Sources */,
 				DED22D052D5FC27C003245C8 /* SignUpResponse.swift in Sources */,
 				DED22CED2D5F7FBA003245C8 /* UploadRequest.swift in Sources */,
 				DED22CEE2D5F7FBA003245C8 /* UploadResponse.swift in Sources */,
 				DED22CEF2D5F7FBA003245C8 /* HotPlaceRequest.swift in Sources */,
+				DED22E672D61A142003245C8 /* VerificationRequest.swift in Sources */,
 				DED22CF02D5F7FBA003245C8 /* HotPlacesResponse.swift in Sources */,
 				DED22CF12D5F7FBA003245C8 /* ScheduleSearchRequest.swift in Sources */,
 				DED22CF22D5F7FBA003245C8 /* ScheduleSearchResponse.swift in Sources */,
