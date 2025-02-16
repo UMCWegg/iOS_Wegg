@@ -47,14 +47,8 @@ class OccupationInputView: UIView {
     let occupationDropdown = DropdownButton().then {
         $0.configure(
             options: UserOccupation.allCases,
-            placeholder: UserOccupation.employee.rawValue
+            placeholder: UserOccupation.employee.displayName
         )
-    }
-    
-    var selectedOccupation: String? {
-        didSet {
-            // 추후 구현 예정.
-        }
     }
     
     let nextButton = LoginButton(
@@ -62,6 +56,12 @@ class OccupationInputView: UIView {
         title: "다음",
         backgroundColor: .primary
     )
+    
+    var nameText: String = "" {
+        didSet {
+            self.mainLabel.text = "'\(nameText)'님,\n직업이 어떻게 되시나요?"
+        }
+    }
     
     // MARK: - Setup
     

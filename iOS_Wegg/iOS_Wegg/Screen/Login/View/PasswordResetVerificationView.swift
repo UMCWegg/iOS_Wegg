@@ -8,7 +8,7 @@
 import UIKit
 
 class PasswordResetVerificationView: UIView {
-
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -30,7 +30,7 @@ class PasswordResetVerificationView: UIView {
     
     private let mainLabel = LoginLabel(title: "인증 번호를 입력해주세요", type: .main)
     
-    private let subLabel = LoginLabel(title: "wegg@email.com로 인증 번호를 보냈어요", type: .sub)
+    let subLabel = LoginLabel(title: "wegg@email.com로 인증 번호를 보냈어요", type: .sub)
     
     let verificationTextField = VerificationTextField()
     
@@ -52,6 +52,12 @@ class PasswordResetVerificationView: UIView {
         title: "확인",
         backgroundColor: .primary
     )
+    
+    var emailText: String = "" {
+        didSet {
+            self.subLabel.text = "\(emailText)로 인증 번호를 보냈어요"
+        }
+    }
     
     // MARK: - Setup
     

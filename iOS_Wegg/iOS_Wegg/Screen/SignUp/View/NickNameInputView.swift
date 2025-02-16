@@ -52,6 +52,12 @@ class NickNameInputView: UIView {
         backgroundColor: .primary
     )
     
+    var nameText: String = "" {
+        didSet {
+            self.mainLabel.text = "'\(nameText)'님,\n나만의 아이디를 만들어보세요!"
+        }
+    }
+    
     // MARK: - Setup
     
     private func setupViews() {
