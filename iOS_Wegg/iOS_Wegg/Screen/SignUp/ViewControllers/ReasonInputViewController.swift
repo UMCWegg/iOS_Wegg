@@ -23,6 +23,8 @@ class ReasonInputViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupActions()
+        
+        handlereasonSelection(UserReason.formHabits.displayName)
     }
     
     // MARK: - Setup
@@ -33,11 +35,13 @@ class ReasonInputViewController: UIViewController {
                                              action: #selector(nextButtonTapped),
                                              for: .touchUpInside)
         
-        reasonInputView.backButton.addTarget(
-            self,
-            action: #selector(backButtonTapped),
-            for: .touchUpInside
-        )
+        reasonInputView.backButton.addTarget(self,
+                                             action: #selector(backButtonTapped),
+                                             for: .touchUpInside)
+        
+        reasonInputView.passButton.addTarget(self,
+                                             action: #selector(passButtonTapped),
+                                             for: .touchUpInside)
         
         reasonInputView.reasonDropdown.didSelectOption = { [weak self] selectedOption in
             self?.handlereasonSelection(selectedOption)
@@ -47,26 +51,21 @@ class ReasonInputViewController: UIViewController {
     // MARK: - Actions
     
     private func handlereasonSelection(_ reason: String) {
-        guard let reasonType = UserReason(rawValue: reason) else { return }
+        guard let reasonType = UserReason(from: reason) else { return }
         
-        switch reasonType {
-        case .formHabits:
-            
-            break
-        case .followFriends:
-            
-            break
-        case .recordStudy:
-            
-            break
-        case .shareKnowledge:
-            
-            break
-        case .other:
-            
-            break
+        UserSignUpStorage.shared.update { data in
+            data.reason = reasonType
+        }
+    }
+    
+    @objc private func passButtonTapped() {
+        // 건너뛰기 시 nil로 설정
+        UserSignUpStorage.shared.update { data in
+            data.reason = nil
         }
         
+        let getAlertPermissionVC = GetAlertPermissionViewController()
+        navigationController?.pushViewController(getAlertPermissionVC, animated: true)
     }
     
     @objc private func nextButtonTapped() {

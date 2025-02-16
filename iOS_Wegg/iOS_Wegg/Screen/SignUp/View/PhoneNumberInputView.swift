@@ -19,6 +19,7 @@ class PhoneNumberInputView: UIView {
         super.init(frame: frame)
         setupViews()
         setupConstraints()
+        setupTextFields()
     }
     
     required init(coder: NSCoder) {
@@ -171,5 +172,42 @@ class PhoneNumberInputView: UIView {
             make.width.equalTo(60)
         }
     }
+    
+    private func setupTextFields() {
+        [firstTextField, secondTextField, thirdTextField].forEach {
+            $0.delegate = self
+            $0.keyboardType = .numberPad
+            $0.textAlignment = .center
+        }
+    }
+}
 
+extension PhoneNumberInputView: UITextFieldDelegate {
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        // 현재 텍스트와 새로운 문자열을 합친 결과
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        
+        // 백스페이스는 허용
+        if string.isEmpty {
+            return true
+        }
+        
+        // 숫자만 입력 가능하도록
+        let numberOnly = CharacterSet.decimalDigits
+        let characterSet = CharacterSet(charactersIn: string)
+        if !characterSet.isSubset(of: numberOnly) {
+            return false
+        }
+        
+        // 각 TextField의 최대 길이 체크
+        if textField == firstTextField {
+            return updatedText.count <= 3
+        } else {
+            return updatedText.count <= 4
+        }
+    }
 }

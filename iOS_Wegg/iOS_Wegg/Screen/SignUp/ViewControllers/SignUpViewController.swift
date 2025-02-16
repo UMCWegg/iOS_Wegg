@@ -40,11 +40,41 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func googleLoginButtonTapped() {
-        LoginManager.shared.login(type: .google, from: self)
+        Task {
+            do {
+                let (email, token) = try await GoogleLoginManager.shared.requestSignUp(from: self)
+                
+                UserSignUpStorage.shared.update { data in
+                    data.socialType = .google
+                    data.email = email
+                    data.accessToken = token
+                }
+                
+                let serviceAgreementVC = ServiceAgreementViewController()
+                navigationController?.pushViewController(serviceAgreementVC, animated: true)
+            } catch {
+                print("Google signup failed: \(error)")
+            }
+        }
     }
     
     @objc private func kakaoLoginButtonTapped() {
-        LoginManager.shared.login(type: .kakao)
+        Task {
+            do {
+                let (id, token) = try await KakaoLoginManager.shared.requestSignUp()
+                
+                UserSignUpStorage.shared.update { data in
+                    data.socialType = .kakao
+                    data.email = "K\(id)@daum.net"
+                    data.accessToken = token
+                }
+                
+                let serviceAgreementVC = ServiceAgreementViewController()
+                navigationController?.pushViewController(serviceAgreementVC, animated: true)
+            } catch {
+                print("Kakao signup failed: \(error)")
+            }
+        }
     }
     
     @objc private func emailLoginButtonTapped() {

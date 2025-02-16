@@ -47,7 +47,7 @@ class ReasonInputView: UIView {
     let reasonDropdown = DropdownButton().then {
         $0.configure(
             options: UserReason.allCases,
-            placeholder: UserReason.formHabits.rawValue
+            placeholder: UserReason.formHabits.displayName
         )
     }
     

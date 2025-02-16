@@ -36,7 +36,14 @@ class NameInputViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func nextButtonTapped() {
+        guard let name = nameInputView.nameTextField.text else { return }
+        
+        UserSignUpStorage.shared.update { data in
+            data.name = name
+        }
+        
         let nickNameInputVC = NickNameInputViewController()
+        nickNameInputVC.nameText = name
         navigationController?.pushViewController(nickNameInputVC, animated: true)
     }
     
