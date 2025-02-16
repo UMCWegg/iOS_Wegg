@@ -35,9 +35,7 @@ class AddScheduleViewController: UIViewController {
         view = addScheduleView
         
         apiManager = APIManager()
-        addScheduleSearchTableHandler.setupDataSource(
-            for: addScheduleView.searchResultListView.tableView
-        )
+        setupTableHandler()
     }
     
     lazy var addScheduleView = AddScheduleView().then {
@@ -51,6 +49,16 @@ class AddScheduleViewController: UIViewController {
                     tapGesture.delegate = self
                 }
             }
+        }
+    }
+    
+    private func setupTableHandler() {
+        addScheduleSearchTableHandler.setupDataSource(
+            for: addScheduleView.searchResultListView.tableView
+        )
+        // 선택한 장소 UI 업데이트
+        addScheduleSearchTableHandler.didSelectPlace = { [weak self] place in
+            self?.addScheduleView.updateSearchResultLabel(place, isHidden: false)
         }
     }
     
@@ -119,6 +127,7 @@ extension AddScheduleViewController: UISearchBarDelegate {
         // TODO: [25.02.15] 실제 현재 위치 mapManager 통해서 가져오기 - 작성자: 이재원
         let currentLocation: Coordinate = Coordinate(latitude: 37.60635, longitude: 127.04425)
         if !searchText.isEmpty {
+            // REFACT: API 호출 중복 개선하기 - 작성자: 이재원
             fetchSearchPlace(
                 keyword: searchText,
                 at: currentLocation

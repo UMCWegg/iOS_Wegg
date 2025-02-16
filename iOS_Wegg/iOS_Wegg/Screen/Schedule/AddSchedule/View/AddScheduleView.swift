@@ -223,6 +223,16 @@ class AddScheduleView: UIView {
         searchResultListView.isHidden = isHidden
     }
     
+    // MARK: - get/set Functions
+    
+    public func updateSearchResultLabel(
+        _ text: String,
+        isHidden: Bool
+    ) {
+        selectedPlaceLabel.text = text
+        selectedPlaceLabel.isHidden = isHidden
+    }
+    
     public func getSearchResultListView() -> UIView {
         return searchResultListView
     }
@@ -335,7 +345,7 @@ private extension AddScheduleView {
         }
         
         searchResultListView.snp.makeConstraints { make in
-            make.top.equalTo(placeSearchBar.snp.bottom).offset(5)
+            make.top.equalTo(placeSearchBar.snp.bottom).offset(10)
             make.leading.trailing.equalTo(placeSearchBar)
             make.height.equalTo(200)
         }

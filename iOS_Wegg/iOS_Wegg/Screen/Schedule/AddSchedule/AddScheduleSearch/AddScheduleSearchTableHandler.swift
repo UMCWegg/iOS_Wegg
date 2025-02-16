@@ -11,6 +11,8 @@ class AddScheduleSearchTableHandler:
     NSObject,
     UITableViewDelegate {
     
+    var             didSelectPlace: ((String) -> Void)?
+    
     private var dataSource: UITableViewDiffableDataSource<Int, String>?
 
     /// 데이터 소스를 설정하는 함수
@@ -46,6 +48,9 @@ class AddScheduleSearchTableHandler:
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("✅ 선택된 셀: \(indexPath.row)")
+        // 선택한 셀 아이템 가져오기
+        if let item = dataSource?.itemIdentifier(for: indexPath) {
+            didSelectPlace?(item)
+        }
     }
 }
