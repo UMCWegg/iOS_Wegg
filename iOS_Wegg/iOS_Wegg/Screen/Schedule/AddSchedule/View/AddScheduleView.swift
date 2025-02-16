@@ -80,6 +80,16 @@ class AddScheduleView: UIView {
         $0.layer.shadowRadius = 2.5
         $0.layer.shadowOpacity = 0.2
     }
+    
+    private lazy var selectedPlaceLabel = makeLabel(
+        nil,
+        .notoSans(.medium, size: 14),
+        .secondary
+    ).then {
+        $0.isHidden = true
+        $0.textAlignment = .center
+        $0.numberOfLines = 2
+    }
 
     private lazy var detailSettingLabel = makeLabel(
         "세부 설정",
@@ -287,6 +297,7 @@ private extension AddScheduleView {
             searchResultListView,
             createPlaceImageView,
             yellowLogoIcon,
+            selectedPlaceLabel,
             detailSettingLabel,
             detailSettingCardView
         ].forEach(addSubview)
@@ -339,6 +350,11 @@ private extension AddScheduleView {
         yellowLogoIcon.snp.makeConstraints { make in
             make.center.equalTo(createPlaceImageView)
             make.width.height.equalTo(20)
+        }
+        
+        selectedPlaceLabel.snp.makeConstraints { make in
+            make.top.equalTo(yellowLogoIcon.snp.bottom).offset(5)
+            make.centerX.equalTo(createPlaceImageView)
         }
         
         detailSettingLabel.snp.makeConstraints { make in
