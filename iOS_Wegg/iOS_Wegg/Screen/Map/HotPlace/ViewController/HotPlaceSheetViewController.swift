@@ -11,6 +11,7 @@ import Then
 class HotPlaceSheetViewController: UIViewController {
     /// `MapViewController`를 참조하도록 설정하여 FloatingPanel에 접근할 수 있도록 함
     weak var mapVC: MapViewController?
+    private var hotPlaceSectionList: [HotPlaceSectionModel] = []
     
     init(mapVC: MapViewController?) { // 생성자에서 의존성 주입
         self.mapVC = mapVC
@@ -27,8 +28,16 @@ class HotPlaceSheetViewController: UIViewController {
     }
     
     lazy var hotPlaceView = HotPlaceSheetView().then {
+        $0.delegate = self
         $0.hotPlaceCollectionView.delegate = self
         $0.hotPlaceCollectionView.dataSource = self
+    }
+    
+    func updateHotPlaceList(_ list: [HotPlaceSectionModel]) {
+        hotPlaceSectionList = list
+        DispatchQueue.main.async {
+            self.hotPlaceView.hotPlaceCollectionView.reloadData()
+        }
     }
 }
 
@@ -40,7 +49,7 @@ extension HotPlaceSheetViewController:
     
     /// 섹션 갯수
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return HotPlaceSectionModel.sampleSections.count
+        return hotPlaceSectionList.count
     }
     
     /// 셀 아이템 갯수
@@ -48,7 +57,7 @@ extension HotPlaceSheetViewController:
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return HotPlaceSectionModel.sampleSections[section].items.count
+        return hotPlaceSectionList[section].items.count
     }
     
     /// 셀 아이템 데이터 설정
@@ -64,7 +73,7 @@ extension HotPlaceSheetViewController:
         }
         
         // 데이터 접근 시 범위 확인
-        let section = HotPlaceSectionModel.sampleSections[indexPath.section]
+        let section = hotPlaceSectionList[indexPath.section]
         guard indexPath.row < section.items.count else {
             fatalError("Index out of range for section items")
         }
@@ -123,7 +132,7 @@ extension HotPlaceSheetViewController {
             }
             header.gestureDelegate = self
             /// HotPlaceCellHeader의 각 섹션마다 데이터 주입
-            let section = HotPlaceSectionModel.sampleSections[indexPath.section]
+            let section = hotPlaceSectionList[indexPath.section]
             header.configure(model: section.header)
             return header
             
@@ -153,7 +162,10 @@ extension HotPlaceSheetViewController {
 
 // MARK: - Delegate Extension
 
-extension HotPlaceSheetViewController: HotPlaceCellGestureDelegate {
+extension HotPlaceSheetViewController:
+    HotPlaceCellGestureDelegate,
+    HotPlaceSheetViewDelegate {
+    
     func didTapHotPlaceCellHeader() {
         guard let mapVC = mapVC else { return }
         let hotPlaceView = mapVC.hotPlaceSheetVC.hotPlaceView
@@ -163,6 +175,22 @@ extension HotPlaceSheetViewController: HotPlaceCellGestureDelegate {
         mapVC.floatingPanel.set(contentViewController: mapVC.placeDetailVC)
         mapVC.floatingPanel.move(to: .full, animated: true)
         mapVC.overlayView.placeDetailBackButton.isHidden = false
+    }
+    
+    func didTapDistanceButton() {
+        guard let mapVC = mapVC else {
+            print("Error: HotPlaceSheetVC's mapVC is nil")
+            return
+        }
+        mapVC.fetchHotPlacesFromVisibleBounds()
+    }
+    
+    func didTapVerificationButton() {
+        guard let mapVC = mapVC else {
+            print("Error: HotPlaceSheetVC's mapVC is nil")
+            return
+        }
+        mapVC.fetchHotPlacesFromVisibleBounds(sortBy: "authCount")
     }
     
 }

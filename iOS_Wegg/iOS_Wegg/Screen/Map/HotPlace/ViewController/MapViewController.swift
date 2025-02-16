@@ -32,7 +32,13 @@ class MapViewController:
     UIViewController,
     FloatingPanelControllerDelegate,
     UIGestureRecognizerDelegate {
+    
     private let mapManager: MapManagerProtocol
+    private var apiManager: APIManager
+    private var hotplaceList: [HotPlacesResponse.HotPlace] = []
+    
+    // MARK: - 의존성 주입 위한 Property
+    
     /// `MapSearchViewController`도 의존성 주입하여 재사용 (옵셔널로 선언)
     private var mapSearchVC: MapSearchViewController?
     /// FloatingPanelController를 `MapViewController`에서 직접 관리하여 중복 생성을 방지
@@ -42,14 +48,13 @@ class MapViewController:
     /// `PlaceDetailViewController`도 한 번만 생성하여 FloatingPanel 내에서 재사용
     let placeDetailVC: PlaceDetailViewController
     
-    lazy var overlayView = MapOverlayView().then {
-        $0.placeSearchBar.searchTextFieldView.isUserInteractionEnabled = false
-    }
+    // MARK: - Init
     
     /// 의존성 주입
     /// `MapViewController`에서 모든 뷰 컨트롤러를 한 번만 생성하여 유지하도록 함
     init(mapManager: MapManagerProtocol) {
         self.mapManager = mapManager
+        self.apiManager = APIManager()
         self.mapSearchVC = MapSearchViewController(mapVC: nil)
         self.floatingPanel = FloatingPanelController()
         self.hotPlaceSheetVC = HotPlaceSheetViewController(mapVC: nil)
@@ -90,11 +95,13 @@ class MapViewController:
         super.viewDidAppear(animated)
         
         mapManager.requestCurrentLocation()
-        
-        // 약간의 지연을 주고 API 호출
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.fetchHotPlacesFromVisibleBounds()
-        }
+        fetchHotPlacesFromVisibleBounds() // API 호출
+    }
+    
+    // MARK: - Property
+    
+    lazy var overlayView = MapOverlayView().then {
+        $0.placeSearchBar.searchTextFieldView.isUserInteractionEnabled = false
     }
     
     // MARK: - Set Up
@@ -106,14 +113,15 @@ class MapViewController:
     }
     
     private func setupMapManagerGestures() {
-        mapManager.setTapGestureHandler { latlng in
-            // 지도 탭하면 Wegg 아이콘 마커 생성(추후 변경될 예정)
-            self.mapManager.addMarker(at: latlng)
-        }
-        
-        mapManager.setLongTapGestureHandler { latlng in
-            print("롱탭한 위치: \(latlng.latitude), \(latlng.longitude)")
-        }
+        // [25.02.13] 현재 시점 탭 제스처 불필요 - 작성자: 이재원
+//        mapManager.setTapGestureHandler { latlng in
+//            // 지도 탭하면 Wegg 아이콘 마커 생성(추후 변경될 예정)
+//            self.mapManager.addMarker(at: latlng)
+//        }
+//        
+//        mapManager.setLongTapGestureHandler { latlng in
+//            print("롱탭한 위치: \(latlng.latitude), \(latlng.longitude)")
+//        }
     }
     
     /// 바텀 시트 초기 설정
@@ -172,8 +180,25 @@ class MapViewController:
         navigationController.setViewControllers(viewControllers, animated: false)
     }
     
-    private func fetchHotPlacesFromVisibleBounds() {
-        let apiManager = APIManager()
+    /// API에서 가져온 hotplaceList의 좌표를 기반으로 지도에 마커를 추가하는 함수
+    /// - `hotplaceList`가 비어 있으면 실행되지 않음
+    /// - API 호출 후 데이터가 로드된 뒤 실행해야 함
+    /// - `mapManager.addMarker(at:)`를 사용하여 지도에 마커 추가
+    private func setupMapPin() {
+        guard !hotplaceList.isEmpty else {
+            print("MapViewController Error: hotplaceList가 비어 있음")
+            return
+        }
+        
+        hotplaceList.forEach { list in
+            let coordinate = Coordinate(latitude: list.latitude, longitude: list.longitude)
+            mapManager.addMarker(at: coordinate)
+        }
+    }
+    
+    // MARK: - API 관련 함수
+    
+    func fetchHotPlacesFromVisibleBounds(sortBy: String = "distance") {
         // 쿠키를 직접 저장
         apiManager.setCookie(
             value: "871F290DD58CF91959E169A08F4B706D"
@@ -187,10 +212,36 @@ class MapViewController:
                 let response: HotPlacesResponse = try await apiManager.request(
                     target: HotPlacesAPI.getHotPlaces(request: request)
                 )
-                print("✅ 성공: \(response.result.hotPlaceList)")
+                hotplaceList = response.result.hotPlaceList
+                let section = convertToSectionModel(from: hotplaceList)
+                DispatchQueue.main.async {
+                    self.setupMapPin()
+                    self.hotPlaceSheetVC.updateHotPlaceList(section)
+                }
             } catch {
                 print("❌ 실패: \(error)")
             }
+        }
+    }
+    
+    /// `HotPlacesResponse.HotPlace` 데이터를 `HotPlaceSectionModel`로 변환하는 함수
+    private func convertToSectionModel(
+        from hotplaces: [HotPlacesResponse.HotPlace]
+    ) -> [HotPlaceSectionModel] {
+        return hotplaces.map { hotplace in
+            HotPlaceSectionModel(
+                header: HotPlaceHeaderModel(
+                    title: hotplace.placeName,
+                    // TODO: 서버 측에서 카테고리 내용 업데이트 하면 `hotplace.placeLabel`로 변경
+                    category: "카페",
+                    verificationCount: "인증 \(hotplace.authCount)",
+                    saveCount: "저장 \(hotplace.saveCount)"
+                ),
+                items: hotplace.postList.map { post in
+                    HotPlaceImageModel(imageName: post.imageUrl)
+                },
+                details: nil // 현재 API에서 추가적인 상세 정보 없음
+            )
         }
     }
 }
