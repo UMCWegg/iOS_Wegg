@@ -88,7 +88,7 @@ extension AuthAPI: TargetType {
                 encoding: JSONEncoding.default)
         case .idCheck(let id):
             return .requestParameters(
-                parameters: ["account": id],
+                parameters: ["accountId": id],
                 encoding: URLEncoding.default)
         case .resign:
             return .requestPlain
@@ -96,6 +96,11 @@ extension AuthAPI: TargetType {
     }
     
     var headers: [String: String]? {
-        return ["Content-Type": "application/json"]
+        switch self {
+        case .idCheck:
+            return nil
+        default:
+            return ["Content-Type": "application/json"]
+        }
     }
 }
