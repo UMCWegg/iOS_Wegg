@@ -34,6 +34,12 @@ class PhoneNumberInputViewController: UIViewController {
             .addTarget(self,
                        action: #selector(nextButtonTapped),
                        for: .touchUpInside)
+        
+        phoneNumberInputView
+            .backButton
+            .addTarget(self,
+                       action: #selector(backButtonTapped),
+                       for: .touchUpInside)
     }
     
     // MARK: - Actions
@@ -62,6 +68,10 @@ class PhoneNumberInputViewController: UIViewController {
                 showAlert(message: "전화번호 인증 요청에 실패했습니다")
             }
         }
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
         
     // MARK: - Functions
