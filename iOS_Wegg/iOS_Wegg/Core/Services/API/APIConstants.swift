@@ -20,4 +20,8 @@ struct APIConstants {
     struct Post {
         static let uploadRandomPost = "/posts"
     }
+    
+    struct Todo {
+        static let addTodoListURL = "/todo/add" /// 투두 등록
+    }
 }
