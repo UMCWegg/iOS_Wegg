@@ -28,7 +28,7 @@ extension UIImageView {
             self.image = UIImage(named: placeholder)
             return
         }
-
+        
         let cacheOption: [KingfisherOptionsInfoItem] = cacheMemoryOnly ? [.cacheMemoryOnly] : []
         
         let modifier = AnyModifier { request in
@@ -54,7 +54,7 @@ extension UIImageView {
             self.image = UIImage(named: placeholder) // ✅ 지정된 placeholder 사용
             return
         }
-
+        
         DispatchQueue.global().async {
             if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
                 DispatchQueue.main.async {
@@ -66,4 +66,5 @@ extension UIImageView {
                 }
             }
         }
+    }
 }

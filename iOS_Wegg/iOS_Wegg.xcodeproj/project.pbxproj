@@ -56,20 +56,6 @@
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
 		DE85E2772D4623BB0055C78C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		FF2E3C922D5B1C2900A09A16 /* ScheduleSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearchRequest.swift; sourceTree = "<group>"; };
-		FF2E3C962D5B1CB300A09A16 /* HotPlaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceRequest.swift; sourceTree = "<group>"; };
-		FF2E3C972D5B1CB300A09A16 /* HotPlacesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlacesResponse.swift; sourceTree = "<group>"; };
-		FF7980AC2D5A7FED0055B370 /* AddScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleView.swift; sourceTree = "<group>"; };
-		FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleViewController.swift; sourceTree = "<group>"; };
-		FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCardCell.swift; sourceTree = "<group>"; };
-		FF7980B22D5A7FED0055B370 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
-		FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
-		FF79855D2D5A86510055B370 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
-		FF79855E2D5A86510055B370 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
-		FF7985622D5A86510055B370 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		FF7985632D5A86510055B370 /* UserOccupation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOccupation.swift; sourceTree = "<group>"; };
-		FF7985642D5A86510055B370 /* UserReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReason.swift; sourceTree = "<group>"; };
-		FF7985662D5A86510055B370 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		FF7985712D5A86A40055B370 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceSectionModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -200,11 +186,6 @@
 			path = Label;
 			sourceTree = "<group>";
 		};
-		FF2E3C9B2D5B2B9100A09A16 /* Post */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Post;
-			sourceTree = "<group>";
-		};
 		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BrowseItem;
@@ -218,11 +199,6 @@
 		FF3CC3402D4B41FD00006955 /* EmojiModel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = EmojiModel;
-			sourceTree = "<group>";
-		};
-		FF4BFFAE2D5CBB7200457861 /* Browse */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Browse;
 			sourceTree = "<group>";
 		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
@@ -268,7 +244,6 @@
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
 				0E98E9D62D2D009D006F25EF /* Products */,
-				FF4BFB2B2D5BCDC400457861 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -392,102 +367,6 @@
 			path = NotoSans;
 			sourceTree = "<group>";
 		};
-		FF4BFB2B2D5BCDC400457861 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				FF2E3C972D5B1CB300A09A16 /* HotPlacesResponse.swift */,
-				FF2E3C962D5B1CB300A09A16 /* HotPlaceRequest.swift */,
-				FF2E3C922D5B1C2900A09A16 /* ScheduleSearchRequest.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		FF7980AF2D5A7FED0055B370 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				FF7980AE2D5A7FED0055B370 /* AddScheduleViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		FF7980B02D5A7FED0055B370 /* AddSchedule */ = {
-			isa = PBXGroup;
-			children = (
-				FF7980AD2D5A7FED0055B370 /* View */,
-				FF7980AF2D5A7FED0055B370 /* ViewController */,
-			);
-			path = AddSchedule;
-			sourceTree = "<group>";
-		};
-		FF7980B32D5A7FED0055B370 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				FF7980B12D5A7FED0055B370 /* ScheduleCardCell.swift */,
-				FF7980B22D5A7FED0055B370 /* ScheduleView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		FF7980B52D5A7FED0055B370 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				FF7980B42D5A7FED0055B370 /* ScheduleViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		FF7980B62D5A7FED0055B370 /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-				FF7980B02D5A7FED0055B370 /* AddSchedule */,
-				FF7980B32D5A7FED0055B370 /* View */,
-				FF7980B52D5A7FED0055B370 /* ViewController */,
-			);
-			path = Schedule;
-			sourceTree = "<group>";
-		};
-		FF79855F2D5A86510055B370 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				FF79855D2D5A86510055B370 /* LoginRequest.swift */,
-				FF79855E2D5A86510055B370 /* LoginResponse.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		FF7985612D5A86510055B370 /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-				0E46AD5E2D5B25D100529B35 /* ScheduleSearchRequest.swift */,
-				0E46AD5F2D5B25D100529B35 /* ScheduleSearchResponse.swift */,
-			);
-			path = Schedule;
-			sourceTree = "<group>";
-		};
-		FF7985652D5A86510055B370 /* User */ = {
-			isa = PBXGroup;
-			children = (
-				FF7985622D5A86510055B370 /* UserModel.swift */,
-				FF7985632D5A86510055B370 /* UserOccupation.swift */,
-				FF7985642D5A86510055B370 /* UserReason.swift */,
-			);
-			path = User;
-			sourceTree = "<group>";
-		};
-		FF7985672D5A86510055B370 /* NetworkModel */ = {
-			isa = PBXGroup;
-			children = (
-				FF4BFFAE2D5CBB7200457861 /* Browse */,
-				FF2E3C9B2D5B2B9100A09A16 /* Post */,
-				0E46AD642D5B25D800529B35 /* Map */,
-				FF79855F2D5A86510055B370 /* Login */,
-				FF7985612D5A86510055B370 /* Schedule */,
-				FF7985652D5A86510055B370 /* User */,
-				FF7985662D5A86510055B370 /* .gitkeep */,
-			);
-			path = NetworkModel;
-			sourceTree = "<group>";
-		};
 		FF7985722D5A86A40055B370 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,11 +414,9 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DEEB72322D4D211C001C3880 /* Label */,
-				FF2E3C9B2D5B2B9100A09A16 /* Post */,
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
-				FF4BFFAE2D5CBB7200457861 /* Browse */,
 				FFC8E52F2D5605100094B687 /* Map */,
 			);
 			name = iOS_Wegg;
