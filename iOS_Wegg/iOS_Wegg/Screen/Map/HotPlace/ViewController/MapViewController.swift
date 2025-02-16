@@ -191,8 +191,16 @@ class MapViewController:
         }
         
         hotplaceList.forEach { list in
-            let coordinate = Coordinate(latitude: list.latitude, longitude: list.longitude)
-            mapManager.addMarker(at: coordinate)
+            let coordinate = Coordinate(
+                latitude: list.latitude,
+                longitude: list.longitude
+            )
+            mapManager.addMarker(
+                imageName: "list_brown_icon",
+                width: 28,
+                height: 40,
+                at: coordinate
+            )
         }
     }
     
