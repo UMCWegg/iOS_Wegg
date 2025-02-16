@@ -5,7 +5,7 @@
 //  Created by 이건수 on 2025.02.01.
 //
 
-struct SignUpRequest: Codable {
+struct SignUpRequest: Encodable {
 
     let email: String?
     let password: String?

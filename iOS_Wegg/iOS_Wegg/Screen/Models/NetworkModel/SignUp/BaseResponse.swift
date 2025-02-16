@@ -5,23 +5,23 @@
 //  Created by 이건수 on 2025.02.15.
 //
 
-struct BaseResponse<T: Codable>: Codable {
+struct BaseResponse<T: Decodable>: Decodable {
     let isSuccess: Bool
     let code: String
     let message: String
     let result: T
 }
 
-struct IDCheckResult: Codable {
+struct IDCheckResult: Decodable {
     let message: String
     let duplicate: Bool
     
 }
 
-struct SendVerification: Codable {
+struct SendVerification: Decodable {
     let message: String
 }
 
-struct CheckVerification: Codable {
+struct CheckVerification: Decodable {
     let valid: String
 }

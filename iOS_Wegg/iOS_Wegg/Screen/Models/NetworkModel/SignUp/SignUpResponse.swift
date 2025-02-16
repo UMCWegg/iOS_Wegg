@@ -5,7 +5,7 @@
 //  Created by 이건수 on 2025.02.01.
 //
 
-struct SignUpResponse: Codable {
+struct SignUpResponse: Decodable {
     let isSuccess: Bool
     let code: String
     let message: String
@@ -19,7 +19,7 @@ struct SignUpResponse: Codable {
     }
 }
 
-struct SignUpResult: Codable {
+struct SignUpResult: Decodable {
     let userId: Int
     let createdAt: String
     let contactFriends: [String]
