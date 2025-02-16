@@ -116,7 +116,6 @@ extension AddScheduleViewController: UISearchBarDelegate {
     
     /// 검색 내용 리턴
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchText = searchBar.text else { return }
         searchBar.text = ""
         addScheduleView.toggleSearchResultList(true)
     }
@@ -124,8 +123,10 @@ extension AddScheduleViewController: UISearchBarDelegate {
     /// 검색 내용 변화 리턴
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // 실시간 검색
-        // TODO: [25.02.15] 실제 현재 위치 mapManager 통해서 가져오기 - 작성자: 이재원
-        let currentLocation: Coordinate = Coordinate(latitude: 37.60635, longitude: 127.04425)
+        guard let mapManager = mapManager else { return }
+        // 현재 위치 기반 장소 검색
+        guard let currentLocation = mapManager.getCurrentLocation() else { return }
+        
         if !searchText.isEmpty {
             // REFACT: API 호출 중복 개선하기 - 작성자: 이재원
             fetchSearchPlace(

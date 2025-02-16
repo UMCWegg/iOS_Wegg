@@ -248,7 +248,11 @@ extension NaverMapManager:
         _ manager: CLLocationManager,
         didUpdateLocations locations: [CLLocation]
     ) {
-        guard let location = locations.first else { return }
+        guard let location = locations.first else {
+            print("위치 정보 없음")
+            return
+        }
+        
         moveCameraToLocation(location)
         // 현재 위치 저장
         currentLocation = Coordinate(

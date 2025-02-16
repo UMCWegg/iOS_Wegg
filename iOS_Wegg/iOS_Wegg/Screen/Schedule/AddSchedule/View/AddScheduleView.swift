@@ -345,7 +345,7 @@ private extension AddScheduleView {
         }
         
         searchResultListView.snp.makeConstraints { make in
-            make.top.equalTo(placeSearchBar.snp.bottom).offset(10)
+            make.top.equalTo(placeSearchBar.snp.bottom).offset(15)
             make.leading.trailing.equalTo(placeSearchBar)
             make.height.equalTo(200)
         }

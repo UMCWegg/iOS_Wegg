@@ -48,11 +48,18 @@ class ScheduleViewController:
         // 뒤로가기 제스처 활성화
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        // 현재 위치 초기화
+        setupCurrentLocation()
     }
 
     lazy var scheduleView = ScheduleView().then {
         $0.studyCardTableView.delegate = self
         $0.gestureDelegate = self
+    }
+    
+    private func setupCurrentLocation() {
+        guard let mapManager = mapManager else { return }
+        mapManager.setupLocationManager()
     }
 
     private func setupDataSource() {
