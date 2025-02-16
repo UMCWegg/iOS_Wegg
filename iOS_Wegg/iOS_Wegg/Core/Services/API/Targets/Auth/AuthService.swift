@@ -46,6 +46,10 @@ final class AuthService {
         try await apiManager.request(target: AuthAPI.idCheck(id: id))
     }
     
+    func checkEmail(_ email: String) async throws -> BaseResponse<IDCheckResult> {
+        try await apiManager.request(target: AuthAPI.emailCheck(email: email))
+    }
+    
     func resign() async throws -> EmptyResponse {
         try await apiManager.request(target: AuthAPI.resign)
     }

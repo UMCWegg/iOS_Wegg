@@ -50,7 +50,7 @@ class EmailSignUpViewController: UIViewController {
         
         Task {
             do {
-                let response = try await authService.checkAccountId(email)
+                let response = try await authService.checkEmail(email)
                 await MainActor.run {
                     handleDuplicateCheckResponse(response)
                 }

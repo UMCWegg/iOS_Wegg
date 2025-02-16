@@ -30,6 +30,7 @@ struct APIConstants {
         static let verifyPhone = "/users/phone/send-verification"
         static let verificationNum = "/users/verifinum-check"
         static let idCheck = "/users/id-check"
+        static let emailCheck = "/users/email-check"
         static let resign = "/users/resign"
         static let search = "/users/search"
     }

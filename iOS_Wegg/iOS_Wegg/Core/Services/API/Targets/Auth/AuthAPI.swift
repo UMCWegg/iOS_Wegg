@@ -18,6 +18,7 @@ enum AuthAPI {
     case verifyPhone(phone: String)
     case verificationNum(request: CheckVerificationRequest)
     case idCheck(id: String)
+    case emailCheck(email: String)
     case resign
 }
 
@@ -47,6 +48,8 @@ extension AuthAPI: TargetType {
             return APIConstants.Auth.verificationNum
         case .idCheck:
             return APIConstants.Auth.idCheck
+        case .emailCheck:
+            return APIConstants.Auth.emailCheck
         case .resign:
             return APIConstants.Auth.resign
         }
@@ -57,7 +60,7 @@ extension AuthAPI: TargetType {
         case .signUp, .login, .socialSignUp,
                 .socialLogin, .verifyEmail, .verifyPhone, .verificationNum:
             return .post
-        case .idCheck:
+        case .idCheck, .emailCheck:
             return .get
         case .resign:
             return .delete
@@ -87,6 +90,10 @@ extension AuthAPI: TargetType {
         case .idCheck(let id):
             return .requestParameters(
                 parameters: ["accountId": id],
+                encoding: URLEncoding.default)
+        case .emailCheck(let email):
+            return .requestParameters(
+                parameters: ["email" : email],
                 encoding: URLEncoding.default)
         case .resign:
             return .requestPlain
