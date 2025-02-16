@@ -43,6 +43,7 @@ class NameInputViewController: UIViewController {
         }
         
         let nickNameInputVC = NickNameInputViewController()
+        nickNameInputVC.nameText = name
         navigationController?.pushViewController(nickNameInputVC, animated: true)
     }
     

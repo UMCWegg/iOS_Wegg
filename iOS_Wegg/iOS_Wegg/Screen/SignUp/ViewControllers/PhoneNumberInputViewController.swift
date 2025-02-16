@@ -47,6 +47,7 @@ class PhoneNumberInputViewController: UIViewController {
         }
         
         let phoneNumberVerificationVC = PhoneNumberVerificationViewController()
+        phoneNumberVerificationVC.phoneNumber = phoneNumber
         navigationController?.pushViewController(phoneNumberVerificationVC, animated: true)
     }
     

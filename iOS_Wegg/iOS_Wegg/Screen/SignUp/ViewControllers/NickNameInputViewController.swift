@@ -11,6 +11,7 @@ class NickNameInputViewController: UIViewController {
 
     // MARK: - Properties
     
+    var nameText: String?
     private let nickNameInputView = NickNameInputView()
     
     // MARK: - Lifecycle
@@ -23,6 +24,7 @@ class NickNameInputViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupActions()
+        setupNameText()
     }
     
     // MARK: - Setup
@@ -31,6 +33,12 @@ class NickNameInputViewController: UIViewController {
         nickNameInputView.nextButton.addTarget(self,
                                            action: #selector(nextButtonTapped),
                                            for: .touchUpInside)
+    }
+    
+    private func setupNameText() {
+        if let nameText = nameText {
+            nickNameInputView.nameText = nameText
+        }
     }
     
     // MARK: - Actions
@@ -43,6 +51,7 @@ class NickNameInputViewController: UIViewController {
         }
         
         let occupationInputVC = OccupationInputViewController()
+        occupationInputVC.nameText = nameText
         navigationController?.pushViewController(occupationInputVC, animated: true)
     }
     

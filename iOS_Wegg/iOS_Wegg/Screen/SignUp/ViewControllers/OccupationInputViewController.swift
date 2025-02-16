@@ -11,6 +11,7 @@ class OccupationInputViewController: UIViewController {
 
     // MARK: - Properties
     
+    var nameText: String?
     private let occupationInputView = OccupationInputView()
     
     // MARK: - Lifecycle
@@ -23,6 +24,7 @@ class OccupationInputViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupActions()
+        setupNameText()
     }
     
     // MARK: - Setup
@@ -44,6 +46,11 @@ class OccupationInputViewController: UIViewController {
         }
     }
     
+    private func setupNameText() {
+        if let nameText = nameText {
+            occupationInputView.nameText = nameText
+        }
+    }
     // MARK: - Actions
     
     private func handleOccupationSelection(_ occupation: String) {

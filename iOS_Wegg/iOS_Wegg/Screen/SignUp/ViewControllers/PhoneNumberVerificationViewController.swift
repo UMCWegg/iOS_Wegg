@@ -11,6 +11,7 @@ class PhoneNumberVerificationViewController: UIViewController {
     
     // MARK: - Properties
     
+    var phoneNumber: String?
     private let phoneNumberVerificationView = PhoneNumberVerificationView()
     
     // MARK: - Lifecycle
@@ -38,6 +39,11 @@ class PhoneNumberVerificationViewController: UIViewController {
                                                          for: .touchUpInside)
     }
     
+    private func setupSubLabel() {
+        if let phoneNumber = phoneNumber {
+            phoneNumberVerificationView.phoneNumber = phoneNumber
+        }
+    }
     // MARK: - Actions
     
     @objc private func nextButtonTapped() {

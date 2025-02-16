@@ -51,17 +51,17 @@ class OccupationInputView: UIView {
         )
     }
     
-    var selectedOccupation: String? {
-        didSet {
-            // 추후 구현 예정.
-        }
-    }
-    
     let nextButton = LoginButton(
         style: .textOnly,
         title: "다음",
         backgroundColor: .primary
     )
+    
+    var nameText: String = "" {
+        didSet {
+            self.mainLabel.text = "'\(nameText)'님,\n직업이 어떻게 되시나요?"
+        }
+    }
     
     // MARK: - Setup
     
