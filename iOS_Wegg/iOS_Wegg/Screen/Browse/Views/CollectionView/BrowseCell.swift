@@ -87,9 +87,9 @@ class BrowseCell: UICollectionViewCell {
         nickNameLabel.text = item.nickname // ✅ 속성명 `nickname` 확인
         
         // 프로필 이미지 로드 (기본값: profile_placeholder)
-        userProfile.loadImage(from: item.profileImageUrl, placeholder: "profile_placeholder")
+        userProfile.setImage(from: item.profileImageUrl, placeholder: "profile_placeholder")
         
         // 게시물 이미지 로드 (기본값: post_placeholder)
-        postImage.loadImage(from: item.postImageUrl, placeholder: "post_placeholder")
+        postImage.setImage(from: item.postImageUrl, placeholder: "post_placeholder")
     }
 }

@@ -50,7 +50,7 @@ class BrowseViewController: UIViewController {
         // 이 화면에 들어올 때 네비게이션 바 숨김
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // 이 화면을 벗어날 때 네비게이션 바 다시 표시
@@ -67,6 +67,11 @@ class BrowseViewController: UIViewController {
         )
         browseView.browseCollectionView.dataSource = self
         browseView.browseCollectionView.delegate = self
+        browseView.browseCollectionView.register(
+            BrowseSectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "HeaderView"
+        )
     }
     
     /// 리프레시 컨트롤 설정 (UICollectionView에 추가)
@@ -90,17 +95,19 @@ class BrowseViewController: UIViewController {
     
     /// API 호출하여 최신 게시물 가져오기
     private func fetchBrowsePosts() {
-        guard !isFetching else { return } // 중복 요청 방지
+        guard !isFetching else { return }
         isFetching = true
         
         Task {
             do {
-                let posts = try await browseService.fetchBrowsePosts(page: 0, size: 20)
+                // ✅ 서버 응답은 [[BrowsePost]] 형태로 반환
+                let posts = try await self.browseService.fetchBrowsePosts(page: 0, size: 20)
                 DispatchQueue.main.async {
-                    self.browsePosts = posts // API에서 받아온 데이터 저장
-                    self.browseView.browseCollectionView.reloadData() // 컬렉션 뷰 갱신
-                    self.refreshControl.endRefreshing() // 리프레시 종료
-                    self.isFetching = false // API 중복 요청 방지 위해 토글
+                    // ✅ 응답 그대로 사용
+                    self.browsePosts = posts
+                    self.browseView.browseCollectionView.reloadData()
+                    self.refreshControl.endRefreshing()
+                    self.isFetching = false
                 }
             } catch {
                 print("API 호출 실패: \(error)")
@@ -148,6 +155,24 @@ extension BrowseViewController: UICollectionViewDataSource {
         let item = browsePosts[indexPath.section][indexPath.row] // ✅ 2차원 배열 처리
         cell.configure(with: item)
         return cell
+    }
+    
+    // ✅ 섹션 헤더를 추가하여 팔로우 여부를 표시
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: "HeaderView",
+                for: indexPath
+              ) as? BrowseSectionHeaderView else {
+            return UICollectionReusableView()
+        }
+        
+        headerView.titleLabel.text = indexPath.section == 0 ? "팔로우한 사용자의 게시물" : "팔로우하지 않은 사용자의 게시물"
+        return headerView
     }
 }
 /// UICollectionViewDelegate: 사용자 반응 처리(아이템 클릭시 처리)하기 위한 프로토콜

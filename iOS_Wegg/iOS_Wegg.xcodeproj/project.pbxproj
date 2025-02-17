@@ -96,6 +96,7 @@
 				ViewController/BrowseViewController.swift,
 				Views/BrowseView.swift,
 				Views/CollectionView/BrowseCell.swift,
+				Views/CollectionView/BrowseSectionHeaderView.swift,
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};

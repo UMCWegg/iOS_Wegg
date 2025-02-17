@@ -88,11 +88,11 @@ class PostDetailView: UIView {
     /// 댓글 입력과 이모티콘 버튼을 묶는 StackView
     private lazy var buttonStackView = UIStackView(
         arrangedSubviews: [commentButton, emojiButton]).then {
-        $0.axis = .horizontal
-        $0.spacing = 8
-        $0.distribution = .fill // 내부 뷰가 채워지도록 설정
-        $0.alignment = .fill // 높이를 스택뷰에 맞게 설정
-    }
+            $0.axis = .horizontal
+            $0.spacing = 8
+            $0.distribution = .fill // 내부 뷰가 채워지도록 설정
+            $0.alignment = .fill // 높이를 스택뷰에 맞게 설정
+        }
     
     /// 프로필, 닉네임, 시간을 묶을 사용자 정보 StackView
     private lazy var userInfoStackView = UIStackView(arrangedSubviews: [
@@ -112,7 +112,7 @@ class PostDetailView: UIView {
         // 팝업이 이미 추가되지 않은 경우에만 추가
         if emojiPopupView.superview == nil {
             addSubview(emojiPopupView) // 이모지 팝업을 현재 뷰에 추가
-
+            
             // SnapKit으로 팝업의 제약 조건 설정
             emojiPopupView.snp.makeConstraints {
                 $0.centerX.equalTo(emojiButton) // 이모지 버튼과 수평으로 정렬
@@ -120,14 +120,14 @@ class PostDetailView: UIView {
                 $0.width.equalTo(80) // 팝업의 너비 설정
                 $0.height.equalTo(250) // 팝업의 높이 설정
             }
-
+            
             // 이모지 선택 시 호출되는 클로저 정의
             emojiPopupView.emojiSelected = { [weak self] selectedEmoji in
                 print("Selected Emoji: \(selectedEmoji)") // 선택된 이모지 출력
                 self?.hideEmojiPopup() // 선택 후 팝업 숨기기
             }
         }
-
+        
         // 팝업이 부드럽게 나타나는 애니메이션
         UIView.animate(withDuration: 0.3) {
             self.emojiPopupView.alpha = 1 // 팝업의 투명도를 1로 설정하여 표시
@@ -196,18 +196,18 @@ class PostDetailView: UIView {
     /// 상세 페이지 데이터 설정
     func configure(with detail: PostDetailModel) {
         // 프로필 이미지 설정, 서버에 있는 url 이미지 확장자 적용
-        profileImageView.loadImage(from: detail.profileImage, placeholder: "profile_placeholder")
+        profileImageView.setImage(from: detail.profileImage, placeholder: "profile_placeholder")
         
         // 닉네임 설정
         nicknameLabel.text = detail.nickname
         
         // 게시물 이미지 설정, 서버에 있는 url 이미지 확장자 적용
-        postImageView.loadImage(from: detail.postImages, placeholder: "post_placeholder")
+        postImageView.setImage(from: detail.postImages, placeholder: "post_placeholder")
         
         // 게시 시간 레이블 설정 (formattedDate 메서드로 날짜 형식 변환)
         postTimeLabel.text = "게시시간:  \(formattedDate(detail.postTime))"
-        
     }
+    
     /// 시간 설정
     private func formattedDate(_ date: Date) -> String {
         // DateFormatter 초기화

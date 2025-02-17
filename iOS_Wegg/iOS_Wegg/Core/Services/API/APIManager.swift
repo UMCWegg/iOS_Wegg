@@ -56,11 +56,11 @@ class APIManager: APIManagerProtocol {
     ///   - provider: MoyaProvider를 주입받음 (기본값은 `MoyaProvider<MultiTarget>()`)
     /// - MoyaProvider에 customSession 적용
     init(provider: MoyaProvider<MultiTarget> = {
-        #if DEBUG
+#if DEBUG
         return MoyaProvider<MultiTarget>(session: insecureSession) // 테스트 환경
-        #else
+#else
         return MoyaProvider<MultiTarget>(session: customSession)   // 프로덕션 환경
-        #endif
+#endif
     }()) {
         self.provider = provider
     }
@@ -75,11 +75,6 @@ class APIManager: APIManagerProtocol {
                 switch result {
                 case .success(let response):
                     print("🔍 [APIManager] 응답 코드: \(response.statusCode)")
-                    
-                    // ✅ 서버에서 받은 원본 JSON 데이터 출력
-                       if let jsonString = String(data: response.data, encoding: .utf8) {
-                           print("📥 [APIManager] 서버 응답 데이터:\n\(jsonString)")
-                       }
                     
                     do {
                         // JSON 데이터를 Decodable 타입으로 디코딩
