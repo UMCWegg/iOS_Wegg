@@ -251,9 +251,6 @@ class ToDoListView: UIView {
             textField.text = self.todoItems[indexPath.row].content
             textField.font = .notoSans(.regular, size: 14)
             textField.backgroundColor = .white
-            textField.layer.cornerRadius = 5
-            textField.layer.borderWidth = 1
-            textField.layer.borderColor = UIColor.lightGray.cgColor
         }
 
         let saveAction = UIAlertAction(title: "저장", style: .default) { [weak self] _ in
@@ -359,14 +356,23 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        showEditTodoAlert(at: indexPath)
     }
 
-    // ✅ 투두 삭제
+    // ✅ 투두 스와이프 액션
     func tableView(
         _ tableView: UITableView,
         trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
+        let editAction = UIContextualAction(
+            style: .normal,
+            title: "수정"
+        ) { [weak self] (_, _, completionHandler) in
+            guard let self = self else { return }
+            self.showEditTodoAlert(at: indexPath)
+            completionHandler(true)
+        }
+        editAction.backgroundColor = .systemBlue
+
         let deleteAction = UIContextualAction(
             style: .destructive,
             title: "삭제"
@@ -406,6 +412,7 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
             completionHandler(true)
         }
 
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+        return configuration
     }
 }
