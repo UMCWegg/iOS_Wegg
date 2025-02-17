@@ -18,7 +18,7 @@ extension UIAlertController {
     func styleAlert() {
         guard let subView = self.view.subviews.first,
               let alertContentView = subView.subviews.first else {
-            print("Alert view structure is different than expected")
+            print("Alert view structure is 다릅니다")
             return
         }
         
@@ -30,8 +30,8 @@ extension UIAlertController {
         // Title 스타일 변경
         if let title = self.title {
             let attributedString = NSAttributedString(string: title, attributes: [
-                NSAttributedString.Key.font: UIFont.notoSans(.bold, size: 16),
-                NSAttributedString.Key.foregroundColor: UIColor.black
+                .font: UIFont.notoSans(.bold, size: 16),
+                .foregroundColor: UIColor.black
             ])
             self.setValue(attributedString, forKey: "attributedTitle")
         }
@@ -39,8 +39,8 @@ extension UIAlertController {
         // Message 스타일 변경
         if let message = self.message {
             let attributedString = NSAttributedString(string: message, attributes: [
-                NSAttributedString.Key.font: UIFont.notoSans(.regular, size: 14),
-                NSAttributedString.Key.foregroundColor: UIColor.darkGray
+                .font: UIFont.notoSans(.regular, size: 14),
+                .foregroundColor: UIColor.darkGray
             ])
             self.setValue(attributedString, forKey: "attributedMessage")
         }
@@ -79,10 +79,11 @@ class ToDoListView: UIView {
     }
 
     // MARK: - Properties
-    var todoItems: [ToDoItem] = [] {
+    var todoItems: [TodoResponse.TodoResult] = [] {
         didSet {
             updateEmptyState()
             updateTableViewHeight()
+            tableView.reloadData()
         }
     }
 
@@ -150,10 +151,9 @@ class ToDoListView: UIView {
     }
 
     // MARK: - Public Methods
-    func addTodoItem(text: String) {
-        let newItem = ToDoItem(name: text)
+    func addTodoItem(_ item: TodoResponse.TodoResult) {
         tableView.performBatchUpdates({
-            self.todoItems.append(newItem)
+            self.todoItems.append(item)
             let indexPath = IndexPath(row: self.todoItems.count - 1, section: 0)
             self.tableView.insertRows(at: [indexPath], with: .automatic)
         }, completion: { _ in
@@ -188,7 +188,7 @@ class ToDoListView: UIView {
             message: "할 일을 입력하세요.",
             preferredStyle: .alert
         )
-        alert.styleAlert()  // 커스텀 스타일 적용
+        alert.styleAlert()
 
         alert.addTextField { textField in
             textField.placeholder = "할 일 내용"
@@ -197,9 +197,25 @@ class ToDoListView: UIView {
         }
 
         let addAction = UIAlertAction(title: "추가", style: .default) { [weak self] _ in
-            if let text = alert.textFields?.first?.text, !text.isEmpty {
-                self?.addTodoItem(text: text)
-                self?.delegate?.didAddToDoItem(text: text)
+            guard let text = alert.textFields?.first?.text, !text.isEmpty else { return }
+            
+            // API 호출을 위해 TodoRequest 생성
+            let request = TodoRequest(status: "YET", content: text)
+            
+            let todoService = TodoService()
+            Task {
+                let result = await todoService.addTodo(request)
+                switch result {
+                case .success(let response):
+                    // 성공 시 UI에 추가
+                    DispatchQueue.main.async {
+                        // 'response.result' → 'response' 변경
+                        self?.addTodoItem(response)
+                        print("✅ Todo 등록 성공: \(response.content)")
+                    }
+                case .failure(let error):
+                    print("❌ Todo 등록 실패: \(error)")
+                }
             }
         }
 
@@ -208,7 +224,6 @@ class ToDoListView: UIView {
         alert.addAction(addAction)
         alert.addAction(cancelAction)
 
-        // 버튼 색상 변경
         addAction.setValue(UIColor.blue, forKey: "titleTextColor")
         cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
 
@@ -221,10 +236,10 @@ class ToDoListView: UIView {
             message: "할 일을 수정하세요.",
             preferredStyle: .alert
         )
-        alert.styleAlert()  // 커스텀 스타일 적용
+        alert.styleAlert()
 
         alert.addTextField { textField in
-            textField.text = self.todoItems[indexPath.row].name
+            textField.text = self.todoItems[indexPath.row].content
             textField.font = .notoSans(.regular, size: 14)
             textField.backgroundColor = .white
             textField.layer.cornerRadius = 5
@@ -233,11 +248,11 @@ class ToDoListView: UIView {
         }
 
         let saveAction = UIAlertAction(title: "저장", style: .default) { [weak self] _ in
-            if let textField = alert.textFields?.first, let text = textField.text, !text.isEmpty {
-                self?.todoItems[indexPath.row].name = text
-                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
-                self?.delegate?.didUpdateToDoItem(at: indexPath.row, with: text)
-            }
+            guard let textField = alert.textFields?.first,
+                  let text = textField.text, !text.isEmpty else { return }
+            
+            self?.updateTodoContent(at: indexPath, with: text)
+            self?.delegate?.didUpdateToDoItem(at: indexPath.row, with: text)
         }
 
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
@@ -245,14 +260,25 @@ class ToDoListView: UIView {
         alert.addAction(saveAction)
         alert.addAction(cancelAction)
 
-        // 버튼 색상 변경
         saveAction.setValue(UIColor.blue, forKey: "titleTextColor")
         cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
 
         findViewController()?.present(alert, animated: true)
     }
 
-    // ViewController를 찾는 Helper 함수
+    // MARK: - Helper Methods
+    private func updateTodoContent(at indexPath: IndexPath, with newContent: String) {
+        let oldItem = todoItems[indexPath.row]
+        let updatedItem = TodoResponse.TodoResult(
+            todoId: oldItem.todoId,
+            content: newContent,
+            status: oldItem.status,
+            createdAt: oldItem.createdAt
+        )
+        todoItems[indexPath.row] = updatedItem
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
     private func findViewController() -> UIViewController? {
         var responder: UIResponder? = self
         while responder != nil {

@@ -21,6 +21,8 @@
 		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
 		0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */; };
 		0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */; };
+		7B75AA692D625D1200882385 /* TodoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B75AA682D625D1200882385 /* TodoRequest.swift */; };
+		7B75AA6B2D625D3E00882385 /* TodoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B75AA6A2D625D3E00882385 /* TodoResponse.swift */; };
 		DE0020B92D3F75E6003A273F /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020B82D3F75E6003A273F /* KakaoSDK */; };
 		DE0020BB2D3F75E6003A273F /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020BA2D3F75E6003A273F /* KakaoSDKAuth */; };
 		DE0020BD2D3F75E6003A273F /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020BC2D3F75E6003A273F /* KakaoSDKCommon */; };
@@ -69,6 +71,8 @@
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
+		7B75AA682D625D1200882385 /* TodoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRequest.swift; sourceTree = "<group>"; };
+		7B75AA6A2D625D3E00882385 /* TodoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoResponse.swift; sourceTree = "<group>"; };
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
 		DE85E2772D4623BB0055C78C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -403,6 +407,15 @@
 			path = NotoSans;
 			sourceTree = "<group>";
 		};
+		7B75AA672D625D0A00882385 /* Todo */ = {
+			isa = PBXGroup;
+			children = (
+				7B75AA682D625D1200882385 /* TodoRequest.swift */,
+				7B75AA6A2D625D3E00882385 /* TodoResponse.swift */,
+			);
+			path = Todo;
+			sourceTree = "<group>";
+		};
 		DED22B802D5F7C8B003245C8 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -479,6 +492,7 @@
 		FF7985672D5A86510055B370 /* NetworkModel */ = {
 			isa = PBXGroup;
 			children = (
+				7B75AA672D625D0A00882385 /* Todo */,
 				DED22CFF2D5FA108003245C8 /* SignUp */,
 				DED22CEC2D5F7F7F003245C8 /* Post */,
 				DED22CE92D5F7F70003245C8 /* Map */,
@@ -679,6 +693,8 @@
 				DED22CDA2D5F7D41003245C8 /* UserOccupation.swift in Sources */,
 				DED22CDB2D5F7D41003245C8 /* UserReason.swift in Sources */,
 				FF7985732D5A86A40055B370 /* HeaderView.swift in Sources */,
+				7B75AA692D625D1200882385 /* TodoRequest.swift in Sources */,
+				7B75AA6B2D625D3E00882385 /* TodoResponse.swift in Sources */,
 				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
 				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
 				DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */,
