@@ -167,6 +167,14 @@ extension AddScheduleViewController: AddScheduleGestureDelegate {
     
     func didChangeDate(_ date: Date) {
         print("didChangeDate")
+        let scheduleTimePicker = ScheduleTimeViewController()
+        if let sheet = scheduleTimePicker.sheetPresentationController {
+            sheet.detents = [
+                .custom(resolver: { context in
+                    return context.maximumDetentValue * 0.64
+                })]
+        }
+        present(scheduleTimePicker, animated: true)
     }
     
 }
