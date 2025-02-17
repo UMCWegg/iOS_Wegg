@@ -27,10 +27,7 @@ class TodoService {
     func updateTodo(todoId: Int, request: TodoUpdateRequest) async -> Result<TodoResult, Error> {
         do {
             let response: TodoResponse = try await apiManager.request(
-                target: TodoAPI.updateTodo(
-                    todoId: todoId,
-                    request: request
-                )
+                target: TodoAPI.updateTodo(todoId: todoId, request: request)
             )
             return .success(response.result)
         } catch {
@@ -38,14 +35,11 @@ class TodoService {
         }
     }
 
-    // 투두 체크
+    // 투두 달성 체크
     func checkTodo(todoId: Int, request: TodoCheckRequest) async -> Result<TodoResult, Error> {
         do {
             let response: TodoResponse = try await apiManager.request(
-                target: TodoAPI.checkTodo(
-                    todoId: todoId,
-                    request: request
-                )
+                target: TodoAPI.checkTodo(todoId: todoId, request: request)
             )
             return .success(response.result)
         } catch {

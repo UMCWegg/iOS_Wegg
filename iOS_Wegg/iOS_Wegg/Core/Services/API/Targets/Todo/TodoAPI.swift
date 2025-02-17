@@ -47,8 +47,7 @@ extension TodoAPI: TargetType {
         case .addTodo: return .post
         case .updateTodo: return .patch
         case .checkTodo: return .patch
-        case .getAchievement: return .get
-        case .getTodoList: return .get
+        case .getAchievement, .getTodoList: return .get
         case .deleteTodo: return .delete
         }
     }
