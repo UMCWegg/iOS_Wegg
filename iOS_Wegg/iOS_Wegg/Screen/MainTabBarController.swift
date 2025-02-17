@@ -29,7 +29,9 @@ class MainTabBarController: UITabBarController {
         let browseVC = UINavigationController(rootViewController: BrowseViewController())
         browseVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Search"), tag: 2)
         
-        let scheduleVC = UINavigationController(rootViewController: ScheduleViewController())
+        let scheduleVC = UINavigationController(
+            rootViewController: ScheduleViewController(mapManager: mapManager)
+        )
         scheduleVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Schedule"), tag: 3)
 
         let mapVC = UINavigationController(

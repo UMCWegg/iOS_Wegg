@@ -19,9 +19,20 @@ class ScheduleViewController:
     UIViewController,
     UIGestureRecognizerDelegate {
     
+    private var mapManager: MapManagerProtocol?
     // UITableViewDiffableDataSource를 사용하여 데이터 관리
     private var dataSource: UITableViewDiffableDataSource<Int, Schedule>?
-
+    
+    // 의존성 주입
+    init(mapManager: MapManagerProtocol) {
+        self.mapManager = mapManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,11 +48,18 @@ class ScheduleViewController:
         // 뒤로가기 제스처 활성화
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        // 현재 위치 초기화
+        setupCurrentLocation()
     }
 
     lazy var scheduleView = ScheduleView().then {
         $0.studyCardTableView.delegate = self
         $0.gestureDelegate = self
+    }
+    
+    private func setupCurrentLocation() {
+        guard let mapManager = mapManager else { return }
+        mapManager.setupLocationManager()
     }
 
     private func setupDataSource() {
@@ -116,7 +134,8 @@ extension ScheduleViewController: UITableViewDelegate {
 
 extension ScheduleViewController: ScheduleViewGestureDelegate {
     func didTapAddScheduleButton() {
-        let addScheduleVC = AddScheduleViewController()
+        guard let mapManager = mapManager else { return }
+        let addScheduleVC = AddScheduleViewController(mapManager: mapManager)
         addScheduleVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(addScheduleVC, animated: true)
     }

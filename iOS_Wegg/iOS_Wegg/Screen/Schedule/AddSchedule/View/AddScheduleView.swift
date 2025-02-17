@@ -59,6 +59,15 @@ class AddScheduleView: UIView {
         $0.searchTextField.layer.cornerRadius = 12
         $0.searchTextField.layer.masksToBounds = true
     }
+    
+    lazy var searchResultListView = AddScheduleSearchListView().then {
+        $0.backgroundColor = .white
+        $0.isHidden = true
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.secondary.cgColor
+        $0.layer.cornerRadius = 12
+        $0.clipsToBounds = true
+    }
 
     private lazy var createPlaceImageView = makeImageView(
         "CreatePlace",
@@ -70,6 +79,16 @@ class AddScheduleView: UIView {
         $0.layer.shadowOffset = CGSize(width: 0, height: 3)
         $0.layer.shadowRadius = 2.5
         $0.layer.shadowOpacity = 0.2
+    }
+    
+    private lazy var selectedPlaceLabel = makeLabel(
+        nil,
+        .notoSans(.medium, size: 14),
+        .secondary
+    ).then {
+        $0.isHidden = true
+        $0.textAlignment = .center
+        $0.numberOfLines = 2
     }
 
     private lazy var detailSettingLabel = makeLabel(
@@ -199,6 +218,25 @@ class AddScheduleView: UIView {
         }
     }
     
+    /// 검색 결과 드롭다운
+    public func toggleSearchResultList(_ isHidden: Bool) {
+        searchResultListView.isHidden = isHidden
+    }
+    
+    // MARK: - get/set Functions
+    
+    public func updateSearchResultLabel(
+        _ text: String,
+        isHidden: Bool
+    ) {
+        selectedPlaceLabel.text = text
+        selectedPlaceLabel.isHidden = isHidden
+    }
+    
+    public func getSearchResultListView() -> UIView {
+        return searchResultListView
+    }
+    
     // MARK: - Action Handler
     
     @objc private func handleCalendarButton() {
@@ -215,6 +253,12 @@ class AddScheduleView: UIView {
     
     @objc private func handleChangeDateButton() {
         gestureDelegate?.didChangeDate(Date())
+    }
+    
+    /// 키보드 내리는 핸들러
+    @objc private func handleDismissKeyboard() {
+        endEditing(true)
+        toggleSearchResultList(true)
     }
 }
 
@@ -240,6 +284,15 @@ private extension AddScheduleView {
             action: #selector(handleChangeDateButton),
             for: .touchUpInside
         )
+        
+        // 키보드 내리는 제스처 추가
+        let dismissKeyboardGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handleDismissKeyboard)
+        )
+        dismissKeyboardGesture.cancelsTouchesInView = false
+        addGestureRecognizer(dismissKeyboardGesture)
+        
     }
     
     func setupStackView() {
@@ -251,11 +304,14 @@ private extension AddScheduleView {
             headerStackView,
             placeSettingLabel,
             placeSearchBar,
+            searchResultListView,
             createPlaceImageView,
             yellowLogoIcon,
+            selectedPlaceLabel,
             detailSettingLabel,
             detailSettingCardView
         ].forEach(addSubview)
+        bringSubviewToFront(searchResultListView) // 최상위로 배치
 
         [
             dateLabel,
@@ -288,6 +344,12 @@ private extension AddScheduleView {
             make.height.equalTo(44)
         }
         
+        searchResultListView.snp.makeConstraints { make in
+            make.top.equalTo(placeSearchBar.snp.bottom).offset(12)
+            make.leading.trailing.equalTo(placeSearchBar)
+            make.height.equalTo(200)
+        }
+        
         createPlaceImageView.snp.makeConstraints { make in
             make.top.equalTo(placeSearchBar.snp.bottom).offset(14)
             make.leading.equalTo(placeSearchBar.snp.leading)
@@ -298,6 +360,11 @@ private extension AddScheduleView {
         yellowLogoIcon.snp.makeConstraints { make in
             make.center.equalTo(createPlaceImageView)
             make.width.height.equalTo(20)
+        }
+        
+        selectedPlaceLabel.snp.makeConstraints { make in
+            make.top.equalTo(yellowLogoIcon.snp.bottom).offset(5)
+            make.centerX.equalTo(createPlaceImageView)
         }
         
         detailSettingLabel.snp.makeConstraints { make in

@@ -8,12 +8,13 @@
 import Foundation
 import Moya
 
-/// 장소 검색 API 정의
+/// 일정 관련 API 정의
 enum ScheduleAPI {
     case searchPlace(request: ScheduleSearchRequest)
 }
 
 extension ScheduleAPI: TargetType {
+    
     var baseURL: URL {
         guard let url = URL(string: APIConstants.baseURL) else {
             fatalError("❌ [ScheduleTargetType] 유효하지 않은 URL: \(APIConstants.baseURL)")
@@ -31,22 +32,35 @@ extension ScheduleAPI: TargetType {
     var method: Moya.Method {
         switch self {
         case .searchPlace:
-            return .post
+            return .get
         }
     }
     
     var task: Task {
         switch self {
+            //        case .searchPlace(let request):
+            //            return .requestJSONEncodable(request)
+            //        }
         case .searchPlace(let request):
-            return .requestJSONEncodable(request)
+            return .requestParameters(
+                parameters: [
+                    "keyword": request.keyword,
+                    "latitude": request.latitude,
+                    "longitude": request.longitude,
+                    "page": request.page,
+                    "size": request.size
+                ],
+                encoding: URLEncoding.queryString
+            )
         }
     }
     
     var headers: [String: String]? {
-        return [
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        ]
+//        return [
+//            "Content-Type": "application/json",
+//            "Accept": "application/json"
+//        ]
+        return ["Content-Type": "application/json"]
     }
     
     var validationType: ValidationType {

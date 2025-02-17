@@ -58,14 +58,15 @@ class PlaceVerificationViewController: UIViewController {
     
     private func setupInfoMarker(image: UIImage) {
         // TODO: [25.02.14] 추후 공부 일정에 등록된 장소 위치로 변경 필요 - 작성자: 이재원
-        guard let coordinate = mapManager.getCurrentLocation() else { return }
-
-        mapManager.addMarker(
-            image: image,
-            width: image.size.width,
-            height: image.size.height,
-            at: coordinate
-        )
+        mapManager.getCurrentLocation { [weak self] coordinate in
+            guard let coordinate = coordinate else { return }
+            self?.mapManager.addMarker(
+                image: image,
+                width: image.size.width,
+                height: image.size.height,
+                at: coordinate
+            )
+        }
     }
     
 }

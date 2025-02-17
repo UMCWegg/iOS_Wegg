@@ -92,7 +92,6 @@
 		FF7985622D5A86510055B370 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		FF7985632D5A86510055B370 /* UserOccupation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOccupation.swift; sourceTree = "<group>"; };
 		FF7985642D5A86510055B370 /* UserReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReason.swift; sourceTree = "<group>"; };
-		FF7985662D5A86510055B370 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		FF7985712D5A86A40055B370 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceSectionModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -500,7 +499,6 @@
 				FF79855F2D5A86510055B370 /* Login */,
 				FF7985612D5A86510055B370 /* Recovered References */,
 				FF7985652D5A86510055B370 /* User */,
-				FF7985662D5A86510055B370 /* .gitkeep */,
 			);
 			path = NetworkModel;
 			sourceTree = "<group>";
@@ -726,6 +724,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용 중에 위치를 활용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -738,7 +737,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "UMC-7th.iOS-Wegg";
+				PRODUCT_BUNDLE_IDENTIFIER = "UMC-7th.iOS-Wegg.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -762,6 +761,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용 중에 위치를 활용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -774,7 +774,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "UMC-7th.iOS-Wegg";
+				PRODUCT_BUNDLE_IDENTIFIER = "UMC-7th.iOS-Wegg.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

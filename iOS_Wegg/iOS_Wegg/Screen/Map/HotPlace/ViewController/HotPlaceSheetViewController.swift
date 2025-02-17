@@ -182,6 +182,8 @@ extension HotPlaceSheetViewController:
             print("Error: HotPlaceSheetVC's mapVC is nil")
             return
         }
+        
+        // REFACT: API 중복 호출 방지 필요
         mapVC.fetchHotPlacesFromVisibleBounds()
     }
     
@@ -190,6 +192,7 @@ extension HotPlaceSheetViewController:
             print("Error: HotPlaceSheetVC's mapVC is nil")
             return
         }
+        // REFACT: API 중복 호출 방지 필요
         mapVC.fetchHotPlacesFromVisibleBounds(sortBy: "authCount")
     }
     

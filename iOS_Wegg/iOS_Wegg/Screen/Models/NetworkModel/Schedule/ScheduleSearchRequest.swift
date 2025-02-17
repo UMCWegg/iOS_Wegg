@@ -11,4 +11,6 @@ struct ScheduleSearchRequest: Encodable {
     let keyword: String
     let latitude: String
     let longitude: String
+    let page: Int
+    let size: Int
 }
