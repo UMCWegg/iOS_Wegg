@@ -181,12 +181,11 @@ class ToDoListView: UIView {
     }
 
     func updateTableViewHeight() {
-        tableView.layoutIfNeeded()
-        let totalHeight = tableView.contentSize.height
+        tableView.reloadData()
+        let height = tableView.contentSize.height
         tableView.snp.updateConstraints {
-            $0.height.equalTo(totalHeight)
+            $0.height.equalTo(height)
         }
-        self.layoutIfNeeded()
     }
 
     // MARK: - Actions
