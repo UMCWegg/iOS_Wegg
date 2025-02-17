@@ -333,7 +333,7 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
                         let completedCount = self.todoItems.filter { $0.status == "DONE" }.count
                         let totalCount = self.todoItems.count
                         let achievement =
-                        totalCount == 0 ? 0 : Double(completedCount) / Double(totalCount) * 100
+                            totalCount == 0 ? 0 : Double(completedCount) / Double(totalCount) * 100
                         
                         // SwipeView 업데이트
                         if let homeVC = self.findViewController() as? HomeViewController {
@@ -341,6 +341,8 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
                             homeVC.homeView.swipeView.updateTodoCount(
                                 completed: completedCount, total: totalCount
                             )
+                            // SwipeView 다시 로드
+                            homeVC.homeView.swipeView.loadData()
                         }
                     }
                 case .failure(let error):

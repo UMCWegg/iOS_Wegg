@@ -37,12 +37,14 @@ final class SwipeView: UIView, UIScrollViewDelegate {
         super.init(frame: frame)
         setupUI()
         setupLayout()
+        loadData() // 데이터 로드 추가
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
         setupLayout()
+        loadData() // 데이터 로드 추가
     }
     
     override func layoutSubviews() {
@@ -81,10 +83,6 @@ final class SwipeView: UIView, UIScrollViewDelegate {
     private func setupSlides() {
         scrollView.subviews.forEach { $0.removeFromSuperview() }
         slides.removeAll()
-        
-        let totalTodos = 4
-        let completedTodos = 2
-        let consecutiveSuccesses = 3
         
         let slide1 = createSlideView(
             title: "나의 목표 달성",
@@ -135,13 +133,14 @@ final class SwipeView: UIView, UIScrollViewDelegate {
     private func attributedText(
         fullText: String,
         highlightText: String,
-        highlightColor: UIColor) -> NSAttributedString {
-            let attributedString = NSMutableAttributedString(string: fullText)
-            let range = (fullText as NSString).range(of: highlightText)
-            
-            attributedString.addAttribute(.foregroundColor, value: highlightColor, range: range)
-            return attributedString
-        }
+        highlightColor: UIColor
+    ) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(string: fullText)
+        let range = (fullText as NSString).range(of: highlightText)
+        
+        attributedString.addAttribute(.foregroundColor, value: highlightColor, range: range)
+        return attributedString
+    }
     
     // MARK: - createSlideView 수정
     private func createSlideView(
@@ -262,57 +261,98 @@ final class SwipeView: UIView, UIScrollViewDelegate {
         }
     }
     
+    // MARK: - API 연동 및 데이터 업데이트
+    func loadData() {
+        Task {
+            let todoService = TodoService()
+            
+            // 투두 리스트 가져오기
+            let todoListResult = await todoService.getTodoList()
+            switch todoListResult {
+            case .success(let todos):
+                self.totalTodos = todos.count
+                self.completedTodos = todos.filter { $0.status == "DONE" }.count
+                print("✅ Todo List 가져오기 성공: Total \(totalTodos), Completed \(completedTodos)")
+                
+                // 달성률 가져오기
+                let achievementResult = await todoService.getTodoAchievement()
+                switch achievementResult {
+                case .success(let achievement):
+                    print("✅ 달성률 가져오기 성공: \(achievement)")
+                    
+                    // UI 업데이트 (메인 스레드에서)
+                    DispatchQueue.main.async {
+                        self.updateAchievement(achievement)
+                        self.updateTodoCount(completed: self.completedTodos, total: self.totalTodos)
+                        self.setupSlides() // 슬라이드 업데이트
+                    }
+                case .failure(let error):
+                    print("❌ 달성률 가져오기 실패: \(error)")
+                }
+                
+            case .failure(let error):
+                print("❌ Todo List 가져오기 실패: \(error)")
+            }
+        }
+    }
+    
+    
     // MARK: - 투두 달성률 업데이트
     func updateAchievement(_ achievement: Double) {
         guard let slide = slides.first else {
             print("⚠️ [SwipeView] 첫 번째 슬라이드를 찾을 수 없습니다.")
             return
         }
-
+        
         // 프로그레스 뷰 업데이트
         for subview in slide.subviews {
-            if let progressView = subview.subviews.first(
-                where: { $0 is EggProgressView }
-            ) as? EggProgressView {
-                let progress = CGFloat(achievement / 100)
-                progressView.setProgress(progress, animated: true)
-                print("✅ [SwipeView] eggProgressView 업데이트 완료: \(progress * 100)%")
-                break
+            if let contentView = subview as? UIView {
+                for subview2 in contentView.subviews {
+                    if let eggProgressView = subview2.subviews.first(
+                        where: { $0 is EggProgressView }) as? EggProgressView {
+                        let progress = CGFloat(achievement / 100)
+                        eggProgressView.setProgress(progress, animated: true)
+                        print("✅ [SwipeView] eggProgressView 업데이트 완료: \(progress * 100)%")
+                        break
+                    }
+                }
             }
         }
     }
-
+    
     // MARK: - 투두 개수 업데이트
     func updateTodoCount(completed: Int, total: Int) {
+        self.completedTodos = completed
+        self.totalTodos = total
+        
         guard let slide = slides.first else { return }
-
-        let text = "\(total)개의 투두 중 \(completed)개를 달성했어요!"
-        let attributedText = self.attributedText(
-            fullText: text,
-            highlightText: "\(completed)개",
-            highlightColor: .primary
-        )
-
-        // ✅ progressLabel 업데이트
+        
+        // progressLabel 업데이트
         for subview in slide.subviews {
-            if let label = subview.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                label.attributedText = attributedText
-                print("✅ 투두 개수 업데이트 완료: \(completed)/\(total)")
-                break
-            }
-        }
-
-        // ✅ remainingLabel 업데이트
-        let remaining = total - completed
-        let remainingText = "나머지 \(remaining)개도 마저 달성하여 에그를 얻어보세요"
-        // ✅ UILabel을 안전하게 찾아서 '나머지' 텍스트 확인
-        for subview in slide.subviews {
-            if let remainingLabel = subview.subviews.first(where: {
-                ($0 as? UILabel)?.text?.contains("나머지") == true
-            }) as? UILabel {
-                remainingLabel.text = remainingText
-                print("✅ 남은 투두 개수 업데이트 완료: \(remaining)개")
-                break
+            if let contentView = subview as? UIView {
+                for subview2 in contentView.subviews {
+                    if let labelContainerView = subview2 as? UIView {
+                        for subview3 in labelContainerView.subviews {
+                            if let progressLabel = subview3 as? UILabel,
+                               progressLabel.attributedText != nil {
+                                let text = "\(totalTodos)개의 투두 중 \(completedTodos)개를 달성했어요!"
+                                let attributedText = self.attributedText(
+                                    fullText: text,
+                                    highlightText: "\(completedTodos)개",
+                                    highlightColor: .primary
+                                )
+                                progressLabel.attributedText = attributedText
+                                print("✅ 투두 개수 업데이트 완료: \(completedTodos)/\(totalTodos)")
+                            } else if let remainingLabel = subview3 as? UILabel,
+                                      remainingLabel.text?.contains("나머지") == true {
+                                let remaining = totalTodos - completedTodos
+                                let remainingText = "나머지 \(remaining)개도 마저 달성하여 에그를 얻어보세요"
+                                remainingLabel.text = remainingText
+                                print("✅ 남은 투두 개수 업데이트 완료: \(remaining)개")
+                            }
+                        }
+                    }
+                }
             }
         }
     }
