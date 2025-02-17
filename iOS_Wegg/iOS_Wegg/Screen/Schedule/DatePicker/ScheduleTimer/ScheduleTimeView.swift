@@ -12,7 +12,6 @@ import SnapKit
 protocol ScheduleViewDelegate: AnyObject {
     func didTapCancelButton()
     func didTapConfirmButton(date: Date)
-    func didTimeChanged(_ sender: UIDatePicker)
 }
 
 class ScheduleTimeView: UIView {
@@ -40,7 +39,6 @@ class ScheduleTimeView: UIView {
         $0.datePickerMode = .time
         $0.preferredDatePickerStyle = .wheels
         $0.locale = Locale(identifier: "ko_KR")
-        $0.addTarget(self, action: #selector(timeChanged(_:)), for: .valueChanged)
     }
     
     private lazy var confirmButton = makeButton(title: "확인").then {
@@ -68,10 +66,6 @@ class ScheduleTimeView: UIView {
     }
     
     // MARK: - Handler
-    
-    @objc private func timeChanged(_ sender: UIDatePicker) {
-        delegate?.didTimeChanged(sender)
-    }
     
     @objc private func cancelButtonHandler() {
         delegate?.didTapCancelButton()

@@ -12,7 +12,7 @@ class ScheduleTimeViewController: UIViewController {
     weak var parentVC: AddScheduleViewController?
     var timePickerType: TimePickertype?
     
-    private var selectedStartTime: String?
+    private var         selectedTime: String?
     private var selectedFinishTime: String?
 
     override func viewDidLoad() {
@@ -29,57 +29,22 @@ class ScheduleTimeViewController: UIViewController {
 extension ScheduleTimeViewController: ScheduleViewDelegate {
     
     func didTapCancelButton() {
-        selectedStartTime = nil
+        selectedTime = nil
         dismiss(animated: true)
     }
     
     func didTapConfirmButton(date: Date) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        switch timePickerType {
-        case .startTime:
-            if let selectedTime = selectedStartTime {
-                parentVC?.addScheduleView.updateRandomTimeDate(
-                    type: .startTime,
-                    selectedTime
-                )
-            } else {
-                // 휠을 돌리지 않았을 경우 현재 지정된 시각으로 설정
-                if selectedStartTime == nil {
-                    selectedStartTime = formatter.string(from: date)
-                }
-                parentVC?.addScheduleView.updateRandomTimeDate(
-                    type: .startTime,
-                    selectedStartTime ?? "00:00"
-                )
-            }
-        case .finishTime:
-            if let selectedTime = selectedFinishTime {
-                parentVC?.addScheduleView.updateRandomTimeDate(
-                    type: .finishTime,
-                    selectedTime
-                )
-            } else {
-                // 휠을 돌리지 않았을 경우 현재 지정된 시각으로 설정
-                if selectedFinishTime == nil {
-                    selectedFinishTime = formatter.string(from: date)
-                }
-                parentVC?.addScheduleView.updateRandomTimeDate(
-                    type: .finishTime,
-                    selectedFinishTime ?? "00:00"
-                )
-            }
-        case .none:
-            print("TimePickerType Error")
-        }
-        dismiss(animated: true)
-    }
-    
-    func didTimeChanged(_ sender: UIDatePicker) {
+        guard let timePickerType = timePickerType else { return }
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         
-        let selectedTime = formatter.string(from: sender.date)
+        // REFACTOR: [25.02.17] 추후 시간되면 시작 시각이 종료 시각보다 더 크지 못하게 막기 - 작성자: 이재원
+        selectedTime = formatter.string(from: date)
+        parentVC?.addScheduleView.updateRandomTimeDate(
+            type: timePickerType,
+            selectedTime ?? "00:00"
+        )
+        dismiss(animated: true)
     }
     
 }

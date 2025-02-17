@@ -230,6 +230,8 @@ class AddScheduleView: UIView {
         }
     }
     
+    // MARK: - Public Functions
+    
     /// 캘린더에서 날짜 선택 후 업데이트하는 함수
     /// - Parameters:
     ///     - isHidden: `updatedDateLabel`을 보여줄지 여부
@@ -245,8 +247,6 @@ class AddScheduleView: UIView {
     public func toggleSearchResultList(_ isHidden: Bool) {
         searchResultListView.isHidden = isHidden
     }
-    
-    // MARK: - get/set Functions
     
     public func updateSearchResultLabel(
         _ text: String,
