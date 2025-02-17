@@ -123,6 +123,7 @@ extension AddScheduleViewController: UISearchBarDelegate {
     /// 검색 내용 변화 리턴
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // 실시간 검색
+        addScheduleView.toggleSearchResultList(false)
         guard let mapManager = mapManager else { return }
         // 현재 위치 기반 장소 검색
         mapManager.getCurrentLocation { [weak self] coordinate in
