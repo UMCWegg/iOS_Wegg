@@ -25,7 +25,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
         homeView.headerView.viewController = self
         homeView.headerView.updateHeaderMode(isHomeMode: true)
         
-        apiManager.setCookie(value: "36B7C543C34C3D968184B2CC1D801475")
+        apiManager.setCookie(value: "28464E7DD7565477B6514D5AE504D70D")
         print("[HomeVC] JSESSIONID 쿠키 설정 완료")
         
         // 쿠키 디버그 로그 출력
@@ -46,7 +46,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
     
     // MARK: - 쿠키 설정
     private func applySessionCookie() {
-        let sessionId = "36B7C543C34C3D968184B2CC1D801475"
+        let sessionId = "28464E7DD7565477B6514D5AE504D70D"
         apiManager.setCookie(value: sessionId)
         print("✅ [HomeViewController] 쿠키 설정 완료: JSESSIONID=\(sessionId)")
     }

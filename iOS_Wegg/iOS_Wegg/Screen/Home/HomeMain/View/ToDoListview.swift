@@ -79,7 +79,7 @@ class ToDoListView: UIView {
     }
 
     // MARK: - Properties
-    var todoItems: [TodoResponse.TodoResult] = [] {
+    var todoItems: [TodoResult] = [] {
         didSet {
             updateEmptyState()
             updateTableViewHeight()
@@ -151,7 +151,7 @@ class ToDoListView: UIView {
     }
 
     // MARK: - Public Methods
-    func addTodoItem(_ item: TodoResponse.TodoResult) {
+    func addTodoItem(_ item: TodoResult) {
         tableView.performBatchUpdates({
             self.todoItems.append(item)
             let indexPath = IndexPath(row: self.todoItems.count - 1, section: 0)
@@ -269,7 +269,7 @@ class ToDoListView: UIView {
     // MARK: - Helper Methods
     private func updateTodoContent(at indexPath: IndexPath, with newContent: String) {
         let oldItem = todoItems[indexPath.row]
-        let updatedItem = TodoResponse.TodoResult(
+        let updatedItem = TodoResult(
             todoId: oldItem.todoId,
             content: newContent,
             status: oldItem.status,

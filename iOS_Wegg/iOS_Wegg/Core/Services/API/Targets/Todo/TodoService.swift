@@ -11,7 +11,7 @@ import Moya
 class TodoService {
     private let apiManager = APIManager()
 
-    func addTodo(_ request: TodoRequest) async -> Result<TodoResponse.TodoResult, Error> {
+    func addTodo(_ request: TodoRequest) async -> Result<TodoResult, Error> {
         do {
             let response: TodoResponse = try await apiManager.request(
                 target: TodoAPI.addTodo(request: request)
