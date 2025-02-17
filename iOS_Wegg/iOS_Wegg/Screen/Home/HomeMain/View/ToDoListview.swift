@@ -21,12 +21,12 @@ extension UIAlertController {
             print("Alert view structure is 다릅니다")
             return
         }
-        
+
         alertContentView.backgroundColor = .primary
         alertContentView.layer.cornerRadius = 12
         alertContentView.layer.borderWidth = 1
         alertContentView.layer.borderColor = UIColor.secondary.cgColor
-        
+
         // Title 스타일 변경
         if let title = self.title {
             let attributedString = NSAttributedString(string: title, attributes: [
@@ -35,7 +35,7 @@ extension UIAlertController {
             ])
             self.setValue(attributedString, forKey: "attributedTitle")
         }
-        
+
         // Message 스타일 변경
         if let message = self.message {
             let attributedString = NSAttributedString(string: message, attributes: [
@@ -162,13 +162,13 @@ class ToDoListView: UIView {
             self.updateTableViewHeight()
         })
     }
-    
+
     func reloadTableView() {
         tableView.reloadData()
         updateTableViewHeight()
         updateEmptyState()
     }
-    
+
     func updateTodoContent(at index: Int, with newTodo: TodoResult) {
         guard index >= 0 && index < todoItems.count else { return }
         todoItems[index] = newTodo
@@ -218,6 +218,9 @@ class ToDoListView: UIView {
                     DispatchQueue.main.async {
                         self?.addTodoItem(response)
                         print("✅ Todo 등록 성공: \(response.content)")
+
+                        // ✅ SwipeView 업데이트
+                        self?.updateSwipeView()
                     }
                 case .failure(let error):
                     print("❌ Todo 등록 실패: \(error)")
@@ -296,6 +299,19 @@ class ToDoListView: UIView {
         }
         return nil
     }
+
+    // ✅ SwipeView 업데이트
+    private func updateSwipeView() {
+        guard let homeVC = self.findViewController() as? HomeViewController else { return }
+
+        let completedCount = self.todoItems.filter { $0.status == "DONE" }.count
+        let totalCount = self.todoItems.count
+        let achievement = totalCount == 0 ? 0 : Double(completedCount) / Double(totalCount) * 100
+
+        homeVC.homeView.swipeView.updateAchievement(achievement)
+        homeVC.homeView.swipeView.updateTodoCount(completed: completedCount, total: totalCount)
+        homeVC.homeView.swipeView.loadData()
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -319,7 +335,7 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
             guard let self = self else { return }
             let newStatus = todo.status == "YET" ? "DONE" : "YET"
             let request = TodoCheckRequest(status: newStatus)
-            
+
             Task {
                 let result = await self.todoService.checkTodo(todoId: todo.todoId, request: request)
                 switch result {
@@ -328,22 +344,9 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
                         self.todoItems[indexPath.row] = updatedTodo
                         self.tableView.reloadData()
                         self.updateTableViewHeight()
-                        
-                        // ✅ 투두 달성률 및 텍스트 즉시 업데이트
-                        let completedCount = self.todoItems.filter { $0.status == "DONE" }.count
-                        let totalCount = self.todoItems.count
-                        let achievement =
-                            totalCount == 0 ? 0 : Double(completedCount) / Double(totalCount) * 100
-                        
-                        // SwipeView 업데이트
-                        if let homeVC = self.findViewController() as? HomeViewController {
-                            homeVC.homeView.swipeView.updateAchievement(achievement)
-                            homeVC.homeView.swipeView.updateTodoCount(
-                                completed: completedCount, total: totalCount
-                            )
-                            // SwipeView 다시 로드
-                            homeVC.homeView.swipeView.loadData()
-                        }
+
+                        // ✅ SwipeView 업데이트
+                        self.updateSwipeView()
                     }
                 case .failure(let error):
                     print("❌ Todo 상태 변경 실패: \(error)")
@@ -389,6 +392,9 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
 
                             // 5. 상태 업데이트
                             self.updateEmptyState()
+
+                            // ✅ SwipeView 업데이트
+                            self.updateSwipeView()
 
                             print("✅ Todo 삭제 성공: \(deletedTodo.message)")
                         }
