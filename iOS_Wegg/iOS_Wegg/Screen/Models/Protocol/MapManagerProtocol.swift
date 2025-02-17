@@ -38,6 +38,7 @@ protocol MapManagerProtocol {
     )
     /// 지도의 카메라 기준으로 경계값 가져옴
     func getVisibleBounds(sortBy: String?) -> HotPlaceRequest
+    
     /// 현재 위치 정보를 반환하는 함수
     /// - Parameter completion: 위치 정보를 비동기적으로 반환하는 클로저
     ///

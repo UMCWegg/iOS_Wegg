@@ -10,10 +10,8 @@ import Foundation
 import GoogleSignIn
 
 final class GoogleService {
-    static let shared = GoogleService()
-    private let clientID =
-    "498161093152-ajp8av7ktm4gcakp3fqjkbutbehjuebl.apps.googleusercontent.com"
-    
+    @MainActor static let shared = GoogleService()
+    private let clientID = APIKeys.googleClientId
     private init() {
         setupGoogleSignIn()
     }
@@ -22,8 +20,10 @@ final class GoogleService {
         GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
     }
     
-    func signIn(presenting viewController: UIViewController,
-                completion: @escaping (Result<(String, String), Error>) -> Void) {
+    func signIn(
+        presenting viewController: UIViewController,
+        completion: @escaping (Result<(email: String, token: String), Error>) -> Void
+    ) {
         GIDSignIn.sharedInstance.signIn(withPresenting: viewController) { signInResult, error in
             if let error = error {
                 completion(.failure(error))
@@ -31,12 +31,17 @@ final class GoogleService {
             }
             
             guard let email = signInResult?.user.profile?.email,
-                  let token = signInResult?.user.accessToken.tokenString else {
-                completion(.failure(NSError(domain: "", code: -1)))
+                  let token = signInResult?.user.idToken?.tokenString else {
+                let error = NSError(
+                    domain: "GoogleSignIn",
+                    code: -1,
+                    userInfo: [NSLocalizedDescriptionKey: "Failed to get email or token"]
+                )
+                completion(.failure(error))
                 return
             }
             
-            completion(.success((email, token)))
+            completion(.success((email: email, token: token)))
         }
     }
     

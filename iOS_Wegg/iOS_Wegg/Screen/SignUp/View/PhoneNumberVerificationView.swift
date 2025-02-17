@@ -59,6 +59,12 @@ class PhoneNumberVerificationView: UIView {
         backgroundColor: .primary
     )
     
+    var phoneNumber: String = "" {
+        didSet {
+            self.subLabel.text = "\(phoneNumber)로 인증 번호를 보냈어요"
+        }
+    }
+    
     // MARK: - Setup
     
     private func setupViews() {

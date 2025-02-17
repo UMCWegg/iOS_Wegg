@@ -8,53 +8,49 @@
 import Foundation
 
 final class UserDefaultsManager {
-   static let shared = UserDefaultsManager()
-   private let defaults = UserDefaults.standard
-   
-   private enum Keys {
-       static let accessToken = "accessToken"
-       static let refreshToken = "refreshToken"
-       static let googleToken = "googleToken"
-       static let googleEmail = "googleEmail"
-       static let kakaoToken = "kakaoToken"
-       static let kakaoId = "kakaoId"
+    static let shared = UserDefaultsManager()
+    private let defaults = UserDefaults.standard
+    
+    private init() {}
+    
+    // Google 데이터
+    func saveGoogleData(email: String) {
+        defaults.set(email, forKey: StorageKeys.Social.googleEmail)
     }
     
-    func saveToken(_ token: String) {
-        defaults.setValue(token, forKey: Keys.accessToken)
+    func getGoogleData(email: String?) -> String? {
+        let email = defaults.string(forKey: StorageKeys.Social.googleEmail)
+        return email
     }
     
-    func getToken() -> String? {
-        return defaults.string(forKey: Keys.accessToken)
-    }
-   
-    func saveGoogleData(token: String, email: String) {
-        defaults.setValue(token, forKey: Keys.googleToken)
-        defaults.setValue(email, forKey: Keys.googleEmail)
+    // Kakao 데이터
+    func saveKakaoData(email: String) {
+        defaults.set(email, forKey: StorageKeys.Social.kakaoID)
     }
     
-    func getGoogleData() -> (token: String?, email: String?) {
-        let token = defaults.string(forKey: Keys.googleToken)
-        let email = defaults.string(forKey: Keys.googleEmail)
-        return (token, email)
+    func getKakaoData(email: String?) -> String? {
+        let email = defaults.string(forKey: StorageKeys.Social.kakaoID)
+        return email
     }
     
-    func saveKakaoData(token: String, id: String) {
-        defaults.setValue(token, forKey: Keys.kakaoToken)
-        defaults.setValue(id, forKey: Keys.kakaoId)
+    // 데이터 초기화
+    func clearAllData() {
+        guard let domain = Bundle.main.bundleIdentifier else { return }
+        defaults.removePersistentDomain(forName: domain)
     }
     
-    func getKakaoData() -> (token: String?, id: String?) {
-        let token = defaults.string(forKey: Keys.kakaoToken)
-        let id = defaults.string(forKey: Keys.kakaoId)
-        return (token, id)
+    func clearAuthTokens() {
+        defaults.removeObject(forKey: StorageKeys.Social.googleToken)
+        defaults.removeObject(forKey: StorageKeys.Social.kakaoToken)
     }
     
-    func clearAuthData() {
-        defaults.removeObject(forKey: Keys.googleToken)
-        defaults.removeObject(forKey: Keys.googleEmail)
-        defaults.removeObject(forKey: Keys.kakaoToken)
-        defaults.removeObject(forKey: Keys.kakaoId)
+    // UserID 데이터
+    func saveUserID(_ userID: Int) {
+        defaults.set(userID, forKey: StorageKeys.Login.userID)
     }
     
+    // UserID 조회 (Int64 타입)
+    func getUserID() -> Int? {
+        return defaults.object(forKey: StorageKeys.Login.userID) as? Int
+    }
 }
