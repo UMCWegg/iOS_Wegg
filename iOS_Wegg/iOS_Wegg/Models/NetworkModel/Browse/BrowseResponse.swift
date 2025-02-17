@@ -21,5 +21,4 @@ struct BrowsePost: Decodable {
     let nickname: String
     let postImageUrl: String
     let createdAt: String
-    let isFollowing: Bool
 }

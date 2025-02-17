@@ -22,7 +22,7 @@ class BrowseView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     // MARK: - Properties
     
     /// 게시물과 사용자 정보를 보여주는 둘러보기 CollectionView
@@ -36,7 +36,7 @@ class BrowseView: UIView {
     
     /// 검색바 헤더 뷰 추가
     public lazy var searchView: SearchView = SearchView()
-
+    
     // MARK: - Methods
     
     /// UI 구성 요소 추가
@@ -77,6 +77,12 @@ class BrowseView: UIView {
         layout.minimumLineSpacing = 13 // 행 간격
         layout.minimumInteritemSpacing = horizontalSpacing // 열 간격
         layout.sectionInset = sectionInsets
+        
+        // ✅ 헤더뷰 높이 설정 (필수)
+        layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 50)
+        
+        // ✅ 필요 시 헤더뷰를 상단에 고정
+        layout.sectionHeadersPinToVisibleBounds = true
         
         return layout
     }

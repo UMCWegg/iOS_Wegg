@@ -103,11 +103,12 @@ class BrowseViewController: UIViewController {
                 // ✅ 서버 응답은 [[BrowsePost]] 형태로 반환
                 let posts = try await self.browseService.fetchBrowsePosts(page: 0, size: 20)
                 DispatchQueue.main.async {
-                    // ✅ 응답 그대로 사용
-                    self.browsePosts = posts
+                    // API응답 2차원 배열 구조에 맞게 유효한 섹션만 사용
+                    self.browsePosts = posts.filter { !$0.isEmpty } // ✅ 빈 배열 제거
                     self.browseView.browseCollectionView.reloadData()
                     self.refreshControl.endRefreshing()
                     self.isFetching = false
+                    print("🔄 데이터 갱신 완료")
                 }
             } catch {
                 print("API 호출 실패: \(error)")
@@ -131,14 +132,22 @@ class BrowseViewController: UIViewController {
 /// UICollectionViewDataSource: 섹션마다 데이터 소스를 분리하여 처리
 extension BrowseViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return browsePosts.count // ✅ 섹션 개수는 팔로우 O / 팔로우 X
+        // ✅ 빈 배열 제외 후 유효한 섹션 수만 반환
+        let validSections = browsePosts.filter { !$0.isEmpty }.count
+        print("🔍 유효한 섹션 개수: \(validSections)")
+        return validSections
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return browsePosts[section].count // ✅ 각 섹션별 게시물 개수
+        // ✅ 해당 섹션이 비어있는지 확인
+        let itemCount = browsePosts[section].count
+        print("🔍 섹션 \(section) 게시물 개수: \(itemCount)")
+        print("🧩 browsePosts 전체 구조: \(browsePosts)")
+        // ✅ 빈 배열 제외 후 섹션 수 반환
+        return browsePosts.filter { !$0.isEmpty }.count
     }
     
     func collectionView(
@@ -152,8 +161,16 @@ extension BrowseViewController: UICollectionViewDataSource {
             fatalError("Unable to dequeue BrowseCell")
         }
         
-        let item = browsePosts[indexPath.section][indexPath.row] // ✅ 2차원 배열 처리
-        cell.configure(with: item)
+        // ✅ 인덱스 검증
+        if indexPath.section <
+            browsePosts.count && indexPath.row <
+            browsePosts[indexPath.section].count {
+            let item = browsePosts[indexPath.section][indexPath.row]
+            cell.configure(with: item)
+        } else {
+            print("⚠️ 잘못된 인덱스 접근: section=\(indexPath.section), row=\(indexPath.row)")
+        }
+        
         return cell
     }
     
@@ -162,18 +179,22 @@ extension BrowseViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath) -> UICollectionReusableView {
-        guard kind == UICollectionView.elementKindSectionHeader,
-              let headerView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: "HeaderView",
-                for: indexPath
-              ) as? BrowseSectionHeaderView else {
-            return UICollectionReusableView()
+            guard kind == UICollectionView.elementKindSectionHeader,
+                  let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: "HeaderView",
+                    for: indexPath
+                  ) as? BrowseSectionHeaderView else {
+                return UICollectionReusableView()
+            }
+            
+            headerView.titleLabel.text = indexPath.section == 0
+            ? "팔로우한 사용자의 게시물"
+            : "팔로우하지 않은 사용자의 게시물"
+            
+            print("🛠️ 헤더뷰 생성 완료: 섹션 \(indexPath.section)")
+            return headerView
         }
-        
-        headerView.titleLabel.text = indexPath.section == 0 ? "팔로우한 사용자의 게시물" : "팔로우하지 않은 사용자의 게시물"
-        return headerView
-    }
 }
 /// UICollectionViewDelegate: 사용자 반응 처리(아이템 클릭시 처리)하기 위한 프로토콜
 extension BrowseViewController: UICollectionViewDelegate {
