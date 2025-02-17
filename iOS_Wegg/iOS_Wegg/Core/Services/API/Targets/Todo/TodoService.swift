@@ -72,7 +72,7 @@ class TodoService {
     }
 
     // 투두 삭제
-    func deleteTodo(todoId: Int) async -> Result<TodoResult, Error> {
+    func deleteTodo(todoId: Int) async -> Result<DeletedTodoResult, Error> {
         do {
             let response: TodoDeleteResponse = try await apiManager.request(
                 target: TodoAPI.deleteTodo(todoId: todoId)

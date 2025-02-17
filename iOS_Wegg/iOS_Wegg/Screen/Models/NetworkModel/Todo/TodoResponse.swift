@@ -44,5 +44,13 @@ struct TodoDeleteResponse: Decodable {
     let isSuccess: Bool
     let code: String
     let message: String
-    let result: TodoResult
+    let result: DeletedTodoResult
+}
+
+/// 삭제 결과 response
+struct DeletedTodoResult: Decodable {
+    let todoId: Int
+    let content: String
+    let status: String
+    let message: String
 }

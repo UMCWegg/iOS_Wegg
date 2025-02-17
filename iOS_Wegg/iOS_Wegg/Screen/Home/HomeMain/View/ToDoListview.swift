@@ -358,13 +358,24 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
             Task {
                 let result = await self.todoService.deleteTodo(todoId: todoId)
                 switch result {
-                case .success:
+                case .success(let deletedTodo):
                     DispatchQueue.main.async {
-                        self.todoItems.remove(at: indexPath.row)
-                        self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                        self.updateEmptyState()
-                        self.updateTableViewHeight()
-                        print("✅ Todo 삭제 성공")
+                        // 1. 테이블 뷰 동기화
+                        self.tableView.performBatchUpdates {
+                            // 2. 데이터 소스 배열에서 항목 삭제
+                            self.todoItems.remove(at: indexPath.row)
+
+                            // 3. 해당 행 삭제
+                            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                        } completion: { _ in
+                            // 4. 테이블 뷰 높이 업데이트
+                            self.updateTableViewHeight()
+
+                            // 5. 상태 업데이트
+                            self.updateEmptyState()
+
+                            print("✅ Todo 삭제 성공: \(deletedTodo.message)")
+                        }
                     }
                 case .failure(let error):
                     print("❌ Todo 삭제 실패: \(error)")
