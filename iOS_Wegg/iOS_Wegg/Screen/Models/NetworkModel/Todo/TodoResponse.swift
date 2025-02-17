@@ -39,8 +39,8 @@ struct TodoListResponse: Decodable {
     let result: [TodoResult]
 }
 
-/// Todo리스트 딜리게이트 response
-struct TodoDelegateREsponse: Decodable {
+/// Todo리스트 삭제 response
+struct TodoDeleteResponse: Decodable {
     let isSuccess: Bool
     let code: String
     let message: String
