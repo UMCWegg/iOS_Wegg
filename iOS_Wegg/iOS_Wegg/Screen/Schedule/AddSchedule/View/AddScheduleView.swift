@@ -8,6 +8,14 @@
 import UIKit
 import Then
 
+protocol AddScheduleGestureDelegate: AnyObject {
+    func didTapCalendarButton()
+    func didTapDoneButton()
+    func didTapCancelButton()
+    func didSelectStartTime()
+    func didSelectFinishTime()
+}
+
 class AddScheduleView: UIView {
 
     weak var gestureDelegate: AddScheduleGestureDelegate?
@@ -119,12 +127,27 @@ class AddScheduleView: UIView {
         .customGray
     )
 
-    private lazy var timeRangeButton = makeButton(
-        "00:00     ~    00:00",
+    private lazy var startTimeButton = makeButton(
+        "00:00",
+        color: .gray1
+    ).then {
+        $0.contentHorizontalAlignment = .right
+    }
+    
+    private lazy var timeRangeLabel = makeLabel(
+        "~",
+        .notoSans(.medium, size: 16),
+        .gray1
+    )
+    
+    private lazy var finishTimeButton = makeButton(
+        "00:00",
         color: .gray1
     ).then {
         $0.contentHorizontalAlignment = .right // 우측 정렬
     }
+    
+    private lazy var timeRangeStackView = makeStackView(10, .horizontal)
 
     private lazy var lateAllowanceLabel = makeLabel(
         "지각 허용",
@@ -237,6 +260,22 @@ class AddScheduleView: UIView {
         return searchResultListView
     }
     
+    /// 랜덤인증 시간 업데이트 함수
+    /// - Parameters:
+    ///     - type: TimePickerType
+    ///     - _ date: 선택된 시간
+    public func updateRandomTimeDate(
+        type: TimePickertype,
+        _ date: String
+    ) {
+        switch type {
+        case .startTime:
+            startTimeButton.setTitle(date, for: .normal)
+        case .finishTime:
+            finishTimeButton.setTitle(date, for: .normal)
+        }
+    }
+    
     // MARK: - Action Handler
     
     @objc private func handleCalendarButton() {
@@ -251,8 +290,12 @@ class AddScheduleView: UIView {
         gestureDelegate?.didTapCancelButton()
     }
     
-    @objc private func handleChangeDateButton() {
-        gestureDelegate?.didChangeDate(Date())
+    @objc private func startTimeButtonHandler() {
+        gestureDelegate?.didSelectStartTime()
+    }
+    
+    @objc private func finishTimeButtonHandler() {
+        gestureDelegate?.didSelectFinishTime()
     }
     
     /// 키보드 내리는 핸들러
@@ -279,9 +322,14 @@ private extension AddScheduleView {
             action: #selector(handleCalendarButton),
             for: .touchUpInside
         )
-        timeRangeButton.addTarget(
+        startTimeButton.addTarget(
             self,
-            action: #selector(handleChangeDateButton),
+            action: #selector(startTimeButtonHandler),
+            for: .touchUpInside
+        )
+        finishTimeButton.addTarget(
+            self,
+            action: #selector(finishTimeButtonHandler),
             for: .touchUpInside
         )
         
@@ -296,7 +344,15 @@ private extension AddScheduleView {
     }
     
     func setupStackView() {
-        [cancelLabel, createEggLabel, saveLabel].forEach { headerStackView.addArrangedSubview($0) }
+        [cancelLabel, createEggLabel, saveLabel].forEach { headerStackView.addArrangedSubview($0)
+        }
+        [
+            startTimeButton,
+            timeRangeLabel,
+            finishTimeButton
+        ].forEach {
+            timeRangeStackView.addArrangedSubview($0)
+        }
     }
     
     func addComponents() {
@@ -319,7 +375,7 @@ private extension AddScheduleView {
             calenderImageButton,
             dividedLine,
             randomVerificationLabel,
-            timeRangeButton,
+            timeRangeStackView,
             dividedLine2,
             lateAllowanceLabel,
             toggleSwitch
@@ -417,14 +473,14 @@ private extension AddScheduleView {
             make.width.equalTo(labelWidth)
         }
         
-        timeRangeButton.snp.makeConstraints { make in
+        timeRangeStackView.snp.makeConstraints { make in
             make.top.equalTo(randomVerificationLabel)
             make.trailing.equalToSuperview().offset(-sideInset)
-            make.width.equalTo(170)
+            make.width.equalTo(150)
         }
         
         dividedLine2.snp.makeConstraints { make in
-            make.top.equalTo(timeRangeButton.snp.bottom).offset(verticalSpacing)
+            make.top.equalTo(timeRangeStackView.snp.bottom).offset(verticalSpacing)
             make.leading.trailing.equalToSuperview().inset(sideInset)
         }
         

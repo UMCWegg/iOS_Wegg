@@ -11,7 +11,7 @@ import SnapKit
 
 protocol ScheduleViewDelegate: AnyObject {
     func didTapCancelButton()
-    func didTapConfirmButton()
+    func didTapConfirmButton(date: Date)
     func didTimeChanged(_ sender: UIDatePicker)
 }
 
@@ -78,7 +78,7 @@ class ScheduleTimeView: UIView {
     }
     
     @objc private func confirmButtonHandler() {
-        delegate?.didTapConfirmButton()
+        delegate?.didTapConfirmButton(date: timePicker.date)
     }
     
     private func setupView() {
