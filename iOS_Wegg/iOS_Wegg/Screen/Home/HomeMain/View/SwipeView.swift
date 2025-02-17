@@ -268,24 +268,50 @@ final class SwipeView: UIView, UIScrollViewDelegate {
             print("⚠️ [SwipeView] 첫 번째 슬라이드를 찾을 수 없습니다.")
             return
         }
-        
-        // 프로그레스 라벨 업데이트
-        for subview in slide.subviews {
-            if let label = subview.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                label.text = "투두 달성률: \(Int(achievement))%"
-                print("✅ [SwipeView] progressLabel 업데이트 완료: \(Int(achievement))%")
-                break
-            }
-        }
-        
+
         // 프로그레스 뷰 업데이트
         for subview in slide.subviews {
             if let progressView = subview.subviews.first(
                 where: { $0 is EggProgressView }
             ) as? EggProgressView {
                 let progress = CGFloat(achievement / 100)
-                progressView.setProgress(progress, animated: false)
+                progressView.setProgress(progress, animated: true)
                 print("✅ [SwipeView] eggProgressView 업데이트 완료: \(progress * 100)%")
+                break
+            }
+        }
+    }
+
+    // MARK: - 투두 개수 업데이트
+    func updateTodoCount(completed: Int, total: Int) {
+        guard let slide = slides.first else { return }
+
+        let text = "\(total)개의 투두 중 \(completed)개를 달성했어요!"
+        let attributedText = self.attributedText(
+            fullText: text,
+            highlightText: "\(completed)개",
+            highlightColor: .primary
+        )
+
+        // ✅ progressLabel 업데이트
+        for subview in slide.subviews {
+            if let label = subview.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                label.attributedText = attributedText
+                print("✅ 투두 개수 업데이트 완료: \(completed)/\(total)")
+                break
+            }
+        }
+
+        // ✅ remainingLabel 업데이트
+        let remaining = total - completed
+        let remainingText = "나머지 \(remaining)개도 마저 달성하여 에그를 얻어보세요"
+        // ✅ UILabel을 안전하게 찾아서 '나머지' 텍스트 확인
+        for subview in slide.subviews {
+            if let remainingLabel = subview.subviews.first(where: {
+                ($0 as? UILabel)?.text?.contains("나머지") == true
+            }) as? UILabel {
+                remainingLabel.text = remainingText
+                print("✅ 남은 투두 개수 업데이트 완료: \(remaining)개")
                 break
             }
         }

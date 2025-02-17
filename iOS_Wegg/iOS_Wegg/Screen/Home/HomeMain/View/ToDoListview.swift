@@ -328,7 +328,20 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
                         self.todoItems[indexPath.row] = updatedTodo
                         self.tableView.reloadData()
                         self.updateTableViewHeight()
-                        print("✅ Todo 상태 변경 성공: \(updatedTodo.status)")
+                        
+                        // ✅ 투두 달성률 및 텍스트 즉시 업데이트
+                        let completedCount = self.todoItems.filter { $0.status == "DONE" }.count
+                        let totalCount = self.todoItems.count
+                        let achievement =
+                        totalCount == 0 ? 0 : Double(completedCount) / Double(totalCount) * 100
+                        
+                        // SwipeView 업데이트
+                        if let homeVC = self.findViewController() as? HomeViewController {
+                            homeVC.homeView.swipeView.updateAchievement(achievement)
+                            homeVC.homeView.swipeView.updateTodoCount(
+                                completed: completedCount, total: totalCount
+                            )
+                        }
                     }
                 case .failure(let error):
                     print("❌ Todo 상태 변경 실패: \(error)")

@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDelegate {
-    private let homeView = HomeView()
+    let homeView = HomeView()
     private let todoService = TodoService()
     private let apiManager = APIManager()
     
@@ -43,14 +43,26 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
                 DispatchQueue.main.async {
                     self.homeView.toDoListView.todoItems = todos
                     self.homeView.toDoListView.reloadTableView()
-                    print("✅ 투두 리스트 불러오기 성공: \(todos.count)개 항목")
+
+                    // ✅ SwipeView에 텍스트 및 달성률 업데이트
+                    let completedCount = todos.filter { $0.status == "DONE" }.count
+                    let totalCount = todos.count
+                    let achievement =
+                    totalCount == 0 ? 0 : Double(completedCount) / Double(totalCount) * 100
+                    
+                    self.homeView.swipeView.updateAchievement(achievement)
+                    self.homeView.swipeView.updateTodoCount(
+                        completed: completedCount, total: totalCount
+                    )
+
+                    print("✅ 투두 리스트 및 달성률 업데이트 완료")
                 }
             case .failure(let error):
                 print("❌ 투두 리스트 불러오기 실패: \(error.localizedDescription)")
             }
         }
     }
-    
+
     // MARK: - 로드 시 투두 달성률 불러오기
     private func loadTodoAchievement() {
         Task {
