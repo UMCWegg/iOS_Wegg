@@ -39,8 +39,8 @@ class HomeView: UIView {
     
     let authView = AuthView()
     let toDoListView = ToDoListView()
-    private let swipeView = SwipeView()
-    private let timerView = TimerView()
+    let swipeView = SwipeView()
+    let timerView = TimerView()
     
     private var modalHeightConstraint: Constraint?
     

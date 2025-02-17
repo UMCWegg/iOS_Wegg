@@ -48,7 +48,7 @@ class TodoService {
     }
 
     // 달성률 조회
-    func getAchievement() async -> Result<Int, Error> {
+    func getTodoAchievement() async -> Result<Double, Error> {
         do {
             let response: TodoAchievementResponse = try await apiManager.request(
                 target: TodoAPI.getAchievement
@@ -58,6 +58,7 @@ class TodoService {
             return .failure(error)
         }
     }
+
 
     // 투두 리스트 조회
     func getTodoList() async -> Result<[TodoResult], Error> {
@@ -76,6 +77,19 @@ class TodoService {
         do {
             let response: TodoDeleteResponse = try await apiManager.request(
                 target: TodoAPI.deleteTodo(todoId: todoId)
+            )
+            return .success(response.result)
+        } catch {
+            return .failure(error)
+        }
+    }
+}
+
+extension TodoService {
+    func fetchTodoAchievement() async -> Result<Double, Error> {
+        do {
+            let response: TodoAchievementResponse = try await apiManager.request(
+                target: TodoAPI.getAchievement
             )
             return .success(response.result)
         } catch {

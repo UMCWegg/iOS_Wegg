@@ -28,7 +28,7 @@ struct TodoAchievementResponse: Decodable {
     let isSuccess: Bool
     let code: String
     let message: String
-    let result: Int
+    let result: Double
 }
 
 /// Todo리스트 조회 response

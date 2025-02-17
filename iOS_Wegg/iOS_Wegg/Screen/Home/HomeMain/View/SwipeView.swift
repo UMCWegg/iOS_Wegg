@@ -85,7 +85,7 @@ final class SwipeView: UIView, UIScrollViewDelegate {
         let totalTodos = 4
         let completedTodos = 2
         let consecutiveSuccesses = 3
-
+        
         let slide1 = createSlideView(
             title: "나의 목표 달성",
             progressText: attributedText(
@@ -130,19 +130,19 @@ final class SwipeView: UIView, UIScrollViewDelegate {
             height: slideHeight
         )
     }
-
+    
     // MARK: - 텍스트 컬러 적용 함수
     private func attributedText(
         fullText: String,
         highlightText: String,
         highlightColor: UIColor) -> NSAttributedString {
-        let attributedString = NSMutableAttributedString(string: fullText)
-        let range = (fullText as NSString).range(of: highlightText)
-        
-        attributedString.addAttribute(.foregroundColor, value: highlightColor, range: range)
-        return attributedString
-    }
-
+            let attributedString = NSMutableAttributedString(string: fullText)
+            let range = (fullText as NSString).range(of: highlightText)
+            
+            attributedString.addAttribute(.foregroundColor, value: highlightColor, range: range)
+            return attributedString
+        }
+    
     // MARK: - createSlideView 수정
     private func createSlideView(
         title: String,
@@ -156,32 +156,32 @@ final class SwipeView: UIView, UIScrollViewDelegate {
             $0.layer.cornerRadius = 24
             $0.layer.masksToBounds = true
         }
-
+        
         // 라벨을 묶을 컨테이너 뷰
         let labelContainerView = UIView()
-
+        
         let titleLabel = UILabel().then {
             $0.text = title
             $0.font = .notoSans(.bold, size: 13)
             $0.textColor = .secondary
         }
-
+        
         let progressLabel = UILabel().then {
             $0.attributedText = progressText
             $0.font = .notoSans(.bold, size: 14)
             $0.numberOfLines = 2
         }
-
+        
         let remainingLabel = UILabel().then {
             $0.text = remainingText
             $0.font = .notoSans(.medium, size: 11)
             $0.textColor = .gray
         }
-
+        
         labelContainerView.addSubview(titleLabel)
         labelContainerView.addSubview(progressLabel)
         labelContainerView.addSubview(remainingLabel)
-
+        
         let eggProgressView = EggProgressView().then {
             if let progress = progress {
                 $0.setProgress(progress, animated: false)
@@ -189,7 +189,7 @@ final class SwipeView: UIView, UIScrollViewDelegate {
                 $0.isHidden = true
             }
         }
-
+        
         let shineEggView = UIButton().then {
             if let imageName = image {
                 $0.setImage(UIImage(named: imageName), for: .normal)
@@ -199,36 +199,36 @@ final class SwipeView: UIView, UIScrollViewDelegate {
                 $0.isHidden = true
             }
         }
-
+        
         let contentView = UIView()
         contentView.addSubview(labelContainerView)
         contentView.addSubview(progress != nil ? eggProgressView : shineEggView)
-
+        
         view.addSubview(contentView)
-
+        
         contentView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(16)
         }
-
+        
         labelContainerView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.7)
         }
-
+        
         titleLabel.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
         }
-
+        
         progressLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview()
         }
-
+        
         remainingLabel.snp.makeConstraints { make in
             make.top.equalTo(progressLabel.snp.bottom).offset(6)
             make.leading.trailing.bottom.equalToSuperview()
         }
-
+        
         if progress != nil {
             eggProgressView.snp.makeConstraints { make in
                 make.centerY.equalToSuperview()
@@ -244,10 +244,10 @@ final class SwipeView: UIView, UIScrollViewDelegate {
                 make.height.equalTo(102)
             }
         }
-
+        
         return view
     }
-
+    
     // MARK: - Button Action
     @objc private func shineEggButtonTapped(_ sender: UIButton) {
         print("포인트 버튼 클릭✅")
@@ -261,7 +261,36 @@ final class SwipeView: UIView, UIScrollViewDelegate {
             })
         }
     }
-
+    
+    // MARK: - 투두 달성률 업데이트
+    func updateAchievement(_ achievement: Double) {
+        guard let slide = slides.first else {
+            print("⚠️ [SwipeView] 첫 번째 슬라이드를 찾을 수 없습니다.")
+            return
+        }
+        
+        // 프로그레스 라벨 업데이트
+        for subview in slide.subviews {
+            if let label = subview.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                label.text = "투두 달성률: \(Int(achievement))%"
+                print("✅ [SwipeView] progressLabel 업데이트 완료: \(Int(achievement))%")
+                break
+            }
+        }
+        
+        // 프로그레스 뷰 업데이트
+        for subview in slide.subviews {
+            if let progressView = subview.subviews.first(
+                where: { $0 is EggProgressView }
+            ) as? EggProgressView {
+                let progress = CGFloat(achievement / 100)
+                progressView.setProgress(progress, animated: false)
+                print("✅ [SwipeView] eggProgressView 업데이트 완료: \(progress * 100)%")
+                break
+            }
+        }
+    }
+    
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageWidth = scrollView.frame.width

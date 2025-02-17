@@ -18,6 +18,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadTodoAchievement()
+
         view.backgroundColor = .primary
         setupActions()
         homeView.scrollView.delegate = self
@@ -28,7 +30,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
         apiManager.setCookie(value: "9B054ED826CCEE55F59353174E0A4755")
         print("[HomeVC] JSESSIONID 쿠키 설정 완료")
         
-        // 투두 리스트 불러오기
+        // 투두 리스트 및 달성률 불러오기
         fetchTodoList()
     }
     
@@ -45,6 +47,22 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
                 }
             case .failure(let error):
                 print("❌ 투두 리스트 불러오기 실패: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    // MARK: - 로드 시 투두 달성률 불러오기
+    private func loadTodoAchievement() {
+        Task {
+            let result = await todoService.getTodoAchievement()
+            switch result {
+            case .success(let achievement):
+                DispatchQueue.main.async {
+                    self.homeView.swipeView.updateAchievement(achievement)
+                }
+                print("✅ 투두 달성률 가져오기 성공: \(achievement)%")
+            case .failure(let error):
+                print("❌ 투두 달성률 가져오기 실패: \(error)")
             }
         }
     }
