@@ -9,7 +9,15 @@ import UIKit
 import Then
 import SnapKit
 
+protocol ScheduleViewDelegate: AnyObject {
+    func didTapCancelButton()
+    func didTapConfirmButton()
+    func didTimeChanged(_ sender: UIDatePicker)
+}
+
 class ScheduleTimeView: UIView {
+    
+    weak var delegate: ScheduleViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,8 +43,20 @@ class ScheduleTimeView: UIView {
         $0.addTarget(self, action: #selector(timeChanged(_:)), for: .valueChanged)
     }
     
-    private lazy var confirmButton = makeButton(title: "확인")
-    private lazy var cancelButton = makeButton(title: "취소")
+    private lazy var confirmButton = makeButton(title: "확인").then {
+        $0.addTarget(
+            self,
+            action: #selector(confirmButtonHandler),
+            for: .touchUpInside
+        )
+    }
+    private lazy var cancelButton = makeButton(title: "취소").then {
+        $0.addTarget(
+            self,
+            action: #selector(cancelButtonHandler),
+            for: .touchUpInside
+        )
+    }
     
     /// 버튼 생성 함수
     private func makeButton(title: String) -> UIButton {
@@ -47,12 +67,18 @@ class ScheduleTimeView: UIView {
         }
     }
     
+    // MARK: - Handler
+    
     @objc private func timeChanged(_ sender: UIDatePicker) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm" // 24시간 형식
-        
-        let selectedTime = formatter.string(from: sender.date)
-        print("선택된 시간: \(selectedTime)")
+        delegate?.didTimeChanged(sender)
+    }
+    
+    @objc private func cancelButtonHandler() {
+        delegate?.didTapCancelButton()
+    }
+    
+    @objc private func confirmButtonHandler() {
+        delegate?.didTapConfirmButton()
     }
     
     private func setupView() {

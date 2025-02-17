@@ -14,7 +14,28 @@ class ScheduleTimeViewController: UIViewController {
         
         view = scheduleTimerView
     }
+    lazy var scheduleTimerView = ScheduleTimeView().then {
+        $0.delegate = self
+    }
     
-    lazy var scheduleTimerView = ScheduleTimeView()
+}
+
+extension ScheduleTimeViewController: ScheduleViewDelegate {
+    
+    func didTapCancelButton() {
+        print("didTapCancelButton")
+    }
+    
+    func didTapConfirmButton() {
+        print("didTapConfirmButton")
+    }
+    
+    func didTimeChanged(_ sender: UIDatePicker) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm" // 24시간 형식
+        
+        let selectedTime = formatter.string(from: sender.date)
+        print("선택된 시간: \(selectedTime)")
+    }
     
 }
