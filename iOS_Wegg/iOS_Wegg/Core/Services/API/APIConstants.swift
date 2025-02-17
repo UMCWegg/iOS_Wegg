@@ -37,5 +37,20 @@ struct APIConstants {
 
     struct Todo {
         static let addTodoListURL = "/todo/add" /// 투두 등록
+        /// 투두 수정
+        static func editTodoURL(todoId: Int) -> String {
+            return "/todo/\(todoId)"
+        }
+        /// 투두 달성체크
+        static func checkTodoURL(todoId: Int) -> String {
+            return "/todo/\(todoId)/check"
+        }
+        /// 달성률 조회
+        static let achivementTodoURL = "/todo/achivement"
+        static let todoURL = "/todo" /// 투두리스트 조회
+        ///투두 삭제
+        static func deleteTodoURL(todoId: Int) -> String {
+            return "/todo/\(todoId)"
+        }
     }
 }

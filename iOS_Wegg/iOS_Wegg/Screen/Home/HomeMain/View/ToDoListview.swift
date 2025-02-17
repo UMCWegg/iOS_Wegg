@@ -21,12 +21,12 @@ extension UIAlertController {
             print("Alert view structure is 다릅니다")
             return
         }
-        
+
         alertContentView.backgroundColor = .primary
         alertContentView.layer.cornerRadius = 12
         alertContentView.layer.borderWidth = 1
         alertContentView.layer.borderColor = UIColor.secondary.cgColor
-        
+
         // Title 스타일 변경
         if let title = self.title {
             let attributedString = NSAttributedString(string: title, attributes: [
@@ -35,7 +35,7 @@ extension UIAlertController {
             ])
             self.setValue(attributedString, forKey: "attributedTitle")
         }
-        
+
         // Message 스타일 변경
         if let message = self.message {
             let attributedString = NSAttributedString(string: message, attributes: [
@@ -79,7 +79,7 @@ class ToDoListView: UIView {
     }
 
     // MARK: - Properties
-    var todoItems: [TodoResponse.TodoResult] = [] {
+    var todoItems: [TodoResult] = [] {
         didSet {
             updateEmptyState()
             updateTableViewHeight()
@@ -87,6 +87,7 @@ class ToDoListView: UIView {
         }
     }
 
+    private let todoService = TodoService()
     weak var delegate: ToDoListViewDelegate?
 
     // MARK: - Initializers
@@ -151,7 +152,7 @@ class ToDoListView: UIView {
     }
 
     // MARK: - Public Methods
-    func addTodoItem(_ item: TodoResponse.TodoResult) {
+    func addTodoItem(_ item: TodoResult) {
         tableView.performBatchUpdates({
             self.todoItems.append(item)
             let indexPath = IndexPath(row: self.todoItems.count - 1, section: 0)
@@ -162,26 +163,37 @@ class ToDoListView: UIView {
         })
     }
 
+    func reloadTableView() {
+        tableView.reloadData()
+        updateTableViewHeight()
+        updateEmptyState()
+    }
+
+    func updateTodoContent(at index: Int, with newTodo: TodoResult) {
+        guard index >= 0 && index < todoItems.count else { return }
+        todoItems[index] = newTodo
+        tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+    }
+
     func updateEmptyState() {
         emptyStateLabel.isHidden = !todoItems.isEmpty
         tableView.isHidden = todoItems.isEmpty
     }
 
     func updateTableViewHeight() {
-        tableView.layoutIfNeeded()
-        let totalHeight = tableView.contentSize.height
+        tableView.reloadData()
+        let height = tableView.contentSize.height
         tableView.snp.updateConstraints {
-            $0.height.equalTo(totalHeight)
+            $0.height.equalTo(height)
         }
-        self.layoutIfNeeded()
     }
 
     // MARK: - Actions
     @objc private func addTodoButtonTapped() {
-        print("TO DO LIST 추가 버튼 터치 ✅")
         showAddTodoAlert()
     }
 
+    // MARK: - API: 투두 추가
     private func showAddTodoAlert() {
         let alert = UIAlertController(
             title: "새로운 할 일",
@@ -198,23 +210,22 @@ class ToDoListView: UIView {
 
         let addAction = UIAlertAction(title: "추가", style: .default) { [weak self] _ in
             guard let text = alert.textFields?.first?.text, !text.isEmpty else { return }
-            
-            // API 호출을 위해 TodoRequest 생성
             let request = TodoRequest(status: "YET", content: text)
-            
-            let todoService = TodoService()
             Task {
-                let result = await todoService.addTodo(request)
+                let result = await self?.todoService.addTodo(request)
                 switch result {
                 case .success(let response):
-                    // 성공 시 UI에 추가
                     DispatchQueue.main.async {
-                        // 'response.result' → 'response' 변경
                         self?.addTodoItem(response)
                         print("✅ Todo 등록 성공: \(response.content)")
+
+                        // ✅ SwipeView 업데이트
+                        self?.updateSwipeView()
                     }
                 case .failure(let error):
                     print("❌ Todo 등록 실패: \(error)")
+                case .none:
+                    print("⚠️ Todo 등록 실패: 결과 없음")
                 }
             }
         }
@@ -224,12 +235,10 @@ class ToDoListView: UIView {
         alert.addAction(addAction)
         alert.addAction(cancelAction)
 
-        addAction.setValue(UIColor.blue, forKey: "titleTextColor")
-        cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
-
         findViewController()?.present(alert, animated: true)
     }
 
+    // MARK: - API: 투두 수정
     private func showEditTodoAlert(at indexPath: IndexPath) {
         let alert = UIAlertController(
             title: "할 일 수정",
@@ -242,17 +251,30 @@ class ToDoListView: UIView {
             textField.text = self.todoItems[indexPath.row].content
             textField.font = .notoSans(.regular, size: 14)
             textField.backgroundColor = .white
-            textField.layer.cornerRadius = 5
-            textField.layer.borderWidth = 1
-            textField.layer.borderColor = UIColor.lightGray.cgColor
         }
 
         let saveAction = UIAlertAction(title: "저장", style: .default) { [weak self] _ in
             guard let textField = alert.textFields?.first,
                   let text = textField.text, !text.isEmpty else { return }
-            
-            self?.updateTodoContent(at: indexPath, with: text)
-            self?.delegate?.didUpdateToDoItem(at: indexPath.row, with: text)
+            let oldTodo = self?.todoItems[indexPath.row]
+            guard let todoId = oldTodo?.todoId else { return }
+            let request = TodoUpdateRequest(status: oldTodo?.status ?? "YET", content: text)
+
+            Task {
+                let result = await self?.todoService.updateTodo(todoId: todoId, request: request)
+                switch result {
+                case .success(let updatedTodo):
+                    DispatchQueue.main.async {
+                        self?.todoItems[indexPath.row] = updatedTodo
+                        self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+                        print("✅ Todo 수정 성공: \(updatedTodo.content)")
+                    }
+                case .failure(let error):
+                    print("❌ Todo 수정 실패: \(error)")
+                case .none:
+                    print("⚠️ Todo 수정 실패: 결과 없음")
+                }
+            }
         }
 
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
@@ -260,25 +282,10 @@ class ToDoListView: UIView {
         alert.addAction(saveAction)
         alert.addAction(cancelAction)
 
-        saveAction.setValue(UIColor.blue, forKey: "titleTextColor")
-        cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
-
         findViewController()?.present(alert, animated: true)
     }
 
     // MARK: - Helper Methods
-    private func updateTodoContent(at indexPath: IndexPath, with newContent: String) {
-        let oldItem = todoItems[indexPath.row]
-        let updatedItem = TodoResponse.TodoResult(
-            todoId: oldItem.todoId,
-            content: newContent,
-            status: oldItem.status,
-            createdAt: oldItem.createdAt
-        )
-        todoItems[indexPath.row] = updatedItem
-        tableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
     private func findViewController() -> UIViewController? {
         var responder: UIResponder? = self
         while responder != nil {
@@ -288,6 +295,19 @@ class ToDoListView: UIView {
             responder = responder?.next
         }
         return nil
+    }
+
+    // ✅ SwipeView 업데이트
+    private func updateSwipeView() {
+        guard let homeVC = self.findViewController() as? HomeViewController else { return }
+
+        let completedCount = self.todoItems.filter { $0.status == "DONE" }.count
+        let totalCount = self.todoItems.count
+        let achievement = totalCount == 0 ? 0 : Double(completedCount) / Double(totalCount) * 100
+
+        homeVC.homeView.swipeView.updateAchievement(achievement)
+        homeVC.homeView.swipeView.updateTodoCount(completed: completedCount, total: totalCount)
+        homeVC.homeView.swipeView.loadData()
     }
 }
 
@@ -304,29 +324,95 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
         ) as? ToDoCell else {
             return UITableViewCell()
         }
-        cell.configure(with: todoItems[indexPath.row])
+        let todo = todoItems[indexPath.row]
+        cell.configure(with: todo)
+
+        // ✅ 투두 완료 상태 변경
+        cell.onToggleDone = { [weak self] in
+            guard let self = self else { return }
+            let newStatus = todo.status == "YET" ? "DONE" : "YET"
+            let request = TodoCheckRequest(status: newStatus)
+
+            Task {
+                let result = await self.todoService.checkTodo(todoId: todo.todoId, request: request)
+                switch result {
+                case .success(let updatedTodo):
+                    DispatchQueue.main.async {
+                        self.todoItems[indexPath.row] = updatedTodo
+                        self.tableView.reloadData()
+                        self.updateTableViewHeight()
+
+                        // ✅ SwipeView 업데이트
+                        self.updateSwipeView()
+                    }
+                case .failure(let error):
+                    print("❌ Todo 상태 변경 실패: \(error)")
+                }
+            }
+        }
+
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        showEditTodoAlert(at: indexPath)
     }
 
+    // ✅ 투두 스와이프 액션
     func tableView(
         _ tableView: UITableView,
         trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
+        let editAction = UIContextualAction(
+            style: .normal,
+            title: "수정"
+        ) { [weak self] (_, _, completionHandler) in
+            guard let self = self else { return }
+            self.showEditTodoAlert(at: indexPath)
+            completionHandler(true)
+        }
+        editAction.backgroundColor = .systemBlue
+
         let deleteAction = UIContextualAction(
             style: .destructive,
             title: "삭제"
         ) { [weak self] (_, _, completionHandler) in
-            self?.todoItems.remove(at: indexPath.row)
-            self?.tableView.deleteRows(at: [indexPath], with: .automatic)
-            self?.updateEmptyState()
-            self?.updateTableViewHeight()
+            guard let self = self else { return }
+            let todoId = self.todoItems[indexPath.row].todoId
+
+            Task {
+                let result = await self.todoService.deleteTodo(todoId: todoId)
+                switch result {
+                case .success(let deletedTodo):
+                    DispatchQueue.main.async {
+                        // 1. 테이블 뷰 동기화
+                        self.tableView.performBatchUpdates {
+                            // 2. 데이터 소스 배열에서 항목 삭제
+                            self.todoItems.remove(at: indexPath.row)
+
+                            // 3. 해당 행 삭제
+                            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                        } completion: { _ in
+                            // 4. 테이블 뷰 높이 업데이트
+                            self.updateTableViewHeight()
+
+                            // 5. 상태 업데이트
+                            self.updateEmptyState()
+
+                            // ✅ SwipeView 업데이트
+                            self.updateSwipeView()
+
+                            print("✅ Todo 삭제 성공: \(deletedTodo.message)")
+                        }
+                    }
+                case .failure(let error):
+                    print("❌ Todo 삭제 실패: \(error)")
+                }
+            }
             completionHandler(true)
         }
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+        return configuration
     }
 }
