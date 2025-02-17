@@ -319,13 +319,15 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
             guard let self = self else { return }
             let newStatus = todo.status == "YET" ? "DONE" : "YET"
             let request = TodoCheckRequest(status: newStatus)
+            
             Task {
                 let result = await self.todoService.checkTodo(todoId: todo.todoId, request: request)
                 switch result {
                 case .success(let updatedTodo):
                     DispatchQueue.main.async {
                         self.todoItems[indexPath.row] = updatedTodo
-                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                        self.tableView.reloadData()
+                        self.updateTableViewHeight()
                         print("✅ Todo 상태 변경 성공: \(updatedTodo.status)")
                     }
                 case .failure(let error):
