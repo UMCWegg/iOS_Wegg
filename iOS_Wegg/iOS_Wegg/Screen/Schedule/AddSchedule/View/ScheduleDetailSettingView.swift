@@ -16,6 +16,7 @@ protocol ScheduleDetailSettingViewDelegate: AnyObject {
 class ScheduleDetailSettingView: UIView {
     
     weak var gestureDelegate: ScheduleDetailSettingViewDelegate?
+    private var selectedLateButton: UIButton?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -100,6 +101,9 @@ class ScheduleDetailSettingView: UIView {
             button.layer.borderColor = UIColor.secondaryLabel.cgColor
             button.clipsToBounds = true
             button.backgroundColor = .white
+            // 태그 생성
+            guard let latestIndex = lateButtonTitles.lastIndex(of: title) else { return }
+            button.tag = latestIndex
         }
     }
     
@@ -218,6 +222,15 @@ class ScheduleDetailSettingView: UIView {
         gestureDelegate?.didSelectFinishTime()
     }
     
+    @objc private func handleButtonTap(_ sender: UIButton) {
+        selectedLateButton?.isSelected = false
+        selectedLateButton?.backgroundColor = .white
+        
+        sender.isSelected = true
+        sender.backgroundColor = .primary
+        selectedLateButton = sender
+    }
+    
     private func toggleLateAllowanceButton(action: UIAction) {
         guard let toggle = action.sender as? UISwitch else { return }
         if toggle.isOn {
@@ -267,6 +280,10 @@ private extension ScheduleDetailSettingView {
         lateAllowanceSwitch.addAction(UIAction { [weak self] in
             self?.toggleLateAllowanceButton(action: $0)
         }, for: .valueChanged)
+        
+        lateButtons.forEach { button in
+            button.addTarget(self, action: #selector(handleButtonTap), for: .touchUpInside)
+        }
     }
     
     func setupStackView() {
