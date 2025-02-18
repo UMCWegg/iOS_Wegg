@@ -46,8 +46,12 @@ class SearchViewController: UIViewController {
 }
 
 // MARK: - UISearchBarDelegate
+
+/// search버튼 클릭시 키보드를 내리고 테이블뷰에 데이터 로드하여 추가하기
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // 🔹 키보드 내리기
+        searchBar.resignFirstResponder()
         guard let text = searchBar.text, !text.isEmpty else { return }
         let user = User(
             profileImage: UIImage(named: "profile_placeholder") ?? UIImage(),

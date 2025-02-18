@@ -37,7 +37,6 @@ class SearchView: UIView {
         searchBarView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.left.right.equalToSuperview()
-            make.height.equalTo(56)
         }
 
         searchResultView.snp.makeConstraints { make in
