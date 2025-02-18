@@ -27,7 +27,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
         homeView.headerView.viewController = self
         homeView.headerView.updateHeaderMode(isHomeMode: true)
         
-        apiManager.setCookie(value: "9B054ED826CCEE55F59353174E0A4755")
+        apiManager.setCookie(value: "4DCFDEB49A1AE96A8C23F0BDE537A0F8")
         print("[HomeVC] JSESSIONID 쿠키 설정 완료")
         
         // 투두 리스트 및 달성률 불러오기
