@@ -9,7 +9,7 @@ import UIKit
 
 class SearchResultView: UIView {
     
-    /// 테이블 뷰. ㅓㄴ언
+    /// 테이블 뷰 선언
     let tableView = UITableView().then {
         $0.register(SearchResultCell.self, forCellReuseIdentifier: SearchResultCell.identifier)
     }
