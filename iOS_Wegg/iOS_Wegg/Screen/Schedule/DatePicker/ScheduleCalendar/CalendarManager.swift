@@ -19,6 +19,14 @@ class CalendarManager {
         formatter.dateFormat = "yyyy년 M월"
         return formatter
     }()
+    
+    /// 날짜 포맷터 (yyyy-MM-dd)
+    private let hyphenDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "yyyy-MM"
+        return formatter
+    }()
 
     /// 초기화 - 현재 월을 기준으로 설정
     init() {
@@ -32,6 +40,11 @@ class CalendarManager {
     /// 현재 선택된 날짜를 "yyyy년 M월" 형식으로 반환
     func getFormattedDate() -> String {
         return dateFormatter.string(from: selectedDate)
+    }
+    
+    /// 현재 선택된 날짜를 "yyyy-MM" 형식으로 반환
+    func getFormattedDateWithHyphen() -> String {
+        return hyphenDateFormatter.string(from: selectedDate)
     }
 
     /// 이전 달로 변경

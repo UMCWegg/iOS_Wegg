@@ -12,6 +12,7 @@ class ScheduleCalendarViewController: UIViewController {
     weak var parentVC: AddScheduleViewController? // 부모 뷰 컨트롤러 저장
     
     private var dates: [String?] = [] // 날짜 배열 (요일 포함)
+    private var formattedDates: [String] = [] // yyyy-MM-dd 형식의 날짜 배열
     private var selectedDates = Set<Int>() // 선택된 날짜 저장
     private let calendarManager: CalendarManager = CalendarManager()
 
@@ -157,6 +158,7 @@ extension ScheduleCalendarViewController: ScheduleCalendarViewDelegate {
                 print("Error: parentVC is nil")
                 return
             }
+            parentVC.selectedFormmatedDates = convertSelectedDatesToFormattedStrings()
             DispatchQueue.main.async {
                 parentVC.addScheduleView.updateDateLabel(
                     isHidden: false, // 날짜가 선택되었으므로 라벨 보이게 설정
@@ -166,6 +168,28 @@ extension ScheduleCalendarViewController: ScheduleCalendarViewDelegate {
             
             dismiss(animated: true) // 바텀 시트 닫기
         }
+    }
+    
+    /// 선택된 날짜를 "yy-MM-dd" 형식으로 변환
+    private func convertSelectedDatesToFormattedStrings() -> [String] {
+        let year = calendarManager.getYear()
+        let month = calendarManager.getMonth()
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        for day in selectedDates {
+            var components = DateComponents()
+            components.year = year
+            components.month = month
+            components.day = day
+            
+            if let date = Calendar.current.date(from: components) {
+                formattedDates.append(formatter.string(from: date))
+            }
+        }
+        
+        return formattedDates.sorted() // 날짜 오름차순 정렬
     }
     
 }

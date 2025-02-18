@@ -17,6 +17,7 @@ class AddScheduleViewController: UIViewController {
     private var apiManager: APIManager?
     private var mapManager: MapManagerProtocol?
     private var addScheduleSearchTableHandler = AddScheduleSearchTableHandler()
+    var selectedFormmatedDates: [String] = [] // yyyy-MM-dd 형식의 날짜 배열
     
     init(mapManager: MapManagerProtocol) {
         self.mapManager = mapManager
@@ -149,10 +150,9 @@ extension AddScheduleViewController:
         guard let apiManager = apiManager else { return }
         // 쿠키를 직접 저장
         apiManager.setCookie(value: "23D3500ABEB8B273361E6711EF8F0627")
-        
         let request = AddScheduleRequest(
             status: .yet,
-            planDates: ["2025-02-27"],
+            planDates: selectedFormmatedDates,
             startTime: "15:24",
             finishTime: "22:00",
             lateTime: "ZERO",
@@ -170,6 +170,7 @@ extension AddScheduleViewController:
                 print("❌ ScheduleAddResponse 실패: \(error)")
             }
         }
+        print(selectedFormmatedDates)
         navigationController?.popViewController(animated: true)
     }
     

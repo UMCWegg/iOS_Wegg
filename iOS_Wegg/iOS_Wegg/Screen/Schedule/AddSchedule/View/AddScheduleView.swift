@@ -244,7 +244,7 @@ private extension AddScheduleView {
     }
     
     func setupStackView() {
-        [cancelButton, createEggLabel, saveButton].forEach { headerStackView.addArrangedSubview($0) }
+        [cancelButton, createEggLabel, saveButton].forEach(headerStackView.addArrangedSubview)
     }
     
     func addComponents() {
