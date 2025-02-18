@@ -7,11 +7,9 @@
 
 import UIKit
 
-protocol AddScheduleGestureDelegate: AnyObject {
-    func didTapCalendarButton()
-    func didTapDoneButton()
-    func didTapCancelButton()
-    func didChangeDate(_ date: Date)
+enum TimePickertype {
+    case startTime
+    case finishTime
 }
 
 // TODO: - 셀 션택시 선택된 장소로 UI 업데이트 구현
@@ -144,6 +142,7 @@ extension AddScheduleViewController: UISearchBarDelegate {
 }
 
 extension AddScheduleViewController: AddScheduleGestureDelegate {
+    
     func didTapCalendarButton() {
         let scheduleCalendarVC = ScheduleCalendarViewController()
         scheduleCalendarVC.parentVC = self
@@ -165,8 +164,25 @@ extension AddScheduleViewController: AddScheduleGestureDelegate {
         print("didTapCancelButton")
     }
     
-    func didChangeDate(_ date: Date) {
-        print("didChangeDate")
+    func didSelectStartTime() {
+        showTimePicker(type: .startTime)
+    }
+    
+    func didSelectFinishTime() {
+        showTimePicker(type: .finishTime)
+    }
+    
+    private func showTimePicker(type: TimePickertype) {
+        let scheduleTimePicker = ScheduleTimeViewController()
+        scheduleTimePicker.parentVC = self
+        scheduleTimePicker.timePickerType = type
+        if let sheet = scheduleTimePicker.sheetPresentationController {
+            sheet.detents = [
+                .custom(resolver: { context in
+                    return context.maximumDetentValue * 0.64
+                })]
+        }
+        present(scheduleTimePicker, animated: true)
     }
     
 }
