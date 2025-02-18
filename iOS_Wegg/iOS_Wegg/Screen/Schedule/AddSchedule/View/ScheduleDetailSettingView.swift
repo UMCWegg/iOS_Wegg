@@ -83,6 +83,32 @@ class ScheduleDetailSettingView: UIView {
     private lazy var dividedLine = makeDivider()
     private lazy var dividedLine2 = makeDivider()
     
+    private let lateButtonTitles: [String] = ["1분", "3분", "7분", "10분"]
+    
+    private lazy var lateButtons: [UIButton] = lateButtonTitles.map { title in
+        return makeButton(
+            title,
+            color: .secondary,
+            font: .notoSans(.regular, size: 14)
+        ).then { button in
+            button.snp.makeConstraints { make in
+                make.width.equalTo(55)
+                make.height.equalTo(21)
+            }
+            button.layer.cornerRadius = 10.5
+            button.layer.borderWidth = 1
+            button.layer.borderColor = UIColor.secondaryLabel.cgColor
+            button.clipsToBounds = true
+            button.backgroundColor = .white
+        }
+    }
+    
+    private lazy var lateAllowanceButtonStack = makeStackView(
+        28,
+        .horizontal,
+        distribution: .fillEqually
+    )
+    
     // MARK: - Utility Functions
     
     private func makeLabel(
@@ -110,23 +136,25 @@ class ScheduleDetailSettingView: UIView {
 
     private func makeStackView(
         _ spacing: CGFloat,
-        _ axis: NSLayoutConstraint.Axis
+        _ axis: NSLayoutConstraint.Axis,
+        distribution: UIStackView.Distribution = .fill
     ) -> UIStackView {
         return UIStackView().then {
             $0.axis = axis
             $0.spacing = spacing
-            $0.distribution = .fill
+            $0.distribution = distribution
         }
     }
 
     private func makeButton(
         _ title: String,
-        color: UIColor
+        color: UIColor,
+        font: UIFont? = nil
     ) -> UIButton {
         return UIButton().then {
             $0.setTitle(title, for: .normal)
             $0.setTitleColor(color, for: .normal)
-            $0.titleLabel?.font = .notoSans(.medium, size: 16)
+            $0.titleLabel?.font = font
         }
     }
     
@@ -223,6 +251,8 @@ private extension ScheduleDetailSettingView {
         ].forEach {
             timeRangeStackView.addArrangedSubview($0)
         }
+        
+        lateButtons.forEach(lateAllowanceButtonStack.addArrangedSubview)
     }
     
     func addComponents() {
@@ -235,7 +265,8 @@ private extension ScheduleDetailSettingView {
             timeRangeStackView,
             dividedLine2,
             lateAllowanceLabel,
-            toggleSwitch
+            toggleSwitch,
+            lateAllowanceButtonStack
         ].forEach(addSubview)
     }
     
@@ -287,13 +318,18 @@ private extension ScheduleDetailSettingView {
         lateAllowanceLabel.snp.makeConstraints { make in
             make.top.equalTo(dividedLine2.snp.bottom).offset(verticalSpacing)
             make.leading.equalToSuperview().offset(sideInset)
-            make.bottom.equalToSuperview().offset(-20)
             make.width.equalTo(labelWidth)
         }
         
         toggleSwitch.snp.makeConstraints { make in
             make.top.bottom.equalTo(lateAllowanceLabel)
             make.trailing.equalToSuperview().offset(-sideInset)
+        }
+        
+        lateAllowanceButtonStack.snp.makeConstraints { make in
+            make.top.equalTo(toggleSwitch.snp.bottom).offset(verticalSpacing + 7)
+            make.leading.trailing.equalToSuperview().inset(sideInset)
+            make.bottom.equalToSuperview().offset(-verticalSpacing)
         }
     }
 }
