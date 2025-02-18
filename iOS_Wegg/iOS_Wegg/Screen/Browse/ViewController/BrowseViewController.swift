@@ -8,7 +8,7 @@
 import UIKit
 import Then
 
-class BrowseViewController: UIViewController {
+class BrowseViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Properties
     
@@ -43,6 +43,7 @@ class BrowseViewController: UIViewController {
         setupCollectionView()
         fetchBrowsePosts() // BrowseVC 탭 최초 API 호출
         setupRefreshControl()
+        setupActions()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +51,7 @@ class BrowseViewController: UIViewController {
         // 이 화면에 들어올 때 네비게이션 바 숨김
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // 이 화면을 벗어날 때 네비게이션 바 다시 표시
@@ -58,6 +59,17 @@ class BrowseViewController: UIViewController {
     }
     
     // MARK: - Methods
+    
+    /// 검색창 클릭시 화면 전환 로직
+    private func setupActions() {
+        browseView.searchView.searchBar.delegate = self
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        let searchViewController = SearchViewController()
+        navigationController?.pushViewController(searchViewController, animated: true)
+        return false
+    }
     
     /// CollectionView 초기 설정하기
     private func setupCollectionView() {
