@@ -8,6 +8,8 @@
 import UIKit
 
 class SearchResultCell: UITableViewCell {
+    // MARK: - Property
+    
     static let identifier = "SearchResultCell"
     
     private let profileImageView = UIImageView().then {
@@ -17,8 +19,10 @@ class SearchResultCell: UITableViewCell {
     }
     
     private let usernameLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 16, weight: .medium)
+        $0.font = .notoSans(.medium, size: 16)
     }
+    
+    // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,6 +32,8 @@ class SearchResultCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Methods
     
     private func setupView() {
         contentView.addSubview(profileImageView)
