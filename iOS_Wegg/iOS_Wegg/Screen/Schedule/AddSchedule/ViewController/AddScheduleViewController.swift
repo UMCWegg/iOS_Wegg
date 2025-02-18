@@ -12,7 +12,6 @@ enum TimePickertype {
     case finishTime
 }
 
-// TODO: - 셀 션택시 선택된 장소로 UI 업데이트 구현
 class AddScheduleViewController: UIViewController {
     
     private var apiManager: APIManager?
@@ -38,6 +37,7 @@ class AddScheduleViewController: UIViewController {
     
     lazy var addScheduleView = AddScheduleView().then {
         $0.gestureDelegate = self
+        $0.setDetailSettingCardDelegate(self)
         $0.placeSearchBar.delegate = self
         $0.searchResultListView.tableView.delegate = addScheduleSearchTableHandler
         // 뷰에서 만든 제스처의 딜리게이트를 컨트롤러에서 설정
@@ -141,22 +141,11 @@ extension AddScheduleViewController: UISearchBarDelegate {
     }
 }
 
-extension AddScheduleViewController: AddScheduleGestureDelegate {
+extension AddScheduleViewController:
+    AddScheduleGestureDelegate,
+    ScheduleDetailSettingViewDelegate {
     
-    func didTapCalendarButton() {
-        let scheduleCalendarVC = ScheduleCalendarViewController()
-        scheduleCalendarVC.parentVC = self
-        if let sheet = scheduleCalendarVC.sheetPresentationController {
-            sheet.detents = [
-                .custom(resolver: { context in
-                // 화면 최대 높이의 66%
-                return context.maximumDetentValue * 0.64
-            })]
-        }
-        present(scheduleCalendarVC, animated: true)
-    }
-    
-    func didTapDoneButton() {
+    func didTapSaveButton() {
         guard let apiManager = apiManager else { return }
         // 쿠키를 직접 저장
         apiManager.setCookie(value: "23D3500ABEB8B273361E6711EF8F0627")
@@ -186,6 +175,19 @@ extension AddScheduleViewController: AddScheduleGestureDelegate {
     
     func didTapCancelButton() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func didTapCalendarButton() {
+        let scheduleCalendarVC = ScheduleCalendarViewController()
+        scheduleCalendarVC.parentVC = self
+        if let sheet = scheduleCalendarVC.sheetPresentationController {
+            sheet.detents = [
+                .custom(resolver: { context in
+                // 화면 최대 높이의 66%
+                return context.maximumDetentValue * 0.64
+            })]
+        }
+        present(scheduleCalendarVC, animated: true)
     }
     
     func didSelectStartTime() {
