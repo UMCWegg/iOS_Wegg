@@ -12,7 +12,6 @@ enum TimePickertype {
     case finishTime
 }
 
-// TODO: - 셀 션택시 선택된 장소로 UI 업데이트 구현
 class AddScheduleViewController: UIViewController {
     
     private var apiManager: APIManager?
