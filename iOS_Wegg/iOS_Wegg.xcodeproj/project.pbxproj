@@ -531,6 +531,8 @@
 		};
 		0E98E9EB2D2D009E006F25EF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 0EDA97202D64ADEE008656E7 /* Core */;
+			baseConfigurationReferenceRelativePath = Secrets/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -594,6 +596,8 @@
 		};
 		0E98E9EC2D2D009E006F25EF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 0EDA97202D64ADEE008656E7 /* Core */;
+			baseConfigurationReferenceRelativePath = Secrets/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
