@@ -39,6 +39,7 @@ class SearchViewController: UIViewController {
         }
     }
     
+    /// 네비게이션 조정함수
     private func setupNavigationBar() {
         searchBarView.searchBar.delegate = self
         self.navigationItem.titleView = searchBarView.searchBar
@@ -66,7 +67,7 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text, !text.isEmpty else { return }
         let user = User(
-            profileImage: UIImage(systemName: "person.circle") ?? UIImage(),
+            profileImage: UIImage(named: "profile_placeholder") ?? UIImage(),
             username: text)
         recentSearches.append(user)
         searchResultView.tableView.reloadData()
