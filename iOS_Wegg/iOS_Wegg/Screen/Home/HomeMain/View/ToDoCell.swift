@@ -26,7 +26,7 @@ class ToDoCell: UITableViewCell {
     }
 
     // MARK: - Properties
-    private var todoItem: TodoResponse.TodoResult?
+    private var todoItem: TodoResult?
     var onToggleDone: (() -> Void)?
 
     // MARK: - Initializers
@@ -65,7 +65,7 @@ class ToDoCell: UITableViewCell {
     }
 
     // MARK: - Configuration
-    func configure(with todo: TodoResponse.TodoResult) {
+    func configure(with todo: TodoResult) {
         self.todoItem = todo
         nameLabel.text = todo.content
         doneButton.isSelected = todo.status == "DONE"

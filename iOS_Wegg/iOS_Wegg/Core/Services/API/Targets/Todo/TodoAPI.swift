@@ -10,6 +10,11 @@ import Moya
 
 enum TodoAPI {
     case addTodo(request: TodoRequest)
+    case updateTodo(todoId: Int, request: TodoUpdateRequest)
+    case checkTodo(todoId: Int, request: TodoCheckRequest)
+    case getAchievement
+    case getTodoList
+    case deleteTodo(todoId: Int)
 }
 
 extension TodoAPI: TargetType {
@@ -24,13 +29,26 @@ extension TodoAPI: TargetType {
         switch self {
         case .addTodo:
             return APIConstants.Todo.addTodoListURL
+        case .updateTodo(let todoId, _):
+            return "/todo/\(todoId)"
+        case .checkTodo(let todoId, _):
+            return "/todo/\(todoId)/check"
+        case .getAchievement:
+            return "/todo/achievement"
+        case .getTodoList:
+            return "/todo"
+        case .deleteTodo(let todoId):
+            return "/todo/\(todoId)"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .addTodo:
-            return .post
+        case .addTodo: return .post
+        case .updateTodo: return .patch
+        case .checkTodo: return .patch
+        case .getAchievement, .getTodoList: return .get
+        case .deleteTodo: return .delete
         }
     }
 
@@ -38,12 +56,16 @@ extension TodoAPI: TargetType {
         switch self {
         case .addTodo(let request):
             return .requestJSONEncodable(request)
+        case .updateTodo(_, let request):
+            return .requestJSONEncodable(request)
+        case .checkTodo(_, let request):
+            return .requestJSONEncodable(request)
+        case .getAchievement, .getTodoList, .deleteTodo:
+            return .requestPlain
         }
     }
 
     var headers: [String: String]? {
-        return [
-            "Content-Type": "application/json"
-        ]
+        return ["Content-Type": "application/json"]
     }
 }
