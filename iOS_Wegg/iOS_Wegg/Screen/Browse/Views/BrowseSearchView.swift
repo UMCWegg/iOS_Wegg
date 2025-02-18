@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SearchView: UIView, UISearchBarDelegate {
+class BrowseSearchView: UIView, UISearchBarDelegate {
     
     // MARK: - Init
     override init(frame: CGRect) {

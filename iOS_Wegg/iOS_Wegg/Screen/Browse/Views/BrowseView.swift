@@ -35,14 +35,14 @@ class BrowseView: UIView {
     }
     
     /// 검색바 헤더 뷰 추가
-    public lazy var searchView: SearchView = SearchView()
+    public lazy var browseSearchView: BrowseSearchView = BrowseSearchView()
 
     // MARK: - Methods
     
     /// UI 구성 요소 추가
     private func addcomponents() {
         [
-            searchView,
+            browseSearchView,
             browseCollectionView
         ].forEach {
             self.addSubview($0)
@@ -52,14 +52,14 @@ class BrowseView: UIView {
     
     /// UI 제약 조건 설정
     private func setupConstraints() {
-        searchView.snp.makeConstraints {
+        browseSearchView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
             $0.left.right.equalToSuperview()
             $0.height.equalTo(50)
         }
         
         browseCollectionView.snp.makeConstraints {
-            $0.top.equalTo(searchView.snp.bottom) // 검색바 아래에 위치하도록 수정
+            $0.top.equalTo(browseSearchView.snp.bottom) // 검색바 아래에 위치하도록 수정
             $0.left.right.equalToSuperview()
             $0.bottom.equalToSuperview()
         }

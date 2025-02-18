@@ -62,7 +62,7 @@ class BrowseViewController: UIViewController, UISearchBarDelegate {
     
     /// 검색창 클릭시 화면 전환 로직
     private func setupActions() {
-        browseView.searchView.searchBar.delegate = self
+        browseView.browseSearchView.searchBar.delegate = self
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
