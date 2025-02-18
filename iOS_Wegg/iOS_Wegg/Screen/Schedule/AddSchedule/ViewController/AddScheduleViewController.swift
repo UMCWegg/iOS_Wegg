@@ -17,6 +17,7 @@ class AddScheduleViewController: UIViewController {
     private var apiManager: APIManager?
     private var mapManager: MapManagerProtocol?
     private var addScheduleSearchTableHandler = AddScheduleSearchTableHandler()
+    private var selectedPlace: String?
     private var selectedStartTime: String?
     private var selectedFinishTime: String?
     var selectedFormmatedDates: [String] = [] // yyyy-MM-dd 형식의 날짜 배열
@@ -62,6 +63,7 @@ class AddScheduleViewController: UIViewController {
         // 선택한 장소 UI 업데이트
         addScheduleSearchTableHandler.didSelectPlace = { [weak self] place in
             self?.addScheduleView.updateSearchResultLabel(place, isHidden: false)
+            self?.selectedPlace = place
         }
     }
     
@@ -166,7 +168,9 @@ extension AddScheduleViewController:
     func didTapSaveButton() {
         guard let apiManager = apiManager,
             let selectedStartTime = selectedStartTime,
-            let selectedFinishTime = selectedFinishTime else { return }
+            let selectedFinishTime = selectedFinishTime,
+            let selectedPlace = selectedPlace else { return }
+        
         // 쿠키를 직접 저장
         apiManager.setCookie(value: "23D3500ABEB8B273361E6711EF8F0627")
         let request = AddScheduleRequest(
@@ -175,7 +179,7 @@ extension AddScheduleViewController:
             startTime: selectedStartTime,
             finishTime: selectedFinishTime,
             lateTime: .onTime,
-            placeName: "스타벅스 월곡역점",
+            placeName: selectedPlace,
             planOn: true
         )
         
@@ -184,7 +188,7 @@ extension AddScheduleViewController:
                 let response: AddScheduleResponse = try await apiManager.request(
                     target: ScheduleAPI.addSchedule(request: request)
                 )
-                print("ScheduleAddResponse: \(response)")
+                print("ScheduleAddResponse: \(response.code)")
             } catch {
                 print("❌ ScheduleAddResponse 실패: \(error)")
             }
