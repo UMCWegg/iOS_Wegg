@@ -78,7 +78,7 @@ class ScheduleDetailSettingView: UIView {
         .notoSans(.medium, size: 16),
         .customGray
     )
-    private lazy var toggleSwitch = UISwitch().then { $0.onTintColor = .primary }
+    private lazy var lateAllowanceSwitch = UISwitch().then { $0.onTintColor = .primary }
 
     private lazy var dividedLine = makeDivider()
     private lazy var dividedLine2 = makeDivider()
@@ -107,7 +107,9 @@ class ScheduleDetailSettingView: UIView {
         28,
         .horizontal,
         distribution: .fillEqually
-    )
+    ).then {
+        $0.isHidden = true
+    }
     
     // MARK: - Utility Functions
     
@@ -215,6 +217,40 @@ class ScheduleDetailSettingView: UIView {
     @objc private func finishTimeButtonHandler() {
         gestureDelegate?.didSelectFinishTime()
     }
+    
+    private func toggleLateAllowanceButton(action: UIAction) {
+        guard let toggle = action.sender as? UISwitch else { return }
+        if toggle.isOn {
+            lateAllowanceSwitch.snp.remakeConstraints { make in
+                make.top.bottom.equalTo(lateAllowanceLabel)
+                make.trailing.equalToSuperview().offset(-17)
+            }
+            lateAllowanceButtonStack.snp.remakeConstraints { make in
+                make.top.bottom.equalTo(lateAllowanceLabel)
+                make.trailing.equalToSuperview().offset(-17)
+                make.bottom.equalToSuperview().offset(-21)
+            }
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.lateAllowanceButtonStack.isHidden = false
+                self?.layoutIfNeeded()
+            }
+        } else {
+            lateAllowanceSwitch.snp.makeConstraints { make in
+                make.top.bottom.equalTo(lateAllowanceLabel)
+                make.trailing.equalToSuperview().offset(-17)
+                make.bottom.equalToSuperview().offset(-21)
+            }
+            lateAllowanceButtonStack.snp.makeConstraints { make in
+                make.top.equalTo(lateAllowanceSwitch.snp.bottom).offset(21)
+                make.leading.trailing.equalToSuperview().inset(17)
+            }
+            
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.lateAllowanceButtonStack.isHidden = true
+                self?.layoutIfNeeded()
+            }
+        }
+    }
 }
 
 private extension ScheduleDetailSettingView {
@@ -241,6 +277,9 @@ private extension ScheduleDetailSettingView {
             action: #selector(finishTimeButtonHandler),
             for: .touchUpInside
         )
+        lateAllowanceSwitch.addAction(UIAction { [weak self] in
+            self?.toggleLateAllowanceButton(action: $0)
+        }, for: .valueChanged)
     }
     
     func setupStackView() {
@@ -265,7 +304,7 @@ private extension ScheduleDetailSettingView {
             timeRangeStackView,
             dividedLine2,
             lateAllowanceLabel,
-            toggleSwitch,
+            lateAllowanceSwitch,
             lateAllowanceButtonStack
         ].forEach(addSubview)
     }
@@ -321,15 +360,15 @@ private extension ScheduleDetailSettingView {
             make.width.equalTo(labelWidth)
         }
         
-        toggleSwitch.snp.makeConstraints { make in
+        lateAllowanceSwitch.snp.makeConstraints { make in
             make.top.bottom.equalTo(lateAllowanceLabel)
             make.trailing.equalToSuperview().offset(-sideInset)
+            make.bottom.equalToSuperview().offset(-verticalSpacing)
         }
         
         lateAllowanceButtonStack.snp.makeConstraints { make in
-            make.top.equalTo(toggleSwitch.snp.bottom).offset(verticalSpacing + 7)
+            make.top.equalTo(lateAllowanceSwitch.snp.bottom).offset(verticalSpacing)
             make.leading.trailing.equalToSuperview().inset(sideInset)
-            make.bottom.equalToSuperview().offset(-verticalSpacing)
         }
     }
 }
