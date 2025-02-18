@@ -12,7 +12,7 @@ struct AddScheduleRequest: Encodable {
     let planDates: [String]
     let startTime: String
     let finishTime: String
-    let lateTime: String
+    let lateTime: LateStatus
     let placeName: String
     let planOn: Bool
 }

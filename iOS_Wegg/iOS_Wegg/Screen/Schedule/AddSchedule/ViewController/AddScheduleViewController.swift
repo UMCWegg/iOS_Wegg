@@ -174,7 +174,7 @@ extension AddScheduleViewController:
             planDates: selectedFormmatedDates,
             startTime: selectedStartTime,
             finishTime: selectedFinishTime,
-            lateTime: "ZERO",
+            lateTime: .onTime,
             placeName: "스타벅스 월곡역점",
             planOn: true
         )
@@ -189,8 +189,7 @@ extension AddScheduleViewController:
                 print("❌ ScheduleAddResponse 실패: \(error)")
             }
         }
-        print(selectedStartTime)
-        print(selectedFinishTime)
+        
         navigationController?.popViewController(animated: true)
     }
     
