@@ -14,8 +14,8 @@ struct AddScheduleResponse: Decodable {
     let result: [SchedulePlan]
     
     struct SchedulePlan: Decodable {
-        let planId: Int
-        let createdAt: String
+        let planId: Int?
+        let createdAt: String?
         var warningMessage: String?
     }
 }
