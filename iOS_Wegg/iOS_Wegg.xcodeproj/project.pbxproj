@@ -95,6 +95,7 @@
 				Search/ViewController/SearchViewController.swift,
 				Search/Views/SearchBarView.swift,
 				Search/Views/SearchResultView.swift,
+				Search/Views/SearchView.swift,
 				ViewController/BrowseViewController.swift,
 				Views/BrowseSearchView.swift,
 				Views/BrowseView.swift,

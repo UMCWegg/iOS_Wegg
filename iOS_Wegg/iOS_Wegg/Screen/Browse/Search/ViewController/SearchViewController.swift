@@ -9,40 +9,23 @@ import UIKit
 
 class SearchViewController: UIViewController {
     // MARK: - Property
-    private let searchBarView = SearchBarView()
-    private let searchResultView = SearchResultView()
+    private var searchView: SearchView = SearchView()
     private var recentSearches: [User] = []
     
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        view = searchView
         setupNavigationBar()
         setupTableView()
     }
     
     // MARK: - Methods
     
-    private func setupView() {
-        view.addSubview(searchBarView)
-        view.addSubview(searchResultView)
-        
-        searchBarView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(56)
-        }
-        
-        searchResultView.snp.makeConstraints { make in
-            make.top.equalTo(searchBarView.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
-        }
-    }
-    
     /// 네비게이션 조정함수
     private func setupNavigationBar() {
-        searchBarView.searchBar.delegate = self
-        self.navigationItem.titleView = searchBarView.searchBar
+        searchView.searchBarView.searchBar.delegate = self
+        self.navigationItem.titleView = searchView.searchBarView.searchBar
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "arrow.left")?
                 .withRenderingMode(.alwaysOriginal)
@@ -53,8 +36,8 @@ class SearchViewController: UIViewController {
     }
     
     private func setupTableView() {
-        searchResultView.tableView.delegate = self
-        searchResultView.tableView.dataSource = self
+        searchView.searchResultView.tableView.delegate = self
+        searchView.searchResultView.tableView.dataSource = self
     }
     
     @objc private func didTapBack() {
@@ -70,7 +53,7 @@ extension SearchViewController: UISearchBarDelegate {
             profileImage: UIImage(named: "profile_placeholder") ?? UIImage(),
             username: text)
         recentSearches.append(user)
-        searchResultView.tableView.reloadData()
+        searchView.searchResultView.tableView.reloadData()
     }
 }
 
