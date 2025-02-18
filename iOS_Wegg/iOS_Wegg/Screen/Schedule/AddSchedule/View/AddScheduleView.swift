@@ -294,6 +294,7 @@ private extension AddScheduleView {
             make.top.equalTo(detailSettingLabel.snp.bottom).offset(14)
             make.leading.equalTo(placeSearchBar.snp.leading)
             make.trailing.equalTo(placeSearchBar.snp.trailing)
+            make.height.equalTo(174)
         }
         
     }

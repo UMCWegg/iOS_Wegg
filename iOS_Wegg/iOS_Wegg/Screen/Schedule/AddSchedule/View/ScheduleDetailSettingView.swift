@@ -221,31 +221,18 @@ class ScheduleDetailSettingView: UIView {
     private func toggleLateAllowanceButton(action: UIAction) {
         guard let toggle = action.sender as? UISwitch else { return }
         if toggle.isOn {
-            lateAllowanceSwitch.snp.remakeConstraints { make in
-                make.top.bottom.equalTo(lateAllowanceLabel)
-                make.trailing.equalToSuperview().offset(-17)
+            self.snp.updateConstraints { make in
+                make.height.equalTo(216)
             }
-            lateAllowanceButtonStack.snp.remakeConstraints { make in
-                make.top.bottom.equalTo(lateAllowanceLabel)
-                make.trailing.equalToSuperview().offset(-17)
-                make.bottom.equalToSuperview().offset(-21)
-            }
-            UIView.animate(withDuration: 0.3) { [weak self] in
+            UIView.animate(withDuration: 0.7) { [weak self] in
                 self?.lateAllowanceButtonStack.isHidden = false
                 self?.layoutIfNeeded()
             }
         } else {
-            lateAllowanceSwitch.snp.makeConstraints { make in
-                make.top.bottom.equalTo(lateAllowanceLabel)
-                make.trailing.equalToSuperview().offset(-17)
-                make.bottom.equalToSuperview().offset(-21)
+            self.snp.updateConstraints { make in
+                make.height.equalTo(174)
             }
-            lateAllowanceButtonStack.snp.makeConstraints { make in
-                make.top.equalTo(lateAllowanceSwitch.snp.bottom).offset(21)
-                make.leading.trailing.equalToSuperview().inset(17)
-            }
-            
-            UIView.animate(withDuration: 0.3) { [weak self] in
+            UIView.animate(withDuration: 0.7) { [weak self] in
                 self?.lateAllowanceButtonStack.isHidden = true
                 self?.layoutIfNeeded()
             }
@@ -363,7 +350,6 @@ private extension ScheduleDetailSettingView {
         lateAllowanceSwitch.snp.makeConstraints { make in
             make.top.bottom.equalTo(lateAllowanceLabel)
             make.trailing.equalToSuperview().offset(-sideInset)
-            make.bottom.equalToSuperview().offset(-verticalSpacing)
         }
         
         lateAllowanceButtonStack.snp.makeConstraints { make in
