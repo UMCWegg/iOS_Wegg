@@ -53,4 +53,8 @@ struct APIConstants {
             return "/todo/\(todoId)"
         }
     }
+    
+    struct Follow {
+        static let followLabelURL = "/home/follow"
+    }
 }

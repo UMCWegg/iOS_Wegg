@@ -21,6 +21,7 @@
 		0E98EB8A2D3A274B006F25EF /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */; };
 		0E98EC942D3BD206006F25EF /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */; };
 		0E98EC952D3BD206006F25EF /* NotoSansKR-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */; };
+		7B45A21C2D6440CB001AD28B /* FollowResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B45A21B2D6440CB001AD28B /* FollowResponse.swift */; };
 		7B75AA692D625D1200882385 /* TodoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B75AA682D625D1200882385 /* TodoRequest.swift */; };
 		7B75AA6B2D625D3E00882385 /* TodoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B75AA6A2D625D3E00882385 /* TodoResponse.swift */; };
 		DE0020B92D3F75E6003A273F /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020B82D3F75E6003A273F /* KakaoSDK */; };
@@ -71,6 +72,7 @@
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
+		7B45A21B2D6440CB001AD28B /* FollowResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowResponse.swift; sourceTree = "<group>"; };
 		7B75AA682D625D1200882385 /* TodoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRequest.swift; sourceTree = "<group>"; };
 		7B75AA6A2D625D3E00882385 /* TodoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoResponse.swift; sourceTree = "<group>"; };
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -406,6 +408,14 @@
 			path = NotoSans;
 			sourceTree = "<group>";
 		};
+		7B45A2182D6440B6001AD28B /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				7B45A21B2D6440CB001AD28B /* FollowResponse.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		7B75AA672D625D0A00882385 /* Todo */ = {
 			isa = PBXGroup;
 			children = (
@@ -491,6 +501,7 @@
 		FF7985672D5A86510055B370 /* NetworkModel */ = {
 			isa = PBXGroup;
 			children = (
+				7B45A2182D6440B6001AD28B /* Home */,
 				7B75AA672D625D0A00882385 /* Todo */,
 				DED22CFF2D5FA108003245C8 /* SignUp */,
 				DED22CEC2D5F7F7F003245C8 /* Post */,
@@ -679,6 +690,7 @@
 				DED22D042D5FC27C003245C8 /* SignUpRequest.swift in Sources */,
 				DED22D052D5FC27C003245C8 /* SignUpResponse.swift in Sources */,
 				DED22CED2D5F7FBA003245C8 /* UploadRequest.swift in Sources */,
+				7B45A21C2D6440CB001AD28B /* FollowResponse.swift in Sources */,
 				DED22CEE2D5F7FBA003245C8 /* UploadResponse.swift in Sources */,
 				DED22CEF2D5F7FBA003245C8 /* HotPlaceRequest.swift in Sources */,
 				DED22E672D61A142003245C8 /* VerificationRequest.swift in Sources */,

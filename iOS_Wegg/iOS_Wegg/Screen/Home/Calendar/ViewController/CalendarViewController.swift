@@ -6,6 +6,7 @@
 import UIKit
 
 class CalendarViewController: UIViewController {
+    private let apiManager = APIManager()
     
     let calendarView = CalendarView()
     private var days: [String] = []
@@ -30,6 +31,8 @@ class CalendarViewController: UIViewController {
         // 초기 상태 설정
         calendarView.calendarCollectionView.isHidden = false
         calendarView.studyTimeView.isHidden = true
+        
+        fetchFollowInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +46,30 @@ class CalendarViewController: UIViewController {
         
         calendarView.studyTimeView.studyTimeCollectionView.dataSource = self
         calendarView.studyTimeView.studyTimeCollectionView.delegate = self
+    }
+    
+    private func fetchFollowInfo() {
+        Task {
+            do {
+                let followResponse: FollowResponse = try await apiManager.request(
+                    target: FollowAPI.getFollowInfo)
+                await updateUI(with: followResponse.result)
+            } catch {
+                print("Error fetching follow info: \(error)")
+                // 에러 처리 로직 추가
+            }
+        }
+    }
+    
+    private func updateUI(with result: FollowResult) {
+        calendarView.followerLabel.text = "\(result.followerCount)\n팔로워"
+        calendarView.followingLabel.text = "\(result.followingCount)\n팔로잉"
+        calendarView.profileLabel.text = result.accountId
+        if let imageURLString = result.profileImage, let imageURL = URL(string: imageURLString) {
+            // 프로필 이미지 로드 및 설정 (URLSession 또는 이미지 로딩 라이브러리 사용)
+            // 예: SDWebImage 라이브러리 사용
+            // calendarView.profileIcon.sd_setImage(with: imageURL, completed: nil)
+        }
     }
     
     private func setupButtonActions() {
