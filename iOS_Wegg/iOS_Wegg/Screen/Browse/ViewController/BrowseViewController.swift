@@ -109,6 +109,9 @@ class BrowseViewController: UIViewController {
                     self.refreshControl.endRefreshing()
                     self.isFetching = false
                     print("🔄 데이터 갱신 완료")
+                    
+                    // ✅ 데이터가 비어있으면 안내 메시지 표시
+                    self.updateEmptyMessageIfNeeded()
                 }
             } catch {
                 print("API 호출 실패: \(error)")
@@ -119,6 +122,21 @@ class BrowseViewController: UIViewController {
             }
         }
     }
+    
+    /// 데이터가 없는 경우 메시지를 표시하는 메서드
+    private func updateEmptyMessageIfNeeded() {
+        if browsePosts.isEmpty {
+            let emptyLabel = UILabel()
+            emptyLabel.text = "게시물이 없습니다."
+            emptyLabel.textColor = .darkGray
+            emptyLabel.font = UIFont.notoSans(.bold, size: 16)
+            emptyLabel.textAlignment = .center
+            browseView.browseCollectionView.backgroundView = emptyLabel
+        } else {
+            browseView.browseCollectionView.backgroundView = nil
+        }
+    }
+    
 }
 
 // MARK: - Extensions
