@@ -12,7 +12,7 @@ class ScheduleTimeViewController: UIViewController {
     weak var parentVC: AddScheduleViewController?
     var timePickerType: TimePickertype?
     
-    private var         selectedTime: String?
+    private var selectedTime: String?
     private var selectedFinishTime: String?
 
     override func viewDidLoad() {
