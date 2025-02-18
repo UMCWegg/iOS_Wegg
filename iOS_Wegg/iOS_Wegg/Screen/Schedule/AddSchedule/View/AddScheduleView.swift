@@ -174,6 +174,10 @@ class AddScheduleView: UIView {
         return searchResultListView
     }
     
+    /// 랜덤인증 시간 업데이트 함수
+    /// - Parameters:
+    ///     - type: TimePickerType
+    ///     - _ date: 선택된 시간
     public func updateRandomTimeDate(
         type: TimePickertype,
         _ date: String
@@ -298,4 +302,5 @@ private extension AddScheduleView {
         }
         
     }
+
 }
