@@ -17,6 +17,8 @@ class AddScheduleViewController: UIViewController {
     private var apiManager: APIManager?
     private var mapManager: MapManagerProtocol?
     private var addScheduleSearchTableHandler = AddScheduleSearchTableHandler()
+    private var selectedStartTime: String?
+    private var selectedFinishTime: String?
     var selectedFormmatedDates: [String] = [] // yyyy-MM-dd 형식의 날짜 배열
     
     init(mapManager: MapManagerProtocol) {
@@ -51,6 +53,8 @@ class AddScheduleViewController: UIViewController {
         }
     }
     
+    // MARK: - Set Up Functions
+    
     private func setupTableHandler() {
         addScheduleSearchTableHandler.setupDataSource(
             for: addScheduleView.searchResultListView.tableView
@@ -60,6 +64,19 @@ class AddScheduleViewController: UIViewController {
             self?.addScheduleView.updateSearchResultLabel(place, isHidden: false)
         }
     }
+    
+    // MARK: - Public Functions
+    
+    public func setSelectedTime(type: TimePickertype, selectedTime: String) {
+        switch type {
+        case .startTime:
+            selectedStartTime = selectedTime
+        case .finishTime:
+            selectedFinishTime = selectedTime
+        }
+    }
+    
+    // MARK: - API Functions
     
     /// 장소 검색 API 가져오는 함수
     /// - Parameters:
@@ -147,14 +164,16 @@ extension AddScheduleViewController:
     ScheduleDetailSettingViewDelegate {
     
     func didTapSaveButton() {
-        guard let apiManager = apiManager else { return }
+        guard let apiManager = apiManager,
+            let selectedStartTime = selectedStartTime,
+            let selectedFinishTime = selectedFinishTime else { return }
         // 쿠키를 직접 저장
         apiManager.setCookie(value: "23D3500ABEB8B273361E6711EF8F0627")
         let request = AddScheduleRequest(
             status: .yet,
             planDates: selectedFormmatedDates,
-            startTime: "15:24",
-            finishTime: "22:00",
+            startTime: selectedStartTime,
+            finishTime: selectedFinishTime,
             lateTime: "ZERO",
             placeName: "스타벅스 월곡역점",
             planOn: true
@@ -170,7 +189,8 @@ extension AddScheduleViewController:
                 print("❌ ScheduleAddResponse 실패: \(error)")
             }
         }
-        print(selectedFormmatedDates)
+        print(selectedStartTime)
+        print(selectedFinishTime)
         navigationController?.popViewController(animated: true)
     }
     
