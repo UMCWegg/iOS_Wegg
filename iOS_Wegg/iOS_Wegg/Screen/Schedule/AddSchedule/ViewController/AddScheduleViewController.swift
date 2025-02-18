@@ -37,6 +37,7 @@ class AddScheduleViewController: UIViewController {
     
     lazy var addScheduleView = AddScheduleView().then {
         $0.gestureDelegate = self
+        $0.setDetailSettingCardDelegate(self)
         $0.placeSearchBar.delegate = self
         $0.searchResultListView.tableView.delegate = addScheduleSearchTableHandler
         // 뷰에서 만든 제스처의 딜리게이트를 컨트롤러에서 설정
@@ -140,7 +141,17 @@ extension AddScheduleViewController: UISearchBarDelegate {
     }
 }
 
-extension AddScheduleViewController: AddScheduleGestureDelegate {
+extension AddScheduleViewController:
+    AddScheduleGestureDelegate,
+    ScheduleDetailSettingViewDelegate {
+    
+    func didTapDoneButton() {
+        print("didTapDoneButton")
+    }
+    
+    func didTapCancelButton() {
+        print("didTapCancelButton")
+    }
     
     func didTapCalendarButton() {
         let scheduleCalendarVC = ScheduleCalendarViewController()
@@ -153,14 +164,6 @@ extension AddScheduleViewController: AddScheduleGestureDelegate {
             })]
         }
         present(scheduleCalendarVC, animated: true)
-    }
-    
-    func didTapDoneButton() {
-        print("didTapDoneButton")
-    }
-    
-    func didTapCancelButton() {
-        print("didTapCancelButton")
     }
     
     func didSelectStartTime() {
