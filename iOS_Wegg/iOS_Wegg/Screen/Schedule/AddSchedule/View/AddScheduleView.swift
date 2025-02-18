@@ -9,8 +9,11 @@ import UIKit
 import Then
 
 protocol AddScheduleGestureDelegate: AnyObject {
+    func didTapCalendarButton()
     func didTapDoneButton()
     func didTapCancelButton()
+    func didSelectStartTime()
+    func didSelectFinishTime()
 }
 
 class AddScheduleView: UIView {
@@ -31,19 +34,15 @@ class AddScheduleView: UIView {
     
     private lazy var headerStackView = makeStackView(90, .horizontal)
     
-    private lazy var cancelLabel = makeLabel("취소", .notoSans(.medium, size: 16), .primary)
+    private lazy var cancelButton = makeButton("취소", color: .primary)
     private lazy var createEggLabel = makeLabel(
         "create egg",
         .notoSans(.medium, size: 16),
         .customGray
     ).then {
-        $0.textAlignment = .center
+        $0.textAlignment = .left
     }
-    private lazy var saveLabel = makeLabel(
-        "저장",
-        .notoSans(.medium, size: 16),
-        .primary
-    )
+    private lazy var saveButton = makeButton("저장", color: .primary)
     
     private lazy var placeSettingLabel = makeLabel(
         "장소 설정",
@@ -102,7 +101,59 @@ class AddScheduleView: UIView {
         , .customGray
     )
 
-    private lazy var detailSettingCardView = ScheduleDetailSettingView()
+    private lazy var detailSettingCardView = makeCardView()
+
+    private lazy var dateLabel = makeLabel("날짜", .notoSans(.medium, size: 16), .customGray)
+    private lazy var calenderImageButton = makeImageButton("calendar")
+    
+    // 날짜 선택 후 보여줄 라벨
+    private lazy var updatedDateLabel = makeLabel(
+        nil,
+        .notoSans(.medium, size: 16),
+        .customGray
+    ).then {
+        $0.isHidden = true
+        $0.textAlignment = .right
+        $0.numberOfLines = 1
+    }
+
+    private lazy var randomVerificationLabel = makeLabel(
+        "랜덤 인증",
+        .notoSans(.medium, size: 16),
+        .customGray
+    )
+
+    private lazy var startTimeButton = makeButton(
+        "00:00",
+        color: .gray1
+    ).then {
+        $0.contentHorizontalAlignment = .right
+    }
+    
+    private lazy var timeRangeLabel = makeLabel(
+        "~",
+        .notoSans(.medium, size: 16),
+        .gray1
+    )
+    
+    private lazy var finishTimeButton = makeButton(
+        "00:00",
+        color: .gray1
+    ).then {
+        $0.contentHorizontalAlignment = .right // 우측 정렬
+    }
+    
+    private lazy var timeRangeStackView = makeStackView(10, .horizontal)
+
+    private lazy var lateAllowanceLabel = makeLabel(
+        "지각 허용",
+        .notoSans(.medium, size: 16),
+        .customGray
+    )
+    private lazy var toggleSwitch = UISwitch().then { $0.onTintColor = .primary }
+
+    private lazy var dividedLine = makeDivider()
+    private lazy var dividedLine2 = makeDivider()
 
     // MARK: - Utility Functions
 
@@ -139,6 +190,17 @@ class AddScheduleView: UIView {
             $0.distribution = .fill
         }
     }
+
+    private func makeButton(
+        _ title: String,
+        color: UIColor
+    ) -> UIButton {
+        return UIButton().then {
+            $0.setTitle(title, for: .normal)
+            $0.setTitleColor(color, for: .normal)
+            $0.titleLabel?.font = .notoSans(.medium, size: 16)
+        }
+    }
     
     private func makeImageButton(
         _ imageName: String
@@ -147,14 +209,34 @@ class AddScheduleView: UIView {
             $0.setImage(UIImage(named: imageName), for: .normal)
         }
     }
+
+    private func makeDivider() -> UIView {
+        return UIView().then {
+            $0.backgroundColor = .customGray2
+            $0.snp.makeConstraints { make in make.height.equalTo(1) }
+        }
+    }
+    
+    private func makeCardView() -> UIView {
+        return UIView().then {
+            $0.backgroundColor = .white
+            $0.layer.borderWidth = 1
+            $0.layer.borderColor = UIColor.secondaryLabel.cgColor
+            $0.layer.cornerRadius = 25
+        }
+    }
     
     // MARK: - Public Functions
     
-    /// ScheduleDetailSettingView 딜리게이트 설정 함수
-    public func setDetailSettingCardDelegate(
-        _ delegate: ScheduleDetailSettingViewDelegate
-    ) {
-        detailSettingCardView.gestureDelegate = delegate
+    /// 캘린더에서 날짜 선택 후 업데이트하는 함수
+    /// - Parameters:
+    ///     - isHidden: `updatedDateLabel`을 보여줄지 여부
+    ///     - date: 선택된 날짜
+    public func updateDateLabel(isHidden: Bool, date: String?) {
+        updatedDateLabel.isHidden = isHidden
+        if !isHidden {
+            updatedDateLabel.text = date
+        }
     }
     
     /// 검색 결과 드롭다운
@@ -182,21 +264,34 @@ class AddScheduleView: UIView {
         type: TimePickertype,
         _ date: String
     ) {
-        detailSettingCardView.updateRandomTimeDate(type: type, date)
-    }
-    
-    public func updateDateLabel(isHidden: Bool, date: String?) {
-        detailSettingCardView.updateDateLabel(isHidden: isHidden, date: date)
+        switch type {
+        case .startTime:
+            startTimeButton.setTitle(date, for: .normal)
+        case .finishTime:
+            finishTimeButton.setTitle(date, for: .normal)
+        }
     }
     
     // MARK: - Action Handler
     
-    @objc private func handleDoneButton() {
+    @objc private func handleCalendarButton() {
+        gestureDelegate?.didTapCalendarButton()
+    }
+    
+    @objc private func handleSaveButton() {
         gestureDelegate?.didTapDoneButton()
     }
     
     @objc private func handleCancelButton() {
         gestureDelegate?.didTapCancelButton()
+    }
+    
+    @objc private func startTimeButtonHandler() {
+        gestureDelegate?.didSelectStartTime()
+    }
+    
+    @objc private func finishTimeButtonHandler() {
+        gestureDelegate?.didSelectFinishTime()
     }
     
     /// 키보드 내리는 핸들러
@@ -214,9 +309,36 @@ private extension AddScheduleView {
         setupGestures()
         addComponents()
         constraints()
+        constraintsDetailSettingView()
     }
     
     func setupGestures() {
+        cancelButton.addTarget(
+            self,
+            action: #selector(handleCancelButton),
+            for: .touchUpInside
+        )
+        saveButton.addTarget(
+            self,
+            action: #selector(handleSaveButton),
+            for: .touchUpInside
+        )
+        calenderImageButton.addTarget(
+            self,
+            action: #selector(handleCalendarButton),
+            for: .touchUpInside
+        )
+        startTimeButton.addTarget(
+            self,
+            action: #selector(startTimeButtonHandler),
+            for: .touchUpInside
+        )
+        finishTimeButton.addTarget(
+            self,
+            action: #selector(finishTimeButtonHandler),
+            for: .touchUpInside
+        )
+        
         // 키보드 내리는 제스처 추가
         let dismissKeyboardGesture = UITapGestureRecognizer(
             target: self,
@@ -224,10 +346,18 @@ private extension AddScheduleView {
         )
         dismissKeyboardGesture.cancelsTouchesInView = false
         addGestureRecognizer(dismissKeyboardGesture)
+        
     }
     
     func setupStackView() {
-        [cancelLabel, createEggLabel, saveLabel].forEach { headerStackView.addArrangedSubview($0)
+        [cancelButton, createEggLabel, saveButton].forEach { headerStackView.addArrangedSubview($0)
+        }
+        [
+            startTimeButton,
+            timeRangeLabel,
+            finishTimeButton
+        ].forEach {
+            timeRangeStackView.addArrangedSubview($0)
         }
     }
     
@@ -244,6 +374,18 @@ private extension AddScheduleView {
             detailSettingCardView
         ].forEach(addSubview)
         bringSubviewToFront(searchResultListView) // 최상위로 배치
+
+        [
+            dateLabel,
+            updatedDateLabel,
+            calenderImageButton,
+            dividedLine,
+            randomVerificationLabel,
+            timeRangeStackView,
+            dividedLine2,
+            lateAllowanceLabel,
+            toggleSwitch
+        ].forEach(detailSettingCardView.addSubview)
     }
     
     func constraints() {
@@ -302,5 +444,62 @@ private extension AddScheduleView {
         }
         
     }
+    
+    func constraintsDetailSettingView() {
+        let sideInset: CGFloat = 17
+        let verticalSpacing: CGFloat = 14
+        let labelWidth: CGFloat = 70
 
+        dateLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(sideInset)
+            make.width.equalTo(labelWidth)
+        }
+        
+        calenderImageButton.snp.makeConstraints { make in
+            make.top.equalTo(dateLabel)
+            make.trailing.equalToSuperview().offset(-sideInset)
+            make.width.height.equalTo(20)
+        }
+        
+        updatedDateLabel.snp.makeConstraints { make in
+            make.top.equalTo(calenderImageButton)
+            make.trailing.lessThanOrEqualTo(calenderImageButton.snp.leading).offset(-5)
+            make.width.equalTo(labelWidth + 70)
+        }
+        
+        dividedLine.snp.makeConstraints { make in
+            make.top.equalTo(dateLabel.snp.bottom).offset(verticalSpacing)
+            make.leading.trailing.equalToSuperview().inset(sideInset)
+        }
+        
+        randomVerificationLabel.snp.makeConstraints { make in
+            make.top.equalTo(dividedLine.snp.bottom).offset(verticalSpacing)
+            make.leading.equalToSuperview().offset(sideInset)
+            make.width.equalTo(labelWidth)
+        }
+        
+        timeRangeStackView.snp.makeConstraints { make in
+            make.top.equalTo(randomVerificationLabel)
+            make.trailing.equalToSuperview().offset(-sideInset)
+            make.width.equalTo(150)
+        }
+        
+        dividedLine2.snp.makeConstraints { make in
+            make.top.equalTo(timeRangeStackView.snp.bottom).offset(verticalSpacing)
+            make.leading.trailing.equalToSuperview().inset(sideInset)
+        }
+        
+        lateAllowanceLabel.snp.makeConstraints { make in
+            make.top.equalTo(dividedLine2.snp.bottom).offset(verticalSpacing)
+            make.leading.equalToSuperview().offset(sideInset)
+            make.bottom.equalToSuperview().offset(-20)
+            make.width.equalTo(labelWidth)
+        }
+        
+        toggleSwitch.snp.makeConstraints { make in
+            make.top.bottom.equalTo(lateAllowanceLabel)
+            make.trailing.equalToSuperview().offset(-sideInset)
+        }
+    }
 }

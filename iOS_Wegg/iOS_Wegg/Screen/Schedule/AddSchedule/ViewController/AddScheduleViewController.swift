@@ -12,6 +12,7 @@ enum TimePickertype {
     case finishTime
 }
 
+// TODO: - 셀 션택시 선택된 장소로 UI 업데이트 구현
 class AddScheduleViewController: UIViewController {
     
     private var apiManager: APIManager?
@@ -33,36 +34,10 @@ class AddScheduleViewController: UIViewController {
         
         apiManager = APIManager()
         setupTableHandler()
-        
-        guard let apiManager = apiManager else { return }
-        // 쿠키를 직접 저장
-        apiManager.setCookie(value: "23D3500ABEB8B273361E6711EF8F0627")
-        
-        let request = AddScheduleRequest(
-            status: .yet,
-            planDates: ["2025-02-21"],
-            startTime: "15:24",
-            finishTime: "22:00",
-            lateTime: "ZERO",
-            placeName: "스타벅스 월곡역점",
-            planOn: true
-        )
-        
-        Task {
-            do {
-                let response: AddScheduleResponse = try await apiManager.request(
-                    target: ScheduleAPI.addSchedule(request: request)
-                )
-                print("ScheduleAddResponse: \(response.result)")
-            } catch {
-                print("❌ ScheduleAddResponse 실패: \(error)")
-            }
-        }
     }
     
     lazy var addScheduleView = AddScheduleView().then {
         $0.gestureDelegate = self
-        $0.setDetailSettingCardDelegate(self)
         $0.placeSearchBar.delegate = self
         $0.searchResultListView.tableView.delegate = addScheduleSearchTableHandler
         // 뷰에서 만든 제스처의 딜리게이트를 컨트롤러에서 설정
@@ -166,17 +141,7 @@ extension AddScheduleViewController: UISearchBarDelegate {
     }
 }
 
-extension AddScheduleViewController:
-    AddScheduleGestureDelegate,
-    ScheduleDetailSettingViewDelegate {
-    
-    func didTapDoneButton() {
-        print("didTapDoneButton")
-    }
-    
-    func didTapCancelButton() {
-        print("didTapCancelButton")
-    }
+extension AddScheduleViewController: AddScheduleGestureDelegate {
     
     func didTapCalendarButton() {
         let scheduleCalendarVC = ScheduleCalendarViewController()
@@ -189,6 +154,38 @@ extension AddScheduleViewController:
             })]
         }
         present(scheduleCalendarVC, animated: true)
+    }
+    
+    func didTapDoneButton() {
+        guard let apiManager = apiManager else { return }
+        // 쿠키를 직접 저장
+        apiManager.setCookie(value: "23D3500ABEB8B273361E6711EF8F0627")
+        
+        let request = AddScheduleRequest(
+            status: .yet,
+            planDates: ["2025-02-27"],
+            startTime: "15:24",
+            finishTime: "22:00",
+            lateTime: "ZERO",
+            placeName: "스타벅스 월곡역점",
+            planOn: true
+        )
+        
+        Task {
+            do {
+                let response: AddScheduleResponse = try await apiManager.request(
+                    target: ScheduleAPI.addSchedule(request: request)
+                )
+                print("ScheduleAddResponse: \(response)")
+            } catch {
+                print("❌ ScheduleAddResponse 실패: \(error)")
+            }
+        }
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func didTapCancelButton() {
+        navigationController?.popViewController(animated: true)
     }
     
     func didSelectStartTime() {
