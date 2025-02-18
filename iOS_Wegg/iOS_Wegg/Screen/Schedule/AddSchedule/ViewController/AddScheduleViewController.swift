@@ -33,6 +33,31 @@ class AddScheduleViewController: UIViewController {
         
         apiManager = APIManager()
         setupTableHandler()
+        
+        guard let apiManager = apiManager else { return }
+        // 쿠키를 직접 저장
+        apiManager.setCookie(value: "23D3500ABEB8B273361E6711EF8F0627")
+        
+        let request = AddScheduleRequest(
+            status: .yet,
+            planDates: ["2025-02-21"],
+            startTime: "15:24",
+            finishTime: "22:00",
+            lateTime: "ZERO",
+            placeName: "스타벅스 월곡역점",
+            planOn: true
+        )
+        
+        Task {
+            do {
+                let response: AddScheduleResponse = try await apiManager.request(
+                    target: ScheduleAPI.addSchedule(request: request)
+                )
+                print("ScheduleAddResponse: \(response.result)")
+            } catch {
+                print("❌ ScheduleAddResponse 실패: \(error)")
+            }
+        }
     }
     
     lazy var addScheduleView = AddScheduleView().then {
