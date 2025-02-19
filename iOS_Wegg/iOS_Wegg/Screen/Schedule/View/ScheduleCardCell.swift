@@ -60,7 +60,7 @@ class ScheduleCardCell: UITableViewCell {
     }
     
     // 테이블 datasoruce 주입
-    func configure(with schedule: Schedule) {
+    func configure(with schedule: ScheduleModel) {
         dateLabel.text = schedule.date
         titleLabel.text = schedule.location
         timeRangeLabel.text = schedule.timeRange

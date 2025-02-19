@@ -7,8 +7,8 @@
 
 import UIKit
 
-struct Schedule: Hashable {
-    let id: UUID
+struct ScheduleModel: Hashable {
+    let id: Int
     let date: String
     let location: String
     let timeRange: String
@@ -21,7 +21,8 @@ class ScheduleViewController:
     
     private var mapManager: MapManagerProtocol?
     // UITableViewDiffableDataSource를 사용하여 데이터 관리
-    private var dataSource: UITableViewDiffableDataSource<Int, Schedule>?
+    private var dataSource: UITableViewDiffableDataSource<Int, ScheduleModel>?
+    private var scheduleList: [ScheduleModel] = []
     
     // 의존성 주입
     init(mapManager: MapManagerProtocol) {
@@ -38,7 +39,7 @@ class ScheduleViewController:
         
         view = scheduleView
         setupDataSource()
-        applyInitialSnapshot()
+        fetchAllSchedules()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,7 +65,7 @@ class ScheduleViewController:
 
     private func setupDataSource() {
         // Diffable Data Source를 생성하여 테이블 뷰에 연결
-        dataSource = UITableViewDiffableDataSource<Int, Schedule>(
+        dataSource = UITableViewDiffableDataSource<Int, ScheduleModel>(
             tableView: scheduleView.studyCardTableView
         ) { tableView, indexPath, schedule in
             guard let cell = tableView.dequeueReusableCell(
@@ -81,24 +82,9 @@ class ScheduleViewController:
     }
 
     private func applyInitialSnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Schedule>()
+        var snapshot = NSDiffableDataSourceSnapshot<Int, ScheduleModel>()
         snapshot.appendSections([0]) // 단일 섹션 추가
-        snapshot.appendItems([
-            Schedule(
-                id: UUID(),
-                date: "1월 14일",
-                location: "스타벅스 미아점",
-                timeRange: "9:00 AM ~ 12:00 PM",
-                isOn: true
-            ),
-            Schedule(
-                id: UUID(),
-                date: "1월 15일",
-                location: "투썸플레이스 강남점",
-                timeRange: "10:00 AM ~ 1:00 PM",
-                isOn: false
-            )
-        ])
+        snapshot.appendItems(scheduleList)
         // DataSource가 nil이 아닌 경우 스냅샷 적용
         guard let dataSource = dataSource else { return }
         dataSource.apply(snapshot, animatingDifferences: true)
@@ -107,6 +93,40 @@ class ScheduleViewController:
 //        let currentSnapshot = dataSource.snapshot()
 //        // 스냅샷에서 모든 아이템 가져오기
 //        print(currentSnapshot.itemIdentifiers)
+    }
+    
+    private func fetchAllSchedules() {
+        let apiManager = APIManager()
+        apiManager.setCookie(value: "28B5EBCFB902182C74E36C7E692429DE")
+        
+        Task {
+            do {
+                let response: FetchAllSchedulesResponse = try await apiManager.request(
+                    target: ScheduleAPI.fetchScheduleList
+                )
+                scheduleList = convertToScheduleModel(from: response.result)
+                DispatchQueue.main.async { [weak self] in
+                    self?.applyInitialSnapshot()
+                }
+            } catch {
+                print("❌ ScheduleAddResponse 실패: \(error)")
+            }
+        }
+    }
+    
+    /// ScheduleModel로 변환
+    private func convertToScheduleModel(
+        from scheduleList: [FetchAllSchedulesResponse.AllSchedulesResult]
+    ) -> [ScheduleModel] {
+        return scheduleList.map { schedule in
+            ScheduleModel(
+                id: schedule.planId,
+                date: schedule.startTime,
+                location: schedule.address,
+                timeRange: schedule.startTime + schedule.finishTime,
+                isOn: true
+            )
+        }
     }
 }
 
