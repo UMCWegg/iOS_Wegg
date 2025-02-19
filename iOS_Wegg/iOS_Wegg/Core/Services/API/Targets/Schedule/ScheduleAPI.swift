@@ -14,6 +14,7 @@ enum ScheduleAPI {
     case deleteSchedule(planId: Int)
     case searchPlace(request: ScheduleSearchRequest)
     case addSchedule(request: AddScheduleRequest)
+    case onOffSchedule(planId: Int, request: OnOffScheduleRequest)
 }
 
 extension ScheduleAPI: TargetType {
@@ -35,6 +36,9 @@ extension ScheduleAPI: TargetType {
             return APIConstants.Schedule.schedulePlaceSearchURL
         case .addSchedule:
             return APIConstants.Schedule.addURL
+        case .onOffSchedule(let planId, _):
+            return (APIConstants.Schedule.baseURL
+            + "/\(planId)" + APIConstants.Schedule.onOffURL)
         }
     }
     
@@ -46,6 +50,8 @@ extension ScheduleAPI: TargetType {
             return .delete
         case .addSchedule:
             return .post
+        case .onOffSchedule:
+            return .patch
         }
     }
     
@@ -67,6 +73,8 @@ extension ScheduleAPI: TargetType {
                 encoding: URLEncoding.queryString
             )
         case .addSchedule(let request):
+            return .requestJSONEncodable(request)
+        case .onOffSchedule(_, let request):
             return .requestJSONEncodable(request)
         }
     }

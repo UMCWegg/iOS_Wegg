@@ -40,6 +40,21 @@ class ScheduleViewController:
         
         view = scheduleView
         setupDataSource()
+        // 임시 쿠키 설정
+        apiManager.setCookie(value: CookieStorage.cookie)
+        
+        let request = OnOffScheduleRequest(planOn: .on)
+        
+        Task {
+            do {
+                let _: OnOffScheduleResponse = try await apiManager.request(
+                    target: ScheduleAPI.onOffSchedule(planId: 40, request: request)
+                )
+                
+            } catch {
+                print("DeleteScheduleResponse 오류: \(error)")
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -102,8 +117,6 @@ class ScheduleViewController:
     }
     
     private func fetchAllSchedules() {
-        apiManager.setCookie(value: CookieStorage.cookie)
-        
         Task {
             do {
                 let response: FetchAllSchedulesResponse = try await apiManager.request(

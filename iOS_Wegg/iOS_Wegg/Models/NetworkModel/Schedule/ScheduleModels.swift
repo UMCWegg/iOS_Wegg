@@ -25,3 +25,8 @@ enum LateStatus: String, Codable {
     case late7Min = "SEVEN"    // 7분 지각
     case late10Min = "TEN"     // 10분 지각
 }
+
+enum ScheduleOnOffSyntax: String, Codable {
+    case on = "TRUE"
+    case off = "FALSE"
+}
