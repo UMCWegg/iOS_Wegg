@@ -17,6 +17,11 @@ class AddScheduleViewController: UIViewController {
     private var apiManager: APIManager?
     private var mapManager: MapManagerProtocol?
     private var addScheduleSearchTableHandler = AddScheduleSearchTableHandler()
+    private var selectedPlace: String?
+    private var selectedStartTime: String?
+    private var selectedFinishTime: String?
+    private var selectedLateTime: LateStatus?
+    var selectedFormmatedDates: [String] = [] // yyyy-MM-dd 형식의 날짜 배열
     
     init(mapManager: MapManagerProtocol) {
         self.mapManager = mapManager
@@ -37,7 +42,10 @@ class AddScheduleViewController: UIViewController {
     
     lazy var addScheduleView = AddScheduleView().then {
         $0.gestureDelegate = self
-        $0.setDetailSettingCardDelegate(self)
+        $0.setDetailSettingCardDelegate(
+            delegate: self,
+            sendingDelegate: self
+        )
         $0.placeSearchBar.delegate = self
         $0.searchResultListView.tableView.delegate = addScheduleSearchTableHandler
         // 뷰에서 만든 제스처의 딜리게이트를 컨트롤러에서 설정
@@ -50,6 +58,8 @@ class AddScheduleViewController: UIViewController {
         }
     }
     
+    // MARK: - Set Up Functions
+    
     private func setupTableHandler() {
         addScheduleSearchTableHandler.setupDataSource(
             for: addScheduleView.searchResultListView.tableView
@@ -57,8 +67,22 @@ class AddScheduleViewController: UIViewController {
         // 선택한 장소 UI 업데이트
         addScheduleSearchTableHandler.didSelectPlace = { [weak self] place in
             self?.addScheduleView.updateSearchResultLabel(place, isHidden: false)
+            self?.selectedPlace = place
         }
     }
+    
+    // MARK: - Public Functions
+    
+    public func setSelectedTime(type: TimePickertype, selectedTime: String) {
+        switch type {
+        case .startTime:
+            selectedStartTime = selectedTime
+        case .finishTime:
+            selectedFinishTime = selectedTime
+        }
+    }
+    
+    // MARK: - API Functions
     
     /// 장소 검색 API 가져오는 함수
     /// - Parameters:
@@ -75,7 +99,7 @@ class AddScheduleViewController: UIViewController {
         guard let apiManager = apiManager else { return }
         
         apiManager.setCookie(
-            value: "20AF7D1A2B9B7EF0223EC02AB644CE45"
+            value: "DE0F971AFB7992075B852E639B1E6C84"
         )
         
         // 지도 경계 좌표 가져오기
@@ -145,12 +169,52 @@ extension AddScheduleViewController:
     AddScheduleGestureDelegate,
     ScheduleDetailSettingViewDelegate {
     
-    func didTapDoneButton() {
-        print("didTapDoneButton")
+    func didTapSaveButton() {
+        guard let apiManager = apiManager,
+            let selectedStartTime = selectedStartTime,
+            let selectedFinishTime = selectedFinishTime,
+            let selectedPlace = selectedPlace else { return }
+        
+        // 쿠키를 직접 저장
+        apiManager.setCookie(value: "DE0F971AFB7992075B852E639B1E6C84")
+        let request = AddScheduleRequest(
+            status: .yet,
+            planDates: selectedFormmatedDates,
+            startTime: selectedStartTime,
+            finishTime: selectedFinishTime,
+            lateTime: selectedLateTime ?? .onTime,
+            placeName: selectedPlace,
+            planOn: true
+        )
+        
+        Task {
+            do {
+                let response: AddScheduleResponse = try await apiManager.request(
+                    target: ScheduleAPI.addSchedule(request: request)
+                )
+                let warningMessage = response.result.first?.warningMessage
+                // 경고 메시지 존재할 경우 Alert 띄움
+                if let warningMessage = warningMessage {
+                    let confirmAction = UIAlertAction(title: "확인", style: .default)
+                    let alert = UIAlertController(
+                        title: "다시 작성해주세요!",
+                        message: warningMessage,
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(confirmAction)
+                    present(alert, animated: true)
+                } else {
+                    navigationController?.popViewController(animated: true)
+                }
+            } catch {
+                print("❌ ScheduleAddResponse 실패: \(error)")
+            }
+        }
+        
     }
     
     func didTapCancelButton() {
-        print("didTapCancelButton")
+        navigationController?.popViewController(animated: true)
     }
     
     func didTapCalendarButton() {
@@ -200,4 +264,11 @@ extension AddScheduleViewController: UIGestureRecognizerDelegate {
         }
         return true
     }
+}
+
+extension AddScheduleViewController: ScheduleDetailViewSendingData {
+    func sendSelectedLateStatus(_ status: LateStatus?) {
+        selectedLateTime = status
+    }
+    
 }

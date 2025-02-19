@@ -37,9 +37,9 @@ extension ScheduleTimeViewController: ScheduleViewDelegate {
         guard let timePickerType = timePickerType else { return }
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        
-        // REFACTOR: [25.02.17] 추후 시간되면 시작 시각이 종료 시각보다 더 크지 못하게 막기 - 작성자: 이재원
         selectedTime = formatter.string(from: date)
+        
+        parentVC?.setSelectedTime(type: timePickerType, selectedTime: selectedTime ?? "00:00")
         parentVC?.addScheduleView.updateRandomTimeDate(
             type: timePickerType,
             selectedTime ?? "00:00"

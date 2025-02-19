@@ -9,7 +9,7 @@ import UIKit
 import Then
 
 protocol AddScheduleGestureDelegate: AnyObject {
-    func didTapDoneButton()
+    func didTapSaveButton()
     func didTapCancelButton()
 }
 
@@ -31,7 +31,7 @@ class AddScheduleView: UIView {
     
     private lazy var headerStackView = makeStackView(90, .horizontal)
     
-    private lazy var cancelLabel = makeLabel("취소", .notoSans(.medium, size: 16), .primary)
+    private lazy var cancelButton = makeButton("취소", color: .primary)
     private lazy var createEggLabel = makeLabel(
         "create egg",
         .notoSans(.medium, size: 16),
@@ -39,11 +39,7 @@ class AddScheduleView: UIView {
     ).then {
         $0.textAlignment = .center
     }
-    private lazy var saveLabel = makeLabel(
-        "저장",
-        .notoSans(.medium, size: 16),
-        .primary
-    )
+    private lazy var saveButton = makeButton("저장", color: .primary)
     
     private lazy var placeSettingLabel = makeLabel(
         "장소 설정",
@@ -139,6 +135,17 @@ class AddScheduleView: UIView {
             $0.distribution = .fill
         }
     }
+
+    private func makeButton(
+        _ title: String,
+        color: UIColor
+    ) -> UIButton {
+        return UIButton().then {
+            $0.setTitle(title, for: .normal)
+            $0.setTitleColor(color, for: .normal)
+            $0.titleLabel?.font = .notoSans(.medium, size: 16)
+        }
+    }
     
     private func makeImageButton(
         _ imageName: String
@@ -150,11 +157,13 @@ class AddScheduleView: UIView {
     
     // MARK: - Public Functions
     
-    /// ScheduleDetailSettingView 딜리게이트 설정 함수
+    /// detailSettingCardView 딜리게이트 설정 함수
     public func setDetailSettingCardDelegate(
-        _ delegate: ScheduleDetailSettingViewDelegate
+        delegate: ScheduleDetailSettingViewDelegate,
+        sendingDelegate: ScheduleDetailViewSendingData
     ) {
         detailSettingCardView.gestureDelegate = delegate
+        detailSettingCardView.sendingData = sendingDelegate
     }
     
     /// 검색 결과 드롭다운
@@ -191,8 +200,8 @@ class AddScheduleView: UIView {
     
     // MARK: - Action Handler
     
-    @objc private func handleDoneButton() {
-        gestureDelegate?.didTapDoneButton()
+    @objc private func handleSaveButton() {
+        gestureDelegate?.didTapSaveButton()
     }
     
     @objc private func handleCancelButton() {
@@ -217,6 +226,16 @@ private extension AddScheduleView {
     }
     
     func setupGestures() {
+        cancelButton.addTarget(
+            self,
+            action: #selector(handleCancelButton),
+            for: .touchUpInside
+        )
+        saveButton.addTarget(
+            self,
+            action: #selector(handleSaveButton),
+            for: .touchUpInside
+        )
         // 키보드 내리는 제스처 추가
         let dismissKeyboardGesture = UITapGestureRecognizer(
             target: self,
@@ -227,8 +246,7 @@ private extension AddScheduleView {
     }
     
     func setupStackView() {
-        [cancelLabel, createEggLabel, saveLabel].forEach { headerStackView.addArrangedSubview($0)
-        }
+        [cancelButton, createEggLabel, saveButton].forEach(headerStackView.addArrangedSubview)
     }
     
     func addComponents() {

@@ -11,6 +11,7 @@ import Moya
 /// 일정 관련 API 정의
 enum ScheduleAPI {
     case searchPlace(request: ScheduleSearchRequest)
+    case addSchedule(request: AddScheduleRequest)
 }
 
 extension ScheduleAPI: TargetType {
@@ -25,7 +26,9 @@ extension ScheduleAPI: TargetType {
     var path: String {
         switch self {
         case .searchPlace:
-            return APIConstants.Map.schedulePlaceSearchURL
+            return APIConstants.Schedule.schedulePlaceSearchURL
+        case .addSchedule:
+            return APIConstants.Schedule.addURL
         }
     }
     
@@ -33,14 +36,13 @@ extension ScheduleAPI: TargetType {
         switch self {
         case .searchPlace:
             return .get
+        case .addSchedule:
+            return .post
         }
     }
     
     var task: Task {
         switch self {
-            //        case .searchPlace(let request):
-            //            return .requestJSONEncodable(request)
-            //        }
         case .searchPlace(let request):
             return .requestParameters(
                 parameters: [
@@ -52,15 +54,16 @@ extension ScheduleAPI: TargetType {
                 ],
                 encoding: URLEncoding.queryString
             )
+        case .addSchedule(let request):
+            return .requestJSONEncodable(request)
         }
     }
     
     var headers: [String: String]? {
-//        return [
-//            "Content-Type": "application/json",
-//            "Accept": "application/json"
-//        ]
-        return ["Content-Type": "application/json"]
+        return [
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        ]
     }
     
     var validationType: ValidationType {

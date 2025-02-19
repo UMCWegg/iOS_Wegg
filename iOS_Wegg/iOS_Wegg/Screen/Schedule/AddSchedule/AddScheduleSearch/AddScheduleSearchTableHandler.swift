@@ -11,7 +11,7 @@ class AddScheduleSearchTableHandler:
     NSObject,
     UITableViewDelegate {
     
-    var             didSelectPlace: ((String) -> Void)?
+    var didSelectPlace: ((String) -> Void)?
     
     private var dataSource: UITableViewDiffableDataSource<Int, String>?
 

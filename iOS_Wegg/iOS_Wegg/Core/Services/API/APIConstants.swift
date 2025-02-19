@@ -12,9 +12,15 @@ struct APIConstants {
     static let baseURL = "https://weggserver.store"
     
     struct Map {
-        static let hotplacesURL = "/maps/hotplaces"
-        static let schedulePlaceURL = "/maps/plans"
+        static let baseURL = "/maps"
+        static let hotplacesURL = Map.baseURL + "/hotplaces"
+    }
+    
+    struct Schedule {
+        static let baseURL = "/plans"
+        static let schedulePlaceURL = Map.baseURL + Schedule.baseURL
         static let schedulePlaceSearchURL = schedulePlaceURL + "/search"
+        static let addURL = Schedule.baseURL + "/add"
     }
     
     struct Post {
@@ -48,7 +54,7 @@ struct APIConstants {
         /// 달성률 조회
         static let achivementTodoURL = "/todo/achivement"
         static let todoURL = "/todo" /// 투두리스트 조회
-        ///투두 삭제
+        /// 투두 삭제
         static func deleteTodoURL(todoId: Int) -> String {
             return "/todo/\(todoId)"
         }
