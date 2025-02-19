@@ -9,7 +9,10 @@ import UIKit
 import Then
 
 class MapSearchViewController: UIViewController {
+    
     weak var mapVC: MapViewController?
+    
+    private let apiManager = APIManager()
     
     init(mapVC: MapViewController?) { // 의존성 주입
         self.mapVC = mapVC
@@ -24,6 +27,27 @@ class MapSearchViewController: UIViewController {
         super.viewDidLoad()
         
         view = mapSearchView
+        apiManager.setCookie(value: CookieStorage.cookie)
+        
+        // 지도 경계 좌표 가져오기
+        let request = SearchHotplaceRequest(
+            keyword: "스타벅스",
+            latitude: 37.60635,
+            longitude: 127.04425,
+            page: 0,
+            size: 15
+        )
+        
+        Task {
+            do {
+                let response: SearchHotplaceResponse = try await apiManager.request(
+                    target: HotPlacesAPI.searchHotPlaces(request: request)
+                )
+                print("SearchHotplaceResponse: \(response.result)")
+            } catch {
+                print("❌ 실패: \(error)")
+            }
+        }
     }
     
     lazy var mapSearchView = MapSearchView().then {

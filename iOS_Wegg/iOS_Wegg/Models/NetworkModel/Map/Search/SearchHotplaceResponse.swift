@@ -6,3 +6,22 @@
 //
 
 import Foundation
+
+struct SearchHotplaceResponse: Decodable {
+    let isSuccess: Bool
+    let code: String
+    let message: String
+    let result: SearchResult
+    
+    struct SearchResult: Decodable {
+        let placeList: [PlaceList]
+    }
+    
+    struct PlaceList: Decodable {
+        let addressId: Int
+        let placeName: String
+        let roadAddress: String
+        let distance: Double
+        let authCount: Int
+    }
+}
