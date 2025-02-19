@@ -28,26 +28,6 @@ class MapSearchViewController: UIViewController {
         
         view = mapSearchView
         apiManager.setCookie(value: CookieStorage.cookie)
-        
-        // 지도 경계 좌표 가져오기
-        let request = SearchHotplaceRequest(
-            keyword: "스타벅스",
-            latitude: 37.60635,
-            longitude: 127.04425,
-            page: 0,
-            size: 15
-        )
-        
-        Task {
-            do {
-                let response: SearchHotplaceResponse = try await apiManager.request(
-                    target: HotPlacesAPI.searchHotPlaces(request: request)
-                )
-                print("SearchHotplaceResponse: \(response.result)")
-            } catch {
-                print("❌ 실패: \(error)")
-            }
-        }
     }
     
     lazy var mapSearchView = MapSearchView().then {
@@ -96,5 +76,30 @@ extension MapSearchViewController: MapSearchBarDelegate {
         }
         mapVC.overlayView.placeSearchBar.isHidden = false
         customNavigationAnimation(to: nil, isPush: false)
+    }
+    
+    func didChangeSearchText(query: String?) {
+        guard let query = query else {
+            print("검색어를 입력해 주세요")
+            return
+        }
+        let request = SearchHotplaceRequest(
+            keyword: query,
+            latitude: 37.60635,
+            longitude: 127.04425,
+            page: 0,
+            size: 15
+        )
+        
+        Task {
+            do {
+                let response: SearchHotplaceResponse = try await apiManager.request(
+                    target: HotPlacesAPI.searchHotPlaces(request: request)
+                )
+                print("SearchHotplaceResponse: \(response.result)")
+            } catch {
+                print("❌ 실패: \(error)")
+            }
+        }
     }
 }
