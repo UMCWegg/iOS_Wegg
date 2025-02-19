@@ -86,7 +86,8 @@ class LoginViewController: UIViewController {
         )
         
         let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-            self?.handleSignUpConfirm(notification)
+            let signUpVC = SignUpViewController()
+            self?.navigationController?.pushViewController(signUpVC, animated: true)
         }
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)

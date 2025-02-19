@@ -20,6 +20,7 @@ final class LoginManager {
     @MainActor private let emailLoginManager = EmailLoginManager.shared
     private let userDefaultsManager = UserDefaultsManager.shared
     private let authService = AuthService.shared
+    private let sseClient = SSEClient()
     
     // MARK: - Functions
     
@@ -97,9 +98,11 @@ final class LoginManager {
     }
     
     private func handleLoginResponse(_ response: LoginResponse) {
-        if response.result.success {
+        if response.isSuccess, let userID = response.result?.userID {
             // 로그인 성공시 UserID 저장
-            UserDefaultsManager.shared.saveUserID(response.result.userID)
+            UserDefaultsManager.shared.saveUserID(userID)
+            
+            startSSESubscription(userId: String(userID))
             
             // 메인 화면으로 이동
             NotificationCenter.default.post(
@@ -111,8 +114,15 @@ final class LoginManager {
             NotificationCenter.default.post(
                 name: NSNotification.Name("ShowSignUpAlert"),
                 object: nil
-                // userInfo: ["socialType": response.result.socialType]
             )
         }
+    }
+    
+    private func startSSESubscription(userId: String) {
+        sseClient.subscribe(userId: userId)
+    }
+    
+    func stopSSESubscription() {
+        sseClient.disconnect()
     }
 }

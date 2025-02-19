@@ -22,11 +22,27 @@ struct SignUpResponse: Decodable {
 struct SignUpResult: Decodable {
     let userID: Int64
     let createdAt: String
-    let contact: [Contact]?
+    let contactFriends: [ContactFriend]?
     
     enum CodingKeys: String, CodingKey {
         case userID = "userId"
         case createdAt
-        case contact = "contactFriends"
+        case contactFriends
+    }
+}
+
+struct ContactFriend: Decodable {
+    let friendID: Int
+    let accountID: String
+    let name: String
+    let profileImage: String?
+    let phone: String
+    
+    enum CodingKeys: String, CodingKey {
+        case friendID = "friendId"
+        case accountID = "accountId"
+        case name
+        case profileImage
+        case phone
     }
 }

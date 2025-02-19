@@ -64,4 +64,12 @@ struct APIConstants {
             return "/todo/\(todoId)"
         }
     }
+    
+    struct User {
+        static let updateProfile = "/users/update"
+    }
+    
+    struct Notification {
+        static let subscribe = "/notifications/subscribe"
+    }
 }
