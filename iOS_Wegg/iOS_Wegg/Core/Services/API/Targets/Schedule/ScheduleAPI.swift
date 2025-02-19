@@ -10,6 +10,7 @@ import Moya
 
 /// 일정 관련 API 정의
 enum ScheduleAPI {
+    case fetchScheduleList
     case searchPlace(request: ScheduleSearchRequest)
     case addSchedule(request: AddScheduleRequest)
 }
@@ -25,6 +26,8 @@ extension ScheduleAPI: TargetType {
     
     var path: String {
         switch self {
+        case .fetchScheduleList:
+            return "/plans"
         case .searchPlace:
             return APIConstants.Schedule.schedulePlaceSearchURL
         case .addSchedule:
@@ -34,7 +37,7 @@ extension ScheduleAPI: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .searchPlace:
+        case .fetchScheduleList, .searchPlace:
             return .get
         case .addSchedule:
             return .post
@@ -43,6 +46,8 @@ extension ScheduleAPI: TargetType {
     
     var task: Task {
         switch self {
+        case .fetchScheduleList:
+            return .requestPlain
         case .searchPlace(let request):
             return .requestParameters(
                 parameters: [
