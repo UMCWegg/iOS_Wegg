@@ -12,11 +12,13 @@ class MapSearchViewController: UIViewController {
     
     weak var mapVC: MapViewController?
     
+    private var mapManager: MapManagerProtocol
     private let apiManager = APIManager()
     private let mapSearchTableHandler = MapSearchTableHandler()
     
-    init(mapVC: MapViewController?) { // 의존성 주입
+    init(mapVC: MapViewController?, mapManager: MapManagerProtocol) { // 의존성 주입
         self.mapVC = mapVC
+        self.mapManager = mapManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -41,6 +43,32 @@ class MapSearchViewController: UIViewController {
         mapSearchTableHandler.setupDataSource(
             for: mapSearchView.searchResultView
         )
+    }
+    
+    private func searchPlace(keyword: String, at coordinate: Coordinate) {
+        let request = SearchHotplaceRequest(
+            keyword: keyword,
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude,
+            page: 0,
+            size: 15
+        )
+        
+        Task {
+            do {
+                let response: SearchHotplaceResponse = try await apiManager.request(
+                    target: HotPlacesAPI.searchHotPlaces(request: request)
+                )
+                let placeList: [String] = response.result.placeList.map {
+                    $0.placeName
+                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.mapSearchTableHandler.updateSearchResults(placeList)
+                }
+            } catch {
+                print("❌ 실패: \(error)")
+            }
+        }
     }
 
 }
@@ -87,28 +115,17 @@ extension MapSearchViewController: MapSearchBarDelegate {
     }
     
     func didChangeSearchText(query: String) {
-        let request = SearchHotplaceRequest(
-            keyword: query,
-            latitude: 37.60635,
-            longitude: 127.04425,
-            page: 0,
-            size: 15
-        )
-        
-        Task {
-            do {
-                let response: SearchHotplaceResponse = try await apiManager.request(
-                    target: HotPlacesAPI.searchHotPlaces(request: request)
+        mapManager.getCurrentLocation { [weak self] coordinate in
+            guard let coordinate = coordinate else { return }
+            if !query.isEmpty {
+                self?.searchPlace(
+                    keyword: query,
+                    at: coordinate
                 )
-                let placeList: [String] = response.result.placeList.map {
-                    $0.placeName
-                }
-                DispatchQueue.main.async { [weak self] in
-                    self?.mapSearchTableHandler.updateSearchResults(placeList)
-                }
-            } catch {
-                print("❌ 실패: \(error)")
+            } else {
+                self?.mapSearchTableHandler.updateSearchResults([])
             }
         }
+        
     }
 }

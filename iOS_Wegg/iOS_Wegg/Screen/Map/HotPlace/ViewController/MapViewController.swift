@@ -55,7 +55,10 @@ class MapViewController:
     init(mapManager: MapManagerProtocol) {
         self.mapManager = mapManager
         self.apiManager = APIManager()
-        self.mapSearchVC = MapSearchViewController(mapVC: nil)
+        self.mapSearchVC = MapSearchViewController(
+            mapVC: nil,
+            mapManager: mapManager
+        )
         self.floatingPanel = FloatingPanelController()
         self.hotPlaceSheetVC = HotPlaceSheetViewController(mapVC: nil)
         self.placeDetailVC = PlaceDetailViewController(mapVC: nil)
