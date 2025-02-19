@@ -84,12 +84,12 @@ class BrowseCell: UICollectionViewCell {
     /// 셀에 데이터를 설정하는 메서드
     func configure(with item: BrowsePost) { // ✅ BrowsePost를 받도록 변경
         // 닉네임 설정
-        nickNameLabel.text = item.nickname // ✅ 속성명 `nickname` 확인
+        nickNameLabel.text = item.accountId // ✅ 속성명 `nickname` 확인
         
         // 프로필 이미지 로드 (기본값: profile_placeholder)
-        userProfile.loadImage(from: item.profileImageUrl, placeholder: "profile_placeholder")
+        userProfile.setImage(from: item.profileImageUrl, placeholder: "profile_placeholder")
         
         // 게시물 이미지 로드 (기본값: post_placeholder)
-        postImage.loadImage(from: item.postImageUrl, placeholder: "post_placeholder")
+        postImage.setImage(from: item.postImageUrl, placeholder: "post_placeholder")
     }
 }

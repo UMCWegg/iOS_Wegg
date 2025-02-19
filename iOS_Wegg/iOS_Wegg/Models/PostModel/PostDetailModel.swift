@@ -18,7 +18,7 @@ struct PostDetailModel: Codable {
     
     // ✅ BrowsePost → PostDetailModel 변환 생성자 추가
     init(from browsePost: BrowsePost) {
-        self.nickname = browsePost.nickname
+        self.nickname = browsePost.accountId
         self.profileImage = browsePost.profileImageUrl ?? "default_image"
         self.postImages = browsePost.postImageUrl
         self.postTime = Self.convertDate(from: browsePost.createdAt) // ✅ 날짜 변환

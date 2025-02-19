@@ -57,17 +57,11 @@
 		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
 		DE85E2772D4623BB0055C78C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		FF7985712D5A86A40055B370 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		FF88397D2D66161D00FDC0C0 /* iOS_Wegg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Wegg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceSectionModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0E98EAA52D2FB568006F25EF /* Exceptions for "Protocol" folder in "iOS_Wegg" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				.gitkeep,
-			);
-			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
-		};
 		DE0021782D4398A7003A273F /* Exceptions for "Utilities" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -75,6 +69,7 @@
 				"Extensions/UIFont+extensions.swift",
 				"Extensions/UIImage+extentions.swift",
 				"Extensions/UIImageView+extensions.swift",
+				"Extensions/UIView+extensions.swift",
 				"Extensions/UIViewController+extension.swift",
 				Formatters/DateFormatterUtility.swift,
 			);
@@ -100,6 +95,7 @@
 				Views/BrowseSearchView.swift,
 				Views/BrowseView.swift,
 				Views/CollectionView/BrowseCell.swift,
+				Views/CollectionView/BrowseSectionHeaderView.swift,
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
@@ -123,9 +119,6 @@
 		};
 		0E98EA392D2F94AE006F25EF /* Protocol */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0E98EAA52D2FB568006F25EF /* Exceptions for "Protocol" folder in "iOS_Wegg" target */,
-			);
 			path = Protocol;
 			sourceTree = "<group>";
 		};
@@ -155,6 +148,11 @@
 		DE001EC22D3BF1B5003A273F /* TextField */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TextField;
+			sourceTree = "<group>";
+		};
+		DE36792F2D65D1F800CEFFAF /* Settings */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		DE85E2742D4623BB0055C78C /* Browse */ = {
@@ -208,6 +206,9 @@
 		FF6994742D64B83200703190 /* SearchModel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SearchModel;
+		FF883B662D6616AF00FDC0C0 /* SettingsModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SettingsModel;
 			sourceTree = "<group>";
 		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
@@ -260,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */,
+				FF88397D2D66161D00FDC0C0 /* iOS_Wegg.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -299,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				FF6994742D64B83200703190 /* SearchModel */,
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
 				0E68CBB32D5DB2E700CFDA8D /* NetworkModel */,
 				FFC8DBF32D50E3970094B687 /* HotPlaceModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
@@ -323,6 +326,7 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				DE36792F2D65D1F800CEFFAF /* Settings */,
 				0E68CB982D5DB2CE00CFDA8D /* Schedule */,
 				DE85E2742D4623BB0055C78C /* Browse */,
 				DE85E2762D4623BB0055C78C /* Home */,
@@ -419,6 +423,7 @@
 				0E98EAC62D2FB789006F25EF /* Login */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
+				DE36792F2D65D1F800CEFFAF /* Settings */,
 				DE85E2762D4623BB0055C78C /* Home */,
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
@@ -428,6 +433,7 @@
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 				FF6994742D64B83200703190 /* SearchModel */,
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
 				FFC8E52F2D5605100094B687 /* Map */,
 			);
 			name = iOS_Wegg;
@@ -454,7 +460,7 @@
 				0E68CE562D5E018F00CFDA8D /* Kingfisher */,
 			);
 			productName = iOS_Wegg;
-			productReference = 0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */;
+			productReference = FF88397D2D66161D00FDC0C0 /* iOS_Wegg.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

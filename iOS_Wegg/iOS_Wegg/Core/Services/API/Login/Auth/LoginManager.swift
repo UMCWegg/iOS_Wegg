@@ -8,55 +8,121 @@
 import Foundation
 import UIKit
 
+@MainActor
 final class LoginManager {
-    static let shared = LoginManager()
     
-    private let googleLoginManager = GoogleLoginManager.shared
-    private let kakaoLoginManager = KakaoLoginManager.shared
-    private let emailLoginManager = EmailLoginManager.shared
+    // MARK: - Properties
+    
+    @MainActor static let shared = LoginManager()
+    
+    @MainActor private let googleLoginManager = GoogleLoginManager.shared
+    @MainActor private let kakaoLoginManager = KakaoLoginManager.shared
+    @MainActor private let emailLoginManager = EmailLoginManager.shared
     private let userDefaultsManager = UserDefaultsManager.shared
+    private let authService = AuthService.shared
+    private let sseClient = SSEClient()
+    
+    // MARK: - Functions
     
     func login(type: SocialType,
                from viewController: UIViewController? = nil,
                email: String? = nil,
-               password: String? = nil) {
-        switch type {
-        case .google:
-            guard let viewController else { return }
-            googleLoginManager.requestLogin(from: viewController)
-            let data = userDefaultsManager.getGoogleData()
+               password: String? = nil) async {
+        do {
+            let response: LoginResponse
             
-            print("data Token", data.token ?? "X")
-            print("data email", data.email ?? "X")
+            switch type {
+            case .google:
+                response = try await handleGoogleLogin(from: viewController)
+            case .kakao:
+                response = try await handleKakaoLogin()
+            case .email:
+                response = try await handleEmailLogin(email: email, password: password)
+            }
             
-        case .kakao:
-            kakaoLoginManager.requestLogin()
-            let data = userDefaultsManager.getKakaoData()
+            handleLoginResponse(response)
             
-            print("data Token", data.token ?? "X")
-            print("data id", data.id ?? "X")
-            
-        case .email:
-            guard let email = email, let password = password else { return }
-            emailLoginManager.login(email: email, password: password)
+        } catch {
+            print("\(type) login failed: \(error)")
         }
     }
-    
-    func handleLoginResponse(_ response: LoginResponse) {
-        if let email = response.email {
-            UserDefaultsManager.shared.saveGoogleData(
-                token: response.accessToken,
-                email: email
-            )
-        } else if let oauthID = response.oauthID {
-            UserDefaultsManager.shared.saveKakaoData(
-                token: response.accessToken,
-                id: oauthID
+        
+    private func handleGoogleLogin(
+        from viewController: UIViewController?) async throws -> LoginResponse {
+        guard let viewController else {
+            throw NSError(domain: "LoginError",
+                          code: -1,
+                          userInfo:
+                            [NSLocalizedDescriptionKey: "ViewController is required"]
             )
         }
         
-        DispatchQueue.main.async {
-            
+        let (email, token) = try await googleLoginManager.requestSignUp(from: viewController)
+        let request = LoginRequest(
+            email: email,
+            password: nil,
+            socialType: .google,
+            accessToken: token
+        )
+        
+        return try await authService.socialLogin(request: request)
+    }
+    
+    private func handleKakaoLogin() async throws -> LoginResponse {
+        let (id, token) = try await kakaoLoginManager.requestSignUp()
+        let request = LoginRequest(
+            email: "K\(id)@daum.net",
+            password: nil,
+            socialType: .kakao,
+            accessToken: token
+        )
+        
+        return try await authService.socialLogin(request: request)
+    }
+    
+    private func handleEmailLogin(email: String?, password: String?) async throws -> LoginResponse {
+        guard let email = email, let password = password else {
+            throw NSError(domain: "LoginError",
+                          code: -1,
+                          userInfo: [NSLocalizedDescriptionKey: "Email and password are required"])
         }
+        
+        let request = LoginRequest(
+            email: email,
+            password: password,
+            socialType: nil,
+            accessToken: nil
+        )
+        
+        return try await authService.login(request: request)
+    }
+    
+    private func handleLoginResponse(_ response: LoginResponse) {
+        if response.isSuccess, let userID = response.result?.userID {
+            // 로그인 성공시 UserID 저장
+            UserDefaultsManager.shared.saveUserID(userID)
+            
+            startSSESubscription(userId: String(userID))
+            
+            // 메인 화면으로 이동
+            NotificationCenter.default.post(
+                name: NSNotification.Name("LoginSuccess"),
+                object: nil
+            )
+        } else {
+            // 로그인 실패시 회원가입 확인 알림
+            NotificationCenter.default.post(
+                name: NSNotification.Name("ShowSignUpAlert"),
+                object: nil
+            )
+        }
+    }
+    
+    private func startSSESubscription(userId: String) {
+        sseClient.subscribe(userId: userId)
+    }
+    
+    func stopSSESubscription() {
+        sseClient.disconnect()
     }
 }

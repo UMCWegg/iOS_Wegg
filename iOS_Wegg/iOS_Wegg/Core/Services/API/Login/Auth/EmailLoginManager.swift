@@ -5,26 +5,27 @@
 //  Created by 이건수 on 2025.01.21.
 //
 
+import Foundation
+
 final class EmailLoginManager {
-   static let shared = EmailLoginManager()
+    
+    // MARK: - Properties
+    
+    @MainActor static let shared = EmailLoginManager()
+    private let authService = AuthService.shared
    
-   private init() {}
+    private init() {}
+    
+    // MARK: - Functions
    
-    func login(email: String, password: String) {
+    func login(email: String, password: String) async throws -> LoginResponse {
         let request = LoginRequest(
-            type: .email,
-            accessToken: nil,
             email: email,
-            password: password
+            password: password,
+            socialType: .email,
+            accessToken: nil
         )
         
-        AuthService.shared.login(with: request) { result in
-            switch result {
-            case .success(let response):
-                print("Login success: \(response)")
-            case .failure(let error):
-                print("Login failed: \(error)")
-            }
-        }
+        return try await authService.login(request: request)
     }
 }

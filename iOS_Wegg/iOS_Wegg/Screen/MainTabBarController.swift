@@ -29,7 +29,9 @@ class MainTabBarController: UITabBarController {
         let browseVC = UINavigationController(rootViewController: BrowseViewController())
         browseVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Search"), tag: 2)
         
-        let scheduleVC = UINavigationController(rootViewController: ScheduleViewController())
+        let scheduleVC = UINavigationController(
+            rootViewController: ScheduleViewController(mapManager: mapManager)
+        )
         scheduleVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Schedule"), tag: 3)
 
         let mapVC = UINavigationController(
@@ -37,7 +39,7 @@ class MainTabBarController: UITabBarController {
         )
         mapVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Map"), tag: 4)
                 
-        let myVC = UINavigationController(rootViewController: MyPageViewController())
+        let myVC = UINavigationController(rootViewController: SettingsViewController())
         myVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "My"), tag: 5)
         
         self.viewControllers = [homeVC, browseVC, scheduleVC, mapVC, myVC]

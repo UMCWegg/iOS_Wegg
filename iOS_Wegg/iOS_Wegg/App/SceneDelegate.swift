@@ -25,8 +25,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController(rootViewController: loginViewController)
         navigationController.setNavigationBarHidden(true, animated: false)
         
+        // 인증 화면 - 작성자: 이재원
+        let verificationVC = PlaceVerificationViewController(
+            mapManager: NaverMapManager()
+        )
+        
         // 원하는 뷰 컨트롤러 파일의 이름을 작성
-        window?.rootViewController = MainTabBarController()
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
     

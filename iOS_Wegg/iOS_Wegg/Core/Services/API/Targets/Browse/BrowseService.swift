@@ -8,7 +8,7 @@ import Foundation
 
 struct BrowseService {
     
-    private let apiManager = APIManager()
+    let apiManager = APIManager()
 
     /// 둘러보기 API 요청
     func fetchBrowsePosts(page: Int, size: Int) async throws -> [[BrowsePost]] {
