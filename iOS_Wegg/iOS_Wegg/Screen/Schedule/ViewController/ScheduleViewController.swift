@@ -98,6 +98,8 @@ class ScheduleViewController:
             
             // 셀에 데이터 구성
             cell.configure(with: schedule)
+            cell.delegate = self
+            
             return cell
         }
     }
@@ -224,4 +226,11 @@ extension ScheduleViewController: ScheduleViewGestureDelegate {
         navigationController?.pushViewController(addScheduleVC, animated: true)
     }
     
+}
+
+extension ScheduleViewController: ScheduleCardCellDelegate {
+    func toggleSwitchAlarm(action: UIAction) {
+        guard let toggle = action.sender as? UISwitch else { return }
+        print(toggle)
+    }
 }

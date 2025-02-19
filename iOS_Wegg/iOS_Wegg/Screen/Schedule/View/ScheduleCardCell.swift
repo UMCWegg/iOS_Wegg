@@ -8,8 +8,14 @@
 import UIKit
 import Then
 
+protocol ScheduleCardCellDelegate: AnyObject {
+    func toggleSwitchAlarm(action: UIAction)
+}
+
 class ScheduleCardCell: UITableViewCell {
     static let reuseIdentifier = "ScheduleCell"
+    
+    weak var delegate: ScheduleCardCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -51,6 +57,9 @@ class ScheduleCardCell: UITableViewCell {
     }
     private lazy var toggleSwitch = UISwitch().then {
         $0.onTintColor = .primary
+        $0.addAction(UIAction { [weak self] in
+            self?.delegate?.toggleSwitchAlarm(action: $0)
+        }, for: .valueChanged)
     }
     
     private lazy var logoTitleStack = UIStackView().then {
