@@ -13,10 +13,17 @@ protocol ScheduleDetailSettingViewDelegate: AnyObject {
     func didSelectFinishTime()
 }
 
+protocol ScheduleDetailViewSendingData: AnyObject {
+    func sendSelectedLateStatus(_ status: LateStatus?)
+}
+
 class ScheduleDetailSettingView: UIView {
     
     weak var gestureDelegate: ScheduleDetailSettingViewDelegate?
+    weak var sendingData: ScheduleDetailViewSendingData?
+    
     private var selectedLateButton: UIButton?
+    private var selectedLateStatus: LateStatus?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -84,11 +91,16 @@ class ScheduleDetailSettingView: UIView {
     private lazy var dividedLine = makeDivider()
     private lazy var dividedLine2 = makeDivider()
     
-    private let lateButtonTitles: [String] = ["1분", "3분", "7분", "10분"]
+    private let lateButtonData: [(title: String, status: LateStatus)] = [
+        ("3분", .late3Min),
+        ("5분", .late5Min),
+        ("7분", .late7Min),
+        ("10분", .late10Min)
+    ]
     
-    private lazy var lateButtons: [UIButton] = lateButtonTitles.map { title in
+    private lazy var lateButtons: [UIButton] = lateButtonData.map { data in
         return makeButton(
-            title,
+            data.title,
             color: .secondary,
             font: .notoSans(.regular, size: 14)
         ).then { button in
@@ -101,9 +113,7 @@ class ScheduleDetailSettingView: UIView {
             button.layer.borderColor = UIColor.secondaryLabel.cgColor
             button.clipsToBounds = true
             button.backgroundColor = .white
-            // 태그 생성
-            guard let latestIndex = lateButtonTitles.lastIndex(of: title) else { return }
-            button.tag = latestIndex
+            button.tag = lateButtonData.firstIndex { $0.status == data.status } ?? -1
         }
     }
     
@@ -222,13 +232,19 @@ class ScheduleDetailSettingView: UIView {
         gestureDelegate?.didSelectFinishTime()
     }
     
-    @objc private func handleButtonTap(_ sender: UIButton) {
+    @objc private func handleLateButtonTap(_ sender: UIButton) {
+        // 이전 선택 버튼 초기화
         selectedLateButton?.isSelected = false
         selectedLateButton?.backgroundColor = .white
         
+        // 새로운 버튼 선택
         sender.isSelected = true
         sender.backgroundColor = .primary
         selectedLateButton = sender
+        
+        // 선택된 상태 업데이트 및 데이터 전달
+        selectedLateStatus = lateButtonData[sender.tag].status
+        sendingData?.sendSelectedLateStatus(selectedLateStatus)
     }
     
     private func toggleLateAllowanceButton(action: UIAction) {
@@ -282,7 +298,7 @@ private extension ScheduleDetailSettingView {
         }, for: .valueChanged)
         
         lateButtons.forEach { button in
-            button.addTarget(self, action: #selector(handleButtonTap), for: .touchUpInside)
+            button.addTarget(self, action: #selector(handleLateButtonTap), for: .touchUpInside)
         }
     }
     

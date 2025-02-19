@@ -157,11 +157,13 @@ class AddScheduleView: UIView {
     
     // MARK: - Public Functions
     
-    /// ScheduleDetailSettingView 딜리게이트 설정 함수
+    /// detailSettingCardView 딜리게이트 설정 함수
     public func setDetailSettingCardDelegate(
-        _ delegate: ScheduleDetailSettingViewDelegate
+        delegate: ScheduleDetailSettingViewDelegate,
+        sendingDelegate: ScheduleDetailViewSendingData
     ) {
         detailSettingCardView.gestureDelegate = delegate
+        detailSettingCardView.sendingData = sendingDelegate
     }
     
     /// 검색 결과 드롭다운
