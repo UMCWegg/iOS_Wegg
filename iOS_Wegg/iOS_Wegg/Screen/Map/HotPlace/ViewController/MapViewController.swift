@@ -82,6 +82,10 @@ class MapViewController:
         // 뒤로가기 제스처 활성화
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        
+        // 장소 상세 정보 표시 위한 마커 지우고 뷰 로드
+        selectedPlaceDetailInfo.removeAll()
+        mapManager.removeAllMarkers()
     }
     
     override func viewDidLoad() {
@@ -303,7 +307,9 @@ class MapViewController:
         let section = convertToSectionModel(from: selectedPlaceDetailInfo)
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.setupMarkers(from: self.selectedPlaceDetailInfo)
+            if !self.selectedPlaceDetailInfo.isEmpty {
+                self.setupMarkers(from: self.selectedPlaceDetailInfo)
+            }
             self.hotPlaceSheetVC.updateHotPlaceList(section)
         }
     }
@@ -321,9 +327,9 @@ extension MapViewController:
     
     func didTapPlaceSearchButton() {
         guard let mapSearchVC = mapSearchVC else { return }
-        navigationController?.pushViewController(mapSearchVC, animated: true)
         // 검색 버튼 탭한 경우 뒤로 가기 버튼 비활성화
         overlayView.placeDetailBackButton.isHidden = true
+        navigationController?.pushViewController(mapSearchVC, animated: true)
     }
     
     func didTapPlaceSearchBar() {
