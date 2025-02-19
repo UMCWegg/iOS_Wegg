@@ -67,8 +67,7 @@ extension MapSearchViewController: MapSearchBarDelegate {
         navigationController?.popViewController(animated: true)
     }
     
-    func didSearch(query: String?) {
-        print("Search button tapped with query: \(query ?? "empty")")
+    func didSearch(query: String) {
         // 검색시 바텀 시트 헤더 숨기기
         if let hotPlaceVC = mapVC?.hotPlaceSheetVC
             as? HotPlaceSheetViewController {
@@ -87,11 +86,7 @@ extension MapSearchViewController: MapSearchBarDelegate {
         customNavigationAnimation(to: nil, isPush: false)
     }
     
-    func didChangeSearchText(query: String?) {
-        guard let query = query else {
-            print("검색어를 입력해 주세요")
-            return
-        }
+    func didChangeSearchText(query: String) {
         let request = SearchHotplaceRequest(
             keyword: query,
             latitude: 37.60635,
@@ -105,7 +100,6 @@ extension MapSearchViewController: MapSearchBarDelegate {
                 let response: SearchHotplaceResponse = try await apiManager.request(
                     target: HotPlacesAPI.searchHotPlaces(request: request)
                 )
-                print("SearchHotplaceResponse: \(response.result)")
                 let placeList: [String] = response.result.placeList.map {
                     $0.placeName
                 }
