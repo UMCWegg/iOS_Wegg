@@ -20,6 +20,7 @@ class AddScheduleViewController: UIViewController {
     private var selectedPlace: String?
     private var selectedStartTime: String?
     private var selectedFinishTime: String?
+    private var selectedLateTime: LateStatus?
     var selectedFormmatedDates: [String] = [] // yyyy-MM-dd 형식의 날짜 배열
     
     init(mapManager: MapManagerProtocol) {
@@ -98,7 +99,7 @@ class AddScheduleViewController: UIViewController {
         guard let apiManager = apiManager else { return }
         
         apiManager.setCookie(
-            value: "20AF7D1A2B9B7EF0223EC02AB644CE45"
+            value: "DE0F971AFB7992075B852E639B1E6C84"
         )
         
         // 지도 경계 좌표 가져오기
@@ -175,13 +176,13 @@ extension AddScheduleViewController:
             let selectedPlace = selectedPlace else { return }
         
         // 쿠키를 직접 저장
-        apiManager.setCookie(value: "23D3500ABEB8B273361E6711EF8F0627")
+        apiManager.setCookie(value: "DE0F971AFB7992075B852E639B1E6C84")
         let request = AddScheduleRequest(
             status: .yet,
             planDates: selectedFormmatedDates,
             startTime: selectedStartTime,
             finishTime: selectedFinishTime,
-            lateTime: .onTime,
+            lateTime: selectedLateTime ?? .onTime,
             placeName: selectedPlace,
             planOn: true
         )
@@ -255,7 +256,7 @@ extension AddScheduleViewController: UIGestureRecognizerDelegate {
 
 extension AddScheduleViewController: ScheduleDetailViewSendingData {
     func sendSelectedLateStatus(_ status: LateStatus?) {
-        print(status ?? .onTime)
+        selectedLateTime = status
     }
     
 }
