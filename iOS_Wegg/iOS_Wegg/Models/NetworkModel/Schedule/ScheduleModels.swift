@@ -8,7 +8,7 @@
 import Foundation
 
 struct CookieStorage {
-    static let cookie: String = "28B5EBCFB902182C74E36C7E692429DE"
+    static let cookie: String = "BDBD5EEFCE650B5FD52C224134568336"
 }
 
 /// 일정 상태를 나타내는 Enum
@@ -24,4 +24,9 @@ enum LateStatus: String, Codable {
     case late5Min = "FIVE"     // 5분 지각
     case late7Min = "SEVEN"    // 7분 지각
     case late10Min = "TEN"     // 10분 지각
+}
+
+enum ScheduleOnOffSyntax: String, Codable {
+    case on = "TRUE"
+    case off = "FALSE"
 }

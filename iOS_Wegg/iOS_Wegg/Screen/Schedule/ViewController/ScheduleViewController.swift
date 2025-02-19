@@ -19,6 +19,7 @@ class ScheduleViewController:
     UIViewController,
     UIGestureRecognizerDelegate {
     
+    private let apiManager = APIManager()
     private var mapManager: MapManagerProtocol?
     // UITableViewDiffableDataSource를 사용하여 데이터 관리
     private var dataSource: UITableViewDiffableDataSource<Int, ScheduleModel>?
@@ -39,6 +40,8 @@ class ScheduleViewController:
         
         view = scheduleView
         setupDataSource()
+        // 임시 쿠키 설정
+        apiManager.setCookie(value: CookieStorage.cookie)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -82,6 +85,8 @@ class ScheduleViewController:
             
             // 셀에 데이터 구성
             cell.configure(with: schedule)
+            cell.delegate = self
+            
             return cell
         }
     }
@@ -101,9 +106,6 @@ class ScheduleViewController:
     }
     
     private func fetchAllSchedules() {
-        let apiManager = APIManager()
-        apiManager.setCookie(value: CookieStorage.cookie)
-        
         Task {
             do {
                 let response: FetchAllSchedulesResponse = try await apiManager.request(
@@ -133,6 +135,28 @@ class ScheduleViewController:
             )
         }
     }
+    
+    /// 삭제 API 호출 및 UI 업데이트
+    private func deleteSchedule(_ schedule: ScheduleModel) {
+        Task {
+            do {
+                let response: DeleteScheduleResponse = try await apiManager.request(
+                    target: ScheduleAPI.deleteSchedule(planId: schedule.id)
+                )
+                
+                if response.isSuccess {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.scheduleList.removeAll { $0.id == schedule.id } // 로컬 데이터 삭제
+                        self?.applyInitialSnapshot() // UI 업데이트
+                    }
+                } else {
+                    print("일정 삭제 실패")
+                }
+            } catch {
+                print("DeleteScheduleResponse 오류: \(error)")
+            }
+        }
+    }
 }
 
 extension ScheduleViewController: UITableViewDelegate {
@@ -151,6 +175,30 @@ extension ScheduleViewController: UITableViewDelegate {
     }
     */
     
+    // 스와이프 삭제 기능 추가
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        
+        // 삭제 액션 정의
+        let deleteAction = UIContextualAction(
+            style: .destructive,
+            title: "삭제"
+        ) { [weak self] _, _, completionHandler in
+            guard let self = self else { return }
+            
+            let scheduleToDelete = scheduleList[indexPath.row]
+            self.deleteSchedule(scheduleToDelete)
+            
+            completionHandler(true) // 액션 완료 처리
+        }
+        
+        deleteAction.backgroundColor = .systemRed // 삭제 버튼 색상
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
     // 각 셀의 높이를 설정하는 메서드
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 138 // 셀 높이를 138로 고정
@@ -165,4 +213,39 @@ extension ScheduleViewController: ScheduleViewGestureDelegate {
         navigationController?.pushViewController(addScheduleVC, animated: true)
     }
     
+}
+
+extension ScheduleViewController: ScheduleCardCellDelegate {
+    /// `UISwitch`가 속한 `ScheduleCardCell`을 찾는 함수
+    private func findParentCell<T: UITableViewCell>(
+        for view: UIView,
+        ofType cellType: T.Type
+    ) -> T? {
+        var superview = view.superview
+        while let view = superview {
+            if let cell = view as? T {
+                return cell
+            }
+            superview = view.superview
+        }
+        return nil
+    }
+    
+    func toggleSwitchAlarm(planId: Int, isOn: UISwitch?) {
+        guard let isOn = isOn else { return }
+        
+        let request: OnOffScheduleRequest = isOn.isOn
+            ? OnOffScheduleRequest(planOn: .on)
+            : OnOffScheduleRequest(planOn: .off)
+        
+        Task {
+            do {
+                let _: OnOffScheduleResponse = try await apiManager.request(
+                    target: ScheduleAPI.onOffSchedule(planId: planId, request: request)
+                )
+            } catch {
+                print("DeleteScheduleResponse 오류: \(error)")
+            }
+        }
+    }
 }

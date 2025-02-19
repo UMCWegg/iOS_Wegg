@@ -8,8 +8,16 @@
 import UIKit
 import Then
 
+protocol ScheduleCardCellDelegate: AnyObject {
+    func toggleSwitchAlarm(planId: Int, isOn: UISwitch?)
+}
+
 class ScheduleCardCell: UITableViewCell {
     static let reuseIdentifier = "ScheduleCell"
+    
+    weak var delegate: ScheduleCardCellDelegate?
+    
+    private var planId: Int?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,7 +31,7 @@ class ScheduleCardCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Property
+    // MARK: - UI 요소
     
     private lazy var containerView = UIView().then {
         $0.backgroundColor = .white
@@ -37,20 +45,32 @@ class ScheduleCardCell: UITableViewCell {
         $0.image = UIImage(named: "yellow_wegg_icon")
         $0.contentMode = .scaleAspectFit
     }
+    
     private lazy var dateLabel = UILabel().then {
         $0.font = .notoSans(.medium, size: 14)
         $0.textColor = .black
     }
+    
     private lazy var titleLabel = UILabel().then {
         $0.font = .notoSans(.bold, size: 20)
         $0.textColor = .black
     }
+    
     private lazy var timeRangeLabel = UILabel().then {
         $0.font = .notoSans(.medium, size: 16)
         $0.textColor = .customGray
     }
+    
     private lazy var toggleSwitch = UISwitch().then {
         $0.onTintColor = .primary
+        $0.addAction(UIAction { [weak self] in
+            guard let self = self,
+                  let planId = planId else { return }
+            self.delegate?.toggleSwitchAlarm(
+                planId: planId,
+                isOn: $0.sender as? UISwitch
+            )
+        }, for: .valueChanged)
     }
     
     private lazy var logoTitleStack = UIStackView().then {
@@ -61,6 +81,7 @@ class ScheduleCardCell: UITableViewCell {
     
     // 테이블 datasoruce 주입
     func configure(with schedule: ScheduleModel) {
+        planId = schedule.id
         dateLabel.text = schedule.date
         titleLabel.text = schedule.location
         timeRangeLabel.text = schedule.timeRange
@@ -68,7 +89,7 @@ class ScheduleCardCell: UITableViewCell {
     }
 }
 
-// MARK: - Set Up Extension
+// MARK: - UI 설정
 
 private extension ScheduleCardCell {
     func setupView() {
