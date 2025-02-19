@@ -203,12 +203,6 @@
 			path = EmojiModel;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
-		FF6994742D64B83200703190 /* SearchModel */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SearchModel;
-=======
->>>>>>> 77d6b08 (fix: 병합시 빌드 안된 파일 추가)
 		FF883B662D6616AF00FDC0C0 /* SettingsModel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SettingsModel;
