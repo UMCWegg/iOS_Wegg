@@ -243,6 +243,7 @@ class MapViewController:
                 header: HotPlaceHeaderModel(
                     title: hotplace.placeName,
                     category: hotplace.placeLabel,
+                    address: nil,
                     verificationCount: "인증 \(hotplace.authCount)",
                     saveCount: "저장 \(hotplace.saveCount)"
                 ),
@@ -254,9 +255,35 @@ class MapViewController:
         }
     }
     
+    /// `HotplaceDetailInfoResponse.Detail` 데이터를 `HotPlaceSectionModel`로 변환하는 함수
+    private func convertToSectionModel(
+        from details: [HotplaceDetailInfoResponse.Detail]
+    ) -> [HotPlaceSectionModel] {
+        return details.map { detail in
+            HotPlaceSectionModel(
+                header: HotPlaceHeaderModel(
+                    title: detail.placeName,
+                    category: detail.placeLabel,
+                    address: detail.roadAddress, // 주소 추가
+                    verificationCount: "인증 \(detail.authCount)",
+                    saveCount: "저장 \(detail.saveCount)"
+                ),
+                items: detail.postList.map { post in
+                    HotPlaceImageModel(imageName: post.imageUrl)
+                },
+                details: HotPlaceDetailModel(
+                    phoneNumber: detail.phone
+                )
+            )
+        }
+    }
+    
     public func updateHotplaceDetailInfo(_ detailList: [HotplaceDetailInfoResponse.Detail]) {
         selectedPlaceDetailInfo = detailList
-        print(selectedPlaceDetailInfo)
+        let section = convertToSectionModel(from: detailList)
+        DispatchQueue.main.async {
+            self.hotPlaceSheetVC.updateHotPlaceList(section)
+        }
     }
 }
 

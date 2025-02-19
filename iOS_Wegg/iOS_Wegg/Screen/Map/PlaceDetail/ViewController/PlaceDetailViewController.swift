@@ -58,11 +58,7 @@ class PlaceDetailViewController: UIViewController {
         // 임시 Mock 데이터이므로 0.5초 지연
         try? await Task.sleep(for: .milliseconds(500))
         // 임시 반환
-        return HotPlaceDetailModel(
-            phoneNumber: "1522-3232",
-            openingInfo: "영업 중 · 매장 22:00에 영업 종료",
-            websiteURL: "http://www.starbucks.co.kr/"
-        )
+        return HotPlaceDetailModel(phoneNumber: "1522-3232")
     }
     
     /**
@@ -74,8 +70,6 @@ class PlaceDetailViewController: UIViewController {
         detailData = detail
         
         print("Phone: \(detail.phoneNumber)")
-        print("Hours: \(detail.openingInfo)")
-        print("Website: \(detail.websiteURL)")
         
         // TODO: [25.02.05] UI 업데이트 작업 - 작성자: 이재원
         let info = [
@@ -85,8 +79,6 @@ class PlaceDetailViewController: UIViewController {
             placeDetailView.saveCount: "저장 34",
             placeDetailView.addressLabel: "서울특별시 강남구 강남대로101길 101",
             placeDetailView.phoneNumberLabel: detail.phoneNumber,
-            placeDetailView.openingInfoLabel: detail.openingInfo,
-            placeDetailView.webUrlLabel: detail.websiteURL
         ]
         
         info.forEach { $0.key.text = $0.value }
