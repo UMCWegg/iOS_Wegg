@@ -151,6 +151,29 @@ extension ScheduleViewController: UITableViewDelegate {
     }
     */
     
+    // 스와이프 삭제 기능 추가
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        
+        // 삭제 액션 정의
+        let deleteAction = UIContextualAction(
+            style: .destructive,
+            title: "삭제"
+        ) { [weak self] _, _, completionHandler in
+            guard let self = self else { return }
+            
+            let scheduleToDelete = scheduleList[indexPath.row]
+            
+            completionHandler(true) // 액션 완료 처리
+        }
+        
+        deleteAction.backgroundColor = .systemRed // 삭제 버튼 색상
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
     // 각 셀의 높이를 설정하는 메서드
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 138 // 셀 높이를 138로 고정
