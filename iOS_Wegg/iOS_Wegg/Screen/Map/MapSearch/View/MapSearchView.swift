@@ -40,14 +40,31 @@ class MapSearchView: UIView {
         $0.backgroundColor = .white
     }
     
+    /// 키보드 내리는 핸들러
+    @objc private func handleDismissKeyboard() {
+        endEditing(true)
+        // TODO: 테이블 셀 모두 비우기
+    }
+    
 }
 
 // MARK: - Setup Extension
 
 private extension MapSearchView {
     func setupView() {
+        setupGestures()
         addComponenets()
         constraints()
+    }
+    
+    func setupGestures() {
+        // 키보드 내리는 제스처 추가
+        let dismissKeyboardGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handleDismissKeyboard)
+        )
+        dismissKeyboardGesture.cancelsTouchesInView = false
+        addGestureRecognizer(dismissKeyboardGesture)
     }
     
     func addComponenets() {
