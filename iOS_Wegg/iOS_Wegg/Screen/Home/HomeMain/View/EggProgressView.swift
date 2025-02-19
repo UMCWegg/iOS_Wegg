@@ -60,19 +60,21 @@ class EggProgressView: UIView {
     }
 
     func setProgress(_ progress: CGFloat, animated: Bool = true) {
-        let clampedProgress = max(0, min(progress, 1)) // 0~1 범위 제한
+        let clampedProgress = max(0, min(progress, 1))
         
-        if animated {
-            let animation = CABasicAnimation(keyPath: "strokeEnd")
-            animation.duration = 0.5
-            animation.fromValue = progressLayer.strokeEnd
-            animation.toValue = clampedProgress
-            animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-            progressLayer.add(animation, forKey: "progressAnimation")
+        DispatchQueue.main.async {
+            if animated {
+                let animation = CABasicAnimation(keyPath: "strokeEnd")
+                animation.duration = 1.0
+                animation.fromValue = self.progressLayer.strokeEnd
+                animation.toValue = clampedProgress
+                animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                self.progressLayer.add(animation, forKey: "progressAnimation")
+            }
+            
+            self.progressLayer.strokeEnd = clampedProgress
+            self.percentageLabel.text = "\(Int(clampedProgress * 100))%"
         }
-        
-        progressLayer.strokeEnd = clampedProgress
-        percentageLabel.text = "\(Int(clampedProgress * 100))%"
     }
     
     private func updateEggPath() {

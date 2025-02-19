@@ -11,6 +11,7 @@ class OccupationInputViewController: UIViewController {
 
     // MARK: - Properties
     
+    var nameText: String?
     private let occupationInputView = OccupationInputView()
     
     // MARK: - Lifecycle
@@ -23,6 +24,9 @@ class OccupationInputViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupActions()
+        setupNameText()
+        
+        handleOccupationSelection(UserOccupation.employee.displayName)
     }
     
     // MARK: - Setup
@@ -42,37 +46,34 @@ class OccupationInputViewController: UIViewController {
         occupationInputView.occupationDropdown.didSelectOption = { [weak self] selectedOption in
             self?.handleOccupationSelection(selectedOption)
         }
+        
+        occupationInputView.passButton.addTarget(self,
+                                                 action: #selector(passButtonTapped),
+                                                 for: .touchUpInside)
     }
     
+    private func setupNameText() {
+        if let nameText = nameText {
+            occupationInputView.nameText = nameText
+        }
+    }
     // MARK: - Actions
     
     private func handleOccupationSelection(_ occupation: String) {
-        guard let occupationType = UserOccupation(rawValue: occupation) else { return }
+        guard let occupationType = UserOccupation(from: occupation) else { return }
         
-        // 선택된 직업 처리
-        switch occupationType {
-        case .employee:
-            // 직장인 관련 처리
-            break
-        case .university:
-            // 대학생 관련 처리
-            break
-        case .elementary:
-            // 초등학생 관련 처리
-            break
-        case .secondary:
-            // 중・고등학생 관련 처리
-            break
-        case .unemployed:
-            // 무직 관련 처리
-            break
-        case .other:
-            // 기타 관련 처리
-            break
+        UserSignUpStorage.shared.update { data in
+            data.job = occupationType
         }
-        
-        // 다음 화면으로 이동하거나 데이터 저장
-        // moveToNextScreen()
+    }
+    
+    @objc private func passButtonTapped() {
+        // 건너뛰기 시 기본값 설정
+        UserSignUpStorage.shared.update { data in
+            data.job = nil
+        }
+        let reasonInputVC = ReasonInputViewController()
+        navigationController?.pushViewController(reasonInputVC, animated: true)
     }
     
     @objc private func nextButtonTapped() {
@@ -82,6 +83,16 @@ class OccupationInputViewController: UIViewController {
     
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(
+            title: "알림",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
 
 }

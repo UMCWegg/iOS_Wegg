@@ -61,13 +61,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0E98EAA52D2FB568006F25EF /* Exceptions for "Protocol" folder in "iOS_Wegg" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				.gitkeep,
-			);
-			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
-		};
 		DE0021782D4398A7003A273F /* Exceptions for "Utilities" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -120,9 +113,6 @@
 		};
 		0E98EA392D2F94AE006F25EF /* Protocol */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0E98EAA52D2FB568006F25EF /* Exceptions for "Protocol" folder in "iOS_Wegg" target */,
-			);
 			path = Protocol;
 			sourceTree = "<group>";
 		};

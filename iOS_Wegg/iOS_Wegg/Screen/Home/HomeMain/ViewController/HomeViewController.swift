@@ -8,15 +8,9 @@
 import UIKit
 
 class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDelegate {
-    private let homeView = HomeView()
-    private let toDoListView = ToDoListView()
-    
-    // MARK: - Properties
-    var todoItems: [ToDoItem] = [] {
-        didSet {
-            toDoListView.todoItems = todoItems
-        }
-    }
+    let homeView = HomeView()
+    private let todoService = TodoService()
+    private let apiManager = APIManager()
     
     override func loadView() {
         self.view = homeView
@@ -24,6 +18,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadTodoAchievement()
+
         view.backgroundColor = .primary
         setupActions()
         homeView.scrollView.delegate = self
@@ -31,16 +27,56 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
         homeView.headerView.viewController = self
         homeView.headerView.updateHeaderMode(isHomeMode: true)
         
-        toDoListView.delegate = self
+        apiManager.setCookie(value: "9B054ED826CCEE55F59353174E0A4755")
+        print("[HomeVC] JSESSIONID 쿠키 설정 완료")
         
-        // Dummy Data
-        todoItems = [
-            ToDoItem(name: "강남 KKM빌딩 건설"),
-            ToDoItem(name: "부가티 시론 구매"),
-            ToDoItem(name: "람보르기니 아벤타도르 SVJ 구매"),
-            ToDoItem(name: "람보르기니 구매")
-        ]
-        toDoListView.todoItems = todoItems
+        // 투두 리스트 및 달성률 불러오기
+        fetchTodoList()
+    }
+    
+    // MARK: - 투두 리스트 불러오기
+    private func fetchTodoList() {
+        Task {
+            let result = await todoService.getTodoList()
+            switch result {
+            case .success(let todos):
+                DispatchQueue.main.async {
+                    self.homeView.toDoListView.todoItems = todos
+                    self.homeView.toDoListView.reloadTableView()
+
+                    // ✅ SwipeView에 텍스트 및 달성률 업데이트
+                    let completedCount = todos.filter { $0.status == "DONE" }.count
+                    let totalCount = todos.count
+                    let achievement =
+                    totalCount == 0 ? 0 : Double(completedCount) / Double(totalCount) * 100
+                    
+                    self.homeView.swipeView.updateAchievement(achievement)
+                    self.homeView.swipeView.updateTodoCount(
+                        completed: completedCount, total: totalCount
+                    )
+
+                    print("✅ 투두 리스트 및 달성률 업데이트 완료")
+                }
+            case .failure(let error):
+                print("❌ 투두 리스트 불러오기 실패: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    // MARK: - 로드 시 투두 달성률 불러오기
+    private func loadTodoAchievement() {
+        Task {
+            let result = await todoService.getTodoAchievement()
+            switch result {
+            case .success(let achievement):
+                DispatchQueue.main.async {
+                    self.homeView.swipeView.updateAchievement(achievement)
+                }
+                print("✅ 투두 달성률 가져오기 성공: \(achievement)%")
+            case .failure(let error):
+                print("❌ 투두 달성률 가져오기 실패: \(error)")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,12 +90,37 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
     
     // MARK: - ToDoListViewDelegate
     func didAddToDoItem(text: String) {
-        let newToDoItem = ToDoItem(name: text)
-        todoItems.append(newToDoItem)
+        let request = TodoRequest(status: "YET", content: text)
+        Task {
+            let result = await todoService.addTodo(request)
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    self.homeView.toDoListView.addTodoItem(response)
+                }
+                print("✅ 투두 등록 성공: \(response.content)")
+            case .failure(let error):
+                print("❌ 투두 등록 실패: \(error.localizedDescription)")
+            }
+        }
     }
     
     func didUpdateToDoItem(at index: Int, with text: String) {
-        todoItems[index].name = text
+        let todoId = homeView.toDoListView.todoItems[index].todoId
+        let request = TodoUpdateRequest(status: "YET", content: text)
+        
+        Task {
+            let result = await todoService.updateTodo(todoId: todoId, request: request)
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    self.homeView.toDoListView.updateTodoContent(at: index, with: response)
+                }
+                print("✅ 투두 수정 성공: \(response.content)")
+            case .failure(let error):
+                print("❌ 투두 수정 실패: \(error.localizedDescription)")
+            }
+        }
     }
     
     /// 사진 인증 버튼 액션 추가
@@ -73,7 +134,6 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
     
     /// 사진 인증 버튼을 눌렀을 때 `CameraViewController`로 이동
     @objc private func photoAuthTapped() {
-        print("사진인증터치")
         let cameraVC = CameraViewController()
         cameraVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(cameraVC, animated: true)

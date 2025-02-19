@@ -27,17 +27,6 @@ struct BaseUser: Codable {
     }
 }
 
-enum SocialType: String, Codable {
-    case google
-    case kakao
-    case email
-}
-
-struct Contact: Codable {
-    let name: String
-    let phone: String
-}
-
 // Divided with Cases
 
 struct SocialUser: Codable {
@@ -50,4 +39,12 @@ struct EmailUser: Codable {
     let user: BaseUser
     let email: String
     let password: String
+}
+
+struct UserUpdateRequest: Codable {
+    let address: String
+    
+    enum CodingKeys: String, CodingKey {
+        case address
+    }
 }

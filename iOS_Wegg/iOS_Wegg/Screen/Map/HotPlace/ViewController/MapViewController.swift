@@ -191,8 +191,16 @@ class MapViewController:
         }
         
         hotplaceList.forEach { list in
-            let coordinate = Coordinate(latitude: list.latitude, longitude: list.longitude)
-            mapManager.addMarker(at: coordinate)
+            let coordinate = Coordinate(
+                latitude: list.latitude,
+                longitude: list.longitude
+            )
+            mapManager.addMarker(
+                imageName: "list_brown_icon",
+                width: 28,
+                height: 40,
+                at: coordinate
+            )
         }
     }
     
@@ -200,9 +208,7 @@ class MapViewController:
     
     func fetchHotPlacesFromVisibleBounds(sortBy: String = "distance") {
         // 쿠키를 직접 저장
-        apiManager.setCookie(
-            value: "E5EB59AD024C1D128F1A808ECEDA8700"
-        )
+        apiManager.setCookie(value: CookieStorage.cookie)
         
         // 지도 경계 좌표 가져오기
         let request = mapManager.getVisibleBounds(sortBy: "distance")
@@ -232,8 +238,7 @@ class MapViewController:
             HotPlaceSectionModel(
                 header: HotPlaceHeaderModel(
                     title: hotplace.placeName,
-                    // TODO: 서버 측에서 카테고리 내용 업데이트 하면 `hotplace.placeLabel`로 변경
-                    category: "카페",
+                    category: hotplace.placeLabel,
                     verificationCount: "인증 \(hotplace.authCount)",
                     saveCount: "저장 \(hotplace.saveCount)"
                 ),
