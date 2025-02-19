@@ -16,6 +16,7 @@ class SearchView: UIView {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.backgroundColor = .white
         setupView()
         setupConstraints()
     }
