@@ -42,19 +42,6 @@ class ScheduleViewController:
         setupDataSource()
         // 임시 쿠키 설정
         apiManager.setCookie(value: CookieStorage.cookie)
-        
-        let request = OnOffScheduleRequest(planOn: .on)
-        
-        Task {
-            do {
-                let _: OnOffScheduleResponse = try await apiManager.request(
-                    target: ScheduleAPI.onOffSchedule(planId: 40, request: request)
-                )
-                
-            } catch {
-                print("DeleteScheduleResponse 오류: \(error)")
-            }
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -229,8 +216,58 @@ extension ScheduleViewController: ScheduleViewGestureDelegate {
 }
 
 extension ScheduleViewController: ScheduleCardCellDelegate {
+    /// `UISwitch`가 속한 `ScheduleCardCell`을 찾는 함수
+    private func findParentCell<T: UITableViewCell>(
+        for view: UIView,
+        ofType cellType: T.Type
+    ) -> T? {
+        var superview = view.superview
+        while let view = superview {
+            if let cell = view as? T {
+                return cell
+            }
+            superview = view.superview
+        }
+        return nil
+    }
+    
     func toggleSwitchAlarm(action: UIAction) {
         guard let toggle = action.sender as? UISwitch else { return }
-        print(toggle)
+        
+        // `superview`를 탐색하여 `ScheduleCardCell` 찾기
+        guard let cell = findParentCell(for: toggle, ofType: ScheduleCardCell.self) else {
+            print("❌ ScheduleCardCell을 찾을 수 없음")
+            return
+        }
+        
+        guard let indexPath = scheduleView
+            .studyCardTableView.indexPath(for: cell) else {
+            print("indexPath 찾을 수 없음")
+            return
+        }
+        
+        guard let selectedSchedule = dataSource?.itemIdentifier(for: indexPath) else {
+            print("선택된 일정을 찾을 수 없음")
+            return
+        }
+        
+        let planId: Int = selectedSchedule.id
+        
+        var request: OnOffScheduleRequest = toggle.isOn
+            ? OnOffScheduleRequest(planOn: .on)
+            : OnOffScheduleRequest(planOn: .off)
+        
+        print("선택된 일정: \(selectedSchedule)")
+        
+        Task {
+            do {
+                let response: OnOffScheduleResponse = try await apiManager.request(
+                    target: ScheduleAPI.onOffSchedule(planId: planId, request: request)
+                )
+                print("response: \(response)")
+            } catch {
+                print("DeleteScheduleResponse 오류: \(error)")
+            }
+        }
     }
 }
