@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct CookieStorage {
+    static let cookie: String = "28B5EBCFB902182C74E36C7E692429DE"
+}
+
 /// 일정 상태를 나타내는 Enum
 enum ScheduleStatus: String, Encodable {
     case yet = "YET"

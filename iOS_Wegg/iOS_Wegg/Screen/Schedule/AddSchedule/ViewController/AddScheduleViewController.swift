@@ -98,9 +98,7 @@ class AddScheduleViewController: UIViewController {
     ) {
         guard let apiManager = apiManager else { return }
         
-        apiManager.setCookie(
-            value: "DE0F971AFB7992075B852E639B1E6C84"
-        )
+        apiManager.setCookie(value: CookieStorage.cookie)
         
         // 지도 경계 좌표 가져오기
         let request = ScheduleSearchRequest(
@@ -176,7 +174,7 @@ extension AddScheduleViewController:
             let selectedPlace = selectedPlace else { return }
         
         // 쿠키를 직접 저장
-        apiManager.setCookie(value: "DE0F971AFB7992075B852E639B1E6C84")
+        apiManager.setCookie(value: CookieStorage.cookie)
         let request = AddScheduleRequest(
             status: .yet,
             planDates: selectedFormmatedDates,

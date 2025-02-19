@@ -102,7 +102,7 @@ class ScheduleViewController:
     
     private func fetchAllSchedules() {
         let apiManager = APIManager()
-        apiManager.setCookie(value: "28B5EBCFB902182C74E36C7E692429DE")
+        apiManager.setCookie(value: CookieStorage.cookie)
         
         Task {
             do {
