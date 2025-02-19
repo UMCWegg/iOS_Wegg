@@ -30,6 +30,7 @@ struct APIConstants {
     
     struct Browse {
         static let fetchBrowsePosts = "/posts/view"
+    }
     
     struct Auth {
         static let signUp = "/users/signup"
@@ -44,7 +45,7 @@ struct APIConstants {
         static let resign = "/users/resign"
         static let search = "/users/search"
     }
-
+    
     struct Todo {
         static let addTodoListURL = "/todo/add" /// 투두 등록
         /// 투두 수정

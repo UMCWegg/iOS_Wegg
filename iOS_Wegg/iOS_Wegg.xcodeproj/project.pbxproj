@@ -68,6 +68,7 @@
 				"Extensions/UIFont+extensions.swift",
 				"Extensions/UIImage+extentions.swift",
 				"Extensions/UIImageView+extensions.swift",
+				"Extensions/UIView+extensions.swift",
 				"Extensions/UIViewController+extension.swift",
 				Formatters/DateFormatterUtility.swift,
 			);

@@ -95,6 +95,8 @@ class BrowseViewController: UIViewController {
     
     /// API 호출하여 최신 게시물 가져오기
     private func fetchBrowsePosts() {
+        browseService.apiManager.setCookie(value: CookieStorage.cookie)
+
         guard !isFetching else { return }
         isFetching = true
         
