@@ -192,13 +192,25 @@ extension AddScheduleViewController:
                 let response: AddScheduleResponse = try await apiManager.request(
                     target: ScheduleAPI.addSchedule(request: request)
                 )
-                print("ScheduleAddResponse: \(response.code)")
+                let warningMessage = response.result.first?.warningMessage
+                // 경고 메시지 존재할 경우 Alert 띄움
+                if let warningMessage = warningMessage {
+                    let confirmAction = UIAlertAction(title: "확인", style: .default)
+                    let alert = UIAlertController(
+                        title: "다시 작성해주세요!",
+                        message: warningMessage,
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(confirmAction)
+                    present(alert, animated: true)
+                } else {
+                    navigationController?.popViewController(animated: true)
+                }
             } catch {
                 print("❌ ScheduleAddResponse 실패: \(error)")
             }
         }
         
-        navigationController?.popViewController(animated: true)
     }
     
     func didTapCancelButton() {
