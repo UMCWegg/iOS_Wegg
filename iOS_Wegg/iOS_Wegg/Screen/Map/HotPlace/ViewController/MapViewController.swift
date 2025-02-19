@@ -201,7 +201,7 @@ class MapViewController:
     func fetchHotPlacesFromVisibleBounds(sortBy: String = "distance") {
         // 쿠키를 직접 저장
         apiManager.setCookie(
-            value: "3C763C4F7D6E2B1908DA34D1A0CBDF7D"
+            value: "E5EB59AD024C1D128F1A808ECEDA8700"
         )
         
         // 지도 경계 좌표 가져오기

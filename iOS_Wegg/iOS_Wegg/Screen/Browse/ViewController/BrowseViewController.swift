@@ -9,7 +9,6 @@ import UIKit
 import Then
 
 class BrowseViewController: UIViewController {
-    
     // MARK: - Properties
     
     /// 둘러보기 커스텀 뷰
@@ -43,6 +42,7 @@ class BrowseViewController: UIViewController {
         setupCollectionView()
         fetchBrowsePosts() // BrowseVC 탭 최초 API 호출
         setupRefreshControl()
+        browseView.browseCollectionView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,17 +100,20 @@ class BrowseViewController: UIViewController {
         
         Task {
             do {
-                // ✅ 서버 응답은 [[BrowsePost]] 형태로 반환
+                /// 서버 응답은 [[BrowsePost]] 형태로 반환
                 let posts = try await self.browseService.fetchBrowsePosts(page: 0, size: 20)
                 DispatchQueue.main.async {
-                    // ✅ filter를 제거하여 원래의 구조 유지
+                    // filter를 제거하여 원래의 구조 유지
                     self.browsePosts = posts
                     self.browseView.browseCollectionView.reloadData()
+                    self.browseView
+                        .browseCollectionView
+                        .collectionViewLayout.invalidateLayout() //  레이아웃 강제 갱신
                     self.refreshControl.endRefreshing()
                     self.isFetching = false
                     print("🔄 데이터 갱신 완료")
                     
-                    // ✅ 데이터가 비어있으면 안내 메시지 표시
+                    // 데이터가 비어있으면 안내 메시지 표시
                     self.updateEmptyMessageIfNeeded()
                 }
             } catch {
@@ -149,7 +152,7 @@ class BrowseViewController: UIViewController {
  ✔ cellForItemAt → 2차원 배열(browsePosts[indexPath.section][indexPath.row])을 처리하도록 변경
  */
 /// UICollectionViewDataSource: 섹션마다 데이터 소스를 분리하여 처리
-extension BrowseViewController: UICollectionViewDataSource {
+extension BrowseViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         print("🔍 유효한 섹션 개수: \(browsePosts.count)")
         // result[0], result[1]을 그대로 유지
@@ -189,27 +192,49 @@ extension BrowseViewController: UICollectionViewDataSource {
         return cell
     }
     
-    // ✅ 섹션 헤더를 추가하여 팔로우 여부를 표시
+    /// ✅  섹션 헤더를 추가하여 팔로우 여부를 표시, 섹션의 데이터가 비어있으면 빈 뷰를 반환하여 헤더 숨김 처리
     func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
-        at indexPath: IndexPath) -> UICollectionReusableView {
-            guard kind == UICollectionView.elementKindSectionHeader,
-                  let headerView = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: "HeaderView",
-                    for: indexPath
-                  ) as? BrowseSectionHeaderView else {
-                return UICollectionReusableView()
-            }
-            
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader else {
+            fatalError("Unexpected element kind")
+        }
+        
+        // ✅ 올바르게 dequeue된 헤더 뷰 사용
+        guard let headerView = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: "HeaderView",
+            for: indexPath
+        ) as? BrowseSectionHeaderView else {
+            fatalError("Could not dequeue HeaderView")
+        }
+        
+        // ✅ 빈 섹션이면 헤더를 숨김
+        if browsePosts[indexPath.section].isEmpty {
+            headerView.isHidden = true
+        } else {
+            headerView.isHidden = false
             headerView.titleLabel.text = indexPath.section == 0
             ? "팔로우한 사용자의 게시물"
             : "팔로우하지 않은 사용자의 게시물"
-            
-            print("🛠️ 헤더뷰 생성 완료: 섹션 \(indexPath.section)")
-            return headerView
         }
+        
+        print("🛠️ 헤더뷰 생성 완료: 섹션 \(indexPath.section)")
+        return headerView
+    }
+    
+    /// 헤더 크기 0으로 설정하여 레이아웃 헤더 버그 수정
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        // ✅ 해당 섹션이 비어있다면 헤더 공간 제거
+        let headerHeight: CGFloat = browsePosts[section].isEmpty ? 0 : 40
+        return CGSize(width: collectionView.frame.width, height: headerHeight)
+    }
 }
 /// UICollectionViewDelegate: 사용자 반응 처리(아이템 클릭시 처리)하기 위한 프로토콜
 extension BrowseViewController: UICollectionViewDelegate {

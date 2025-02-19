@@ -78,11 +78,8 @@ class BrowseView: UIView {
         layout.minimumInteritemSpacing = horizontalSpacing // 열 간격
         layout.sectionInset = sectionInsets
         
-        // ✅ 헤더뷰 높이 설정 (필수)
+        // ✅ 기본 헤더 크기 설정 (동적 크기 설정을 위함)
         layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 40)
-        
-        // ✅ 필요 시 헤더뷰를 상단에 고정
-        layout.sectionHeadersPinToVisibleBounds = true
         
         return layout
     }
