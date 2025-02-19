@@ -9,13 +9,15 @@ import UIKit
 import Then
 
 protocol ScheduleCardCellDelegate: AnyObject {
-    func toggleSwitchAlarm(action: UIAction)
+    func toggleSwitchAlarm(planId: Int, isOn: UISwitch?)
 }
 
 class ScheduleCardCell: UITableViewCell {
     static let reuseIdentifier = "ScheduleCell"
     
     weak var delegate: ScheduleCardCellDelegate?
+    
+    private var planId: Int?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -58,7 +60,12 @@ class ScheduleCardCell: UITableViewCell {
     private lazy var toggleSwitch = UISwitch().then {
         $0.onTintColor = .primary
         $0.addAction(UIAction { [weak self] in
-            self?.delegate?.toggleSwitchAlarm(action: $0)
+            guard let self = self,
+                  let planId = planId else { return }
+            self.delegate?.toggleSwitchAlarm(
+                planId: planId,
+                isOn: $0.sender as? UISwitch
+            )
         }, for: .valueChanged)
     }
     
@@ -70,6 +77,7 @@ class ScheduleCardCell: UITableViewCell {
     
     // 테이블 datasoruce 주입
     func configure(with schedule: ScheduleModel) {
+        planId = schedule.id
         dateLabel.text = schedule.date
         titleLabel.text = schedule.location
         timeRangeLabel.text = schedule.timeRange
