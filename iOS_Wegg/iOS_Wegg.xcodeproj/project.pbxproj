@@ -203,12 +203,20 @@
 			path = EmojiModel;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		FF6994742D64B83200703190 /* SearchModel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SearchModel;
+=======
+>>>>>>> 77d6b08 (fix: 병합시 빌드 안된 파일 추가)
 		FF883B662D6616AF00FDC0C0 /* SettingsModel */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SettingsModel;
+			sourceTree = "<group>";
+		};
+		FF8910C52D669A2A0069D109 /* SearchModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SearchModel;
 			sourceTree = "<group>";
 		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
@@ -300,7 +308,7 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FF6994742D64B83200703190 /* SearchModel */,
+				FF8910C52D669A2A0069D109 /* SearchModel */,
 				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
 				0E68CBB32D5DB2E700CFDA8D /* NetworkModel */,
 				FFC8DBF32D50E3970094B687 /* HotPlaceModel */,
@@ -432,8 +440,8 @@
 				FF3CBBE92D3E387E00006955 /* BrowseItem */,
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
-				FF6994742D64B83200703190 /* SearchModel */,
 				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
+				FF8910C52D669A2A0069D109 /* SearchModel */,
 				FFC8E52F2D5605100094B687 /* Map */,
 			);
 			name = iOS_Wegg;
