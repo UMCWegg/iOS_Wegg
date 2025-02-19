@@ -41,10 +41,6 @@ class MapSearchViewController: UIViewController {
         mapSearchTableHandler.setupDataSource(
             for: mapSearchView.searchResultView
         )
-        mapSearchTableHandler.updateSearchResults([
-            "스타벅스",
-            "한성대학교"
-        ])
     }
 
 }
@@ -110,6 +106,12 @@ extension MapSearchViewController: MapSearchBarDelegate {
                     target: HotPlacesAPI.searchHotPlaces(request: request)
                 )
                 print("SearchHotplaceResponse: \(response.result)")
+                let placeList: [String] = response.result.placeList.map {
+                    $0.placeName
+                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.mapSearchTableHandler.updateSearchResults(placeList)
+                }
             } catch {
                 print("❌ 실패: \(error)")
             }
