@@ -25,3 +25,4 @@ struct APIConstants {
         static let fetchBrowsePosts = "/posts/view"
     }
 }
+

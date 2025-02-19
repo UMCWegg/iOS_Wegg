@@ -103,8 +103,8 @@ class BrowseViewController: UIViewController {
                 // ✅ 서버 응답은 [[BrowsePost]] 형태로 반환
                 let posts = try await self.browseService.fetchBrowsePosts(page: 0, size: 20)
                 DispatchQueue.main.async {
-                    // API응답 2차원 배열 구조에 맞게 유효한 섹션만 사용
-                    self.browsePosts = posts.filter { !$0.isEmpty } // ✅ 빈 배열 제거
+                    // ✅ filter를 제거하여 원래의 구조 유지
+                    self.browsePosts = posts
                     self.browseView.browseCollectionView.reloadData()
                     self.refreshControl.endRefreshing()
                     self.isFetching = false
@@ -118,6 +118,7 @@ class BrowseViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.refreshControl.endRefreshing()
                     self.isFetching = false
+                    self.updateEmptyMessageIfNeeded()
                 }
             }
         }
@@ -150,22 +151,19 @@ class BrowseViewController: UIViewController {
 /// UICollectionViewDataSource: 섹션마다 데이터 소스를 분리하여 처리
 extension BrowseViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // ✅ 빈 배열 제외 후 유효한 섹션 수만 반환
-        let validSections = browsePosts.filter { !$0.isEmpty }.count
-        print("🔍 유효한 섹션 개수: \(validSections)")
-        return validSections
+        print("🔍 유효한 섹션 개수: \(browsePosts.count)")
+        // result[0], result[1]을 그대로 유지
+        return browsePosts.count
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        // ✅ 해당 섹션이 비어있는지 확인
+        guard section < browsePosts.count else { return 0 } // ✅ 안전한 인덱스 접근
         let itemCount = browsePosts[section].count
         print("🔍 섹션 \(section) 게시물 개수: \(itemCount)")
-        print("🧩 browsePosts 전체 구조: \(browsePosts)")
-        // ✅ 빈 배열 제외 후 섹션 수 반환
-        return browsePosts.filter { !$0.isEmpty }.count
+        return itemCount
     }
     
     func collectionView(
@@ -179,15 +177,14 @@ extension BrowseViewController: UICollectionViewDataSource {
             fatalError("Unable to dequeue BrowseCell")
         }
         
-        // ✅ 인덱스 검증
-        if indexPath.section <
-            browsePosts.count && indexPath.row <
-            browsePosts[indexPath.section].count {
-            let item = browsePosts[indexPath.section][indexPath.row]
-            cell.configure(with: item)
-        } else {
+        guard indexPath.section < browsePosts.count,
+              indexPath.row < browsePosts[indexPath.section].count else {
             print("⚠️ 잘못된 인덱스 접근: section=\(indexPath.section), row=\(indexPath.row)")
+            return cell // 잘못된 경우 빈 셀 반환
         }
+        
+        let item = browsePosts[indexPath.section][indexPath.row]
+        cell.configure(with: item)
         
         return cell
     }

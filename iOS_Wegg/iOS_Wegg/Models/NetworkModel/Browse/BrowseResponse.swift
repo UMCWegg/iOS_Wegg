@@ -18,7 +18,7 @@ struct BrowseResponse: Decodable {
 struct BrowsePost: Decodable {
     let postId: Int
     let profileImageUrl: String?
-    let nickname: String
+    let accountId: String
     let postImageUrl: String
     let createdAt: String
 }
