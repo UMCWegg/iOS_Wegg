@@ -73,7 +73,7 @@ class EmailSignUpView: UIView {
         $0.textColor = UIColor.LoginColor.labelColor
     }
         
-    private let passwordCheckTextField = LoginTextField(
+    let passwordCheckTextField = LoginTextField(
         placeholder: "  6자 이상의 비밀번호",
         type: .password
     )

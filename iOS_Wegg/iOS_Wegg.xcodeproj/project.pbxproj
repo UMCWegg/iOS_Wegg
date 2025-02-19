@@ -50,6 +50,7 @@
 		0EF0F8332D6576BE00E4B0B3 /* iOS_Wegg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Wegg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
+		DE3673562D65C88800CEFFAF /* iOS_Wegg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Wegg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE85E2772D4623BB0055C78C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,6 +126,11 @@
 		DE001EC22D3BF1B5003A273F /* TextField */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TextField;
+			sourceTree = "<group>";
+		};
+		DE36792F2D65D1F800CEFFAF /* Settings */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		DE85E2742D4623BB0055C78C /* Browse */ = {
@@ -203,7 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
-				0EF0F8332D6576BE00E4B0B3 /* iOS_Wegg.app */,
+				DE3673562D65C88800CEFFAF /* iOS_Wegg.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -233,6 +239,7 @@
 		0E98EA262D2F8AE8006F25EF /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				DE36792F2D65D1F800CEFFAF /* Settings */,
 				0E68CB982D5DB2CE00CFDA8D /* Schedule */,
 				DE85E2742D4623BB0055C78C /* Browse */,
 				DE85E2762D4623BB0055C78C /* Home */,
@@ -313,6 +320,7 @@
 				0EDA97202D64ADEE008656E7 /* Core */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
+				DE36792F2D65D1F800CEFFAF /* Settings */,
 				DE85E2762D4623BB0055C78C /* Home */,
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
@@ -345,7 +353,7 @@
 				0E68CE562D5E018F00CFDA8D /* Kingfisher */,
 			);
 			productName = iOS_Wegg;
-			productReference = 0EF0F8332D6576BE00E4B0B3 /* iOS_Wegg.app */;
+			productReference = DE3673562D65C88800CEFFAF /* iOS_Wegg.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

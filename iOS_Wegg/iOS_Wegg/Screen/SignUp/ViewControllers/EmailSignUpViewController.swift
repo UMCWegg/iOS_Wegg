@@ -15,6 +15,14 @@ class EmailSignUpViewController: UIViewController {
     private let authService = AuthService.shared
     private var isEmailVerified = false
     
+    private var isPasswordValid: Bool {
+        guard let password = emailSignUpView.password,
+              let confirmPassword = emailSignUpView.passwordCheckTextField.text else {
+            return false
+        }
+        return password.count >= 6 && password == confirmPassword
+    }
+    
     // MARK: - Lifecycle
     
     override func loadView() {
@@ -81,6 +89,11 @@ class EmailSignUpViewController: UIViewController {
         guard let email = emailSignUpView.email,
               let password = emailSignUpView.password else { return }
         
+        guard isPasswordValid else {
+            showAlert(message: "비밀번호를 확인해주세요")
+            return
+        }
+        
         if !isEmailVerified {
             showErrorMessage("이메일 중복 확인이 필요합니다")
             return
@@ -97,14 +110,26 @@ class EmailSignUpViewController: UIViewController {
         navigationController?.pushViewController(serviceAgreementVC, animated: true)
     }
     
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+
+    // MARK: - Functions
+    
     private func showErrorMessage(_ message: String) {
         emailSignUpView.duplicateCheckLabel.isHidden = false
         emailSignUpView.duplicateCheckLabel.text = message
         emailSignUpView.duplicateCheckLabel.textColor = .red
     }
     
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+    private func showAlert(message: String) {
+        let alert = UIAlertController(
+            title: "알림",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
 
 }

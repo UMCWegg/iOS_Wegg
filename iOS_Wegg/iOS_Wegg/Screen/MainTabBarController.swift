@@ -39,7 +39,7 @@ class MainTabBarController: UITabBarController {
         )
         mapVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Map"), tag: 4)
                 
-        let myVC = UINavigationController(rootViewController: MyPageViewController())
+        let myVC = UINavigationController(rootViewController: SettingsViewController())
         myVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "My"), tag: 5)
         
         self.viewControllers = [homeVC, browseVC, scheduleVC, mapVC, myVC]
