@@ -92,6 +92,8 @@ class MapViewController:
         setupMapManagerGestures()
         setupOverlayView()
         setupFloatingPanel()
+        // 쿠키를 직접 저장
+        apiManager.setCookie(value: CookieStorage.cookie)
     }
     
     /// 지도가 메모리에 완전히 로드된 직후 API 호출
@@ -184,23 +186,39 @@ class MapViewController:
         navigationController.setViewControllers(viewControllers, animated: false)
     }
     
-    /// API에서 가져온 hotplaceList의 좌표를 기반으로 지도에 마커를 추가하는 함수
-    /// - `hotplaceList`가 비어 있으면 실행되지 않음
+    /// API에서 가져온 장소들의 좌표를 기반으로 지도에 마커를 추가하는 함수
+    /// - `place`가 비어 있으면 실행되지 않음
     /// - API 호출 후 데이터가 로드된 뒤 실행해야 함
     /// - `mapManager.addMarker(at:)`를 사용하여 지도에 마커 추가
-    private func setupMapPin() {
-        guard !hotplaceList.isEmpty else {
-            print("MapViewController Error: hotplaceList가 비어 있음")
+    private func setupMarkers<T>(from places: [T]) {
+        guard !places.isEmpty else {
+            print("MapViewController Error: 마커를 추가할 데이터가 없음")
             return
         }
         
-        hotplaceList.forEach { list in
-            let coordinate = Coordinate(
-                latitude: list.latitude,
-                longitude: list.longitude
-            )
+        places.forEach { place in
+            var coordinate: Coordinate
+            var imageName: String
+            
+            if let hotplace = place as? HotPlacesResponse.HotPlace {
+                coordinate = Coordinate(
+                    latitude: hotplace.latitude,
+                    longitude: hotplace.longitude
+                )
+                imageName = "list_brown_icon"
+            } else if let detail = place as? HotplaceDetailInfoResponse.Detail {
+                // TODO: 추후 서버에서 보낸 값으로 변경
+                coordinate = Coordinate(
+                    latitude: 37.60635,
+                    longitude: 127.04425
+                )
+                imageName = "yellow_wegg_icon"
+            } else {
+                return
+            }
+            
             mapManager.addMarker(
-                imageName: "list_brown_icon",
+                imageName: imageName,
                 width: 28,
                 height: 40,
                 at: coordinate
@@ -210,10 +228,8 @@ class MapViewController:
     
     // MARK: - API 관련 함수
     
+    /// 화면 경계값 안에 존재하는 모든 핫플레이스 호출 및 UI 업데이트
     func fetchHotPlacesFromVisibleBounds(sortBy: String = "distance") {
-        // 쿠키를 직접 저장
-        apiManager.setCookie(value: CookieStorage.cookie)
-        
         // 지도 경계 좌표 가져오기
         let request = mapManager.getVisibleBounds(sortBy: "distance")
         
@@ -224,9 +240,12 @@ class MapViewController:
                 )
                 hotplaceList = response.result.hotPlaceList
                 let section = convertToSectionModel(from: hotplaceList)
-                DispatchQueue.main.async {
-                    self.setupMapPin()
-                    self.hotPlaceSheetVC.updateHotPlaceList(section)
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.setupMarkers(from: self.hotplaceList)
+                    if self.selectedPlaceDetailInfo.isEmpty {
+                        self.hotPlaceSheetVC.updateHotPlaceList(section)
+                    }
                 }
             } catch {
                 print("❌ 실패: \(error)")
@@ -278,10 +297,13 @@ class MapViewController:
         }
     }
     
+    /// 모델 변환 후 UI 업데이트
     public func updateHotplaceDetailInfo(_ detailList: [HotplaceDetailInfoResponse.Detail]) {
         selectedPlaceDetailInfo = detailList
-        let section = convertToSectionModel(from: detailList)
-        DispatchQueue.main.async {
+        let section = convertToSectionModel(from: selectedPlaceDetailInfo)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.setupMarkers(from: self.selectedPlaceDetailInfo)
             self.hotPlaceSheetVC.updateHotPlaceList(section)
         }
     }
