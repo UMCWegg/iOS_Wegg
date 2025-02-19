@@ -11,6 +11,7 @@ import Moya
 enum HotPlacesAPI {
     case getHotPlaces(request: HotPlaceRequest)
     case searchHotPlaces(request: SearchHotplaceRequest)
+    case getPlaceDetailInfo(request: HotplaceDetailInfoRequest)
 }
 
 extension HotPlacesAPI: TargetType {
@@ -27,12 +28,14 @@ extension HotPlacesAPI: TargetType {
             return APIConstants.Map.hotplacesURL
         case .searchHotPlaces:
             return "/maps/hotplaces/search"
+        case .getPlaceDetailInfo:
+            return APIConstants.Map.detailInfoURL
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getHotPlaces, .searchHotPlaces:
+        case .getHotPlaces, .searchHotPlaces, .getPlaceDetailInfo:
             return .get
         }
     }
@@ -58,6 +61,13 @@ extension HotPlacesAPI: TargetType {
                     "longitude": request.longitude,
                     "page": request.page,
                     "size": request.size
+                ],
+                encoding: URLEncoding.queryString
+            )
+        case .getPlaceDetailInfo(let request):
+            return .requestParameters(
+                parameters: [
+                    "placeName": request.placeName
                 ],
                 encoding: URLEncoding.queryString
             )

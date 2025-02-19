@@ -32,6 +32,18 @@ class MapSearchViewController: UIViewController {
         view = mapSearchView
         apiManager.setCookie(value: CookieStorage.cookie)
         setupTableHandler()
+        let request = HotplaceDetailInfoRequest(placeName: "스타벅스 월곡역점")
+        
+        Task {
+            do {
+                let response: HotplaceDetailInfoResponse = try await apiManager.request(
+                    target: HotPlacesAPI.getPlaceDetailInfo(request: request)
+                )
+                print(response.result)
+            } catch {
+                print("❌ 실패: \(error)")
+            }
+        }
     }
     
     lazy var mapSearchView = MapSearchView().then {
@@ -43,6 +55,9 @@ class MapSearchViewController: UIViewController {
         mapSearchTableHandler.setupDataSource(
             for: mapSearchView.searchResultView
         )
+        mapSearchTableHandler.didSelectPlace = { [weak self] place in
+            print(place)
+        }
     }
     
     private func searchPlace(keyword: String, at coordinate: Coordinate) {

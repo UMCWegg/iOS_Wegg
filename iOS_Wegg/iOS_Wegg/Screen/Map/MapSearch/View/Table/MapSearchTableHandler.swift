@@ -47,7 +47,7 @@ class MapSearchTableHandler: NSObject, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 선택한 셀 아이템 가져오기
         if let item = dataSource?.itemIdentifier(for: indexPath) {
-            print("item: \(item)")
+            didSelectPlace?(item)
         }
     }
 }
