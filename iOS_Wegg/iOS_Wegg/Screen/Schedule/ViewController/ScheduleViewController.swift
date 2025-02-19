@@ -19,6 +19,7 @@ class ScheduleViewController:
     UIViewController,
     UIGestureRecognizerDelegate {
     
+    private let apiManager = APIManager()
     private var mapManager: MapManagerProtocol?
     // UITableViewDiffableDataSource를 사용하여 데이터 관리
     private var dataSource: UITableViewDiffableDataSource<Int, ScheduleModel>?
@@ -101,7 +102,6 @@ class ScheduleViewController:
     }
     
     private func fetchAllSchedules() {
-        let apiManager = APIManager()
         apiManager.setCookie(value: CookieStorage.cookie)
         
         Task {
@@ -131,6 +131,28 @@ class ScheduleViewController:
                 timeRange: schedule.startTime + schedule.finishTime,
                 isOn: true
             )
+        }
+    }
+    
+    /// 삭제 API 호출 및 UI 업데이트
+    private func deleteSchedule(_ schedule: ScheduleModel) {
+        Task {
+            do {
+                let response: DeleteScheduleResponse = try await apiManager.request(
+                    target: ScheduleAPI.deleteSchedule(planId: schedule.id)
+                )
+                
+                if response.isSuccess {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.scheduleList.removeAll { $0.id == schedule.id } // 로컬 데이터 삭제
+                        self?.applyInitialSnapshot() // UI 업데이트
+                    }
+                } else {
+                    print("일정 삭제 실패")
+                }
+            } catch {
+                print("DeleteScheduleResponse 오류: \(error)")
+            }
         }
     }
 }
@@ -165,6 +187,7 @@ extension ScheduleViewController: UITableViewDelegate {
             guard let self = self else { return }
             
             let scheduleToDelete = scheduleList[indexPath.row]
+            self.deleteSchedule(scheduleToDelete)
             
             completionHandler(true) // 액션 완료 처리
         }
