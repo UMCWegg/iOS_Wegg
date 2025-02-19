@@ -27,6 +27,19 @@ class MapSearchView: UIView {
     
     lazy var searchBarView = MapSearchBar()
     
+    lazy var searchResultView = UITableView(
+        frame: .zero,
+        style: .plain
+    ).then {
+        $0.register(
+            MapSearchTableCell.self,
+            forCellReuseIdentifier: MapSearchTableCell.reuseIdentifier
+        )
+        $0.separatorStyle = .none
+        $0.rowHeight = 60
+        $0.backgroundColor = .white
+    }
+    
 }
 
 // MARK: - Setup Extension
@@ -38,7 +51,7 @@ private extension MapSearchView {
     }
     
     func addComponenets() {
-        [searchBarView].forEach {
+        [searchBarView, searchResultView].forEach {
             addSubview($0)
         }
     }
@@ -50,6 +63,12 @@ private extension MapSearchView {
             make.height.greaterThanOrEqualTo(
                 MapViewLayout.PlaceSearch.searchBarHeight
             )
+        }
+        
+        searchResultView.snp.makeConstraints { make in
+            make.top.equalTo(searchBarView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalToSuperview()
         }
     }
 }

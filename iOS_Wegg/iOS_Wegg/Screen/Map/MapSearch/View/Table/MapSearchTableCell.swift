@@ -1,15 +1,15 @@
 //
-//  AddScheduleSearchTableCell.swift
+//  MapSearchTableCell.swift
 //  iOS_Wegg
 //
-//  Created by jaewon Lee on 2/15/25.
+//  Created by jaewon Lee on 2/19/25.
 //
 
 import UIKit
-import Then
 
-class AddScheduleSearchTableCell: UITableViewCell {
-    static let reuseIdentifier = "ScheduleSearchListTableViewCell"
+class MapSearchTableCell: UITableViewCell {
+
+    static let reuseIdentifier = "MapSearchTableCell"
 
     override init(
         style: UITableViewCell.CellStyle,
@@ -63,5 +63,4 @@ class AddScheduleSearchTableCell: UITableViewCell {
             make.leading.trailing.equalToSuperview().inset(10)
         }
     }
-    
 }

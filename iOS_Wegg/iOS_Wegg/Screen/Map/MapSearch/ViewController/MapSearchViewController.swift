@@ -13,6 +13,7 @@ class MapSearchViewController: UIViewController {
     weak var mapVC: MapViewController?
     
     private let apiManager = APIManager()
+    private let mapSearchTableHandler = MapSearchTableHandler()
     
     init(mapVC: MapViewController?) { // 의존성 주입
         self.mapVC = mapVC
@@ -28,10 +29,22 @@ class MapSearchViewController: UIViewController {
         
         view = mapSearchView
         apiManager.setCookie(value: CookieStorage.cookie)
+        setupTableHandler()
     }
     
     lazy var mapSearchView = MapSearchView().then {
         $0.searchBarView.delegate = self
+        $0.searchResultView.delegate = mapSearchTableHandler
+    }
+    
+    private func setupTableHandler() {
+        mapSearchTableHandler.setupDataSource(
+            for: mapSearchView.searchResultView
+        )
+        mapSearchTableHandler.updateSearchResults([
+            "스타벅스",
+            "한성대학교"
+        ])
     }
 
 }
