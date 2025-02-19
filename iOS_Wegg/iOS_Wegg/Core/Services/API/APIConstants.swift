@@ -21,6 +21,7 @@ struct APIConstants {
         static let schedulePlaceURL = Map.baseURL + Schedule.baseURL
         static let schedulePlaceSearchURL = schedulePlaceURL + "/search"
         static let addURL = Schedule.baseURL + "/add"
+        static let onOffURL = "/onoff"
     }
     
     struct Post {

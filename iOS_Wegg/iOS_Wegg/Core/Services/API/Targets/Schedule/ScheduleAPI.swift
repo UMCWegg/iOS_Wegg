@@ -10,8 +10,11 @@ import Moya
 
 /// 일정 관련 API 정의
 enum ScheduleAPI {
+    case fetchScheduleList
+    case deleteSchedule(planId: Int)
     case searchPlace(request: ScheduleSearchRequest)
     case addSchedule(request: AddScheduleRequest)
+    case onOffSchedule(planId: Int, request: OnOffScheduleRequest)
 }
 
 extension ScheduleAPI: TargetType {
@@ -25,24 +28,39 @@ extension ScheduleAPI: TargetType {
     
     var path: String {
         switch self {
+        case .fetchScheduleList:
+            return APIConstants.Schedule.baseURL
+        case .deleteSchedule(let planId):
+            return APIConstants.Schedule.baseURL + "/\(planId)"
         case .searchPlace:
             return APIConstants.Schedule.schedulePlaceSearchURL
         case .addSchedule:
             return APIConstants.Schedule.addURL
+        case .onOffSchedule(let planId, _):
+            return (APIConstants.Schedule.baseURL
+            + "/\(planId)" + APIConstants.Schedule.onOffURL)
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .searchPlace:
+        case .fetchScheduleList, .searchPlace:
             return .get
+        case .deleteSchedule:
+            return .delete
         case .addSchedule:
             return .post
+        case .onOffSchedule:
+            return .patch
         }
     }
     
     var task: Task {
         switch self {
+        case .fetchScheduleList:
+            return .requestPlain
+        case .deleteSchedule:
+            return .requestPlain
         case .searchPlace(let request):
             return .requestParameters(
                 parameters: [
@@ -55,6 +73,8 @@ extension ScheduleAPI: TargetType {
                 encoding: URLEncoding.queryString
             )
         case .addSchedule(let request):
+            return .requestJSONEncodable(request)
+        case .onOffSchedule(_, let request):
             return .requestJSONEncodable(request)
         }
     }
