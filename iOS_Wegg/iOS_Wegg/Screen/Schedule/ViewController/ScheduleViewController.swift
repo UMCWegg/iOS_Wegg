@@ -39,6 +39,11 @@ class ScheduleViewController:
         
         view = scheduleView
         setupDataSource()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // 화면 전화시에도 호출되어 최신 일정으로 업데이트 됨
         fetchAllSchedules()
     }
     
