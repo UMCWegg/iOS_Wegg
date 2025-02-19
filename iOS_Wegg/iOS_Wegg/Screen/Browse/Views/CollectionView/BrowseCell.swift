@@ -77,15 +77,19 @@ class BrowseCell: UICollectionViewCell {
         }
     }
     
+    /*
+    서버에 있는 이미지를 로드하기 위해 UIImageView확장자를 통해 이미지 url을 로드
+    만약 값이 null일시, 로컬에 있는 기본 이미지 사용
+    */
     /// 셀에 데이터를 설정하는 메서드
-    func configure(with item: BrowseItem) {
+    func configure(with item: BrowsePost) { // ✅ BrowsePost를 받도록 변경
         // 닉네임 설정
-        nickNameLabel.text = item.nickName
+        nickNameLabel.text = item.accountId // ✅ 속성명 `nickname` 확인
         
-        // 프로필 이미지 설정
-        userProfile.image = UIImage(named: item.profileImage)
+        // 프로필 이미지 로드 (기본값: profile_placeholder)
+        userProfile.setImage(from: item.profileImageUrl, placeholder: "profile_placeholder")
         
-        // 게시물 이미지 설정
-        postImage.image = UIImage(named: item.postImage.first ?? "placeholder")
+        // 게시물 이미지 로드 (기본값: post_placeholder)
+        postImage.setImage(from: item.postImageUrl, placeholder: "post_placeholder")
     }
 }

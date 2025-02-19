@@ -11,6 +11,8 @@
 		0E98E9EF2D2E3265006F25EF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9EE2D2E3265006F25EF /* SnapKit */; };
 		0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9F12D2E331D006F25EF /* Alamofire */; };
 		0E98E9F52D2E336F006F25EF /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98E9F42D2E336F006F25EF /* Moya */; };
+		0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EA272D2F8AE8006F25EF /* AppDelegate.swift */; };
+		0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E98EA2A2D2F8AE8006F25EF /* SceneDelegate.swift */; };
 		0E98EA302D2F8AE8006F25EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E98EA282D2F8AE8006F25EF /* Assets.xcassets */; };
 		0E98EA472D2F9F77006F25EF /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98EA462D2F9F77006F25EF /* Then */; };
 		0E98EB802D38E554006F25EF /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 0E98EB7F2D38E554006F25EF /* KakaoMapsSDK-SPM */; };
@@ -34,32 +36,42 @@
 		DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DE0020DC2D420F3B003A273F /* FirebaseFirestore */; };
 		DE00212D2D433D7F003A273F /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = DE00212C2D433D7F003A273F /* NMapsMap */; };
 		DE00217A2D439F3F003A273F /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */; };
-		DE1602EC2D4E18DD00416859 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DE1602EB2D4E18DD00416859 /* CombineMoya */; };
 		DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE85E2772D4623BB0055C78C /* MainTabBarController.swift */; };
+		FF7985732D5A86A40055B370 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7985712D5A86A40055B370 /* HeaderView.swift */; };
 		FFC8DAFB2D50DDE30094B687 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = FFC8DAFA2D50DDE30094B687 /* FloatingPanel */; };
+		FFC8DBF42D50E3970094B687 /* HotPlaceSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Wegg.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E98EA272D2F8AE8006F25EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E98EA282D2F8AE8006F25EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E98EA292D2F8AE8006F25EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E98EA2A2D2F8AE8006F25EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		0E98EB852D3A274B006F25EF /* GmarketSansTTFBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFBold.ttf; sourceTree = "<group>"; };
 		0E98EB862D3A274B006F25EF /* GmarketSansTTFLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFLight.ttf; sourceTree = "<group>"; };
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
-		0EF0F8332D6576BE00E4B0B3 /* iOS_Wegg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Wegg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
-		DE3673562D65C88800CEFFAF /* iOS_Wegg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Wegg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE85E2772D4623BB0055C78C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		FF7985712D5A86A40055B370 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		FF88397D2D66161D00FDC0C0 /* iOS_Wegg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Wegg.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPlaceSectionModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0E9797102D64B1140006B59E /* Exceptions for "Models" folder in "iOS_Wegg" target */ = {
+		DE0021782D4398A7003A273F /* Exceptions for "Utilities" folder in "iOS_Wegg" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Todo/TodoRequest.swift,
-				Todo/TodoResponse.swift,
+				"Extensions/UIColor+extensions.swift",
+				"Extensions/UIFont+extensions.swift",
+				"Extensions/UIImage+extentions.swift",
+				"Extensions/UIImageView+extensions.swift",
+				"Extensions/UIView+extensions.swift",
+				"Extensions/UIViewController+extension.swift",
+				Formatters/DateFormatterUtility.swift,
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
@@ -79,6 +91,7 @@
 				ViewController/BrowseViewController.swift,
 				Views/BrowseView.swift,
 				Views/CollectionView/BrowseCell.swift,
+				Views/CollectionView/BrowseSectionHeaderView.swift,
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
@@ -90,32 +103,37 @@
 			path = Schedule;
 			sourceTree = "<group>";
 		};
+		0E68CBB32D5DB2E700CFDA8D /* NetworkModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NetworkModel;
+			sourceTree = "<group>";
+		};
+		0E98EA322D2F8F8F006F25EF /* Services */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0E98EA392D2F94AE006F25EF /* Protocol */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		0E98EA3C2D2F976E006F25EF /* Secrets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Secrets;
+			sourceTree = "<group>";
+		};
+		0E98EA3F2D2F979A006F25EF /* Utilities */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DE0021782D4398A7003A273F /* Exceptions for "Utilities" folder in "iOS_Wegg" target */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		0E98EAC62D2FB789006F25EF /* Login */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Login;
-			sourceTree = "<group>";
-		};
-		0EDA96D02D64ADD7008656E7 /* Models */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0E9797102D64B1140006B59E /* Exceptions for "Models" folder in "iOS_Wegg" target */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		0EDA96EE2D64ADE2008656E7 /* App */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = App;
-			sourceTree = "<group>";
-		};
-		0EDA96F22D64ADEB008656E7 /* Home */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Home;
-			sourceTree = "<group>";
-		};
-		0EDA97202D64ADEE008656E7 /* Core */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Core;
 			sourceTree = "<group>";
 		};
 		DE001E912D3BDF71003A273F /* Button */ = {
@@ -166,6 +184,26 @@
 			path = Label;
 			sourceTree = "<group>";
 		};
+		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BrowseItem;
+			sourceTree = "<group>";
+		};
+		FF3CBFAF2D41070000006955 /* PostModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PostModel;
+			sourceTree = "<group>";
+		};
+		FF3CC3402D4B41FD00006955 /* EmojiModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EmojiModel;
+			sourceTree = "<group>";
+		};
+		FF883B662D6616AF00FDC0C0 /* SettingsModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SettingsModel;
+			sourceTree = "<group>";
+		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Map;
@@ -181,7 +219,6 @@
 				0E98E9EF2D2E3265006F25EF /* SnapKit in Frameworks */,
 				DE0020D92D420F0E003A273F /* FirebaseAuth in Frameworks */,
 				DE0020D12D414BD9003A273F /* FirebaseAppCheck in Frameworks */,
-				DE1602EC2D4E18DD00416859 /* CombineMoya in Frameworks */,
 				0E98E9F22D2E331D006F25EF /* Alamofire in Frameworks */,
 				0E68CE572D5E018F00CFDA8D /* Kingfisher in Frameworks */,
 				DE0020DD2D420F3B003A273F /* FirebaseFirestore in Frameworks */,
@@ -209,20 +246,62 @@
 			isa = PBXGroup;
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
-				DE3673562D65C88800CEFFAF /* iOS_Wegg.app */,
+				0E98E9D62D2D009D006F25EF /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		0E98E9D62D2D009D006F25EF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0E98E9D52D2D009D006F25EF /* iOS_Wegg.app */,
+				FF88397D2D66161D00FDC0C0 /* iOS_Wegg.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0E98EA212D2F8AE8006F25EF /* App */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EA272D2F8AE8006F25EF /* AppDelegate.swift */,
+				0E98EA2A2D2F8AE8006F25EF /* SceneDelegate.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				0EDA96F22D64ADEB008656E7 /* Home */,
+				FF7985722D5A86A40055B370 /* Home */,
 				FFC8E52F2D5605100094B687 /* Map */,
 				DEEB72322D4D211C001C3880 /* Label */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE001E912D3BDF71003A273F /* Button */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		0E98EA232D2F8AE8006F25EF /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EA322D2F8F8F006F25EF /* Services */,
+				0E98EA3C2D2F976E006F25EF /* Secrets */,
+				0E98EA3F2D2F979A006F25EF /* Utilities */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		0E98EA242D2F8AE8006F25EF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
+				0E68CBB32D5DB2E700CFDA8D /* NetworkModel */,
+				FFC8DBF32D50E3970094B687 /* HotPlaceModel */,
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				0E98EA392D2F94AE006F25EF /* Protocol */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		0E98EA252D2F8AE8006F25EF /* Resources */ = {
@@ -255,11 +334,11 @@
 		0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */ = {
 			isa = PBXGroup;
 			children = (
-				0EDA96EE2D64ADE2008656E7 /* App */,
+				0E98EA212D2F8AE8006F25EF /* App */,
 				0E98EA222D2F8AE8006F25EF /* Component */,
-				0EDA97202D64ADEE008656E7 /* Core */,
+				0E98EA232D2F8AE8006F25EF /* Core */,
 				0E98EA262D2F8AE8006F25EF /* Screen */,
-				0EDA96D02D64ADD7008656E7 /* Models */,
+				0E98EA242D2F8AE8006F25EF /* Models */,
 				0E98EA252D2F8AE8006F25EF /* Resources */,
 			);
 			path = iOS_Wegg;
@@ -294,6 +373,22 @@
 			path = NotoSans;
 			sourceTree = "<group>";
 		};
+		FF7985722D5A86A40055B370 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FF7985712D5A86A40055B370 /* HeaderView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		FFC8DBF32D50E3970094B687 /* HotPlaceModel */ = {
+			isa = PBXGroup;
+			children = (
+				FFC8DBF22D50E3970094B687 /* HotPlaceSectionModel.swift */,
+			);
+			path = HotPlaceModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -313,11 +408,11 @@
 			);
 			fileSystemSynchronizedGroups = (
 				0E68CB982D5DB2CE00CFDA8D /* Schedule */,
+				0E68CBB32D5DB2E700CFDA8D /* NetworkModel */,
+				0E98EA322D2F8F8F006F25EF /* Services */,
+				0E98EA392D2F94AE006F25EF /* Protocol */,
+				0E98EA3C2D2F976E006F25EF /* Secrets */,
 				0E98EAC62D2FB789006F25EF /* Login */,
-				0EDA96D02D64ADD7008656E7 /* Models */,
-				0EDA96EE2D64ADE2008656E7 /* App */,
-				0EDA96F22D64ADEB008656E7 /* Home */,
-				0EDA97202D64ADEE008656E7 /* Core */,
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE36792F2D65D1F800CEFFAF /* Settings */,
@@ -326,6 +421,10 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DEEB72322D4D211C001C3880 /* Label */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
 				FFC8E52F2D5605100094B687 /* Map */,
 			);
 			name = iOS_Wegg;
@@ -348,12 +447,11 @@
 				DE0020DA2D420F0E003A273F /* FirebaseCore */,
 				DE0020DC2D420F3B003A273F /* FirebaseFirestore */,
 				DE00212C2D433D7F003A273F /* NMapsMap */,
-				DE1602EB2D4E18DD00416859 /* CombineMoya */,
 				FFC8DAFA2D50DDE30094B687 /* FloatingPanel */,
 				0E68CE562D5E018F00CFDA8D /* Kingfisher */,
 			);
 			productName = iOS_Wegg;
-			productReference = DE3673562D65C88800CEFFAF /* iOS_Wegg.app */;
+			productReference = FF88397D2D66161D00FDC0C0 /* iOS_Wegg.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -395,7 +493,7 @@
 				0E68CE552D5E018F00CFDA8D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 0E98E9CC2D2D009D006F25EF;
+			productRefGroup = 0E98E9D62D2D009D006F25EF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -449,7 +547,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF7985732D5A86A40055B370 /* HeaderView.swift in Sources */,
+				0E98EA2D2D2F8AE8006F25EF /* AppDelegate.swift in Sources */,
+				0E98EA2E2D2F8AE8006F25EF /* SceneDelegate.swift in Sources */,
 				DE85E28D2D4623BB0055C78C /* MainTabBarController.swift in Sources */,
+				FFC8DBF42D50E3970094B687 /* HotPlaceSectionModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,8 +567,8 @@
 /* Begin XCBuildConfiguration section */
 		0E98E9E92D2D009E006F25EF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 0EDA97202D64ADEE008656E7 /* Core */;
-			baseConfigurationReferenceRelativePath = Secrets/Secrets.xcconfig;
+			baseConfigurationReferenceAnchor = 0E98EA3C2D2F976E006F25EF /* Secrets */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -477,7 +579,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용 중에 위치를 활용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -490,11 +591,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "UMC-7th.iOS-Wegg.com";
+				PRODUCT_BUNDLE_IDENTIFIER = "UMC-7th.iOS-Wegg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -502,8 +602,8 @@
 		};
 		0E98E9EA2D2D009E006F25EF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 0EDA97202D64ADEE008656E7 /* Core */;
-			baseConfigurationReferenceRelativePath = Secrets/Secrets.xcconfig;
+			baseConfigurationReferenceAnchor = 0E98EA3C2D2F976E006F25EF /* Secrets */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -514,7 +614,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용 중에 위치를 활용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -527,11 +626,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "UMC-7th.iOS-Wegg.com";
+				PRODUCT_BUNDLE_IDENTIFIER = "UMC-7th.iOS-Wegg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -539,8 +637,6 @@
 		};
 		0E98E9EB2D2D009E006F25EF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 0EDA97202D64ADEE008656E7 /* Core */;
-			baseConfigurationReferenceRelativePath = Secrets/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -604,8 +700,6 @@
 		};
 		0E98E9EC2D2D009E006F25EF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 0EDA97202D64ADEE008656E7 /* Core */;
-			baseConfigurationReferenceRelativePath = Secrets/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -882,11 +976,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DE00212B2D433D7F003A273F /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
 			productName = NMapsMap;
-		};
-		DE1602EB2D4E18DD00416859 /* CombineMoya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0E98E9F32D2E336F006F25EF /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = CombineMoya;
 		};
 		FFC8DAFA2D50DDE30094B687 /* FloatingPanel */ = {
 			isa = XCSwiftPackageProductDependency;
