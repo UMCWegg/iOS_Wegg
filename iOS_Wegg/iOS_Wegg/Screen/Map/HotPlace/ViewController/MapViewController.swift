@@ -36,6 +36,7 @@ class MapViewController:
     private let mapManager: MapManagerProtocol
     private var apiManager: APIManager
     private var hotplaceList: [HotPlacesResponse.HotPlace] = []
+    private var selectedPlaceDetailInfo: [HotplaceDetailInfoResponse.Detail] = []
     
     // MARK: - 의존성 주입 위한 Property
     
@@ -251,6 +252,11 @@ class MapViewController:
                 details: nil // 현재 API에서 추가적인 상세 정보 없음
             )
         }
+    }
+    
+    public func updateHotplaceDetailInfo(_ detailList: [HotplaceDetailInfoResponse.Detail]) {
+        selectedPlaceDetailInfo = detailList
+        print(selectedPlaceDetailInfo)
     }
 }
 
