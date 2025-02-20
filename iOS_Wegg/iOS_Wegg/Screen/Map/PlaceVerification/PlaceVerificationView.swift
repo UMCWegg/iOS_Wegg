@@ -75,6 +75,11 @@ class PlaceVerificationOverlayView: UIView {
         placeVerificationInfoView.setLabel(title: title, subTitle: subTitle)
     }
     
+    public func toggleVerificationButton(isEnabled: Bool) {
+        verificationButton.isEnabled = isEnabled
+        verificationButton.alpha = isEnabled ? 1 : 0.5
+    }
+    
     // MARK: Utility Functions
     
     private func makeButton(

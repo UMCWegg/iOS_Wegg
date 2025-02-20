@@ -76,33 +76,38 @@ class PlaceVerificationViewController: UIViewController {
                 let response: PlaceVerificationCheckResponse = try await apiManager.request(
                     target: PlaceVerificationAPI.checkPlaceVerification(planId: 1)
                 )
-                print("PlaceVerificationCheckResponse: \(response.result)")
                 let placeName = response.result.placeName
                 let placeLocation = Coordinate(
                     latitude: response.result.latitude,
                     longitude: response.result.longitude
                 )
-                print(placeName, placeLocation)
-                
-                DispatchQueue.main.async { [weak self] in
-                    self?.placeVerificationOverlayView.configuration(
-                        title: placeName,
-                        subTitle: "시간이 다 되었습니다! 인증을 진행해주세요"
-                    )
-                    self?.convertToImage()
-                }
                 
                 mapManager.getCurrentLocation { [weak self] coordinate in
                     guard let self = self else {
                         print("self 없음")
                         return
                     }
+                    // 현재 위치와 등록된 장소 위치 비교
                     if coordinate == placeLocation {
-                        print("인증 성공")
+                        checkVerificationResult = true
+                        placeVerificationOverlayView.toggleVerificationButton(isEnabled: true)
+                        DispatchQueue.main.async { [weak self] in
+                            self?.placeVerificationOverlayView.configuration(
+                                title: placeName,
+                                subTitle: "시간이 다 되었습니다! 인증을 진행해주세요"
+                            )
+                            self?.convertToImage()
+                        }
                     } else {
-                        print("coordinate: \(coordinate)")
-                        print("placeLocation: \(placeLocation)")
-                        print("인증 실패")
+                        checkVerificationResult = false
+                        placeVerificationOverlayView.toggleVerificationButton(isEnabled: false)
+                        DispatchQueue.main.async { [weak self] in
+                            self?.placeVerificationOverlayView.configuration(
+                                title: placeName,
+                                subTitle: "등록된 장소로 이동해주세요!"
+                            )
+                            self?.convertToImage()
+                        }
                     }
                 }
             } catch {
@@ -118,23 +123,32 @@ class PlaceVerificationViewController: UIViewController {
 extension PlaceVerificationViewController: PlaceVerificationOverlayViewDelegate {
     // 인증하기 버튼 누르면 인증 성공 여부 검사 후 메인으로 이동
     func didTapVerificationButton() {
-        // [25.02.14] 추후 공부 일정에 등록된 장소 위치와 현재 위치 비교하는 로직 추가 필요
-        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
-            // alertVC가 닫힌 후 실행되도록 수정
-            self.dismiss(animated: true) {
-                let mainVC = MainTabBarController()
-                mainVC.modalPresentationStyle = .fullScreen
-                self.present(mainVC, animated: true)
+        guard let checkVerificationResult = checkVerificationResult else { return }
+        if checkVerificationResult {
+            let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+                // alertVC가 닫힌 후 실행되도록 수정
+                self.dismiss(animated: true) {
+                    let mainVC = MainTabBarController()
+                    mainVC.modalPresentationStyle = .fullScreen
+                    self.present(mainVC, animated: true)
+                }
             }
+            showAlert(title: "인증 성공!!", action: confirmAction)
         }
-        
-        let alertVC = UIAlertController(
-            title: "인증 성공!!",
-            message: nil,
-            preferredStyle: .alert
-        )
-        alertVC.addAction(confirmAction)
-        present(alertVC, animated: true)
     }
     
+}
+
+// MARK: - Utility
+
+private extension PlaceVerificationViewController {
+    func showAlert(title: String, message: String? = nil, action: UIAlertAction) {
+        let alertVC = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        alertVC.addAction(action)
+        present(alertVC, animated: true)
+    }
 }
