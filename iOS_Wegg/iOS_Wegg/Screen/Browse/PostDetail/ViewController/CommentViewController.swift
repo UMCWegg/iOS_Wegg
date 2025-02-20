@@ -51,7 +51,7 @@ class CommentViewController: UIViewController {
     /// ✅ 이모지 UI 업데이트
     private func updateEmojiUI() {
         let emojiTypes = emojis.emojiCounts
-            .filter { $0.count > 0 } // 개수가 0보다 큰 이모지만 표시
+            .filter { !$0.emojiType.isEmpty } // 개수가 0보다 큰 이모지만 표시
             .map { $0.emojiType.lowercased() } // 서버 데이터가 대문자이므로 소문자로 변환
         commentView.updateEmojiImages(with: emojiTypes)
     }
@@ -87,7 +87,8 @@ class CommentViewController: UIViewController {
         Task {
             do {
                 // ✅ 댓글 등록 API 호출
-                let response = try await postDetailService.postComment(postId: postId, content: text)
+                let response = try await postDetailService.postComment(
+                    postId: postId, content: text)
                 
                 // ✅ 서버에서 댓글 등록이 성공했는지 확인
                 guard response.isSuccess else {
@@ -111,7 +112,8 @@ class CommentViewController: UIViewController {
     /// ✅ 최신 댓글을 다시 불러오는 메서드
     private func fetchUpdatedComments() async {
         do {
-            let (updatedComments, _) = try await postDetailService.fetchCommentsAndEmojis(postId: postId)
+            let (updatedComments, _) = try await postDetailService.fetchCommentsAndEmojis(
+                postId: postId)
             
             DispatchQueue.main.async {
                 self.comments = updatedComments // ✅ 최신 댓글 목록으로 갱신

@@ -176,7 +176,8 @@ class PostDetailViewController: UIViewController {
     @objc private func handleCommentButtonTap() {
         Task {
             do {
-                let (comments, emojis) = try await postDetailService.fetchCommentsAndEmojis(postId: postDetailModel.postId)
+                let (comments, emojis) = try await postDetailService.fetchCommentsAndEmojis(
+                    postId: postDetailModel.postId)
                 
                 DispatchQueue.main.async {
                     self.presentCommentViewController(comments: comments, emojis: emojis)
@@ -190,7 +191,8 @@ class PostDetailViewController: UIViewController {
     
     /// 📌 `CommentViewController`에 데이터를 전달하여 표시
     private func presentCommentViewController(comments: [Comment], emojis: EmojiResult) {
-        let commentVC = CommentViewController(postId: postDetailModel.postId, comments: comments, emojis: emojis)
+        let commentVC = CommentViewController(
+            postId: postDetailModel.postId, comments: comments, emojis: emojis)
         
         if let sheet = commentVC.sheetPresentationController {
             sheet.detents = [
