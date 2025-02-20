@@ -51,7 +51,8 @@ class CommentViewController: UIViewController {
     /// ✅ 이모지 UI 업데이트
     private func updateEmojiUI() {
         let emojiTypes = emojis.emojiCounts
-            .filter { !$0.emojiType.isEmpty } // 개수가 0보다 큰 이모지만 표시
+        // 개수가 1 이상인 이모지만 필터링하여 업데이트
+            .filter { $0.count > 0 } // swiftlint:disable:this empty_count
             .map { $0.emojiType.lowercased() } // 서버 데이터가 대문자이므로 소문자로 변환
         commentView.updateEmojiImages(with: emojiTypes)
     }
