@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DetailService {
+class PostDetailService {
     private let apiManager = APIManager()
     
     /// 📌 댓글 & 이모지 데이터를 동시에 가져오기

@@ -24,6 +24,13 @@ class CommentCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // ✅ 서버에서 받은 `Comment` 데이터를 활용하도록 수정
+    func configure(with comment: Comment) {
+        usernameLabel.text = comment.accountId // ✅ 사용자 이름 적용
+        commentLabel.text = comment.content // ✅ 댓글 내용 적용
+        profileImageView.setImage(from: comment.commenterProfileUrl,
+                                  placeholder: "profile_placeholder")
+    }
     // MARK: - Property
     
     private let profileImageView = UIImageView().then {
@@ -69,11 +76,5 @@ class CommentCell: UITableViewCell {
             $0.trailing.equalToSuperview().offset(-16)
             $0.bottom.equalToSuperview().offset(-10)
         }
-    }
-    
-    func configure(with model: CommentModel) {
-        profileImageView.image = model.profileImage
-        usernameLabel.text = model.userName
-        commentLabel.text = model.commentText
     }
 }

@@ -13,6 +13,7 @@ class PostDetailViewController: UIViewController {
     // MARK: - Property
     private let postDetailModel: PostDetailModel
     private let postDetailView = PostDetailView()
+    private let postDetailService = PostDetailService() // ✅ API 호출을 위한 서비스
     private var isEmojiPopupVisible = false
     
     // MARK: - Init
@@ -49,6 +50,14 @@ class PostDetailViewController: UIViewController {
         postDetailView.configure(with: postDetailModel)
     }
     
+    /// 댓글 버튼에 액션을 추가하는 메서드
+    private func commentButtonAction() {
+        postDetailView.commentButton.addTarget(
+            self,
+            action: #selector(handleCommentButtonTap),
+            for: .touchUpInside)
+    }
+    
     /// 네비게이션 상단 바 타이틀 지정 및 나가기 버튼 커스텀
     private func setNavigation() {
         let titleView = UIView()
@@ -67,8 +76,8 @@ class PostDetailViewController: UIViewController {
         
         let backBtn = UIBarButtonItem(
             image: UIImage(systemName: "arrow.left")?
-            .withRenderingMode(.alwaysOriginal)
-            .withTintColor(UIColor.white),
+                .withRenderingMode(.alwaysOriginal)
+                .withTintColor(UIColor.white),
             style: .plain,
             target: self,
             action: #selector(didTap))
@@ -89,14 +98,14 @@ class PostDetailViewController: UIViewController {
             for: .touchUpInside // 버튼을 눌렀다가 뗐을 때 이벤트가 발생
         )
     }
-
+    
     /// 이모지 버튼이 클릭되었을 때 호출되는 메서드
     @objc private func handleEmojiButtonTap() {
         // PlusEmojiView가 열려 있다면 닫기
-            if let plusEmojiView = view.subviews.first(where: { $0 is PlusEmojiView }) {
-                hidePopupView(plusEmojiView) // PlusEmojiView 닫기
-                return
-            }
+        if let plusEmojiView = view.subviews.first(where: { $0 is PlusEmojiView }) {
+            hidePopupView(plusEmojiView) // PlusEmojiView 닫기
+            return
+        }
         
         // 현재 이모지 팝업이 표시된 상태인지 확인
         if isEmojiPopupVisible {
@@ -163,17 +172,25 @@ class PostDetailViewController: UIViewController {
         })
     }
     
-    /// 댓글 버튼에 액션을 추가하는 메서드
-    private func commentButtonAction() {
-        postDetailView.commentButton.addTarget(
-            self,
-            action: #selector(handleCommentButtonTap),
-            for: .touchUpInside)
+    /// 댓글 버튼 클릭 시 바텀 시트 띄우기 + 댓글 & 이모지 데이터 조회
+    @objc private func handleCommentButtonTap() {
+        Task {
+            do {
+                let (comments, emojis) = try await postDetailService.fetchCommentsAndEmojis(postId: postDetailModel.postId)
+                
+                DispatchQueue.main.async {
+                    self.presentCommentViewController(comments: comments, emojis: emojis)
+                }
+                
+            } catch {
+                print("❌ 댓글 및 이모지 데이터 조회 실패: \(error)")
+            }
+        }
     }
     
-    /// 댓글 버튼 클릭 시 바텀 시트 띄우기
-    @objc private func handleCommentButtonTap() {
-        let commentVC = CommentViewController()
+    /// 📌 `CommentViewController`에 데이터를 전달하여 표시
+    private func presentCommentViewController(comments: [Comment], emojis: EmojiResult) {
+        let commentVC = CommentViewController(postId: postDetailModel.postId, comments: comments, emojis: emojis)
         
         if let sheet = commentVC.sheetPresentationController {
             sheet.detents = [

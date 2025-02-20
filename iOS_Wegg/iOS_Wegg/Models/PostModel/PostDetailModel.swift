@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 struct PostDetailModel: Codable {
+    let postId: Int
     let nickname: String
     let profileImage: String
     let postImages: String
@@ -17,6 +18,7 @@ struct PostDetailModel: Codable {
 
     //  BrowsePost → PostDetailModel 변환 생성자
     init(from browsePost: BrowsePost) {
+        self.postId = browsePost.postId  // ✅ postId 저장
         self.nickname = browsePost.accountId
         self.profileImage = browsePost.profileImageUrl ?? "default_image"
         self.postImages = browsePost.postImageUrl
