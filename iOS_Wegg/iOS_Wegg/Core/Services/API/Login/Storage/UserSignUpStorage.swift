@@ -15,8 +15,8 @@ final class UserSignUpStorage {
     private init() {}
     
     public struct SignUpData: Codable {
-        var email: String?
-        var password: String?
+        var email: String
+        var password: String
         var name: String?
         var accountId: String?
         var job: UserOccupation? 
@@ -29,6 +29,32 @@ final class UserSignUpStorage {
         // 소셜 로그인 구분용
         var socialType: SocialType?
         var accessToken: String?
+        
+        init(email: String = "",
+             password: String = "",
+             name: String? = nil,
+             accountId: String? = nil,
+             job: UserOccupation? = nil,
+             reason: UserReason? = nil,
+             phone: String? = nil,
+             marketingAgree: Bool? = nil,
+             alarm: Bool? = nil,
+             contact: [Contact]? = nil,
+             socialType: SocialType? = nil,
+             accessToken: String? = nil) {
+            self.email = email
+            self.password = password
+            self.name = name
+            self.accountId = accountId
+            self.job = job
+            self.reason = reason
+            self.phone = phone
+            self.marketingAgree = marketingAgree
+            self.alarm = alarm
+            self.contact = contact
+            self.socialType = socialType
+            self.accessToken = accessToken
+        }
     }
     
     func save(_ data: SignUpData) {
@@ -68,7 +94,7 @@ extension UserSignUpStorage.SignUpData {
             reason: reason ?? UserReason.formHabits,
             phone: phone ?? "",
             alarm: alarm ?? false,
-            contact: contact?.map { Contact(phone: $0.phone) } ?? [],
+            contact: contact?.map { Contact(phone: $0.phone) } ?? nil,
             socialType: socialType == .email ? nil : socialType,
             accessToken: socialType == .email ? nil : accessToken
         )

@@ -15,14 +15,14 @@ struct FetchAllSchedulesResponse: Decodable {
     
     struct AllSchedulesResult: Decodable {
         let planId: Int
-        let status: String
+        let planDate: String
         let startTime: String
         let finishTime: String
         let lateTime: LateStatus
         let latitude: Double
         let longitude: Double
-        let address: String
-        let content: String?
+        let placeName: String
         let userId: Int
+        let onoff: Bool
     }
 }

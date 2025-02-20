@@ -12,6 +12,7 @@ class SignUpViewController: UIViewController {
     // MARK: - Properties
     
     private let signUpView = SignUpView()
+    private let authService = AuthService.shared
     
     // MARK: - Lifecycle
     
@@ -44,6 +45,12 @@ class SignUpViewController: UIViewController {
             do {
                 let (email, token) = try await GoogleLoginManager.shared.requestSignUp(from: self)
                 
+                let response = try await authService.checkEmail(email)
+                if response.result.duplicate {
+                    showAlert(message: "이미 가입된 이메일입니다")
+                    return
+                }
+                
                 UserSignUpStorage.shared.update { data in
                     data.socialType = .google
                     data.email = email
@@ -63,6 +70,12 @@ class SignUpViewController: UIViewController {
             do {
                 let (id, token) = try await KakaoLoginManager.shared.requestSignUp()
                 
+                let response = try await authService.checkEmail("K\(id)daum.net")
+                if response.result.duplicate {
+                    showAlert(message: "이미 가입된 계정입니다")
+                    return
+                }
+                
                 UserSignUpStorage.shared.update { data in
                     data.socialType = .kakao
                     data.email = "K\(id)@daum.net"
@@ -80,6 +93,18 @@ class SignUpViewController: UIViewController {
     @objc private func emailLoginButtonTapped() {
         let emailSignUpVC = EmailSignUpViewController()
         navigationController?.pushViewController(emailSignUpVC, animated: true)
+    }
+    
+    // MARK: - Properties
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(
+            title: "알림",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
 
 }

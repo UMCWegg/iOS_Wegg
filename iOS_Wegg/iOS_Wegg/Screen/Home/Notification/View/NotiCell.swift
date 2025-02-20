@@ -8,13 +8,15 @@
 import UIKit
 import SnapKit
 import Then
+import Kingfisher
 
 class NotiCell: UITableViewCell {
     static let identifier = "NotiCell"
 
     private let profileImageView = UIImageView().then {
-        $0.image = UIImage(named: "profileImage")
         $0.backgroundColor = .clear
+        $0.layer.cornerRadius = 22.5 // 반지름 값 설정 (45 / 2)
+        $0.clipsToBounds = true // 이미지가 뷰의 경계를 넘어가지 않도록 설정
     }
 
     private let messageLabel = UILabel().then {
@@ -57,8 +59,17 @@ class NotiCell: UITableViewCell {
         }
     }
 
-    func configure(with text: String, time: String) {
+    // configure 메서드 수정
+    func configure(with text: String, time: String, imageUrl: String?) {
         messageLabel.text = text
         timeLabel.text = time
+
+        // imageUrl이 nil이 아닌 경우에만 Kingfisher를 사용하여 이미지 로드
+        if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
+            profileImageView.kf.setImage(with: url)
+        } else {
+            // imageUrl이 nil인 경우 기본 이미지 설정 (선택 사항)
+            profileImageView.image = UIImage(named: "profileImage")
+        }
     }
 }

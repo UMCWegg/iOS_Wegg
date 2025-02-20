@@ -45,9 +45,9 @@ class GetAlertPermissionViewController: UIViewController {
                     data.alarm = granted
                 }
                 
-                let signUpCompleteViewController = SignUpCompleteViewController()
+                let contactPermissionVC = ContactPermissionViewController()
                 self?.navigationController?
-                    .pushViewController(signUpCompleteViewController, animated: true)
+                    .pushViewController(contactPermissionVC, animated: true)
             }
         }
     }

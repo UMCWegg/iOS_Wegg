@@ -134,21 +134,21 @@ extension MapSearchViewController: MapSearchBarDelegate {
     
     func didSearch(query: String) {
         // 검색시 바텀 시트 헤더 숨기기
-        if let hotPlaceVC = mapVC?.hotPlaceSheetVC
-            as? HotPlaceSheetViewController {
-            let hotPlaceView = hotPlaceVC.hotPlaceView
-            hotPlaceView.showBottomSheetComponents(isHidden: true)
-        }
-        
-        // 검색시 바텀시트 half 위치로 이동
-        mapVC?.floatingPanel.move(to: .half, animated: true)
-        // navigationController에서 MapViewController 탐색
-        guard let mapVC = navigationController?.viewControllers.first(
-            where: { $0 is MapViewController }) as? MapViewController else {
-            return
-        }
-        mapVC.overlayView.placeSearchBar.isHidden = false
-        customNavigationAnimation(to: nil, isPush: false)
+//        if let hotPlaceVC = mapVC?.hotPlaceSheetVC
+//            as? HotPlaceSheetViewController {
+//            let hotPlaceView = hotPlaceVC.hotPlaceView
+//            hotPlaceView.showBottomSheetComponents(isHidden: true)
+//        }
+//        
+//        // 검색시 바텀시트 half 위치로 이동
+//        mapVC?.floatingPanel.move(to: .half, animated: true)
+//        // navigationController에서 MapViewController 탐색
+//        guard let mapVC = navigationController?.viewControllers.first(
+//            where: { $0 is MapViewController }) as? MapViewController else {
+//            return
+//        }
+//        mapVC.overlayView.placeSearchBar.isHidden = false
+//        customNavigationAnimation(to: nil, isPush: false)
     }
     
     func didChangeSearchText(query: String) {
