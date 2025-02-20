@@ -8,7 +8,7 @@
 import Foundation
 
 struct CookieStorage {
-    static let cookie: String = "D8339D30D6CB0CCB967F199B607079D5"
+    static let cookie: String = "F8383527C6D67C7AA234D290EE70B49D"
 }
 
 /// 일정 상태를 나타내는 Enum
