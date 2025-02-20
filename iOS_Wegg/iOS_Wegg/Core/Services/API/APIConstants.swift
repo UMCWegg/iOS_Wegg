@@ -76,4 +76,8 @@ struct APIConstants {
     struct FollowLabel {
         static let followLabelURL = "/home/follow"
     }
+    
+    struct WeeklyRenderURL {
+        static let weeklyRenderURL = "/home/week"
+    }
 }
