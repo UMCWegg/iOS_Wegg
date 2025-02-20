@@ -133,7 +133,8 @@ extension HotPlaceSheetViewController {
             header.gestureDelegate = self
             /// HotPlaceCellHeader의 각 섹션마다 데이터 주입
             let section = hotPlaceSectionList[indexPath.section]
-            header.configure(model: section.header)
+            header.configure(model: section.header) // 셀 데이터 주입
+            mapVC?.placeDetailVC.updateUI(with: section) // PlaceDetailView UI 업데이트
             return header
             
         case UICollectionView.elementKindSectionFooter:
