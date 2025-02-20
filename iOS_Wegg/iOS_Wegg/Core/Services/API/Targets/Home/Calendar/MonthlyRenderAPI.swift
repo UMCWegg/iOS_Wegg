@@ -9,7 +9,8 @@ import Foundation
 import Moya
 
 enum MonthlyRenderAPI {
-    case getMonthlyRender
+    case fetchCurrentMonth
+    case fetchSpecificMonth(year: Int, month: Int)
 }
 
 extension MonthlyRenderAPI: TargetType {
@@ -22,8 +23,10 @@ extension MonthlyRenderAPI: TargetType {
     
     var path: String {
         switch self {
-        case .getMonthlyRender:
+        case .fetchCurrentMonth:
             return APIConstants.MonthlyRenderURL.monthlyRenderURL
+        case .fetchSpecificMonth(let year, let month):
+            return APIConstants.MonthlyRenderURL.calendarURL(year: year, month: month)
         }
     }
     
@@ -36,6 +39,23 @@ extension MonthlyRenderAPI: TargetType {
     }
     
     var headers: [String : String]? {
-        return ["Content-Type": "application/json"]
+        return nil
+    }
+}
+
+// APIManager를 사용하여 요청을 보내는 extension
+extension APIManager {
+    func fetchMonthlyData(
+        year: Int? = nil,
+        month: Int? = nil
+    ) async throws -> MonthlyRenderResponse {
+        let target: MonthlyRenderAPI
+        if let year = year, let month = month {
+            target = .fetchSpecificMonth(year: year, month: month)
+        } else {
+            target = .fetchCurrentMonth
+        }
+        
+        return try await request(target: target)
     }
 }

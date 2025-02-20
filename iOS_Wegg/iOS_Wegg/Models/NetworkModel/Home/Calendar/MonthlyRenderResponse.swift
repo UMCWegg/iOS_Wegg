@@ -7,25 +7,25 @@
 
 import Foundation
 
-struct MonthlyRenderResponse: Decodable {
+struct MonthlyRenderResponse: Codable {
     let isSuccess: Bool
     let code: String
     let message: String
-    let result: MonthlyRenderResult
+    let result: MonthlyResult
 }
 
-struct MonthlyRenderResult: Decodable {
-    let monthlyData: [MonthlyRenderData]
-    let dateSummaries: [MonthlyDateSummary]
+struct MonthlyResult: Codable {
+    let monthlyData: [DayData]
+    let dateSummaries: [DateSummary]
 }
 
-struct MonthlyRenderData: Decodable {
+struct DayData: Codable {
     let date: String
-    let plan: MonthlyPlanData?
-    let post: MonthlyPostData?
+    let plan: Plan?
+    let post: Post?
 }
 
-struct MonthlyPlanData: Decodable {
+struct Plan: Codable {
     let id: Int
     let startTime: String
     let endTime: String
@@ -33,13 +33,13 @@ struct MonthlyPlanData: Decodable {
     let eggStatus: String
 }
 
-struct MonthlyPostData: Decodable {
+struct Post: Codable {
     let id: Int
     let imageUrl: String
     let createdAt: String
 }
 
-struct MonthlyDateSummary: Decodable {
+struct DateSummary: Codable {
     let date: String
     let studyTime: Int
     let completionRate: Double
