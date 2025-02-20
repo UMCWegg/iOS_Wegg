@@ -14,12 +14,15 @@ class PlaceVerificationViewController: UIViewController {
     private let apiManager = APIManager()
     
     private var checkVerificationResult: Bool?
+    private var currentLocation: Coordinate?
+    private var planId: Int
     
     // MARK: - Init
     
     /// `MapManagerProtocol`을 주입하여 지도 관리
-    init(mapManager: MapManagerProtocol) {
+    init(mapManager: MapManagerProtocol, planId: Int = 80) { // TODO: 추후 planId 기본값 제거
         self.mapManager = mapManager
+        self.planId = planId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -40,7 +43,7 @@ class PlaceVerificationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         apiManager.setCookie(value: CookieStorage.cookie)
-        checkPlaceVerification()
+        checkPlaceVerificationInfo()
     }
     
     // MARK: - UI Setup
@@ -90,11 +93,11 @@ class PlaceVerificationViewController: UIViewController {
     // MARK: - API Calls
     
     /// 서버에서 장소 인증 정보를 가져와 현재 위치와 비교
-    private func checkPlaceVerification() {
+    private func checkPlaceVerificationInfo() {
         Task {
             do {
                 let response: FetchPlaceVerificationResponse = try await apiManager.request(
-                    target: PlaceVerificationAPI.getkPlaceVerification(planId: 78)
+                    target: PlaceVerificationAPI.getkPlaceVerification(planId: planId)
                 )
                 let placeName = response.result.placeName
                 let placeLocation = Coordinate(
@@ -115,13 +118,12 @@ class PlaceVerificationViewController: UIViewController {
     ///   - placeName: 장소의 이름
     private func verifyUserLocation(with placeLocation: Coordinate, placeName: String) {
         mapManager.getCurrentLocation { [weak self] coordinate in
-            guard let self = self else {
-                print("self 없음")
-                return
-            }
+            guard let self = self,
+                let coordinate = coordinate else { return }
+            currentLocation = coordinate
 
             // 현재 위치와 등록된 장소 위치 비교
-            if coordinate == placeLocation {
+            if currentLocation == placeLocation {
                 checkVerificationResult = true
                 placeVerificationOverlayView.toggleVerificationButton(isEnabled: true)
                 DispatchQueue.main.async { [weak self] in
@@ -152,17 +154,40 @@ extension PlaceVerificationViewController: PlaceVerificationOverlayViewDelegate 
     
     /// 인증하기 버튼을 누르면 인증 결과를 확인하고 메인 화면으로 이동
     func didTapVerificationButton() {
-        guard let checkVerificationResult = checkVerificationResult else { return }
-        if checkVerificationResult {
-            let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
-                // alertVC가 닫힌 후 실행되도록 수정
-                self.dismiss(animated: true) {
-                    let mainVC = MainTabBarController()
-                    mainVC.modalPresentationStyle = .fullScreen
-                    self.present(mainVC, animated: true)
+        guard let verifyLocation = checkVerificationResult else { return }
+        guard let currentLocation = currentLocation else {
+            print("currentLocation is nil")
+            return
+        }
+        
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in
+            // alertVC가 닫힌 후 실행되도록 수정
+            self.dismiss(animated: true) {
+                let mainVC = MainTabBarController()
+                mainVC.modalPresentationStyle = .fullScreen
+                self.present(mainVC, animated: true)
+            }
+        }
+        
+        if verifyLocation {
+            let requst = CheckPlaceVerificationRequest(
+                lat: currentLocation.latitude,
+                lon: currentLocation.longitude
+            )
+            
+            Task {
+                do {
+                    let res: CheckPlaceVerificationResponse = try await self.apiManager.request(
+                        target: PlaceVerificationAPI.checkPlaceVerification(
+                            planId: planId,
+                            request: requst
+                        )
+                    )
+                    showAlert(title: res.message, action: confirmAction)
+                } catch {
+                    print("CheckPlaceVerificationResponse 오류: \(error)")
                 }
             }
-            showAlert(title: "인증 성공!!", action: confirmAction)
         }
     }
 }

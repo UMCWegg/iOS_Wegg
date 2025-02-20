@@ -12,7 +12,7 @@ enum PlaceVerificationAPI {
     /// 장소 인증 화면에 필요한 API
     case getkPlaceVerification(planId: Int)
     /// 실제 장소 인증을 수행하는 API
-//    case checkPlaceVerification(planId: Int)
+    case checkPlaceVerification(planId: Int, request: CheckPlaceVerificationRequest)
 }
 
 extension PlaceVerificationAPI: TargetType {
@@ -27,12 +27,14 @@ extension PlaceVerificationAPI: TargetType {
         switch self {
         case .getkPlaceVerification(let planId):
             return "/plans/\(planId)/check-info"
+        case .checkPlaceVerification(let planId, _):
+            return "/plans/\(planId)/check"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getkPlaceVerification:
+        case .getkPlaceVerification, .checkPlaceVerification:
             return .get
         }
     }
@@ -41,6 +43,14 @@ extension PlaceVerificationAPI: TargetType {
         switch self {
         case .getkPlaceVerification:
             return .requestPlain
+        case .checkPlaceVerification(_, let request):
+            return .requestParameters(
+                parameters: [
+                    "lat": request.lat,
+                    "lon": request.lon
+                ],
+                encoding: URLEncoding.queryString
+            )
         }
     }
     
