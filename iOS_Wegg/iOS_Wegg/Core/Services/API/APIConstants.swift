@@ -72,4 +72,8 @@ struct APIConstants {
     struct Notification {
         static let subscribe = "/notifications/subscribe"
     }
+    
+    struct FollowLabel {
+        static let followLabelURL = "/home/follow"
+    }
 }
