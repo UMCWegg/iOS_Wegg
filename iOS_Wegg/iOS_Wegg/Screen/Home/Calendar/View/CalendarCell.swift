@@ -64,23 +64,13 @@ class CalendarCell: UICollectionViewCell {
 
     func configure(day: String, dailyData: DayData? = nil, isToday: Bool = false) {
         dateLabel.text = day
+        setupSelected(isToday: isToday)
+        
         if day.isEmpty {
             eggImageView.isHidden = true
             circleView.isHidden = true
             dateLabel.text = ""
             return
-        }
-
-        if isToday {
-            circleView.backgroundColor = .clear
-            circleView.layer.borderColor = UIColor.secondary.cgColor
-            circleView.isHidden = false
-            dateLabel.textColor = .secondary
-        } else {
-            circleView.backgroundColor = .clear
-            circleView.layer.borderColor = UIColor.secondary.cgColor
-            circleView.isHidden = true
-            dateLabel.textColor = .black
         }
 
         // API 데이터에 따른 추가 설정
@@ -89,9 +79,12 @@ class CalendarCell: UICollectionViewCell {
             if let post = dailyData.post {
                 // post가 있는 경우, imageUrl을 사용하여 이미지 로드
                 updateEggImage(with: post.imageUrl)
-            } else if dailyData.plan != nil {
-                // plan이 있는 경우, plan에 따른 이미지 설정 (예: "fillEgg" 또는 "brokenEgg")
-                eggImageView.image = UIImage(named: "fillEgg") // 예시 이미지
+            } else if let plan = dailyData.plan {
+              if plan.status == "FAILED"{
+                    eggImageView.image = UIImage(named: "brokenEgg")
+                } else {
+                    eggImageView.image = UIImage(named: "fillEgg")
+                }
             } else {
                 // plan과 post가 모두 없는 경우 기본 이미지 설정
                 eggImageView.image = UIImage(named: "emptyEgg")
@@ -101,6 +94,11 @@ class CalendarCell: UICollectionViewCell {
             eggImageView.image = UIImage(named: "emptyEgg")
             eggImageView.isHidden = true // dailyData가 없는 경우 숨김
         }
+    }
+    
+    private func setupSelected(isToday: Bool = false) {
+        circleView.isHidden = !isToday
+        dateLabel.textColor = isToday ? UIColor.secondary : UIColor.label
     }
 
     private func updateEggImage(with imageSource: String?) {
@@ -143,7 +141,7 @@ class CalendarCell: UICollectionViewCell {
         return renderer.image { context in
             let cgContext = context.cgContext
             // 1️⃣ 배경을 yellowWhite로 채우기
-            cgContext.setFillColor(UIColor.yellowWhite.cgColor) // `.yellowWhite` 배경 적용
+            cgContext.setFillColor(UIColor.yellowWhite.cgColor)
             cgContext.fill(CGRect(origin: .zero, size: eggMask.size))
             // 2️⃣ 이미지를 emptyEgg 크기에 맞게 그림
             let imageRect = CGRect(origin: .zero, size: eggMask.size)
