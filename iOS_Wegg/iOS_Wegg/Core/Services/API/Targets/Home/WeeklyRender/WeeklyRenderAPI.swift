@@ -35,7 +35,7 @@ extension WeeklyResponseAPI: TargetType {
         return .requestPlain
     }
     
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         return ["Content-Type": "application/json"]
     }
 }

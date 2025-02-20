@@ -287,7 +287,7 @@ extension ScheduleViewController: ScheduleCardCellDelegate {
                     target: ScheduleAPI.onOffSchedule(planId: planId, request: request)
                 )
             } catch {
-                print("DeleteScheduleResponse 오류: \(error)")
+                print("OnOffScheduleResponse 오류: \(error)")
             }
         }
     }
