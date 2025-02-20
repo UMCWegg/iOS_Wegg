@@ -11,6 +11,7 @@ import SnapKit
 protocol HotPlaceSheetViewDelegate: AnyObject {
     func didTapDistanceButton()
     func didTapVerificationButton()
+    func didTapBookmarkButton()
 }
 
 class HotPlaceSheetView: UIView {
@@ -172,7 +173,7 @@ class HotPlaceSheetView: UIView {
 
     @objc private func bookmarkButtonHandler() {
         updateSelectedButton(bookMarkListButton)
-        print("[HotPlaceSheetView] 북마크 버튼 클릭")
+        delegate?.didTapBookmarkButton()
     }
     
     /// 버튼 선택 상태를 업데이트하는 함수

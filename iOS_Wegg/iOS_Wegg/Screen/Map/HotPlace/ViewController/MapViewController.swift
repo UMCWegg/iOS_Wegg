@@ -81,7 +81,7 @@ class MapViewController:
         
         // 장소 상세 정보 표시 위한 마커 지우고 뷰 로드
         selectedPlaceDetailInfo.removeAll()
-        mapManager.removeAllMarkers()
+        removeAllMarkers()
     }
     
     override func viewDidLoad() {
@@ -190,7 +190,7 @@ class MapViewController:
     /// - `place`가 비어 있으면 실행되지 않음
     /// - API 호출 후 데이터가 로드된 뒤 실행해야 함
     /// - `mapManager.addMarker(at:)`를 사용하여 지도에 마커 추가
-    private func setupMarkers<T>(from places: [T]) {
+    func setupMarkers<T>(from places: [T]) {
         guard !places.isEmpty else {
             print("MapViewController Error: 마커를 추가할 데이터가 없음")
             return
@@ -212,6 +212,13 @@ class MapViewController:
                     longitude: detail.longitude
                 )
                 imageName = "yellow_wegg_icon"
+            } else if let bookmark = place as? FetchAllBookMarkPlaceResponse.BookMarkPlaceList {
+                print(bookmark)
+                coordinate = Coordinate(
+                    latitude: bookmark.latitude,
+                    longitude: bookmark.longitude
+                )
+                imageName = "list_brown_icon"
             } else {
                 return
             }
@@ -230,7 +237,7 @@ class MapViewController:
     /// 화면 경계값 안에 존재하는 모든 핫플레이스 호출 및 UI 업데이트
     func fetchHotPlacesFromVisibleBounds(sortBy: String = "distance") {
         // 지도 경계 좌표 가져오기
-        let request = mapManager.getVisibleBounds(sortBy: "distance")
+        let request = mapManager.getVisibleBounds(sortBy: sortBy)
         
         Task {
             do {
@@ -315,6 +322,10 @@ class MapViewController:
             }
             self.hotPlaceSheetVC.updateHotPlaceList(section)
         }
+    }
+    
+    public func removeAllMarkers() {
+        mapManager.removeAllMarkers()
     }
 }
 

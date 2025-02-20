@@ -170,18 +170,18 @@ extension HotPlaceSheetViewController:
     
     func didTapHotPlaceCellHeader(at indexPath: IndexPath) {
         guard let mapVC = mapVC else { return }
-
+        
         // 사용자가 탭한 셀의 섹션 데이터 가져오기
         let selectedSection = hotPlaceSectionList[indexPath.section]
         let placeName = selectedSection.header.title
-
+        
         fetchDetailInfo(query: placeName, from: selectedSection) { updatedSection in
             DispatchQueue.main.async {
                 let hotPlaceView = mapVC.hotPlaceSheetVC.hotPlaceView
                 hotPlaceView.showBottomSheetComponents(isHidden: true)
                 
                 let placeDetailVC = PlaceDetailViewController(sectionModel: updatedSection)
-
+                
                 // FloatingPanel에서 새로운 장소 정보를 보여줌
                 mapVC.floatingPanel.set(contentViewController: placeDetailVC)
                 mapVC.floatingPanel.move(to: .full, animated: true)
@@ -207,6 +207,10 @@ extension HotPlaceSheetViewController:
         }
         // REFACT: API 중복 호출 방지 필요
         mapVC.fetchHotPlacesFromVisibleBounds(sortBy: "authCount")
+    }
+    
+    func didTapBookmarkButton() {
+        fetchAllBookmarks(page: 0, pageSize: 15)
     }
     
 }
@@ -260,15 +264,35 @@ extension HotPlaceSheetViewController {
         }
     }
     
-    private func fetchAllBookmarks() {
-        let request = FetchAllBookMarkPlaceRequest(page: 0, size: 15)
+    private func fetchAllBookmarks(page: Int, pageSize: Int) {
+        let request = FetchAllBookMarkPlaceRequest(page: page, size: pageSize)
         
         Task {
             do {
                 let response: FetchAllBookMarkPlaceResponse = try await apiManager.request(
                     target: HotPlacesAPI.getAllBookmarkPlace(request: request)
                 )
-                print("bookmarkPlaceList: \(response.result.bookmarkPlaceList)")
+                hotPlaceSectionList = response.result.bookmarkPlaceList.map { bookmarkPlace in
+                    return HotPlaceSectionModel(
+                        addressId: bookmarkPlace.addressId,
+                        header: HotPlaceHeaderModel(
+                            title: bookmarkPlace.placeName,
+                            category: bookmarkPlace.placeLabel,
+                            address: nil,
+                            verificationCount: "인증 \(bookmarkPlace.authCount)",
+                            saveCount: "저장 \(bookmarkPlace.saveCount)"
+                        ),
+                        items: bookmarkPlace.postList.map { post in
+                            HotPlaceImageModel(imageName: post.imageUrl)
+                        }
+                    )
+                }
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.mapVC?.removeAllMarkers()
+                    self.mapVC?.setupMarkers(from: response.result.bookmarkPlaceList)
+                    self.updateHotPlaceList(self.hotPlaceSectionList)
+                }
             } catch {
                 print("FetchAllBookMarkPlaceResponse 실패: \(error)")
             }
