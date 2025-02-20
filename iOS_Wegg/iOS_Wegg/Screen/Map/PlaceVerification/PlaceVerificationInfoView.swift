@@ -49,9 +49,11 @@ class PlaceVerificationInfoView: UIView {
         }
     }
     
+    @MainActor
     public func setLabel(title: String, subTitle: String) {
         titleLabel.text = title
         subtitleLabel.text = subTitle
+        layoutIfNeeded()
     }
     
     private func makeButton(

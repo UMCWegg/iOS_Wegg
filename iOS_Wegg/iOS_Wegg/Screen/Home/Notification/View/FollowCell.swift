@@ -15,25 +15,24 @@ enum FollowCellType {
 }
 
 class FollowCell: UITableViewCell {
-    
     static let identifier = "FollowCell"
-    
+
     private let profileImageView = UIImageView().then {
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = true
         $0.backgroundColor = .lightGray
     }
-    
+
     private let usernameLabel = UILabel().then {
         $0.font = .notoSans(.regular, size: 16)
         $0.textColor = .black
     }
-    
+
     private let realNameLabel = UILabel().then {
         $0.font = .notoSans(.regular, size: 14)
         $0.textColor = .gray
     }
-    
+
     // 확인 버튼 뷰
     private let actionButton = UIView().then {
         $0.layer.cornerRadius = 15
@@ -41,24 +40,26 @@ class FollowCell: UITableViewCell {
         $0.layer.borderColor = UIColor.secondary.cgColor
         $0.layer.backgroundColor = UIColor.primary.cgColor
     }
+
     private let actionLabel = UILabel().then {
         $0.text = "확인"
         $0.textColor = .secondary
         $0.font = .notoSans(.regular, size: 13)
     }
-    
+
     // 취소 버튼 뷰
     private let deleteButton = UIView().then {
         $0.layer.cornerRadius = 15
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.secondary.cgColor
     }
+
     private let deleteLabel = UILabel().then {
         $0.text = "취소"
         $0.textColor = .secondary
         $0.font = .notoSans(.regular, size: 13)
     }
-    
+
     // 팔로우 버튼 뷰
     private let followButton = UIView().then {
         $0.layer.cornerRadius = 15
@@ -66,22 +67,23 @@ class FollowCell: UITableViewCell {
         $0.layer.borderColor = UIColor.secondary.cgColor
         $0.layer.backgroundColor = UIColor.primary.cgColor
     }
+
     private let followLabel = UILabel().then {
         $0.text = "팔로우"
         $0.textColor = .secondary
         $0.font = .notoSans(.regular, size: 13)
     }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLayout()
         setupActions()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupLayout() {
         let stackView = UIStackView(arrangedSubviews: [usernameLabel, realNameLabel]).then {
             $0.axis = .vertical
@@ -148,7 +150,7 @@ class FollowCell: UITableViewCell {
             $0.center.equalToSuperview()
         }
     }
-    
+
     private func setupActions() {
         // 확인 버튼 탭 제스처 추가
         let actionTapGesture = UITapGestureRecognizer(
@@ -174,23 +176,22 @@ class FollowCell: UITableViewCell {
         followButton.addGestureRecognizer(followTapGesture)
         followButton.isUserInteractionEnabled = true
     }
-    
+
     @objc private func actionButtonTapped() {
         print("확인 버튼 탭")
     }
-    
+
     @objc private func deleteButtonTapped() {
         print("취소 버튼 탭")
     }
-    
+
     @objc private func followButtonTapped() {
         print("팔로우 버튼 탭")
     }
-    
+
     func configure(with username: String, name: String, type: FollowCellType) {
         usernameLabel.text = username
         realNameLabel.text = name
-        
         switch type {
         case .request:
             actionButton.isHidden = false
@@ -202,7 +203,7 @@ class FollowCell: UITableViewCell {
             followButton.isHidden = false
         }
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 12
     }

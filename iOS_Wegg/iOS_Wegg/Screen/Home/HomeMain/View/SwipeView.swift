@@ -12,6 +12,7 @@ import Then
 final class SwipeView: UIView, UIScrollViewDelegate {
 
     // MARK: - UI Components
+
     private let scrollView = UIScrollView().then {
         $0.isPagingEnabled = true
         $0.showsHorizontalScrollIndicator = false
@@ -28,23 +29,25 @@ final class SwipeView: UIView, UIScrollViewDelegate {
     private var slides: [UIView] = []
 
     // MARK: - Dynamic Data
-    private var totalTodos: Int = 4
-    private var completedTodos: Int = 2
-    private var consecutiveSuccesses: Int = 3
+    private var totalTodos: Int = 0
+    private var completedTodos: Int = 0
+    private var completionRate: Double = 0.0
+    private var consecutiveSuccesses: Int = 0 // 초기값 0으로 변경
+    private var availablePoints: Int = 0 // 사용 가능한 포인트
+    private var canReceivePoints: Bool = false // 포인트 수령 가능 여부
 
     // MARK: - Initializer
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
         setupLayout()
-        loadData() // 데이터 로드 추가
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
         setupLayout()
-        loadData() // 데이터 로드 추가
     }
 
     override func layoutSubviews() {
@@ -55,6 +58,7 @@ final class SwipeView: UIView, UIScrollViewDelegate {
     }
 
     // MARK: - Setup Methods
+
     private func setupUI() {
         self.do {
             $0.backgroundColor = .yellowWhite
@@ -65,7 +69,6 @@ final class SwipeView: UIView, UIScrollViewDelegate {
 
         addSubview(scrollView)
         addSubview(pageControl)
-
         scrollView.delegate = self
     }
 
@@ -92,7 +95,7 @@ final class SwipeView: UIView, UIScrollViewDelegate {
                 highlightColor: .primary
             ),
             remainingText: "나머지 \(totalTodos - completedTodos)개도 마저 달성하여 에그를 얻어보세요",
-            progress: CGFloat(completedTodos) / CGFloat(totalTodos),
+            progress: CGFloat(completionRate / 100),
             image: nil
         )
 
@@ -103,16 +106,14 @@ final class SwipeView: UIView, UIScrollViewDelegate {
                 highlightText: "\(consecutiveSuccesses)번",
                 highlightColor: .primary
             ),
-            remainingText: "알을 눌러 포인트를 적립하세요",
+            remainingText: getPointDescription(), // 포인트 정보 가져오기
             progress: nil,
             image: "shineEgg"
         )
 
         slides = [slide1, slide2]
-
         let slideWidth = bounds.width
         let slideHeight = bounds.height
-
         for (index, slide) in slides.enumerated() {
             scrollView.addSubview(slide)
             slide.snp.makeConstraints { make in
@@ -130,6 +131,7 @@ final class SwipeView: UIView, UIScrollViewDelegate {
     }
 
     // MARK: - 텍스트 컬러 적용 함수
+
     private func attributedText(
         fullText: String,
         highlightText: String,
@@ -137,12 +139,12 @@ final class SwipeView: UIView, UIScrollViewDelegate {
     ) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: fullText)
         let range = (fullText as NSString).range(of: highlightText)
-
         attributedString.addAttribute(.foregroundColor, value: highlightColor, range: range)
         return attributedString
     }
 
     // MARK: - createSlideView 수정
+
     private func createSlideView(
         title: String,
         progressText: NSAttributedString,
@@ -158,7 +160,6 @@ final class SwipeView: UIView, UIScrollViewDelegate {
 
         // 라벨을 묶을 컨테이너 뷰
         let labelContainerView = UIView()
-
         let titleLabel = UILabel().then {
             $0.text = title
             $0.font = .notoSans(.bold, size: 13)
@@ -202,7 +203,6 @@ final class SwipeView: UIView, UIScrollViewDelegate {
         let contentView = UIView()
         contentView.addSubview(labelContainerView)
         contentView.addSubview(progress != nil ? eggProgressView : shineEggView)
-
         view.addSubview(contentView)
 
         contentView.snp.makeConstraints { make in
@@ -248,9 +248,9 @@ final class SwipeView: UIView, UIScrollViewDelegate {
     }
 
     // MARK: - Button Action
+
     @objc private func shineEggButtonTapped(_ sender: UIButton) {
         print("포인트 버튼 클릭✅")
-
         // 애니메이션 효과: 살짝 줄어들었다가 복귀
         UIView.animate(withDuration: 0.1, animations: {
             sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9) // 크기 줄이기
@@ -259,112 +259,52 @@ final class SwipeView: UIView, UIScrollViewDelegate {
                 sender.transform = CGAffineTransform.identity // 원래 크기로 복귀
             })
         }
-    }
-
-    // MARK: - API 연동 및 데이터 업데이트
-    func loadData() {
-        Task {
-            let todoService = TodoService()
-
-            // 투두 리스트 가져오기
-            let todoListResult = await todoService.getTodoList()
-            switch todoListResult {
-            case .success(let todos):
-                self.totalTodos = todos.count
-                self.completedTodos = todos.filter { $0.status == "DONE" }.count
-                print("✅ Todo List 가져오기 성공: Total \(totalTodos), Completed \(completedTodos)")
-
-                // 달성률 가져오기
-                let achievementResult = await todoService.getTodoAchievement()
-                switch achievementResult {
-                case .success(let achievement):
-                    print("✅ 달성률 가져오기 성공: \(achievement)")
-
-                    // UI 업데이트 (메인 스레드에서)
-                    DispatchQueue.main.async {
-                        self.updateAchievement(achievement)
-                        self.updateTodoCount(completed: self.completedTodos, total: self.totalTodos)
-                        self.setupSlides() // 슬라이드 업데이트
-                    }
-                case .failure(let error):
-                    print("❌ 달성률 가져오기 실패: \(error)")
-                }
-
-            case .failure(let error):
-                print("❌ Todo List 가져오기 실패: \(error)")
-            }
+        // TODO: 포인트 획득 로직 구현 필요
+        if canReceivePoints {
+            print("포인트 획득 가능: \(availablePoints) 포인트")
+            // TODO: 포인트 획득 API 호출 및 UI 업데이트 로직 추가
+        } else {
+            print("포인트 획득 불가능")
         }
     }
 
-
-    // MARK: - 투두 달성률 업데이트
-    func updateAchievement(_ achievement: Double) {
-        guard let slide = slides.first else {
-            print("⚠️ [SwipeView] 첫 번째 슬라이드를 찾을 수 없습니다.")
-            return
-        }
-
-        // 프로그레스 뷰 업데이트
-        for subview in slide.subviews {
-            if let contentView = subview as? UIView {
-                for subview2 in contentView.subviews {
-                    if let eggProgressView = subview2.subviews.first(
-                        where: { $0 is EggProgressView }) as? EggProgressView {
-                        let progress = CGFloat(achievement / 100)
-                        eggProgressView.setProgress(progress, animated: true)
-                        print("✅ [SwipeView] eggProgressView 업데이트 완료: \(progress * 100)%")
-                        break
-                    }
-                }
-            }
-        }
+    // MARK: - 데이터 업데이트 함수
+    func updateTodoData(totalTodos: Int, completedTodos: Int, completionRate: Double) {
+        self.totalTodos = totalTodos
+        self.completedTodos = completedTodos
+        self.completionRate = completionRate
+        setupSlides() // 슬라이드 업데이트
     }
 
-    // MARK: - 투두 개수 업데이트
-    func updateTodoCount(completed: Int, total: Int) {
-        self.completedTodos = completed
-        self.totalTodos = total
+    // MARK: - 연속 성공 횟수 업데이트 함수
+    func updateConsecutiveSuccesses(successCount: Int) {
+        self.consecutiveSuccesses = successCount
+        setupSlides() // 슬라이드 업데이트
+    }
 
-        guard let slide = slides.first else { return }
+    // MARK: - 포인트 정보 업데이트 함수
+    func updatePointInfo(availablePoints: Int, canReceivePoints: Bool) {
+        self.availablePoints = availablePoints
+        self.canReceivePoints = canReceivePoints
+        setupSlides() // 슬라이드 업데이트
+        print(
+            "포인트: availablePoints = \(availablePoints), canReceivePoints = \(canReceivePoints)"
+        )
+    }
 
-        // Find labelContainerView
-        for subview in slide.subviews {
-            if let contentView = subview as? UIView {
-                for subview2 in contentView.subviews {
-                    if let labelContainerView = subview2 as? UIView {
-
-                        // progressLabel 업데이트
-                        if let progressLabel = labelContainerView.subviews.first(where: {
-                            ($0 as? UILabel)?.font == UIFont.notoSans(.bold, size: 14)
-                        }) as? UILabel {
-                            let text = "\(totalTodos)개의 투두 중 \(completedTodos)개를 달성했어요!"
-                            let attributedText = self.attributedText(
-                                fullText: text,
-                                highlightText: "\(completedTodos)개",
-                                highlightColor: .primary
-                            )
-                            progressLabel.attributedText = attributedText
-                            print("✅ 투두 개수 업데이트 완료: \(completedTodos)/\(totalTodos)")
-                        }
-
-                        // remainingLabel 업데이트
-                        if let remainingLabel = labelContainerView.subviews.first(where: {
-                            ($0 as? UILabel)?.font == UIFont.notoSans(.medium, size: 11) &&
-                            ($0 as? UILabel)?.text?.contains("나머지") == true
-                        }) as? UILabel {
-                            let remaining = totalTodos - completedTodos
-                            let remainingText = "나머지 \(remaining)개도 마저 달성하여 에그를 얻어보세요"
-                            remainingLabel.text = remainingText
-                            print("✅ 남은 투두 개수 업데이트 완료: \(remaining)개")
-                        }
-                        break
-                    }
-                }
-            }
+    // MARK: - 포인트 정보 표시 함수
+    private func getPointDescription() -> String {
+        if canReceivePoints {
+            print("포인트 획득 가능, \(availablePoints) 포인트")
+            return "알을 눌러 \(availablePoints) 포인트를 적립하세요"
+        } else {
+            print("포인트 획득 불가능")
+            return "포인트를 획득할 수 있는 조건이 아직 충족되지 않았어요"
         }
     }
 
     // MARK: - UIScrollViewDelegate
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageWidth = scrollView.frame.width
         let currentPage = Int((scrollView.contentOffset.x + (0.5 * pageWidth)) / pageWidth)

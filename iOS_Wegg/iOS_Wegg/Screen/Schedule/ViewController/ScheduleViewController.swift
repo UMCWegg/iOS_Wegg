@@ -10,7 +10,7 @@ import UIKit
 struct ScheduleModel: Hashable {
     let id: Int
     let date: String
-    let location: String
+    let placeName: String
     let timeRange: String
     var isOn: Bool
 }
@@ -97,7 +97,7 @@ class ScheduleViewController:
         snapshot.appendItems(scheduleList)
         // DataSource가 nil이 아닌 경우 스냅샷 적용
         guard let dataSource = dataSource else { return }
-        dataSource.apply(snapshot, animatingDifferences: true)
+        dataSource.apply(snapshot, animatingDifferences: false)
         
 //        // 현재 스냅샷 가져오기
 //        let currentSnapshot = dataSource.snapshot()
@@ -125,15 +125,58 @@ class ScheduleViewController:
     private func convertToScheduleModel(
         from scheduleList: [FetchAllSchedulesResponse.AllSchedulesResult]
     ) -> [ScheduleModel] {
-        return scheduleList.map { schedule in
-            ScheduleModel(
+        let scheduleList: [ScheduleModel] = scheduleList.map { schedule in
+            let convertedStartTime = convertToAMPMFormat(schedule.startTime)
+            let convertedFinishTime = convertToAMPMFormat(schedule.finishTime)
+            
+            guard let formattedDate = formatPlanDate(schedule.planDate) else {
+                return ScheduleModel(
+                    id: schedule.planId,
+                    date: schedule.planDate,
+                    placeName: schedule.placeName,
+                    timeRange: convertedStartTime + " ~ " + convertedFinishTime,
+                    isOn: schedule.onoff
+                )
+            }
+            
+            return ScheduleModel(
                 id: schedule.planId,
-                date: schedule.startTime,
-                location: schedule.address,
-                timeRange: schedule.startTime + schedule.finishTime,
-                isOn: true
+                date: formattedDate,
+                placeName: schedule.placeName,
+                timeRange: convertedStartTime + " ~ " + convertedFinishTime,
+                isOn: schedule.onoff
             )
         }
+        return scheduleList
+    }
+    
+    /// M월 d일로 변환
+    func formatPlanDate(_ dateString: String) -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd" // 서버에서 받은 날짜 형식
+        inputFormatter.locale = Locale(identifier: "ko_KR") // 한국어 로캘 설정
+        
+        guard let date = inputFormatter.date(from: dateString) else { return nil }
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "M월 d일" // 원하는 출력 형식
+
+        return outputFormatter.string(from: date)
+    }
+    
+    /// 24시간 형식의 시간을 AM/PM 형식으로 변환하는 함수
+    private func convertToAMPMFormat(_ timeString: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "HH:mm" // 서버에서 받은 형식 (24시간제)
+        inputFormatter.locale = Locale(identifier: "ko_KR")
+        
+        guard let date = inputFormatter.date(from: timeString) else { return timeString }
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "a h:mm" // AM/PM 형식
+        outputFormatter.locale = Locale(identifier: "ko_KR") // 한국어 설정
+        
+        return outputFormatter.string(from: date)
     }
     
     /// 삭제 API 호출 및 UI 업데이트
@@ -244,7 +287,7 @@ extension ScheduleViewController: ScheduleCardCellDelegate {
                     target: ScheduleAPI.onOffSchedule(planId: planId, request: request)
                 )
             } catch {
-                print("DeleteScheduleResponse 오류: \(error)")
+                print("OnOffScheduleResponse 오류: \(error)")
             }
         }
     }

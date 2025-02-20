@@ -9,13 +9,13 @@ import UIKit
 import SnapKit
 
 protocol HotPlaceCellGestureDelegate: AnyObject {
-    func didTapHotPlaceCellHeader()
+    func didTapHotPlaceCellHeader(at indexPath: IndexPath)
 }
 
 class HotPlaceCellHeader: UICollectionReusableView {
     
     weak var gestureDelegate: HotPlaceCellGestureDelegate?
-    
+    private var indexPath: IndexPath?
     static let identifier = "HotPlaceCellHeader"
     
     override init(frame: CGRect) {
@@ -89,15 +89,17 @@ class HotPlaceCellHeader: UICollectionReusableView {
     }
     
     /// 헤더 셀 초기화 설정 함수
-    public func configure(model: HotPlaceHeaderModel) {
+    public func configure(model: HotPlaceHeaderModel, indexPath: IndexPath) {
         titleLabel.text = model.title
         categoryLabel.text = model.category
         verificationCount.text = model.verificationCount
         saveCount.text = model.saveCount
+        self.indexPath = indexPath
     }
     
     @objc private func headerTitleStackTapped() {
-        gestureDelegate?.didTapHotPlaceCellHeader()
+        guard let indexPath = indexPath else { return }
+        gestureDelegate?.didTapHotPlaceCellHeader(at: indexPath) // indexPath 전달
     }
     
 }
