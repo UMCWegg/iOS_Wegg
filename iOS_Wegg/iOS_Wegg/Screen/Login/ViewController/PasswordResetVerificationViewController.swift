@@ -26,6 +26,7 @@ class PasswordResetVerificationViewController: UIViewController {
         view.backgroundColor = .white
         setupActions()
         setupEmailLabel()
+        setupTimer()
     }
     
     // MARK: - Setup
@@ -51,6 +52,20 @@ class PasswordResetVerificationViewController: UIViewController {
         if let email = userEmail {
             passwordResetVerificationView.emailText = email
         }
+    }
+    
+    private func setupTimer() {
+        TimerManager.shared.timerCallback = { [weak self] remainingTime in
+            self?.passwordResetVerificationView.timerLabel.text
+            = TimerManager.shared.getFormattedTime()
+        }
+        
+        TimerManager.shared.timerExpiredCallback = { [weak self] in
+            self?.showAlert(message: "인증 시간이 만료되었습니다. 다시 시도해주세요.")
+            self?.navigationController?.popViewController(animated: true)
+        }
+        
+        TimerManager.shared.startTimer()
     }
     
     // MARK: - Actions
@@ -84,6 +99,8 @@ class PasswordResetVerificationViewController: UIViewController {
     }
     
         @objc private func resendButtonTapped() {
+            TimerManager.shared.startTimer()
+            
             guard let userEmail = userEmail else { return }
             
             Task {

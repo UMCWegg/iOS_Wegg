@@ -10,6 +10,7 @@ import Moya
 
 enum FollowAPI {
     case getFollowInfo
+    
 }
 
 extension FollowAPI: TargetType {

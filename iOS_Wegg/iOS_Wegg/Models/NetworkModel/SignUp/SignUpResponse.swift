@@ -20,7 +20,7 @@ struct SignUpResponse: Decodable {
 }
 
 struct SignUpResult: Decodable {
-    let userID: Int64
+    let userID: Int
     let createdAt: String
     let contactFriends: [ContactFriend]?
     

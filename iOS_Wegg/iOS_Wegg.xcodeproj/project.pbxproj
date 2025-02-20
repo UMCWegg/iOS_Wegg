@@ -170,6 +170,36 @@
 			path = Label;
 			sourceTree = "<group>";
 		};
+		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BrowseItem;
+			sourceTree = "<group>";
+		};
+		FF3CBFAF2D41070000006955 /* PostModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PostModel;
+			sourceTree = "<group>";
+		};
+		FF3CC3402D4B41FD00006955 /* EmojiModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EmojiModel;
+			sourceTree = "<group>";
+		};
+		FF883B662D6616AF00FDC0C0 /* SettingsModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SettingsModel;
+			sourceTree = "<group>";
+		};
+		FF8910C52D669A2A0069D109 /* SearchModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SearchModel;
+			sourceTree = "<group>";
+		};
+		FF891BCF2D67E1DF0069D109 /* SignUp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Map;
@@ -209,17 +239,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E0E55152D67F4F100C361F1 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
+				FF8910C52D669A2A0069D109 /* SearchModel */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		0E98E9CC2D2D009D006F25EF = {
 			isa = PBXGroup;
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
 				0E0E52CB2D67AE1800C361F1 /* iOS_Wegg.app */,
+				0E0E55152D67F4F100C361F1 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				FF891BCF2D67E1DF0069D109 /* SignUp */,
 				0EDA96F22D64ADEB008656E7 /* Home */,
 				FFC8E52F2D5605100094B687 /* Map */,
 				DEEB72322D4D211C001C3880 /* Label */,
@@ -330,6 +374,12 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DEEB72322D4D211C001C3880 /* Label */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
+				FF8910C52D669A2A0069D109 /* SearchModel */,
+				FF891BCF2D67E1DF0069D109 /* SignUp */,
 				FFC8E52F2D5605100094B687 /* Map */,
 			);
 			name = iOS_Wegg;
@@ -482,6 +532,7 @@
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSContactsUsageDescription = "연락처를 통해 Wegg를 사용하고 있는 친구들을 찾고 연결하기 위해 연락처 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용 중에 위치를 활용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -519,6 +570,7 @@
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSContactsUsageDescription = "연락처를 통해 Wegg를 사용하고 있는 친구들을 찾고 연결하기 위해 연락처 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용 중에 위치를 활용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

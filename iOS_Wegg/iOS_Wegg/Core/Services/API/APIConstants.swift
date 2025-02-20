@@ -81,4 +81,18 @@ struct APIConstants {
     struct WeeklyRenderURL {
         static let weeklyRenderURL = "/home/week"
     }
+    
+    struct MonthlyRenderURL {
+        static let monthlyRenderURL = "/home/month"
+        static func calendarURL(year: Int, month: Int) -> String {
+            return "/home/calendar/\(year)/\(month)"
+        }
+    }
+    
+    struct NotificationURL {
+        static let notificationURL = "/notifications"
+        static func markAsReadURL(notificationId: Int) -> String {
+            return "/notifications/\(notificationId)"
+        }
+    }
 }
