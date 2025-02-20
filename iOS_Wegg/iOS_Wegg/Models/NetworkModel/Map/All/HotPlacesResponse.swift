@@ -22,6 +22,7 @@ struct HotPlacesResponse: Codable {
         let latitude: Double
         let longitude: Double
         let placeName: String
+        let phone: String
         let placeLabel: String
         let authCount: Int
         let saveCount: Int

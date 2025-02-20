@@ -51,7 +51,7 @@ class ScheduleCardCell: UITableViewCell {
         $0.textColor = .black
     }
     
-    private lazy var titleLabel = UILabel().then {
+    private lazy var placeLabel = UILabel().then {
         $0.font = .notoSans(.bold, size: 20)
         $0.textColor = .black
     }
@@ -83,7 +83,7 @@ class ScheduleCardCell: UITableViewCell {
     func configure(with schedule: ScheduleModel) {
         planId = schedule.id
         dateLabel.text = schedule.date
-        titleLabel.text = schedule.location
+        placeLabel.text = schedule.placeName
         timeRangeLabel.text = schedule.timeRange
         toggleSwitch.isOn = schedule.isOn
     }
@@ -99,7 +99,7 @@ private extension ScheduleCardCell {
     
     func addComponents() {
         contentView.addSubview(containerView)
-        [yellowLogoIcon, titleLabel].forEach(logoTitleStack.addArrangedSubview)
+        [yellowLogoIcon, placeLabel].forEach(logoTitleStack.addArrangedSubview)
         [
             dateLabel,
             logoTitleStack,
@@ -135,7 +135,7 @@ private extension ScheduleCardCell {
         timeRangeLabel.snp.makeConstraints { make in
             make.top.equalTo(logoTitleStack.snp.bottom).offset(5)
             make.leading.lessThanOrEqualToSuperview().offset(20)
-            make.width.equalTo(160)
+            make.width.equalTo(190)
         }
         
         toggleSwitch.snp.makeConstraints { make in

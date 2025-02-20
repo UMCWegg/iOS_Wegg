@@ -111,8 +111,11 @@ final class AuthView: UIView {
         )
     }
     
+    // 클로저 전달 - 작성자: 이재원
+    var onPlaceVerificationTapped: (() -> Void)?
+    
     @objc private func locationAuthTapped() {
-        print("장소 인증 터치 ✅")
+        onPlaceVerificationTapped?()
     }
 
     // MARK: - 📍 **업데이트 메서드 (장소 정보 적용)**

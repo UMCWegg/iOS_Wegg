@@ -181,7 +181,7 @@ private extension MapOverlayView {
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(
                 MapViewLayout.PlaceSearch.topOffset
             )
-            make.leading.lessThanOrEqualToSuperview().offset(21)
+            make.leading.lessThanOrEqualToSuperview().offset(12)
         }
         
         placeSearchBar.snp.makeConstraints { make in

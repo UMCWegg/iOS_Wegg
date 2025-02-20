@@ -11,10 +11,12 @@ import Then
 class HotPlaceSheetViewController: UIViewController {
     /// `MapViewController`를 참조하도록 설정하여 FloatingPanel에 접근할 수 있도록 함
     weak var mapVC: MapViewController?
+    private let apiManager: APIManager 
     private var hotPlaceSectionList: [HotPlaceSectionModel] = []
     
-    init(mapVC: MapViewController?) { // 생성자에서 의존성 주입
+    init(mapVC: MapViewController?, apiManager: APIManager) { // 생성자에서 의존성 주입
         self.mapVC = mapVC
+        self.apiManager = apiManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -133,7 +135,7 @@ extension HotPlaceSheetViewController {
             header.gestureDelegate = self
             /// HotPlaceCellHeader의 각 섹션마다 데이터 주입
             let section = hotPlaceSectionList[indexPath.section]
-            header.configure(model: section.header) // 셀 데이터 주입
+            header.configure(model: section.header, indexPath: indexPath) // 셀 데이터 주입
             return header
             
         case UICollectionView.elementKindSectionFooter:
@@ -166,19 +168,26 @@ extension HotPlaceSheetViewController:
     HotPlaceCellGestureDelegate,
     HotPlaceSheetViewDelegate {
     
-    func didTapHotPlaceCellHeader() {
+    func didTapHotPlaceCellHeader(at indexPath: IndexPath) {
         guard let mapVC = mapVC else { return }
-        let hotPlaceView = mapVC.hotPlaceSheetVC.hotPlaceView
-        hotPlaceView.showBottomSheetComponents(isHidden: true)
-        
-        let placeDetailVC = PlaceDetailViewController(
-            sectionModel: hotPlaceSectionList[0]
-        )
-        
-        // MapViewController에서 관리하는 PlaceDetailViewController로 변경
-        mapVC.floatingPanel.set(contentViewController: placeDetailVC)
-        mapVC.floatingPanel.move(to: .full, animated: true)
-        mapVC.overlayView.placeDetailBackButton.isHidden = false
+
+        // 사용자가 탭한 셀의 섹션 데이터 가져오기
+        let selectedSection = hotPlaceSectionList[indexPath.section]
+        let placeName = selectedSection.header.title
+
+        fetchDetailInfo(query: placeName, from: selectedSection) { updatedSection in
+            DispatchQueue.main.async {
+                let hotPlaceView = mapVC.hotPlaceSheetVC.hotPlaceView
+                hotPlaceView.showBottomSheetComponents(isHidden: true)
+                
+                let placeDetailVC = PlaceDetailViewController(sectionModel: updatedSection)
+
+                // FloatingPanel에서 새로운 장소 정보를 보여줌
+                mapVC.floatingPanel.set(contentViewController: placeDetailVC)
+                mapVC.floatingPanel.move(to: .full, animated: true)
+                mapVC.overlayView.placeDetailBackButton.isHidden = false
+            }
+        }
     }
     
     func didTapDistanceButton() {
@@ -200,4 +209,50 @@ extension HotPlaceSheetViewController:
         mapVC.fetchHotPlacesFromVisibleBounds(sortBy: "authCount")
     }
     
+}
+
+extension HotPlaceSheetViewController {
+    
+    // REFACTOR: MapSearchViewController와 중복이므로 리팩토링 필요
+    /// 장소 상세 정보 API 가져오기 (비동기 데이터 반환)
+    private func fetchDetailInfo(
+        query: String,
+        from section: HotPlaceSectionModel,
+        completion: @escaping (HotPlaceSectionModel) -> Void
+    ) {
+        let request = HotplaceDetailInfoRequest(placeName: query)
+
+        Task {
+            do {
+                let response: HotplaceDetailInfoResponse = try await apiManager.request(
+                    target: HotPlacesAPI.getPlaceDetailInfo(request: request)
+                )
+
+                if let detail = response.result.detailList.first {
+                    let updatedDetails = HotPlaceDetailModel(phoneNumber: detail.phone)
+
+                    // 기존 헤더 정보 + address 추가
+                    let updatedHeader = HotPlaceHeaderModel(
+                        title: section.header.title,
+                        category: section.header.category,
+                        address: detail.roadAddress, // 🔹 API에서 받은 도로명 주소 반영
+                        verificationCount: section.header.verificationCount,
+                        saveCount: section.header.saveCount
+                    )
+
+                    // 기존 섹션에 새로운 상세 정보 및 주소 적용
+                    var updatedSection = section
+                    updatedSection.details = updatedDetails
+                    updatedSection.header = updatedHeader
+
+                    completion(updatedSection) // 최신 정보가 반영된 섹션 반환
+                } else {
+                    completion(section) // ❗ 상세 정보가 없는 경우 기존 섹션 반환
+                }
+            } catch {
+                print("❌ 실패: \(error)")
+                completion(section) // ❗ 실패 시 기존 섹션 반환
+            }
+        }
+    }
 }

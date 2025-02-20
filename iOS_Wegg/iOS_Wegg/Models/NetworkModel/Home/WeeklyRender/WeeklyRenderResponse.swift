@@ -22,6 +22,7 @@ struct WeeklyRenderResult: Decodable {
     let completionRate: Double
     let successCount: Int
     let totalStudyTime: Int
+    let planId: Int?
     let upcomingPlanAddress: String?
     let availablePoints: Int
     let canReceivePoints: Bool
