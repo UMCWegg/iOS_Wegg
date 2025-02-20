@@ -49,7 +49,8 @@ class PhoneNumberVerificationViewController: UIViewController {
     
     private func setupTimer() {
         TimerManager.shared.timerCallback = { [weak self] remainingTime in
-            self?.phoneNumberVerificationView.timerLabel.text = TimerManager.shared.getFormattedTime()
+            self?.phoneNumberVerificationView.timerLabel.text
+            = TimerManager.shared.getFormattedTime()
         }
         
         TimerManager.shared.timerExpiredCallback = { [weak self] in

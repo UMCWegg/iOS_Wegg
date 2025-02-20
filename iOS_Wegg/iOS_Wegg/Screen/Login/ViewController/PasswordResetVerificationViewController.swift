@@ -56,7 +56,8 @@ class PasswordResetVerificationViewController: UIViewController {
     
     private func setupTimer() {
         TimerManager.shared.timerCallback = { [weak self] remainingTime in
-            self?.passwordResetVerificationView.timerLabel.text = TimerManager.shared.getFormattedTime()
+            self?.passwordResetVerificationView.timerLabel.text
+            = TimerManager.shared.getFormattedTime()
         }
         
         TimerManager.shared.timerExpiredCallback = { [weak self] in
