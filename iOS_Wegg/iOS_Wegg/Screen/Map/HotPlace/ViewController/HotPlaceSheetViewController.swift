@@ -308,6 +308,9 @@ extension HotPlaceSheetViewController: UIScrollViewDelegate {
         let contentHeight = scrollView.contentSize.height
         let frameHeight = scrollView.frame.size.height
 
+        // 중복 요청 방지
+        guard !mapVC.isFetchingData else { return }
+        
         // 스크롤이 끝에 도달하면 다음 페이지 로드
         if offsetY > contentHeight - frameHeight * 1.5 {
             mapVC.fetchHotPlacesFromVisibleBounds(page: mapVC.currentPage)

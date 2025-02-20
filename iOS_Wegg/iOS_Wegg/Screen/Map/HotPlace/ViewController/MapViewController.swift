@@ -235,6 +235,7 @@ class MapViewController:
     // MARK: - API 관련 함수
     
     var currentPage = 0
+    var isFetchingData = false
     private let pageSize = 15
     
     /// 화면 경계값 안에 존재하는 모든 핫플레이스 호출 및 UI 업데이트
@@ -242,7 +243,9 @@ class MapViewController:
         sortBy: String = "distance",
         page: Int? = nil
     ) {
-        // 지도 경계 좌표 가져오기
+        guard !isFetchingData else { return } // 중복 호출 방지
+        isFetchingData = true
+
         let request = mapManager.getVisibleBounds(
             sortBy: sortBy,
             page: page ?? currentPage,
@@ -254,19 +257,33 @@ class MapViewController:
                 let response: HotPlacesResponse = try await apiManager.request(
                     target: HotPlacesAPI.getHotPlaces(request: request)
                 )
-                hotplaceList.append(contentsOf: response.result.hotPlaceList)
-                let section = convertToSectionModel(from: hotplaceList)
                 
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.setupMarkers(from: self.hotplaceList)
-                    if self.selectedPlaceDetailInfo.isEmpty {
-                        self.hotPlaceSheetVC.updateHotPlaceList(section)
+
+                    // 이미 추가된 데이터인지 확인하여 새로운 데이터만 추가
+                    let newPlaces = response.result.hotPlaceList.filter { newPlace in
+                        !self.hotplaceList.contains { $0.addressId == newPlace.addressId }
                     }
-                    self.currentPage += 1 // 다음 페이지를 위한 업데이트
+
+                    // 중복 데이터가 아닌 경우에만 리스트 업데이트
+                    guard !newPlaces.isEmpty else {
+                        self.isFetchingData = false
+                        return
+                    }
+                    
+                    // 기존 리스트에 새로운 데이터 추가
+                    self.hotplaceList.append(contentsOf: newPlaces)
+                    let section = self.convertToSectionModel(from: self.hotplaceList)
+                    self.hotPlaceSheetVC.updateHotPlaceList(section)
+                    self.setupMarkers(from: newPlaces)
+
+                    self.currentPage += 1 // 페이지 증가
+                    self.isFetchingData = false // API 요청 완료 후 해제
                 }
             } catch {
                 print("❌ 실패: \(error)")
+                isFetchingData = false // 실패 시에도 다시 요청 가능하도록 설정
             }
         }
     }
