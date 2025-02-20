@@ -16,25 +16,25 @@ final class AuthView: UIView {
         $0.image = UIImage(named: "location")
         $0.contentMode = .scaleAspectFit
     }
-    
+
     private let locationLabel = UILabel().then {
-        $0.text = "스타벅스 미아점"
+        $0.text = ""
         $0.font = .gmarketSans(.bold, size: 12)
         $0.textColor = .black
     }
-    
+
     private let titleLabel = UILabel().then {
-        $0.text = "곧 공부할 시간이에요!"
+        $0.text = "곧 인증할 시간이에요!"
         $0.font = .gmarketSans(.bold, size: 20)
         $0.textColor = .black
     }
-    
+
     private let subtitleLabel = UILabel().then {
-        $0.text = "🚨서둘러 인증을 진행해주세요"
+        $0.text = "🚨 인증을 진행해주세요"
         $0.font = .notoSans(.bold, size: 10)
         $0.textColor = .secondary
     }
-    
+
     private let authStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
@@ -66,7 +66,7 @@ final class AuthView: UIView {
     private func setupUI() {
         authStackView.addArrangedSubview(locationAuthButton)
         authStackView.addArrangedSubview(photoAuthButton)
-        
+
         [weggLocation, locationLabel, titleLabel, subtitleLabel, authStackView].forEach {
             addSubview($0)
         }
@@ -78,22 +78,22 @@ final class AuthView: UIView {
             make.leading.equalToSuperview().offset(16)
             make.width.height.equalTo(16)
         }
-        
+
         locationLabel.snp.makeConstraints { make in
             make.leading.equalTo(weggLocation.snp.trailing).offset(4)
             make.centerY.equalTo(weggLocation)
         }
-        
+
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(weggLocation.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(16)
         }
-        
+
         subtitleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(16)
         }
-        
+
         authStackView.snp.makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp.bottom).offset(12)
             make.leading.trailing.equalToSuperview().inset(16)
@@ -102,7 +102,7 @@ final class AuthView: UIView {
         }
     }
 
-    /// 사진 인증 버튼 탭 액션 설정
+    /// 📍 사진 인증 버튼 액션 설정
     private func setupActions() {
         locationAuthButton.addTarget(
             self,
@@ -113,6 +113,11 @@ final class AuthView: UIView {
     
     @objc private func locationAuthTapped() {
         print("장소 인증 터치 ✅")
+    }
+
+    // MARK: - 📍 **업데이트 메서드 (장소 정보 적용)**
+    func updateLocationInfo(with address: String?) {
+        locationLabel.text = address ?? "???" // 값이 없으면 빈 문자열
     }
 }
 

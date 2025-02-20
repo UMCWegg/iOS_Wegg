@@ -16,13 +16,13 @@ class CalendarView: UIView {
         $0.contentMode = .scaleAspectFit
     }
     
-    private let profileLabel = UILabel().then {
+    let profileLabel = UILabel().then {
         $0.text = "Me"
         $0.font = .notoSans(.medium, size: 14)
         $0.textColor = .secondary
     }
     
-    private let followerLabel = UILabel().then {
+    let followerLabel = UILabel().then {
         $0.text = "0\n팔로워"
         $0.font = .notoSans(.medium, size: 20)
         $0.textColor = .secondary
@@ -30,7 +30,7 @@ class CalendarView: UIView {
         $0.textAlignment = .center
     }
     
-    private let followingLabel = UILabel().then {
+    let followingLabel = UILabel().then {
         $0.text = "0\n팔로잉"
         $0.font = .notoSans(.medium, size: 20)
         $0.textColor = .secondary
