@@ -78,6 +78,7 @@
 				ViewController/BrowseViewController.swift,
 				Views/BrowseView.swift,
 				Views/CollectionView/BrowseCell.swift,
+				Views/CollectionView/BrowseSectionHeaderView.swift,
 			);
 			target = 0E98E9D42D2D009D006F25EF /* iOS_Wegg */;
 		};
@@ -165,6 +166,31 @@
 			path = Label;
 			sourceTree = "<group>";
 		};
+		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BrowseItem;
+			sourceTree = "<group>";
+		};
+		FF3CBFAF2D41070000006955 /* PostModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PostModel;
+			sourceTree = "<group>";
+		};
+		FF3CC3402D4B41FD00006955 /* EmojiModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EmojiModel;
+			sourceTree = "<group>";
+		};
+		FF883B662D6616AF00FDC0C0 /* SettingsModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SettingsModel;
+			sourceTree = "<group>";
+		};
+		FF8910C52D669A2A0069D109 /* SearchModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SearchModel;
+			sourceTree = "<group>";
+		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Map;
@@ -209,6 +235,7 @@
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
 				DE3673562D65C88800CEFFAF /* iOS_Wegg.app */,
+				DE36903C2D670A8D00CEFFAF /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -293,6 +320,18 @@
 			path = NotoSans;
 			sourceTree = "<group>";
 		};
+		DE36903C2D670A8D00CEFFAF /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
+				FF8910C52D669A2A0069D109 /* SearchModel */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -325,6 +364,11 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DEEB72322D4D211C001C3880 /* Label */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
+				FF8910C52D669A2A0069D109 /* SearchModel */,
 				FFC8E52F2D5605100094B687 /* Map */,
 			);
 			name = iOS_Wegg;
