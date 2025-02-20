@@ -46,7 +46,9 @@ class PostDetailViewController: UIViewController {
     
     // MARK: - Methods
     
+    /// 기본 이모지 선택 시 postEmoji API 호출
     private func setupEmojiSelection() {
+        // ✅ 기본 이모지 선택
         postDetailView.onEmojiSelected = { [weak self] selectedEmoji in
             guard let self = self else { return }
             
@@ -56,23 +58,22 @@ class PostDetailViewController: UIViewController {
                 .uppercased() // ✅ 대문자로 변환
             
             print("✅ 이모지 선택됨: \(selectedEmoji), API 호출 시작 (postId: \(postDetailModel.postId))")
-            // 변환된 값 확인
             print("📡 API 요청: postId = \(postDetailModel.postId), emojiType = \(formattedEmoji)")
-
+            
             Task {
                 do {
                     let response = try await self.postDetailService.postEmoji(
                         postId: self.postDetailModel.postId,
                         emojiType: formattedEmoji // ✅ 수정된 값 전달
                     )
-
+                    
                     guard response.isSuccess else {
                         print("❌ 이모지 등록 실패: \(response.message)")
                         return
                     }
-
+                    
                     print("✅ 이모지 등록 성공: \(response.result)")
-
+                    
                     // ✅ 최신 이모지 UI 업데이트
                     await self.fetchUpdatedEmojis()
                     
@@ -81,7 +82,7 @@ class PostDetailViewController: UIViewController {
                 }
             }
         }
-    }
+        }
     
     /// ✅ 최신 이모지 데이터를 다시 불러오는 메서드
     func fetchUpdatedEmojis() async {
@@ -172,28 +173,57 @@ class PostDetailViewController: UIViewController {
         isEmojiPopupVisible.toggle()
     }
     
-    /// PlusEmojiView를 포함하고, plus 버튼 클릭시 팝업을 표시하기
     private func handlePlusEmojiSelection() {
         postDetailView.emojiPopupView.showPlusView = { [weak self] in
             guard let self = self else { return }
-            
-            // PlusEmojiView 생성 및 설정
+
+            print("✅ showPlusView 클로저 실행됨")
+
             let plusEmojiView = PlusEmojiView()
             plusEmojiView.configure(with: EmojiModel.getEmojiModels()) // 데이터 제공
-            
-            // 선택된 이모지 처리
+
             plusEmojiView.emojiSelected = { [weak self] selectedEmoji in
-                print("이모지가 선택되었습니다: \(selectedEmoji.name)")
-                self?.postDetailView.hideEmojiPopup() // 기존 이모지 팝업 닫기 메서드 호출
+                guard let self = self else { return }
+
+                // ✅ 선택한 이모지 이름에서 확장자 제거 후 대문자로 변환
+                let formattedEmoji = selectedEmoji.name
+                    .replacingOccurrences(of: ".png", with: "") // 확장자 제거
+                    .uppercased() // 대문자로 변환
+
+                print("✅ 추가 이모지 선택됨: \(formattedEmoji), API 호출 시작")
+
+                // ✅ API 호출
+                Task {
+                    do {
+                        let response = try await self.postDetailService.postEmoji(
+                            postId: self.postDetailModel.postId,
+                            emojiType: formattedEmoji
+                        )
+
+                        guard response.isSuccess else {
+                            print("❌ 이모지 등록 실패: \(response.message)")
+                            return
+                        }
+
+                        print("✅ 이모지 등록 성공: \(response.result)")
+
+                        // ✅ 최신 이모지 UI 업데이트
+                        await self.fetchUpdatedEmojis()
+
+                    } catch {
+                        print("❌ 이모지 등록 API 호출 실패: \(error)")
+                    }
+                }
+
+                self.postDetailView.hideEmojiPopup() // 기존 이모지 팝업 닫기
             }
-            
-            // 이모지 선택 시 팝업 닫기 설정
+
             plusEmojiView.closePopup = { [weak self] in
-                print("PlusEmojiView에서 이모지 선택됨")
-                self?.hidePopupView(plusEmojiView) // 팝업 닫기 메서드
+                print("✅ PlusEmojiView 닫기")
+                self?.hidePopupView(plusEmojiView)
             }
-            
-            self.showPopupView(plusEmojiView) // 팝업 표시하기
+
+            self.showPopupView(plusEmojiView)
         }
     }
     
