@@ -88,4 +88,8 @@ struct APIConstants {
             return "/home/calendar/\(year)/\(month)"
         }
     }
+    
+    struct NotificationURL {
+        static let notificationURL = "/notifications"
+    }
 }
