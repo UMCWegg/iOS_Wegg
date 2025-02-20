@@ -78,16 +78,16 @@ class PlaceDetailViewController: UIViewController {
 
     /// 장소 삭제 API 호출 (성공 여부 반환)
     private func deleteHotPlace(addressId: Int) async -> Bool {
-//        do {
-//            let response: DeletePlaceResponse = try await apiManager.request(
-//                target: HotPlacesAPI.deletePlace(addressId: addressId)
-//            )
-//            return response.isSuccess
-//        } catch {
-//            print("❌ 장소 삭제 실패: \(error)")
-//            return false
-//        }
-        return true
+        do {
+            let response: DeletePlaceResponse = try await apiManager.request(
+                target: HotPlacesAPI.deletePlace(addressId: addressId)
+            )
+            print(response.result)
+            return response.result.success
+        } catch {
+            print("❌ 장소 삭제 실패: \(error)")
+            return false
+        }
     }
 }
 
@@ -106,10 +106,11 @@ extension PlaceDetailViewController: PlaceDetailViewGestureDelegate {
 
     func didTapDeletePlaceButton() {
         guard let sectionModel = sectionModel else { return }
-        
+        // TODO: 어떤 addressId 넣어야 하는지 알아보기
+        print(sectionModel.addressId)
         Task {
-            let isSuccess = await deleteHotPlace(addressId: sectionModel.addressId)
-            guard isSuccess else { return }
+//            let isSuccess = await deleteHotPlace(addressId: sectionModel.addressId)
+//            guard isSuccess else { return }
             
             placeDetailView.toggleSaveStatus(isSaved: false)
         }

@@ -12,7 +12,8 @@ enum HotPlacesAPI {
     case getHotPlaces(request: HotPlaceRequest)
     case searchHotPlaces(request: SearchHotplaceRequest)
     case getPlaceDetailInfo(request: HotplaceDetailInfoRequest)
-    case savePlace(addressId: Int)
+    case savePlace(addressId: Int) // 즐겨찾기 저장
+    case deletePlace(addressId: Int) // 즐겨찾기 삭제
 }
 
 extension HotPlacesAPI: TargetType {
@@ -33,6 +34,8 @@ extension HotPlacesAPI: TargetType {
             return APIConstants.Map.detailInfoURL
         case .savePlace(let addressId):
             return "/maps/addresses/\(addressId)/bookmark"
+        case .deletePlace(let addressId):
+            return "/maps/addresses/\(addressId)/bookmark"
         }
     }
     
@@ -42,6 +45,8 @@ extension HotPlacesAPI: TargetType {
             return .get
         case .savePlace:
             return .post
+        case .deletePlace:
+            return .delete
         }
     }
     
@@ -77,6 +82,8 @@ extension HotPlacesAPI: TargetType {
                 encoding: URLEncoding.queryString
             )
         case .savePlace:
+            return .requestPlain
+        case .deletePlace:
             return .requestPlain
         }
     }
