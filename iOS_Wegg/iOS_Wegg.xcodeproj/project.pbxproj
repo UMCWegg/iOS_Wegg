@@ -195,6 +195,11 @@
 			path = SearchModel;
 			sourceTree = "<group>";
 		};
+		FF891BCF2D67E1DF0069D109 /* SignUp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Map;
@@ -246,6 +251,7 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				FF891BCF2D67E1DF0069D109 /* SignUp */,
 				0EDA96F22D64ADEB008656E7 /* Home */,
 				FFC8E52F2D5605100094B687 /* Map */,
 				DEEB72322D4D211C001C3880 /* Label */,
@@ -373,6 +379,7 @@
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
 				FF8910C52D669A2A0069D109 /* SearchModel */,
+				FF891BCF2D67E1DF0069D109 /* SignUp */,
 				FFC8E52F2D5605100094B687 /* Map */,
 			);
 			name = iOS_Wegg;
