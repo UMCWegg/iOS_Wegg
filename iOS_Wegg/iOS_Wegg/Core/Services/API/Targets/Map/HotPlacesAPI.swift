@@ -14,6 +14,7 @@ enum HotPlacesAPI {
     case getPlaceDetailInfo(request: HotplaceDetailInfoRequest)
     case savePlace(addressId: Int) // 즐겨찾기 저장
     case deletePlace(addressId: Int) // 즐겨찾기 삭제
+    case getAllBookmarkPlace(request: FetchAllBookMarkPlaceRequest)
 }
 
 extension HotPlacesAPI: TargetType {
@@ -36,12 +37,14 @@ extension HotPlacesAPI: TargetType {
             return "/maps/addresses/\(addressId)/bookmark"
         case .deletePlace(let addressId):
             return "/maps/addresses/\(addressId)/bookmark"
+        case .getAllBookmarkPlace:
+            return "/users/bookmarks"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getHotPlaces, .searchHotPlaces, .getPlaceDetailInfo:
+        case .getHotPlaces, .searchHotPlaces, .getPlaceDetailInfo, .getAllBookmarkPlace:
             return .get
         case .savePlace:
             return .post
@@ -85,6 +88,14 @@ extension HotPlacesAPI: TargetType {
             return .requestPlain
         case .deletePlace:
             return .requestPlain
+        case .getAllBookmarkPlace(let request):
+            return .requestParameters(
+                parameters: [
+                    "page": request.page,
+                    "size": request.size
+                ],
+                encoding: URLEncoding.queryString
+            )
         }
     }
     

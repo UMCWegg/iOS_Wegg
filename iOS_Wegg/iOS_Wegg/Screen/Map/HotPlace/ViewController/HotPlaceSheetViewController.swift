@@ -259,4 +259,19 @@ extension HotPlaceSheetViewController {
             }
         }
     }
+    
+    private func fetchAllBookmarks() {
+        let request = FetchAllBookMarkPlaceRequest(page: 0, size: 15)
+        
+        Task {
+            do {
+                let response: FetchAllBookMarkPlaceResponse = try await apiManager.request(
+                    target: HotPlacesAPI.getAllBookmarkPlace(request: request)
+                )
+                print("bookmarkPlaceList: \(response.result.bookmarkPlaceList)")
+            } catch {
+                print("FetchAllBookMarkPlaceResponse 실패: \(error)")
+            }
+        }
+    }
 }
