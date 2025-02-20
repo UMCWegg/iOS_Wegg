@@ -137,6 +137,11 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		DE369AF12D67777D00CEFFAF /* SignUp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		DE85E2742D4623BB0055C78C /* Browse */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -246,6 +251,7 @@
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				DE369AF12D67777D00CEFFAF /* SignUp */,
 				0EDA96F22D64ADEB008656E7 /* Home */,
 				FFC8E52F2D5605100094B687 /* Map */,
 				DEEB72322D4D211C001C3880 /* Label */,
@@ -363,6 +369,7 @@
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE36792F2D65D1F800CEFFAF /* Settings */,
+				DE369AF12D67777D00CEFFAF /* SignUp */,
 				DE85E2762D4623BB0055C78C /* Home */,
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
