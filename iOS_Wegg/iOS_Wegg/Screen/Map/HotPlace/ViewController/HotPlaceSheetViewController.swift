@@ -133,7 +133,7 @@ extension HotPlaceSheetViewController {
             header.gestureDelegate = self
             /// HotPlaceCellHeader의 각 섹션마다 데이터 주입
             let section = hotPlaceSectionList[indexPath.section]
-            header.configure(model: section.header) // 셀 데이터 주입
+            header.configure(model: section.header, indexPath: indexPath) // 셀 데이터 주입
             return header
             
         case UICollectionView.elementKindSectionFooter:
@@ -166,16 +166,18 @@ extension HotPlaceSheetViewController:
     HotPlaceCellGestureDelegate,
     HotPlaceSheetViewDelegate {
     
-    func didTapHotPlaceCellHeader() {
+    func didTapHotPlaceCellHeader(at indexPath: IndexPath) {
         guard let mapVC = mapVC else { return }
+        
+        // 사용자가 탭한 셀의 섹션 데이터 가져오기
+        let selectedSection = hotPlaceSectionList[indexPath.section]
+        
         let hotPlaceView = mapVC.hotPlaceSheetVC.hotPlaceView
         hotPlaceView.showBottomSheetComponents(isHidden: true)
         
-        let placeDetailVC = PlaceDetailViewController(
-            sectionModel: hotPlaceSectionList[0]
-        )
-        
-        // MapViewController에서 관리하는 PlaceDetailViewController로 변경
+        let placeDetailVC = PlaceDetailViewController(sectionModel: selectedSection)
+
+        // FloatingPanel에서 새로운 장소 정보를 보여줌
         mapVC.floatingPanel.set(contentViewController: placeDetailVC)
         mapVC.floatingPanel.move(to: .full, animated: true)
         mapVC.overlayView.placeDetailBackButton.isHidden = false
