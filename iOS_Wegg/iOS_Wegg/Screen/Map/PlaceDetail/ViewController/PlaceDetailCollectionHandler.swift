@@ -13,13 +13,12 @@ class PlaceDetailCollectionHandler:
     UICollectionViewDataSource {
     
     // MARK: - Properties
-    private let targetSectionIndex: Int
-    private let sampleSections: [HotPlaceSectionModel]
+    
+    private let sectionModel: HotPlaceSectionModel
     
     // 초기화 메서드로 필요한 데이터 주입
-    init(targetSectionIndex: Int, sampleSections: [HotPlaceSectionModel]) {
-        self.targetSectionIndex = targetSectionIndex
-        self.sampleSections = sampleSections
+    init(sectionModel: HotPlaceSectionModel) {
+        self.sectionModel = sectionModel
     }
     
     // MARK: - UICollectionViewDataSource
@@ -29,17 +28,15 @@ class PlaceDetailCollectionHandler:
         return 1
     }
     
-    /// 특정 인덱스(`targetSectionIndex`)에 해당하는 섹션의 아이템 개수를 반환
+    /// 섹션의 아이템 개수를 반환
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return HotPlaceSectionModel.sampleSections[
-            safe: targetSectionIndex
-        ]?.items.count ?? 0
+        return sectionModel.items.count
     }
     
-    /// 특정 인덱스(`targetSectionIndex`)의 섹션에서 셀을 생성하고 데이터를 설정
+    /// 섹션에서 셀을 생성하고 데이터를 설정
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -51,10 +48,9 @@ class PlaceDetailCollectionHandler:
             fatalError("Could not dequeue PlaceDetailImageCell")
         }
         
-        // safe를 통해`targetSectionIndex`와 `indexPath.row`가 안전한 범위 내에 있는 경우만 실행
-        if let section = HotPlaceSectionModel.sampleSections[safe: targetSectionIndex],
-           let data = section.items[safe: indexPath.row] {
-            cell.configure(model: data)
+        // safe를 `indexPath.row`가 안전한 범위 내에 있는 경우만 실행
+        if let imageModel = sectionModel.items[safe: indexPath.row] {
+            cell.configure(model: imageModel)
         }
         
         return cell
