@@ -17,6 +17,12 @@ class HotPlaceSheetView: UIView {
     
     weak var delegate: HotPlaceSheetViewDelegate?
     
+    private var selectedButton: UIButton? {
+        didSet {
+            updateButtonColors()
+        }
+    }
+    
     // MARK: - init
 
     override init(frame: CGRect) {
@@ -155,15 +161,27 @@ class HotPlaceSheetView: UIView {
     }
     
     @objc private func distanceButtonHandler() {
+        updateSelectedButton(distanceButtonView)
         delegate?.didTapDistanceButton()
     }
-    
+
     @objc private func verificationButtonHandler() {
+        updateSelectedButton(verficationButtonView)
         delegate?.didTapVerificationButton()
     }
-    
+
     @objc private func bookmarkButtonHandler() {
-        print("bookmarkButtonHandler")
+        updateSelectedButton(bookMarkListButton)
+        print("[HotPlaceSheetView] 북마크 버튼 클릭")
+    }
+    
+    /// 버튼 선택 상태를 업데이트하는 함수
+    /// - Parameter button: 새롭게 선택된 버튼
+    private func updateSelectedButton(_ button: UIButton) {
+        // 선택된 버튼이 바뀌면 배경색 업데이트
+        if selectedButton != button {
+            selectedButton = button
+        }
     }
     
     // MARK: - Uitlity Function
@@ -196,6 +214,15 @@ class HotPlaceSheetView: UIView {
         button.clipsToBounds = true // 테두리와 배경이 버튼의 경계에 맞도록 설정
         button.backgroundColor = backgroundColor
         return button
+    }
+    
+    private func updateButtonColors() {
+        let selectedColor: UIColor = .primary
+        let defaultColor: UIColor = .white
+
+        [distanceButtonView, verficationButtonView, bookMarkListButton].forEach { button in
+            button.backgroundColor = (button == selectedButton) ? selectedColor : defaultColor
+        }
     }
 }
 
