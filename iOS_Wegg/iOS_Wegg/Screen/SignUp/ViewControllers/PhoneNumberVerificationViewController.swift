@@ -46,42 +46,59 @@ class PhoneNumberVerificationViewController: UIViewController {
             phoneNumberVerificationView.phoneNumber = phoneNumber
         }
     }
+    
+    private func setupTimer() {
+        TimerManager.shared.timerCallback = { [weak self] remainingTime in
+            self?.phoneNumberVerificationView.timerLabel.text
+            = TimerManager.shared.getFormattedTime()
+        }
+        
+        TimerManager.shared.timerExpiredCallback = { [weak self] in
+            self?.showAlert(message: "인증 시간이 만료되었습니다. 다시 시도해주세요.")
+            self?.navigationController?.popViewController(animated: true)
+        }
+        
+        TimerManager.shared.startTimer()
+    }
+    
     // MARK: - Actions
     
     @objc private func nextButtonTapped() {
         let verificationCode = phoneNumberVerificationView.verificationTextField.verificationCode
         
-       // Task {
-       //     do {
-       //         // API 요청 형식에 맞게 요청 데이터 구성
-       //         let request = CheckVerificationRequest(
-       //             type: "PHONE",
-       //             target: phoneNumber ?? "",
-       //             number: verificationCode
-       //         )
-       //
-       //         let response = try await authService
-       //             .checkVerificationNumber(request: request)
-       //
-       //         if response.isSuccess && response.result.valid {
-       //             // 인증 성공 시 다음 화면으로 이동
-       //             let nameInputVC = NameInputViewController()
-       //             navigationController?.pushViewController(nameInputVC, animated: true)
-       //         } else {
-       //             // 실패 처리
-       //             showAlert(message: "인증번호가 올바르지 않습니다")
-       //         }
-       //     } catch {
-       //         print("❌ 인증번호 확인 실패: \(error)")
-       //         showAlert(message: "인증에 실패했습니다")
-       //     }
-       // }
+      // Task {
+      //     do {
+      //         // API 요청 형식에 맞게 요청 데이터 구성
+      //         let request = CheckVerificationRequest(
+      //             type: "PHONE",
+      //             target: phoneNumber ?? "",
+      //             number: verificationCode
+      //         )
+      //
+      //         let response = try await authService
+      //             .checkVerificationNumber(request: request)
+      //
+      //         if response.isSuccess && response.result.valid {
+      //             // 인증 성공 시 다음 화면으로 이동
+      //             let nameInputVC = NameInputViewController()
+      //             navigationController?.pushViewController(nameInputVC, animated: true)
+      //         } else {
+      //             // 실패 처리
+      //             showAlert(message: "인증번호가 올바르지 않습니다")
+      //         }
+      //     } catch {
+      //         print("❌ 인증번호 확인 실패: \(error)")
+      //         showAlert(message: "인증에 실패했습니다")
+      //     }
+      // }
         
         let nameInputVC = NameInputViewController()
         navigationController?.pushViewController(nameInputVC, animated: true)
     }
     
     @objc private func resendButtonTapped() {
+        TimerManager.shared.startTimer()
+        
         guard let phoneNumber = phoneNumber else { return }
         
         Task {

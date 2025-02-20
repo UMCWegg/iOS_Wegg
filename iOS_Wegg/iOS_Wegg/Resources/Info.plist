@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>NSContactsUsageDescription</key>
+    <string>연락처를 통해 Wegg를 사용하고 있는 친구들을 찾고 연결하기 위해 연락처 접근 권한이 필요합니다.</string>
     <key>NSCameraUsageDescription</key>
     <string></string>
     <key>LSApplicationQueriesSchemes</key>

@@ -47,9 +47,9 @@
 		0E98EB872D3A274B006F25EF /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
 		0E98EC922D3BD206006F25EF /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		0E98EC932D3BD206006F25EF /* NotoSansKR-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.ttf"; sourceTree = "<group>"; };
-		7BA2AA8C2D67B46A00DA41AD /* iOS_Wegg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Wegg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0020D42D41EC0E003A273F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE0021792D439F3F003A273F /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
+		DE3673562D65C88800CEFFAF /* iOS_Wegg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_Wegg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE85E2772D4623BB0055C78C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +137,11 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		DE369AF12D67777D00CEFFAF /* SignUp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		DE85E2742D4623BB0055C78C /* Browse */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -168,6 +173,31 @@
 		DEEB72322D4D211C001C3880 /* Label */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Label;
+			sourceTree = "<group>";
+		};
+		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BrowseItem;
+			sourceTree = "<group>";
+		};
+		FF3CBFAF2D41070000006955 /* PostModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PostModel;
+			sourceTree = "<group>";
+		};
+		FF3CC3402D4B41FD00006955 /* EmojiModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EmojiModel;
+			sourceTree = "<group>";
+		};
+		FF883B662D6616AF00FDC0C0 /* SettingsModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SettingsModel;
+			sourceTree = "<group>";
+		};
+		FF8910C52D669A2A0069D109 /* SearchModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SearchModel;
 			sourceTree = "<group>";
 		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
@@ -213,13 +243,15 @@
 			isa = PBXGroup;
 			children = (
 				0E98EA2C2D2F8AE8006F25EF /* iOS_Wegg */,
-				7BA2AA8C2D67B46A00DA41AD /* iOS_Wegg.app */,
+				DE3673562D65C88800CEFFAF /* iOS_Wegg.app */,
+				DE36903C2D670A8D00CEFFAF /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
 		0E98EA222D2F8AE8006F25EF /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				DE369AF12D67777D00CEFFAF /* SignUp */,
 				0EDA96F22D64ADEB008656E7 /* Home */,
 				FFC8E52F2D5605100094B687 /* Map */,
 				DEEB72322D4D211C001C3880 /* Label */,
@@ -298,6 +330,18 @@
 			path = NotoSans;
 			sourceTree = "<group>";
 		};
+		DE36903C2D670A8D00CEFFAF /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
+				FF8910C52D669A2A0069D109 /* SearchModel */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -325,11 +369,17 @@
 				DE001E912D3BDF71003A273F /* Button */,
 				DE001EC22D3BF1B5003A273F /* TextField */,
 				DE36792F2D65D1F800CEFFAF /* Settings */,
+				DE369AF12D67777D00CEFFAF /* SignUp */,
 				DE85E2762D4623BB0055C78C /* Home */,
 				DE85E2792D4623BB0055C78C /* Map */,
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DEEB72322D4D211C001C3880 /* Label */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
+				FF8910C52D669A2A0069D109 /* SearchModel */,
 				FFC8E52F2D5605100094B687 /* Map */,
 			);
 			name = iOS_Wegg;
@@ -357,7 +407,7 @@
 				0E68CE562D5E018F00CFDA8D /* Kingfisher */,
 			);
 			productName = iOS_Wegg;
-			productReference = 7BA2AA8C2D67B46A00DA41AD /* iOS_Wegg.app */;
+			productReference = DE3673562D65C88800CEFFAF /* iOS_Wegg.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
