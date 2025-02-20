@@ -66,6 +66,9 @@ class SignUpCompleteViewController: UIViewController {
                 if response.isSuccess {
                     UserDefaultsManager.shared.saveUserID(Int(response.result.userID))
                     
+                    SettingsStorage.shared.saveProfileName(request.name)
+                    SettingsStorage.shared.saveProfileId(request.accountId)
+                    
                     let mainTabBarController = MainTabBarController()
                     navigationController?.setViewControllers([mainTabBarController], animated: true)
                     UserSignUpStorage.shared.clear()

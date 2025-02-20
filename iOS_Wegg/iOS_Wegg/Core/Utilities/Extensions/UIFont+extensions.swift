@@ -36,5 +36,11 @@ extension UIFont {
         static let textField = UIFont.notoSans(.regular, size: 15)
         static let loginButton = UIFont.notoSans(.medium, size: 20)
     }
+    
+    enum SettingsFont {
+        static let title = UIFont.notoSans(.medium, size: 16)
+        static let settingsButton = UIFont.notoSans(.regular, size: 14)
+    }
+
 
 }

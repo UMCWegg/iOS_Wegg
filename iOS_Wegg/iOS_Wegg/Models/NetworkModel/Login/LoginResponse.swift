@@ -9,7 +9,7 @@ struct LoginResponse: Decodable {
     let isSuccess: Bool
     let code: String
     let message: String
-    let result: LoginResult
+    let result: LoginResult?
     
     enum CodingKeys: String, CodingKey {
         case isSuccess

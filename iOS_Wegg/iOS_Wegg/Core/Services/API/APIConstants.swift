@@ -29,6 +29,10 @@ struct APIConstants {
         static let uploadRandomPost = "/posts"
     }
     
+    struct Browse {
+        static let fetchBrowsePosts = "/posts/view"
+    }
+    
     struct Auth {
         static let signUp = "/users/signup"
         static let socialSignUp = "/users/oauth2/signup"
@@ -42,7 +46,7 @@ struct APIConstants {
         static let resign = "/users/resign"
         static let search = "/users/search"
     }
-
+    
     struct Todo {
         static let addTodoListURL = "/todo/add" /// 투두 등록
         /// 투두 수정
@@ -60,5 +64,13 @@ struct APIConstants {
         static func deleteTodoURL(todoId: Int) -> String {
             return "/todo/\(todoId)"
         }
+    }
+    
+    struct User {
+        static let updateProfile = "/users/update"
+    }
+    
+    struct Notification {
+        static let subscribe = "/notifications/subscribe"
     }
 }

@@ -32,7 +32,6 @@ class MapSearchViewController: UIViewController {
         view = mapSearchView
         apiManager.setCookie(value: CookieStorage.cookie)
         setupTableHandler()
-        
     }
     
     lazy var mapSearchView = MapSearchView().then {
