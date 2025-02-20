@@ -82,36 +82,41 @@ class PlaceVerificationViewController: UIViewController {
                     longitude: response.result.longitude
                 )
                 
-                mapManager.getCurrentLocation { [weak self] coordinate in
-                    guard let self = self else {
-                        print("self 없음")
-                        return
-                    }
-                    // 현재 위치와 등록된 장소 위치 비교
-                    if coordinate == placeLocation {
-                        checkVerificationResult = true
-                        placeVerificationOverlayView.toggleVerificationButton(isEnabled: true)
-                        DispatchQueue.main.async { [weak self] in
-                            self?.placeVerificationOverlayView.configuration(
-                                title: placeName,
-                                subTitle: "시간이 다 되었습니다! 인증을 진행해주세요"
-                            )
-                            self?.convertToImage()
-                        }
-                    } else {
-                        checkVerificationResult = false
-                        placeVerificationOverlayView.toggleVerificationButton(isEnabled: false)
-                        DispatchQueue.main.async { [weak self] in
-                            self?.placeVerificationOverlayView.configuration(
-                                title: placeName,
-                                subTitle: "등록된 장소로 이동해주세요!"
-                            )
-                            self?.convertToImage()
-                        }
-                    }
-                }
+                verifyUserLocation(with: placeLocation, placeName: placeName)
             } catch {
                 print("PlaceVerificationCheckResponse 오류: \(error)")
+            }
+        }
+    }
+    
+    private func verifyUserLocation(with placeLocation: Coordinate, placeName: String) {
+        mapManager.getCurrentLocation { [weak self] coordinate in
+            guard let self = self else {
+                print("self 없음")
+                return
+            }
+
+            // 현재 위치와 등록된 장소 위치 비교
+            if coordinate == placeLocation {
+                checkVerificationResult = true
+                placeVerificationOverlayView.toggleVerificationButton(isEnabled: true)
+                DispatchQueue.main.async { [weak self] in
+                    self?.placeVerificationOverlayView.configuration(
+                        title: placeName,
+                        subTitle: "시간이 다 되었습니다! 인증을 진행해주세요"
+                    )
+                    self?.convertToImage()
+                }
+            } else {
+                checkVerificationResult = false
+                placeVerificationOverlayView.toggleVerificationButton(isEnabled: false)
+                DispatchQueue.main.async { [weak self] in
+                    self?.placeVerificationOverlayView.configuration(
+                        title: placeName,
+                        subTitle: "등록된 장소로 이동해주세요!"
+                    )
+                    self?.convertToImage()
+                }
             }
         }
     }
