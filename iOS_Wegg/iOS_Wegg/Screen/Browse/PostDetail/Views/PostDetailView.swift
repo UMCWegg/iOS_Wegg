@@ -32,9 +32,9 @@ class PostDetailView: UIView {
     private let space: CGFloat = 23 // 레이아웃 기본 여백
     
     private let profileImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
-        $0.clipsToBounds = true
         $0.layer.cornerRadius = 15
+        $0.clipsToBounds = true
+        $0.contentMode = .scaleAspectFill
     }
     
     private let nicknameLabel = UILabel().then {

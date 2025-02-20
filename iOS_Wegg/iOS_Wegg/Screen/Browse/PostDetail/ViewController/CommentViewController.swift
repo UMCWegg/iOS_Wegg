@@ -21,17 +21,15 @@ class CommentViewController: UIViewController {
         setupActions()
         setupTableView()
         setupSheetPresentation() // 바텀 시트 설정
-        
+        view.backgroundColor = .white
+        view = commentView
         // 초기 이모지 설정 테스트
         commentView.updateEmojiImages(with: ["blush", "cry", "pray"])
     }
     
-    override func loadView() {
-        self.view = commentView
-    }
+    
     
     // MARK: - Methods
-    
     /// 테이블 뷰 설정
     private func setupTableView() {
         commentView.tableView.dataSource = self
@@ -61,7 +59,7 @@ class CommentViewController: UIViewController {
         guard let text = commentView.commentTextField.text, !text.isEmpty else { return }
         let newCommnet = CommentModel(
             userName: "사용자",
-            profileImage: UIImage(named: "profile1"),
+            profileImage: UIImage(named: "profile_placeholder"),
             commentText: text)
         // 댓글 배열에 추가
         comments.append(newCommnet)

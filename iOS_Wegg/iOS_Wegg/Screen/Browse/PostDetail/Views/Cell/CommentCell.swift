@@ -17,6 +17,7 @@ class CommentCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
         setupConstraints()
+        self.backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
