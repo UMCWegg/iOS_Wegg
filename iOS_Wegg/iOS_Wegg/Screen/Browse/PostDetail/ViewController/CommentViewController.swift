@@ -18,16 +18,17 @@ class CommentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupSheetPresentation() // 바텀 시트 설정을 먼저 적용
+        view = commentView // 이후에 뷰를 설정
+        view.backgroundColor = .white
+
         setupActions()
         setupTableView()
-        setupSheetPresentation() // 바텀 시트 설정
-        view.backgroundColor = .white
-        view = commentView
+
         // 초기 이모지 설정 테스트
         commentView.updateEmojiImages(with: ["blush", "cry", "pray"])
     }
-    
-    
     
     // MARK: - Methods
     /// 테이블 뷰 설정
@@ -42,7 +43,7 @@ class CommentViewController: UIViewController {
             for: .touchUpInside)
     }
     
-    /// 바텀 시트 설정
+    /// 바텀 시트 설정, iPhone15 테스트 결과 UIsheetPresentationContoller 특정기기 비정상 작동 버그(16pro 문제없음)
     private func setupSheetPresentation() {
         if let sheet = self.sheetPresentationController {
             sheet.detents = [
