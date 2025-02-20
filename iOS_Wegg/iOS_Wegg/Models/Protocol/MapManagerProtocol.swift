@@ -19,7 +19,7 @@ struct Coordinate: Equatable {
     let longitude: Double
 
     static func == (lhs: Coordinate, rhs: Coordinate) -> Bool {
-        let tolerance: Double = 0.00001 // 허용 오차 (위도/경도 비교 시 사용)
+        let tolerance: Double = 0.01 // 허용 오차 (위도/경도 비교 시 사용)
         return abs(lhs.latitude - rhs.latitude) < tolerance &&
                abs(lhs.longitude - rhs.longitude) < tolerance
     }

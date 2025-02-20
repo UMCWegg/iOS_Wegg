@@ -91,6 +91,20 @@ class PlaceVerificationViewController: UIViewController {
                     )
                     self?.convertToImage()
                 }
+                
+                mapManager.getCurrentLocation { [weak self] coordinate in
+                    guard let self = self else {
+                        print("self 없음")
+                        return
+                    }
+                    if coordinate == placeLocation {
+                        print("인증 성공")
+                    } else {
+                        print("coordinate: \(coordinate)")
+                        print("placeLocation: \(placeLocation)")
+                        print("인증 실패")
+                    }
+                }
             } catch {
                 print("PlaceVerificationCheckResponse 오류: \(error)")
             }
