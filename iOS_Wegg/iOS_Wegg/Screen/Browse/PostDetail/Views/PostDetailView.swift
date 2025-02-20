@@ -32,7 +32,7 @@ class PostDetailView: UIView {
     private let space: CGFloat = 23 // 레이아웃 기본 여백
     
     private let profileImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 15
     }
@@ -205,12 +205,6 @@ class PostDetailView: UIView {
         postImageView.setImage(from: detail.postImages, placeholder: "post_placeholder")
         
         // 게시 시간 레이블 설정 (formattedDate 메서드로 날짜 형식 변환)
-        postTimeLabel.text = "게시시간:  \(formattedDate(detail.postTime))"
-    }
-    
-    /// 시간 설정
-    private func formattedDate(_ date: Date) -> String {
-        // DateFormatter 초기화
-        return DateFormatterUtility.formattedDate(date)
+        postTimeLabel.text = " \(detail.timeAgoSincePost())"
     }
 }
