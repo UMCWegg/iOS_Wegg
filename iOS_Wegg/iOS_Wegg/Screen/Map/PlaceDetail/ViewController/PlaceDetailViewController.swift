@@ -17,6 +17,7 @@ class PlaceDetailViewController: UIViewController {
     
     init(sectionModel: HotPlaceSectionModel) { // 생성자에서 의존성 주입
         self.sectionModel = sectionModel
+        print("sectionModel: \(sectionModel)")
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,11 +62,26 @@ class PlaceDetailViewController: UIViewController {
             info.forEach { $0.key.text = $0.value }
         }
     }
+    
+    /// 장소 저장 API 호출 함수
+    private func saveHotPlace(addressId: Int) {
+        Task {
+            do {
+                let response: SavePlaceResponse = try await apiManager.request(
+                    target: HotPlacesAPI.savePlace(addressId: addressId)
+                )
+                print("response: \(response)")
+            } catch {
+                print("❌ 실패: \(error)")
+            }
+        }
+    }
 }
 
 extension PlaceDetailViewController: PlaceDetailViewGestureDelegate {
     func didTapFavoriteStar() {
         print("didTapFavoriteStar")
+        saveHotPlace(addressId: 1)
     }
     
     func didTapPlaceCreateButton() {

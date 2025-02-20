@@ -252,25 +252,13 @@ class MapViewController:
         }
     }
     
-    private func saveHotPlace(addressId: Int) {
-        Task {
-            do {
-                let response: SavePlaceResponse = try await apiManager.request(
-                    target: HotPlacesAPI.savePlace(addressId: addressId)
-                )
-                print("response: \(response)")
-            } catch {
-                print("❌ 실패: \(error)")
-            }
-        }
-    }
-    
     /// `HotPlacesResponse.HotPlace` 데이터를 `HotPlaceSectionModel`로 변환하는 함수
     private func convertToSectionModel(
         from hotplaces: [HotPlacesResponse.HotPlace]
     ) -> [HotPlaceSectionModel] {
         return hotplaces.map { hotplace in
             HotPlaceSectionModel(
+                addressId: hotplace.addressId,
                 header: HotPlaceHeaderModel(
                     title: hotplace.placeName,
                     category: hotplace.placeLabel,
@@ -281,7 +269,11 @@ class MapViewController:
                 items: hotplace.postList.map { post in
                     HotPlaceImageModel(imageName: post.imageUrl)
                 },
-                details: HotPlaceDetailModel(phoneNumber: hotplace.phone)
+                details: HotPlaceDetailModel(
+                    savedStatus: nil,
+                    authPeople: nil,
+                    phoneNumber: hotplace.phone
+                )
             )
         }
     }
@@ -292,6 +284,7 @@ class MapViewController:
     ) -> [HotPlaceSectionModel] {
         return details.map { detail in
             HotPlaceSectionModel(
+                addressId: detail.addressId,
                 header: HotPlaceHeaderModel(
                     title: detail.placeName,
                     category: detail.placeLabel,
@@ -303,6 +296,8 @@ class MapViewController:
                     HotPlaceImageModel(imageName: post.imageUrl)
                 },
                 details: HotPlaceDetailModel(
+                    savedStatus: detail.savedStatus,
+                    authPeople: detail.authPeople,
                     phoneNumber: detail.phone
                 )
             )

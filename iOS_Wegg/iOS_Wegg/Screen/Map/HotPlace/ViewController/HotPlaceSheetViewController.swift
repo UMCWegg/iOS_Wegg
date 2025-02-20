@@ -229,13 +229,17 @@ extension HotPlaceSheetViewController {
                 )
 
                 if let detail = response.result.detailList.first {
-                    let updatedDetails = HotPlaceDetailModel(phoneNumber: detail.phone)
+                    let updatedDetails = HotPlaceDetailModel(
+                        savedStatus: detail.savedStatus,
+                        authPeople: detail.authPeople,
+                        phoneNumber: detail.phone
+                    )
 
                     // 기존 헤더 정보 + address 추가
                     let updatedHeader = HotPlaceHeaderModel(
                         title: section.header.title,
                         category: section.header.category,
-                        address: detail.roadAddress, // 🔹 API에서 받은 도로명 주소 반영
+                        address: detail.roadAddress, // API에서 받은 도로명 주소 반영
                         verificationCount: section.header.verificationCount,
                         saveCount: section.header.saveCount
                     )
