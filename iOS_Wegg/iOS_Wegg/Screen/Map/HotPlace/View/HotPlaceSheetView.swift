@@ -68,7 +68,7 @@ class HotPlaceSheetView: UIView {
         let fullText = NSMutableAttributedString()
         
         let surroundingText = NSAttributedString(string: "주변 ", attributes: [
-            .font: UIFont.notoSans(.medium, size: 16) ?? UIFont.systemFont(ofSize: 16),
+            .font: UIFont.notoSans(.medium, size: 14) ?? UIFont.systemFont(ofSize: 14),
             .foregroundColor: UIColor.black
         ])
         
@@ -79,7 +79,7 @@ class HotPlaceSheetView: UIView {
         let imageAttributedString = NSAttributedString(attachment: imageAttachment)
 
         let hotspotText = NSAttributedString(string: " 핫플", attributes: [
-            .font: UIFont.notoSans(.medium, size: 16) ?? UIFont.systemFont(ofSize: 16),
+            .font: UIFont.notoSans(.medium, size: 14) ?? UIFont.systemFont(ofSize: 14),
             .foregroundColor: UIColor.black
         ])
 
@@ -105,6 +105,7 @@ class HotPlaceSheetView: UIView {
             for: .touchUpInside
         )
     }
+    
     private lazy var verficationButtonView = makeButtonView(title: "인증순").then {
         $0.addTarget(
             self,
@@ -112,8 +113,21 @@ class HotPlaceSheetView: UIView {
             for: .touchUpInside
         )
     }
-    lazy var bottomSheetTitleStack = makeStackView(spacing: 8, axis: .horizontal)
-    lazy var bottomSheetButtonStack = makeStackView(spacing: 8, axis: .horizontal)
+    
+    private lazy var bookMarkListButton = makeButtonView(title: "북마크").then {
+        $0.addTarget(
+            self,
+            action: #selector(bookmarkButtonHandler),
+            for: .touchUpInside
+        )
+    }
+    
+    lazy var bottomSheetTitleStack = makeStackView(
+        spacing: 8,
+        axis: .horizontal,
+        distribution: .equalSpacing
+    )
+    lazy var bottomSheetButtonStack = makeStackView(spacing: 5, axis: .horizontal)
     
     // MARK: - Functions
     
@@ -148,16 +162,21 @@ class HotPlaceSheetView: UIView {
         delegate?.didTapVerificationButton()
     }
     
+    @objc private func bookmarkButtonHandler() {
+        print("bookmarkButtonHandler")
+    }
+    
     // MARK: - Uitlity Function
     
     func makeStackView(
         spacing: CGFloat,
-        axis: NSLayoutConstraint.Axis
+        axis: NSLayoutConstraint.Axis,
+        distribution: UIStackView.Distribution = .fillEqually
     ) -> UIStackView {
         let stack = UIStackView()
         stack.axis = axis
         stack.spacing = spacing
-        stack.distribution = .fill
+        stack.distribution = distribution
         
         return stack
     }
@@ -197,7 +216,7 @@ private extension HotPlaceSheetView {
             bottomSheetTitleStack.addArrangedSubview($0)
         }
         
-        [distanceButtonView, verficationButtonView].forEach {
+        [distanceButtonView, verficationButtonView, bookMarkListButton].forEach {
             bottomSheetButtonStack.addArrangedSubview($0)
         }
         
@@ -208,7 +227,7 @@ private extension HotPlaceSheetView {
         }
         
         logoLabel.snp.makeConstraints { make in
-            make.width.equalTo(150)
+            make.width.equalTo(170)
         }
         
         distanceButtonView.snp.makeConstraints { make in
@@ -244,6 +263,7 @@ private extension HotPlaceSheetView {
             make.bottom.equalTo(dividedLineView.snp.top).offset(
                 MapViewLayout.BottomSheetHeader.bottomOffset
             )
+            make.width.equalTo(180)
         }
         
         bottomSheetButtonStack.snp.makeConstraints { make in
