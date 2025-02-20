@@ -85,6 +85,8 @@ extension PlusEmojiView: UICollectionViewDataSource, UICollectionViewDelegateFlo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedEmoji = emojis[indexPath.item] // 선택된 이모지 가져오기
+        print("✅ 추가 이모지 선택됨: \(selectedEmoji.name)") // 로그 출력
+        
         emojiSelected?(selectedEmoji) // 선택된 이모지 전달
         closePopup?() // 팝업 닫기 클로저 호출 (PlusEmojiView 닫힘)
     }

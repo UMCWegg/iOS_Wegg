@@ -14,6 +14,7 @@ class CommentView: UIView {
         super.init(frame: frame)
         setupView()
         setupConstraints()
+        self.backgroundColor = .white
     }
     
     required init(coder: NSCoder) {
@@ -43,7 +44,7 @@ class CommentView: UIView {
     
     /// 헤더와 테이블 뷰를 구분하는 구분선
     private let headerSeparator = UIView().then {
-        $0.backgroundColor = .systemGray3
+        $0.backgroundColor = .customGray2
     }
     
     /// 댓글 입력 필드와 버튼을 감싸는 컨테이너 뷰
@@ -51,13 +52,16 @@ class CommentView: UIView {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 25
         $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.systemGray3.cgColor
+        $0.layer.borderColor = UIColor.customGray2.cgColor
         $0.layer.masksToBounds = true
     }
     
     /// 댓글 입력 필드
     lazy var commentTextField = UITextField().then {
-        $0.placeholder = "댓글을 입력하세요 ..."
+        $0.attributedPlaceholder = NSAttributedString(
+                string: "댓글을 입력하세요 ...",
+                attributes: [.foregroundColor: UIColor.customGray2] 
+            )
         $0.font = UIFont.notoSans(.regular, size: 14)
         $0.isUserInteractionEnabled = true
         $0.borderStyle = .none
@@ -79,7 +83,7 @@ class CommentView: UIView {
     
     /// 댓글 입력 필드와 리스트를 구분하는 구분선
     let separator = UIView().then {
-        $0.backgroundColor = .systemGray2
+        $0.backgroundColor = .customGray2
     }
     
     // MARK: - Setup Methods
