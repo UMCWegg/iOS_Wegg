@@ -25,6 +25,7 @@ class NaverMapManager:
     private var longTapGestureHandler: ((Coordinate) -> Void)?
     private var locationUpdateHandler: ((Coordinate?) -> Void)?
     private var currentLocation: Coordinate?
+    private var markers: [NMFMarker] = []
     
     /// 지도 뷰를 특정 UIView에 초기화
     ///
@@ -179,7 +180,13 @@ class NaverMapManager:
         marker.iconImage = icon
         marker.width = width
         marker.height = height
+        markers.append(marker)
         return marker
+    }
+    
+    func removeAllMarkers() {
+        markers.forEach { $0.mapView = nil }
+        markers.removeAll()
     }
     
     /// 지도의 카메라 기준으로 경계값 가져옴

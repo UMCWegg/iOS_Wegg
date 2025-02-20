@@ -22,6 +22,7 @@ protocol MapManagerProtocol {
     func setTapGestureHandler(_ handler: @escaping (Coordinate) -> Void)
     func setLongTapGestureHandler(_ handler: @escaping (Coordinate) -> Void)
     func requestCurrentLocation()
+    
     /// 마커 추가 (이미지 파일 기반)
     func addMarker(
         imageName: String,
@@ -29,6 +30,7 @@ protocol MapManagerProtocol {
         height: CGFloat,
         at coordinate: Coordinate
     )
+    
     /// 마커 추가 (UIImage 기반)
     func addMarker(
         image: UIImage,
@@ -47,4 +49,7 @@ protocol MapManagerProtocol {
     /// 위치 정보를 요청한 후 `locationUpdateHandler`에 클로저를 저장하여
     /// 업데이트가 완료되면 클로저를 실행.
     func getCurrentLocation(completion: @escaping (Coordinate?) -> Void)
+    
+    /// 생성한 마커 모두 제거
+    func removeAllMarkers()
 }

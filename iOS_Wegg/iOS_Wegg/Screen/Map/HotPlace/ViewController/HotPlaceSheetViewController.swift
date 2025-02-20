@@ -133,7 +133,7 @@ extension HotPlaceSheetViewController {
             header.gestureDelegate = self
             /// HotPlaceCellHeader의 각 섹션마다 데이터 주입
             let section = hotPlaceSectionList[indexPath.section]
-            header.configure(model: section.header)
+            header.configure(model: section.header) // 셀 데이터 주입
             return header
             
         case UICollectionView.elementKindSectionFooter:
@@ -171,8 +171,12 @@ extension HotPlaceSheetViewController:
         let hotPlaceView = mapVC.hotPlaceSheetVC.hotPlaceView
         hotPlaceView.showBottomSheetComponents(isHidden: true)
         
+        let placeDetailVC = PlaceDetailViewController(
+            sectionModel: hotPlaceSectionList[0]
+        )
+        
         // MapViewController에서 관리하는 PlaceDetailViewController로 변경
-        mapVC.floatingPanel.set(contentViewController: mapVC.placeDetailVC)
+        mapVC.floatingPanel.set(contentViewController: placeDetailVC)
         mapVC.floatingPanel.move(to: .full, animated: true)
         mapVC.overlayView.placeDetailBackButton.isHidden = false
     }
