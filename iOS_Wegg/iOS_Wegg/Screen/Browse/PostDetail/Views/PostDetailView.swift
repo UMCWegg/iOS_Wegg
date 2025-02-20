@@ -28,13 +28,16 @@ class PostDetailView: UIView {
     lazy var emojiPopupView = EmojiPopupView()
     lazy var plusEmojiView = PlusEmojiView()
     
+    // ✅ 이모지 선택 시 ViewController에서 API를 호출하도록 전달할 클로저 추가
+    var onEmojiSelected: ((String) -> Void)?
+    
     private let postImageSize: CGFloat = 43 // 유지보수를 위한 상수 정의
     private let space: CGFloat = 23 // 레이아웃 기본 여백
     
     private let profileImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
-        $0.clipsToBounds = true
         $0.layer.cornerRadius = 15
+        $0.clipsToBounds = true
+        $0.contentMode = .scaleAspectFill
     }
     
     private let nicknameLabel = UILabel().then {
@@ -124,6 +127,7 @@ class PostDetailView: UIView {
             // 이모지 선택 시 호출되는 클로저 정의
             emojiPopupView.emojiSelected = { [weak self] selectedEmoji in
                 print("Selected Emoji: \(selectedEmoji)") // 선택된 이모지 출력
+                self?.onEmojiSelected?(selectedEmoji) // ViewController에서 API 호출하도록 전달
                 self?.hideEmojiPopup() // 선택 후 팝업 숨기기
             }
         }
@@ -205,12 +209,6 @@ class PostDetailView: UIView {
         postImageView.setImage(from: detail.postImages, placeholder: "post_placeholder")
         
         // 게시 시간 레이블 설정 (formattedDate 메서드로 날짜 형식 변환)
-        postTimeLabel.text = "게시시간:  \(formattedDate(detail.postTime))"
-    }
-    
-    /// 시간 설정
-    private func formattedDate(_ date: Date) -> String {
-        // DateFormatter 초기화
-        return DateFormatterUtility.formattedDate(date)
+        postTimeLabel.text = " \(detail.timeAgoSincePost())"
     }
 }
