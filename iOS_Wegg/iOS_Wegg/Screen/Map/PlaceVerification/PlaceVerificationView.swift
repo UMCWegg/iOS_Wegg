@@ -70,6 +70,7 @@ class PlaceVerificationOverlayView: UIView {
     
     // MARK: - Functions
     
+    @MainActor
     public func configuration(title: String, subTitle: String) {
         placeVerificationInfoView.setLabel(title: title, subTitle: subTitle)
     }

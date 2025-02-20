@@ -11,6 +11,9 @@ class PlaceVerificationViewController: UIViewController {
     
     private let mapManager: MapManagerProtocol
     private lazy var placeVerificationOverlayView = PlaceVerificationOverlayView()
+    private let apiManager = APIManager()
+    
+    private var checkVerificationResult: Bool?
     
     init(mapManager: MapManagerProtocol) {
         self.mapManager = mapManager
@@ -21,15 +24,40 @@ class PlaceVerificationViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         mapManager.setupMap(in: view)
         setupOverlayView()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        apiManager.setCookie(value: CookieStorage.cookie)
+        checkPlaceVerification()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+    }
+    
+    private func setupOverlayView() {
+        placeVerificationOverlayView.setupOverlayConstraints(in: view)
+        placeVerificationOverlayView.delegate = self
+    }
+    
+    private func setupInfoMarker(image: UIImage) {
+        mapManager.getCurrentLocation { [weak self] coordinate in
+            guard let coordinate = coordinate else { return }
+            self?.mapManager.addMarker(
+                image: image,
+                width: image.size.width,
+                height: image.size.height,
+                at: coordinate
+            )
+        }
+    }
+    
+    private func convertToImage() {
         // placeVerificationOverlayView가 완전히 렌더링 된 후 변환 실행
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             var convertedImage: UIImage?
@@ -46,26 +74,30 @@ class PlaceVerificationViewController: UIViewController {
         }
     }
     
-    private func setupOverlayView() {
-        placeVerificationOverlayView.setupOverlayConstraints(in: view)
-        // 임시 데이터 초기화
-        placeVerificationOverlayView.configuration(
-            title: "스타벅스 신용산점",
-            subTitle: "시간이 다 되었습니다! 인증을 진행해주세요"
-        )
-        placeVerificationOverlayView.delegate = self
-    }
-    
-    private func setupInfoMarker(image: UIImage) {
-        // TODO: [25.02.14] 추후 공부 일정에 등록된 장소 위치로 변경 필요 - 작성자: 이재원
-        mapManager.getCurrentLocation { [weak self] coordinate in
-            guard let coordinate = coordinate else { return }
-            self?.mapManager.addMarker(
-                image: image,
-                width: image.size.width,
-                height: image.size.height,
-                at: coordinate
-            )
+    private func checkPlaceVerification() {
+        Task {
+            do {
+                let response: PlaceVerificationCheckResponse = try await apiManager.request(
+                    target: PlaceVerificationAPI.checkPlaceVerification(planId: 1)
+                )
+                print("PlaceVerificationCheckResponse: \(response.result)")
+                let placeName = response.result.placeName
+                let placeLocation = Coordinate(
+                    latitude: response.result.latitude,
+                    longitude: response.result.longitude
+                )
+                print(placeName, placeLocation)
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.placeVerificationOverlayView.configuration(
+                        title: placeName,
+                        subTitle: "시간이 다 되었습니다! 인증을 진행해주세요"
+                    )
+                    self?.convertToImage()
+                }
+            } catch {
+                print("PlaceVerificationCheckResponse 오류: \(error)")
+            }
         }
     }
     
