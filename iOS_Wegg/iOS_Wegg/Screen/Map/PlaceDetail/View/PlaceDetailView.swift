@@ -45,16 +45,14 @@ class PlaceDetailView: UIView {
     // 아이콘 이미지 뷰 배열을 한 번에 생성
     private lazy var iconImageViews: [UIImageView] = [
         "wegg_icon",
-        "brown_phone",
-        "brown_clock",
-        "brown_web"
+        "brown_phone"
     ].map { makeImageView($0) }
 
     // 배열을 통해 개별 아이콘 뷰에 접근할 수 있도록 변수 선언
     private lazy var addressIconImageView = iconImageViews[0]
     private lazy var phoneIconImageView = iconImageViews[1]
-    private lazy var openingIconImageView = iconImageViews[2]
-    private lazy var webUrlIconImageView = iconImageViews[3]
+//    private lazy var openingIconImageView = iconImageViews[2]
+//    private lazy var webUrlIconImageView = iconImageViews[3]
 
     // MARK: - Labels
     
@@ -262,9 +260,9 @@ private extension PlaceDetailView {
             (styledVisitorTextStack, [yellowIconImageView, styledVisitorCountLabel]),
             (statusStack, [verificationCount, saveCount]),
             (addressStack, [addressIconImageView, addressLabel]),
-            (phoneStack, [phoneIconImageView, phoneNumberLabel]),
-            (openingInfoStack, [openingIconImageView, openingInfoLabel]),
-            (webUrlStack, [webUrlIconImageView, webUrlLabel])
+            (phoneStack, [phoneIconImageView, phoneNumberLabel])
+//            (openingInfoStack, [openingIconImageView, openingInfoLabel]),
+//            (webUrlStack, [webUrlIconImageView, webUrlLabel])
         ]
         
         // `forEach`를 사용하여 각 스택뷰에 서브뷰를 추가
@@ -297,8 +295,8 @@ private extension PlaceDetailView {
         let iconViews = [
             addressIconImageView,
             phoneIconImageView,
-            openingIconImageView,
-            webUrlIconImageView,
+//            openingIconImageView,
+//            webUrlIconImageView,
             yellowIconImageView
         ]
         

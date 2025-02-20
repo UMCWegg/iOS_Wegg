@@ -9,10 +9,16 @@ import UIKit
 import Then
 
 class MapSearchViewController: UIViewController {
+    
     weak var mapVC: MapViewController?
     
-    init(mapVC: MapViewController?) { // 의존성 주입
+    private var mapManager: MapManagerProtocol
+    private let apiManager = APIManager()
+    private let mapSearchTableHandler = MapSearchTableHandler()
+    
+    init(mapVC: MapViewController?, mapManager: MapManagerProtocol) { // 의존성 주입
         self.mapVC = mapVC
+        self.mapManager = mapManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -24,10 +30,82 @@ class MapSearchViewController: UIViewController {
         super.viewDidLoad()
         
         view = mapSearchView
+        apiManager.setCookie(value: CookieStorage.cookie)
+        setupTableHandler()
     }
     
     lazy var mapSearchView = MapSearchView().then {
         $0.searchBarView.delegate = self
+        $0.searchResultView.delegate = mapSearchTableHandler
+    }
+    
+    private func setupTableHandler() {
+        mapSearchTableHandler.setupDataSource(
+            for: mapSearchView.searchResultView
+        )
+        mapSearchTableHandler.didSelectPlace = { [weak self] place in
+            self?.fetchDetailInfo(query: place)
+        }
+    }
+    
+    private func searchPlace(keyword: String, at coordinate: Coordinate) {
+        let request = SearchHotplaceRequest(
+            keyword: keyword,
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude,
+            page: 0,
+            size: 15
+        )
+        
+        Task {
+            do {
+                let response: SearchHotplaceResponse = try await apiManager.request(
+                    target: HotPlacesAPI.searchHotPlaces(request: request)
+                )
+                let placeList: [String] = response.result.placeList.map {
+                    $0.placeName
+                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.mapSearchTableHandler.updateSearchResults(placeList)
+                }
+            } catch {
+                print("❌ 실패: \(error)")
+            }
+        }
+    }
+    
+    /// 장소 상세 정보 API 가져오기
+    private func fetchDetailInfo(query: String) {
+        guard let mapVC = mapVC else { return }
+        let request = HotplaceDetailInfoRequest(placeName: query)
+        
+        Task {
+            do {
+                let response: HotplaceDetailInfoResponse = try await apiManager.request(
+                    target: HotPlacesAPI.getPlaceDetailInfo(request: request)
+                )
+                mapVC.updateHotplaceDetailInfo(response.result.detailList)
+            } catch {
+                print("❌ 실패: \(error)")
+            }
+        }
+        
+        mapSearchTableHandler.updateSearchResults([])
+        navigateToSearchResultMapView()
+    }
+    
+    /// 장소 검색 결과 뷰로 네비게이션 이동
+    private func navigateToSearchResultMapView() {
+        if let hotPlaceVC = mapVC?.hotPlaceSheetVC
+            as? HotPlaceSheetViewController {
+            let hotPlaceView = hotPlaceVC.hotPlaceView
+            hotPlaceView.showBottomSheetComponents(isHidden: true)
+        }
+        
+        // 검색시 바텀시트 half 위치로 이동
+        mapVC?.floatingPanel.move(to: .half, animated: true)
+        mapVC?.overlayView.placeSearchBar.isHidden = false
+        customNavigationAnimation(to: nil, isPush: false) // pop navigation
     }
 
 }
@@ -54,8 +132,7 @@ extension MapSearchViewController: MapSearchBarDelegate {
         navigationController?.popViewController(animated: true)
     }
     
-    func didSearch(query: String?) {
-        print("Search button tapped with query: \(query ?? "empty")")
+    func didSearch(query: String) {
         // 검색시 바텀 시트 헤더 숨기기
         if let hotPlaceVC = mapVC?.hotPlaceSheetVC
             as? HotPlaceSheetViewController {
@@ -72,5 +149,20 @@ extension MapSearchViewController: MapSearchBarDelegate {
         }
         mapVC.overlayView.placeSearchBar.isHidden = false
         customNavigationAnimation(to: nil, isPush: false)
+    }
+    
+    func didChangeSearchText(query: String) {
+        mapManager.getCurrentLocation { [weak self] coordinate in
+            guard let coordinate = coordinate else { return }
+            if !query.isEmpty {
+                self?.searchPlace(
+                    keyword: query,
+                    at: coordinate
+                )
+            } else {
+                self?.mapSearchTableHandler.updateSearchResults([])
+            }
+        }
+        
     }
 }

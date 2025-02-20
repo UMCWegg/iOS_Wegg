@@ -1,15 +1,15 @@
 //
-//  AddScheduleSearchTableCell.swift
+//  MapSearchTableCell.swift
 //  iOS_Wegg
 //
-//  Created by jaewon Lee on 2/15/25.
+//  Created by jaewon Lee on 2/19/25.
 //
 
 import UIKit
-import Then
 
-class AddScheduleSearchTableCell: UITableViewCell {
-    static let reuseIdentifier = "ScheduleSearchListTableViewCell"
+class MapSearchTableCell: UITableViewCell {
+
+    static let reuseIdentifier = "MapSearchTableCell"
 
     override init(
         style: UITableViewCell.CellStyle,
@@ -25,13 +25,13 @@ class AddScheduleSearchTableCell: UITableViewCell {
     }
     
     private lazy var resultLabel = UILabel().then {
-        $0.textColor = .secondary
+        $0.textColor = .black
         $0.font = .notoSans(.medium, size: 14)
         $0.numberOfLines = 1
     }
     
     private lazy var dividedLine = UIView().then {
-        $0.backgroundColor = .customGray
+        $0.backgroundColor = .gray1
         $0.snp.makeConstraints { make in
             make.height.equalTo(1)
         }
@@ -54,14 +54,13 @@ class AddScheduleSearchTableCell: UITableViewCell {
     private func constraints() {
         resultLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.lessThanOrEqualToSuperview().offset(10)
+            make.leading.lessThanOrEqualToSuperview().offset(21)
             make.width.equalToSuperview().offset(10)
         }
         
         dividedLine.snp.makeConstraints { make in
             make.top.equalTo(resultLabel.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(10)
+            make.leading.trailing.equalToSuperview()
         }
     }
-    
 }

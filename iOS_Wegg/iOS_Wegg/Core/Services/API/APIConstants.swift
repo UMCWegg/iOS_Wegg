@@ -14,6 +14,7 @@ struct APIConstants {
     struct Map {
         static let baseURL = "/maps"
         static let hotplacesURL = Map.baseURL + "/hotplaces"
+        static let detailInfoURL = Map.baseURL + "/details"
     }
     
     struct Schedule {
@@ -71,5 +72,9 @@ struct APIConstants {
     
     struct Notification {
         static let subscribe = "/notifications/subscribe"
+    }
+    
+    struct FollowLabel {
+        static let followLabelURL = "/home/follow"
     }
 }

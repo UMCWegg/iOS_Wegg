@@ -36,6 +36,7 @@ class MapViewController:
     private let mapManager: MapManagerProtocol
     private var apiManager: APIManager
     private var hotplaceList: [HotPlacesResponse.HotPlace] = []
+    private var selectedPlaceDetailInfo: [HotplaceDetailInfoResponse.Detail] = []
     
     // MARK: - 의존성 주입 위한 Property
     
@@ -45,8 +46,6 @@ class MapViewController:
     let floatingPanel: FloatingPanelController
     /// `HotPlaceSheetViewController`를 한 번만 생성하여 재사용
     let hotPlaceSheetVC: HotPlaceSheetViewController
-    /// `PlaceDetailViewController`도 한 번만 생성하여 FloatingPanel 내에서 재사용
-    let placeDetailVC: PlaceDetailViewController
     
     // MARK: - Init
     
@@ -55,16 +54,17 @@ class MapViewController:
     init(mapManager: MapManagerProtocol) {
         self.mapManager = mapManager
         self.apiManager = APIManager()
-        self.mapSearchVC = MapSearchViewController(mapVC: nil)
+        self.mapSearchVC = MapSearchViewController(
+            mapVC: nil,
+            mapManager: mapManager
+        )
         self.floatingPanel = FloatingPanelController()
         self.hotPlaceSheetVC = HotPlaceSheetViewController(mapVC: nil)
-        self.placeDetailVC = PlaceDetailViewController(mapVC: nil)
         
         super.init(nibName: nil, bundle: nil)
         // 각각의 ViewController에 `MapViewController`를 주입
         self.hotPlaceSheetVC.mapVC = self
         self.mapSearchVC?.mapVC = self
-        self.placeDetailVC.mapVC = self
     }
     
     required init?(coder: NSCoder) {
@@ -78,6 +78,10 @@ class MapViewController:
         // 뒤로가기 제스처 활성화
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        
+        // 장소 상세 정보 표시 위한 마커 지우고 뷰 로드
+        selectedPlaceDetailInfo.removeAll()
+        mapManager.removeAllMarkers()
     }
     
     override func viewDidLoad() {
@@ -88,6 +92,8 @@ class MapViewController:
         setupMapManagerGestures()
         setupOverlayView()
         setupFloatingPanel()
+        // 쿠키를 직접 저장
+        apiManager.setCookie(value: CookieStorage.cookie)
     }
     
     /// 지도가 메모리에 완전히 로드된 직후 API 호출
@@ -180,23 +186,39 @@ class MapViewController:
         navigationController.setViewControllers(viewControllers, animated: false)
     }
     
-    /// API에서 가져온 hotplaceList의 좌표를 기반으로 지도에 마커를 추가하는 함수
-    /// - `hotplaceList`가 비어 있으면 실행되지 않음
+    /// API에서 가져온 장소들의 좌표를 기반으로 지도에 마커를 추가하는 함수
+    /// - `place`가 비어 있으면 실행되지 않음
     /// - API 호출 후 데이터가 로드된 뒤 실행해야 함
     /// - `mapManager.addMarker(at:)`를 사용하여 지도에 마커 추가
-    private func setupMapPin() {
-        guard !hotplaceList.isEmpty else {
-            print("MapViewController Error: hotplaceList가 비어 있음")
+    private func setupMarkers<T>(from places: [T]) {
+        guard !places.isEmpty else {
+            print("MapViewController Error: 마커를 추가할 데이터가 없음")
             return
         }
         
-        hotplaceList.forEach { list in
-            let coordinate = Coordinate(
-                latitude: list.latitude,
-                longitude: list.longitude
-            )
+        places.forEach { place in
+            var coordinate: Coordinate
+            var imageName: String
+            
+            if let hotplace = place as? HotPlacesResponse.HotPlace {
+                coordinate = Coordinate(
+                    latitude: hotplace.latitude,
+                    longitude: hotplace.longitude
+                )
+                imageName = "list_brown_icon"
+            } else if let detail = place as? HotplaceDetailInfoResponse.Detail {
+                // TODO: 추후 서버에서 보낸 값으로 변경
+                coordinate = Coordinate(
+                    latitude: 37.60635,
+                    longitude: 127.04425
+                )
+                imageName = "yellow_wegg_icon"
+            } else {
+                return
+            }
+            
             mapManager.addMarker(
-                imageName: "list_brown_icon",
+                imageName: imageName,
                 width: 28,
                 height: 40,
                 at: coordinate
@@ -206,10 +228,8 @@ class MapViewController:
     
     // MARK: - API 관련 함수
     
+    /// 화면 경계값 안에 존재하는 모든 핫플레이스 호출 및 UI 업데이트
     func fetchHotPlacesFromVisibleBounds(sortBy: String = "distance") {
-        // 쿠키를 직접 저장
-        apiManager.setCookie(value: CookieStorage.cookie)
-        
         // 지도 경계 좌표 가져오기
         let request = mapManager.getVisibleBounds(sortBy: "distance")
         
@@ -220,9 +240,12 @@ class MapViewController:
                 )
                 hotplaceList = response.result.hotPlaceList
                 let section = convertToSectionModel(from: hotplaceList)
-                DispatchQueue.main.async {
-                    self.setupMapPin()
-                    self.hotPlaceSheetVC.updateHotPlaceList(section)
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.setupMarkers(from: self.hotplaceList)
+                    if self.selectedPlaceDetailInfo.isEmpty {
+                        self.hotPlaceSheetVC.updateHotPlaceList(section)
+                    }
                 }
             } catch {
                 print("❌ 실패: \(error)")
@@ -239,6 +262,7 @@ class MapViewController:
                 header: HotPlaceHeaderModel(
                     title: hotplace.placeName,
                     category: hotplace.placeLabel,
+                    address: nil,
                     verificationCount: "인증 \(hotplace.authCount)",
                     saveCount: "저장 \(hotplace.saveCount)"
                 ),
@@ -247,6 +271,42 @@ class MapViewController:
                 },
                 details: nil // 현재 API에서 추가적인 상세 정보 없음
             )
+        }
+    }
+    
+    /// `HotplaceDetailInfoResponse.Detail` 데이터를 `HotPlaceSectionModel`로 변환하는 함수
+    private func convertToSectionModel(
+        from details: [HotplaceDetailInfoResponse.Detail]
+    ) -> [HotPlaceSectionModel] {
+        return details.map { detail in
+            HotPlaceSectionModel(
+                header: HotPlaceHeaderModel(
+                    title: detail.placeName,
+                    category: detail.placeLabel,
+                    address: detail.roadAddress, // 주소 추가
+                    verificationCount: "인증 \(detail.authCount)",
+                    saveCount: "저장 \(detail.saveCount)"
+                ),
+                items: detail.postList.map { post in
+                    HotPlaceImageModel(imageName: post.imageUrl)
+                },
+                details: HotPlaceDetailModel(
+                    phoneNumber: detail.phone
+                )
+            )
+        }
+    }
+    
+    /// 모델 변환 후 UI 업데이트
+    public func updateHotplaceDetailInfo(_ detailList: [HotplaceDetailInfoResponse.Detail]) {
+        selectedPlaceDetailInfo = detailList
+        let section = convertToSectionModel(from: selectedPlaceDetailInfo)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            if !self.selectedPlaceDetailInfo.isEmpty {
+                self.setupMarkers(from: self.selectedPlaceDetailInfo)
+            }
+            self.hotPlaceSheetVC.updateHotPlaceList(section)
         }
     }
 }
@@ -263,9 +323,9 @@ extension MapViewController:
     
     func didTapPlaceSearchButton() {
         guard let mapSearchVC = mapSearchVC else { return }
-        navigationController?.pushViewController(mapSearchVC, animated: true)
         // 검색 버튼 탭한 경우 뒤로 가기 버튼 비활성화
         overlayView.placeDetailBackButton.isHidden = true
+        navigationController?.pushViewController(mapSearchVC, animated: true)
     }
     
     func didTapPlaceSearchBar() {
