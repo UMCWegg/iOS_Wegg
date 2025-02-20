@@ -215,10 +215,3 @@ class NotificationDetailView: UIView {
         }
     }
 }
-
-// UITableViewCell 확장 - configure 메서드 추가
-extension UITableViewCell {
-    func configure(with title: String) {
-        textLabel?.text = title
-    }
-}

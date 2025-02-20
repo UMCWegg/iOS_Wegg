@@ -14,7 +14,7 @@ class SettingDisclosureCell: SettingBaseCell {
 
     // MARK: - Properties
     
-    private let detailLabel = UILabel().then {
+    let detailLabel = UILabel().then {
         $0.font = .notoSans(.regular, size: 14)
         $0.textColor = UIColor(red: 0.84, green: 0.84, blue: 0.84, alpha: 1)
         $0.textAlignment = .right

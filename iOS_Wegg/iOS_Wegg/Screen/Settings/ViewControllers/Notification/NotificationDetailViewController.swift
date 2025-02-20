@@ -1,5 +1,5 @@
 //
-//  NotificationDetailType.swift
+//  NotificationDetailViewController.swift
 //  iOS_Wegg
 //
 //  Created by 이건수 on 2025.02.21.
@@ -86,11 +86,11 @@ class NotificationDetailViewController: UIViewController {
     private func setupUI() {
         detailView.modeLabel.text = "모드"
         
-        // 알림 타입 버튼 설정
-        detailView.silentCell.configure(with: "무음")
-        detailView.vibrateCell.configure(with: "진동")
-        detailView.soundCell.configure(with: "소리")
-        detailView.bothCell.configure(with: "진동 + 소리")
+        // 알림 타입 버튼 설정 - configure 메서드 대신 직접 textLabel에 접근
+        detailView.silentCell.textLabel?.text = "무음"
+        detailView.vibrateCell.textLabel?.text = "진동"
+        detailView.soundCell.textLabel?.text = "소리"
+        detailView.bothCell.textLabel?.text = "진동 + 소리"
         
         // 알 깨기는 주파수 설정 표시하지 않음
         detailView.frequencyLabel.isHidden = !notificationType.showsFrequency

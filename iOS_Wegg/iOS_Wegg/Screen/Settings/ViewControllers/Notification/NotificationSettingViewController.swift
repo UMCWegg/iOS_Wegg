@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NotificationSettingViewController: SettingBaseViewController {
+class NotificationSettingViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -80,34 +80,34 @@ class NotificationSettingViewController: SettingBaseViewController {
         let isCommentEnabled = settingsStorage.getNotificationEnabled(for: "comment") ?? true
         
         // 장소, 랜덤, 알 깨기 알림 설정 불러오기
-        let locationSetting = settingsStorage.getNotificationSetting(for: "location") ?? 
+        let locationSetting = settingsStorage.getNotificationSetting(for: "location") ??
             NotificationSetting(type: .sound, frequency: .single, isEnabled: true)
         
-        let randomSetting = settingsStorage.getNotificationSetting(for: "random") ?? 
+        let randomSetting = settingsStorage.getNotificationSetting(for: "random") ??
             NotificationSetting(type: .sound, frequency: .single, isEnabled: true)
         
-        let eggBreakSetting = settingsStorage.getNotificationSetting(for: "eggBreak") ?? 
+        let eggBreakSetting = settingsStorage.getNotificationSetting(for: "eggBreak") ??
             NotificationSetting(type: .sound, frequency: nil, isEnabled: true)
         
-        // UI 업데이트
-        notificationSettingView.friendPostToggle
-            .configure(with: "친구들 포스트 알림", isOn: isFriendPostEnabled)
-        notificationSettingView.commentToggle.configure(with: "댓글 알림", isOn: isCommentEnabled)
+        // UI 업데이트 - SettingToggleCell의 경우 configure 메서드를 사용하는 대신 직접 속성 설정
+        notificationSettingView.friendPostToggle.titleLabel.text = "친구들 포스트 알림"
+        notificationSettingView.friendPostToggle.toggleSwitch.isOn = isFriendPostEnabled
         
-        notificationSettingView.locationNotificationCell.configure(
-            with: "장소 인증 알림",
-            detail: locationSetting.isEnabled ? locationSetting.displayText : "꺼짐"
-        )
+        notificationSettingView.commentToggle.titleLabel.text = "댓글 알림"
+        notificationSettingView.commentToggle.toggleSwitch.isOn = isCommentEnabled
         
-        notificationSettingView.randomNotificationCell.configure(
-            with: "랜덤 인증 알림",
-            detail: randomSetting.isEnabled ? randomSetting.displayText : "꺼짐"
-        )
+        // SettingDisclosureCell의 경우 직접 속성 설정
+        notificationSettingView.locationNotificationCell.titleLabel.text = "장소 인증 알림"
+        notificationSettingView.locationNotificationCell.detailLabel.text =
+            locationSetting.isEnabled ? locationSetting.displayText : "꺼짐"
         
-        notificationSettingView.eggBreakNotificationCell.configure(
-            with: "알 깨기 알림",
-            detail: eggBreakSetting.isEnabled ? eggBreakSetting.type.displayName : "꺼짐"
-        )
+        notificationSettingView.randomNotificationCell.titleLabel.text = "랜덤 인증 알림"
+        notificationSettingView.randomNotificationCell.detailLabel.text =
+            randomSetting.isEnabled ? randomSetting.displayText : "꺼짐"
+        
+        notificationSettingView.eggBreakNotificationCell.titleLabel.text = "알 깨기 알림"
+        notificationSettingView.eggBreakNotificationCell.detailLabel.text =
+            eggBreakSetting.isEnabled ? eggBreakSetting.type.displayName : "꺼짐"
     }
     
     // MARK: - Actions
