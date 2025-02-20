@@ -81,7 +81,7 @@ class MapViewController:
         
         // 장소 상세 정보 표시 위한 마커 지우고 뷰 로드
         selectedPlaceDetailInfo.removeAll()
-        mapManager.removeAllMarkers()
+        removeAllMarkers()
     }
     
     override func viewDidLoad() {
@@ -190,7 +190,7 @@ class MapViewController:
     /// - `place`가 비어 있으면 실행되지 않음
     /// - API 호출 후 데이터가 로드된 뒤 실행해야 함
     /// - `mapManager.addMarker(at:)`를 사용하여 지도에 마커 추가
-    private func setupMarkers<T>(from places: [T]) {
+    func setupMarkers<T>(from places: [T]) {
         guard !places.isEmpty else {
             print("MapViewController Error: 마커를 추가할 데이터가 없음")
             return
@@ -212,6 +212,13 @@ class MapViewController:
                     longitude: detail.longitude
                 )
                 imageName = "yellow_wegg_icon"
+            } else if let bookmark = place as? FetchAllBookMarkPlaceResponse.BookMarkPlaceList {
+                print(bookmark)
+                coordinate = Coordinate(
+                    latitude: bookmark.latitude,
+                    longitude: bookmark.longitude
+                )
+                imageName = "list_brown_icon"
             } else {
                 return
             }
@@ -227,27 +234,56 @@ class MapViewController:
     
     // MARK: - API 관련 함수
     
+    var currentPage = 0
+    var isFetchingData = false
+    private let pageSize = 10
+    
     /// 화면 경계값 안에 존재하는 모든 핫플레이스 호출 및 UI 업데이트
-    func fetchHotPlacesFromVisibleBounds(sortBy: String = "distance") {
-        // 지도 경계 좌표 가져오기
-        let request = mapManager.getVisibleBounds(sortBy: "distance")
+    func fetchHotPlacesFromVisibleBounds(
+        sortBy: String = "distance",
+        page: Int? = nil
+    ) {
+        guard !isFetchingData else { return } // 중복 호출 방지
+        isFetchingData = true
+
+        let request = mapManager.getVisibleBounds(
+            sortBy: sortBy,
+            page: page ?? currentPage,
+            size: pageSize
+        )
         
         Task {
             do {
                 let response: HotPlacesResponse = try await apiManager.request(
                     target: HotPlacesAPI.getHotPlaces(request: request)
                 )
-                hotplaceList = response.result.hotPlaceList
-                let section = convertToSectionModel(from: hotplaceList)
+                
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.setupMarkers(from: self.hotplaceList)
-                    if self.selectedPlaceDetailInfo.isEmpty {
-                        self.hotPlaceSheetVC.updateHotPlaceList(section)
+
+                    // 이미 추가된 데이터인지 확인하여 새로운 데이터만 추가
+                    let newPlaces = response.result.hotPlaceList.filter { newPlace in
+                        !self.hotplaceList.contains { $0.addressId == newPlace.addressId }
                     }
+
+                    // 중복 데이터가 아닌 경우에만 리스트 업데이트
+                    guard !newPlaces.isEmpty else {
+                        self.isFetchingData = false
+                        return
+                    }
+                    
+                    // 기존 리스트에 새로운 데이터 추가
+                    self.hotplaceList.append(contentsOf: newPlaces)
+                    let section = self.convertToSectionModel(from: self.hotplaceList)
+                    self.hotPlaceSheetVC.updateHotPlaceList(section)
+                    self.setupMarkers(from: newPlaces)
+
+                    self.currentPage += 1 // 페이지 증가
+                    self.isFetchingData = false // API 요청 완료 후 해제
                 }
             } catch {
                 print("❌ 실패: \(error)")
+                isFetchingData = false // 실패 시에도 다시 요청 가능하도록 설정
             }
         }
     }
@@ -258,6 +294,7 @@ class MapViewController:
     ) -> [HotPlaceSectionModel] {
         return hotplaces.map { hotplace in
             HotPlaceSectionModel(
+                addressId: hotplace.addressId,
                 header: HotPlaceHeaderModel(
                     title: hotplace.placeName,
                     category: hotplace.placeLabel,
@@ -268,7 +305,11 @@ class MapViewController:
                 items: hotplace.postList.map { post in
                     HotPlaceImageModel(imageName: post.imageUrl)
                 },
-                details: HotPlaceDetailModel(phoneNumber: hotplace.phone)
+                details: HotPlaceDetailModel(
+                    savedStatus: nil,
+                    authPeople: nil,
+                    phoneNumber: hotplace.phone
+                )
             )
         }
     }
@@ -279,6 +320,7 @@ class MapViewController:
     ) -> [HotPlaceSectionModel] {
         return details.map { detail in
             HotPlaceSectionModel(
+                addressId: detail.addressId,
                 header: HotPlaceHeaderModel(
                     title: detail.placeName,
                     category: detail.placeLabel,
@@ -290,6 +332,8 @@ class MapViewController:
                     HotPlaceImageModel(imageName: post.imageUrl)
                 },
                 details: HotPlaceDetailModel(
+                    savedStatus: detail.savedStatus,
+                    authPeople: detail.authPeople,
                     phoneNumber: detail.phone
                 )
             )
@@ -308,6 +352,15 @@ class MapViewController:
             self.hotPlaceSheetVC.updateHotPlaceList(section)
         }
     }
+    
+    public func removeAllMarkers() {
+        mapManager.removeAllMarkers()
+    }
+    
+    public func removeAllPlaceList() {
+        hotplaceList.removeAll()
+        selectedPlaceDetailInfo.removeAll()
+    }
 }
 
 extension MapViewController:
@@ -318,6 +371,16 @@ extension MapViewController:
     
     func didTapDetectOnLocationButton() {
         mapManager.requestCurrentLocation()
+    }
+    
+    func didTapReloadButton() {
+        removeAllMarkers()
+        
+        // 기존 데이터 초기화
+        removeAllPlaceList()
+        currentPage = 0
+        
+        fetchHotPlacesFromVisibleBounds()
     }
     
     func didTapPlaceSearchButton() {

@@ -170,18 +170,18 @@ extension HotPlaceSheetViewController:
     
     func didTapHotPlaceCellHeader(at indexPath: IndexPath) {
         guard let mapVC = mapVC else { return }
-
+        
         // 사용자가 탭한 셀의 섹션 데이터 가져오기
         let selectedSection = hotPlaceSectionList[indexPath.section]
         let placeName = selectedSection.header.title
-
+        
         fetchDetailInfo(query: placeName, from: selectedSection) { updatedSection in
             DispatchQueue.main.async {
                 let hotPlaceView = mapVC.hotPlaceSheetVC.hotPlaceView
                 hotPlaceView.showBottomSheetComponents(isHidden: true)
                 
                 let placeDetailVC = PlaceDetailViewController(sectionModel: updatedSection)
-
+                
                 // FloatingPanel에서 새로운 장소 정보를 보여줌
                 mapVC.floatingPanel.set(contentViewController: placeDetailVC)
                 mapVC.floatingPanel.move(to: .full, animated: true)
@@ -196,7 +196,12 @@ extension HotPlaceSheetViewController:
             return
         }
         
-        // REFACT: API 중복 호출 방지 필요
+        // 기존 데이터 및 상태 초기화
+        mapVC.removeAllPlaceList()
+        mapVC.removeAllMarkers()
+        mapVC.currentPage = 0
+        mapVC.isFetchingData = false
+        
         mapVC.fetchHotPlacesFromVisibleBounds()
     }
     
@@ -205,8 +210,18 @@ extension HotPlaceSheetViewController:
             print("Error: HotPlaceSheetVC's mapVC is nil")
             return
         }
-        // REFACT: API 중복 호출 방지 필요
+        
+        // 기존 데이터 및 상태 초기화
+        mapVC.removeAllPlaceList()
+        mapVC.removeAllMarkers()
+        mapVC.currentPage = 0
+        mapVC.isFetchingData = false
+        
         mapVC.fetchHotPlacesFromVisibleBounds(sortBy: "authCount")
+    }
+    
+    func didTapBookmarkButton() {
+        fetchAllBookmarks(page: 0, pageSize: 10)
     }
     
 }
@@ -229,13 +244,17 @@ extension HotPlaceSheetViewController {
                 )
 
                 if let detail = response.result.detailList.first {
-                    let updatedDetails = HotPlaceDetailModel(phoneNumber: detail.phone)
+                    let updatedDetails = HotPlaceDetailModel(
+                        savedStatus: detail.savedStatus,
+                        authPeople: detail.authPeople,
+                        phoneNumber: detail.phone
+                    )
 
                     // 기존 헤더 정보 + address 추가
                     let updatedHeader = HotPlaceHeaderModel(
                         title: section.header.title,
                         category: section.header.category,
-                        address: detail.roadAddress, // 🔹 API에서 받은 도로명 주소 반영
+                        address: detail.roadAddress, // API에서 받은 도로명 주소 반영
                         verificationCount: section.header.verificationCount,
                         saveCount: section.header.saveCount
                     )
@@ -247,12 +266,65 @@ extension HotPlaceSheetViewController {
 
                     completion(updatedSection) // 최신 정보가 반영된 섹션 반환
                 } else {
-                    completion(section) // ❗ 상세 정보가 없는 경우 기존 섹션 반환
+                    completion(section) // 상세 정보가 없는 경우 기존 섹션 반환
                 }
             } catch {
                 print("❌ 실패: \(error)")
-                completion(section) // ❗ 실패 시 기존 섹션 반환
+                completion(section) // 실패 시 기존 섹션 반환
             }
+        }
+    }
+    
+    private func fetchAllBookmarks(page: Int, pageSize: Int) {
+        let request = FetchAllBookMarkPlaceRequest(page: page, size: pageSize)
+        Task {
+            do {
+                let response: FetchAllBookMarkPlaceResponse = try await apiManager.request(
+                    target: HotPlacesAPI.getAllBookmarkPlace(request: request)
+                )
+                hotPlaceSectionList = response.result.bookmarkPlaceList.map { bookmarkPlace in
+                    return HotPlaceSectionModel(
+                        addressId: bookmarkPlace.addressId,
+                        header: HotPlaceHeaderModel(
+                            title: bookmarkPlace.placeName,
+                            category: bookmarkPlace.placeLabel,
+                            address: nil,
+                            verificationCount: "인증 \(bookmarkPlace.authCount)",
+                            saveCount: "저장 \(bookmarkPlace.saveCount)"
+                        ),
+                        items: bookmarkPlace.postList.map { post in
+                            HotPlaceImageModel(imageName: post.imageUrl)
+                        }
+                    )
+                }
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.mapVC?.removeAllMarkers()
+                    self.mapVC?.removeAllPlaceList()
+                    self.mapVC?.setupMarkers(from: response.result.bookmarkPlaceList)
+                    self.updateHotPlaceList(self.hotPlaceSectionList)
+                }
+            } catch {
+                print("FetchAllBookMarkPlaceResponse 실패: \(error)")
+            }
+        }
+    }
+}
+
+extension HotPlaceSheetViewController: UIScrollViewDelegate {
+    // 무한 스크롤
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let mapVC = mapVC else { return }
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let frameHeight = scrollView.frame.size.height
+
+        // 중복 요청 방지
+        guard !mapVC.isFetchingData else { return }
+        
+        // 스크롤이 끝에 도달하면 다음 페이지 로드
+        if offsetY > contentHeight - frameHeight * 1.5 {
+            mapVC.fetchHotPlacesFromVisibleBounds(page: mapVC.currentPage)
         }
     }
 }
