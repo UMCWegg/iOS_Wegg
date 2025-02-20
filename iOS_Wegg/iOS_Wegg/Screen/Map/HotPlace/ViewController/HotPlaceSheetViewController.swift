@@ -196,7 +196,12 @@ extension HotPlaceSheetViewController:
             return
         }
         
-        // REFACT: API 중복 호출 방지 필요
+        // 기존 데이터 및 상태 초기화
+        mapVC.removeAllPlaceList()
+        mapVC.removeAllMarkers()
+        mapVC.currentPage = 0
+        mapVC.isFetchingData = false
+        
         mapVC.fetchHotPlacesFromVisibleBounds()
     }
     
@@ -205,7 +210,13 @@ extension HotPlaceSheetViewController:
             print("Error: HotPlaceSheetVC's mapVC is nil")
             return
         }
-        // REFACT: API 중복 호출 방지 필요
+        
+        // 기존 데이터 및 상태 초기화
+        mapVC.removeAllPlaceList()
+        mapVC.removeAllMarkers()
+        mapVC.currentPage = 0
+        mapVC.isFetchingData = false
+        
         mapVC.fetchHotPlacesFromVisibleBounds(sortBy: "authCount")
     }
     
@@ -255,18 +266,17 @@ extension HotPlaceSheetViewController {
 
                     completion(updatedSection) // 최신 정보가 반영된 섹션 반환
                 } else {
-                    completion(section) // ❗ 상세 정보가 없는 경우 기존 섹션 반환
+                    completion(section) // 상세 정보가 없는 경우 기존 섹션 반환
                 }
             } catch {
                 print("❌ 실패: \(error)")
-                completion(section) // ❗ 실패 시 기존 섹션 반환
+                completion(section) // 실패 시 기존 섹션 반환
             }
         }
     }
     
     private func fetchAllBookmarks(page: Int, pageSize: Int) {
         let request = FetchAllBookMarkPlaceRequest(page: page, size: pageSize)
-        
         Task {
             do {
                 let response: FetchAllBookMarkPlaceResponse = try await apiManager.request(
@@ -290,6 +300,7 @@ extension HotPlaceSheetViewController {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     self.mapVC?.removeAllMarkers()
+                    self.mapVC?.removeAllPlaceList()
                     self.mapVC?.setupMarkers(from: response.result.bookmarkPlaceList)
                     self.updateHotPlaceList(self.hotPlaceSectionList)
                 }

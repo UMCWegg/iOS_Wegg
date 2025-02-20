@@ -356,6 +356,11 @@ class MapViewController:
     public func removeAllMarkers() {
         mapManager.removeAllMarkers()
     }
+    
+    public func removeAllPlaceList() {
+        hotplaceList.removeAll()
+        selectedPlaceDetailInfo.removeAll()
+    }
 }
 
 extension MapViewController:
@@ -372,8 +377,7 @@ extension MapViewController:
         removeAllMarkers()
         
         // 기존 데이터 초기화
-        hotplaceList.removeAll()
-        selectedPlaceDetailInfo.removeAll()
+        removeAllPlaceList()
         currentPage = 0
         
         fetchHotPlacesFromVisibleBounds()
