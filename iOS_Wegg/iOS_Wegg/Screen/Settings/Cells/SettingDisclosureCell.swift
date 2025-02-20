@@ -80,3 +80,13 @@ class SettingDisclosureCell: SettingBaseCell {
         }
     }
 }
+
+import UIKit
+
+extension SettingDisclosureCell {
+    func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
+        let tapGesture = UITapGestureRecognizer(target: target, action: action)
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(tapGesture)
+    }
+}

@@ -6,5 +6,18 @@
 //
 
 struct ProfileModifyResponse: Codable {
+    let success: Bool
+    let updateFields: UpdateFields
+}
+
+struct UpdateFields: Codable {
+    let name: String
+    let accountID: String
+    let profileImage: String
     
+    enum CodingKeys: String, CodingKey {
+        case name
+        case accountID = "accountId"
+        case profileImage
+    }
 }
