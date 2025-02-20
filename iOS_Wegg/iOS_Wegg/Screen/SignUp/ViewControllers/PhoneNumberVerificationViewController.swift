@@ -46,6 +46,20 @@ class PhoneNumberVerificationViewController: UIViewController {
             phoneNumberVerificationView.phoneNumber = phoneNumber
         }
     }
+    
+    private func setupTimer() {
+        TimerManager.shared.timerCallback = { [weak self] remainingTime in
+            self?.phoneNumberVerificationView.timerLabel.text = TimerManager.shared.getFormattedTime()
+        }
+        
+        TimerManager.shared.timerExpiredCallback = { [weak self] in
+            self?.showAlert(message: "인증 시간이 만료되었습니다. 다시 시도해주세요.")
+            self?.navigationController?.popViewController(animated: true)
+        }
+        
+        TimerManager.shared.startTimer()
+    }
+    
     // MARK: - Actions
     
     @objc private func nextButtonTapped() {
@@ -82,6 +96,8 @@ class PhoneNumberVerificationViewController: UIViewController {
     }
     
     @objc private func resendButtonTapped() {
+        TimerManager.shared.startTimer()
+        
         guard let phoneNumber = phoneNumber else { return }
         
         Task {

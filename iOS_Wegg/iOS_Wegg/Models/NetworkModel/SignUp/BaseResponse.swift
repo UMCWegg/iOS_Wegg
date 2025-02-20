@@ -9,13 +9,12 @@ struct BaseResponse<T: Decodable>: Decodable {
     let isSuccess: Bool
     let code: String
     let message: String
-    let result: T
+    let result: T?
 }
 
 struct IDCheckResult: Decodable {
     let message: String
     let duplicate: Bool
-    
 }
 
 struct SendVerification: Decodable {

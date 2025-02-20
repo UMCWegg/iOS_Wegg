@@ -59,6 +59,12 @@ class PhoneNumberVerificationView: UIView {
         backgroundColor: .primary
     )
     
+    let timerLabel = UILabel().then {
+            $0.font = .notoSans(.regular, size: 13)
+            $0.textColor = .red
+            $0.textAlignment = .center
+        }
+    
     var phoneNumber: String = "" {
         didSet {
             self.subLabel.text = "\(phoneNumber)로 인증 번호를 보냈어요"
@@ -75,7 +81,8 @@ class PhoneNumberVerificationView: UIView {
             verificationLabel,
             verificationTextField,
             resendButton,
-            nextButton
+            nextButton,
+            timerLabel
         ].forEach { addSubview($0) }
     }
     
@@ -116,6 +123,11 @@ class PhoneNumberVerificationView: UIView {
         nextButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-40)
+        }
+        
+        timerLabel.snp.makeConstraints { make in
+            make.top.equalTo(verificationTextField.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
         }
     }
 
