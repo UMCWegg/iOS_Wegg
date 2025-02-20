@@ -236,7 +236,7 @@ class MapViewController:
     
     var currentPage = 0
     var isFetchingData = false
-    private let pageSize = 15
+    private let pageSize = 10
     
     /// 화면 경계값 안에 존재하는 모든 핫플레이스 호출 및 UI 업데이트
     func fetchHotPlacesFromVisibleBounds(
@@ -370,6 +370,12 @@ extension MapViewController:
     
     func didTapReloadButton() {
         removeAllMarkers()
+        
+        // 기존 데이터 초기화
+        hotplaceList.removeAll()
+        selectedPlaceDetailInfo.removeAll()
+        currentPage = 0
+        
         fetchHotPlacesFromVisibleBounds()
     }
     

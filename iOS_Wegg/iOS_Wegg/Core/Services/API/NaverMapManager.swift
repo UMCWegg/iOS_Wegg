@@ -209,7 +209,7 @@ class NaverMapManager:
             maxY: northEast.lat,
             sortBy: sortBy ?? "distance",
             page: page,
-            size: 3
+            size: size
         )
     }
     

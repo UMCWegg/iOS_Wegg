@@ -62,7 +62,9 @@ extension HotPlacesAPI: TargetType {
                     "maxX": request.maxX,
                     "minY": request.minY,
                     "maxY": request.maxY,
-                    "sortBy": request.sortBy
+                    "sortBy": request.sortBy,
+                    "page": request.page,
+                    "size": request.size
                 ],
                 encoding: URLEncoding.queryString
             )

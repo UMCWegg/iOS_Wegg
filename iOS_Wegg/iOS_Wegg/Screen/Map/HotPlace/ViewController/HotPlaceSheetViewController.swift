@@ -210,7 +210,7 @@ extension HotPlaceSheetViewController:
     }
     
     func didTapBookmarkButton() {
-        fetchAllBookmarks(page: 0, pageSize: 15)
+        fetchAllBookmarks(page: 0, pageSize: 10)
     }
     
 }
