@@ -46,8 +46,6 @@ class MapViewController:
     let floatingPanel: FloatingPanelController
     /// `HotPlaceSheetViewController`를 한 번만 생성하여 재사용
     let hotPlaceSheetVC: HotPlaceSheetViewController
-    /// `PlaceDetailViewController`도 한 번만 생성하여 FloatingPanel 내에서 재사용
-    let placeDetailVC: PlaceDetailViewController
     
     // MARK: - Init
     
@@ -62,13 +60,11 @@ class MapViewController:
         )
         self.floatingPanel = FloatingPanelController()
         self.hotPlaceSheetVC = HotPlaceSheetViewController(mapVC: nil)
-        self.placeDetailVC = PlaceDetailViewController(mapVC: nil)
         
         super.init(nibName: nil, bundle: nil)
         // 각각의 ViewController에 `MapViewController`를 주입
         self.hotPlaceSheetVC.mapVC = self
         self.mapSearchVC?.mapVC = self
-        self.placeDetailVC.mapVC = self
     }
     
     required init?(coder: NSCoder) {

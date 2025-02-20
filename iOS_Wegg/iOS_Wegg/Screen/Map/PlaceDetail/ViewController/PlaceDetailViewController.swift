@@ -10,14 +10,12 @@ import FloatingPanel
 
 class PlaceDetailViewController: UIViewController {
     weak var mapVC: MapViewController?
-    var targetSectionIndex: Int = 3 // 모델에서 원하는 인덱스 설정
     private var collectionHandler: PlaceDetailCollectionHandler?
-    private let sampleSections = HotPlaceSectionModel.sampleSections
     private var sectionModel: HotPlaceSectionModel?
     lazy var placeDetailView = PlaceDetailView()
     
-    init(mapVC: MapViewController?) { // 생성자에서 의존성 주입
-        self.mapVC = mapVC
+    init(sectionModel: HotPlaceSectionModel) { // 생성자에서 의존성 주입
+        self.sectionModel = sectionModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -30,13 +28,13 @@ class PlaceDetailViewController: UIViewController {
         
         view = placeDetailView
         configureCollectionView()
+        updateUI()
     }
     
+    @MainActor
     private func configureCollectionView() {
-        collectionHandler = PlaceDetailCollectionHandler(
-            targetSectionIndex: targetSectionIndex,
-            sampleSections: sampleSections
-        )
+        guard let sectionModel = sectionModel else { return }
+        collectionHandler = PlaceDetailCollectionHandler(sectionModel: sectionModel)
         placeDetailView.studyImageCollectionView.delegate = collectionHandler
         placeDetailView.studyImageCollectionView.dataSource = collectionHandler
         placeDetailView.gestureDelegate = self
@@ -47,8 +45,8 @@ class PlaceDetailViewController: UIViewController {
      - Parameter detail: `HotPlaceDetailModel` 데이터
      */
     @MainActor
-    public func updateUI(with sectionModel: HotPlaceSectionModel) {
-        
+    public func updateUI() {
+        guard let sectionModel = sectionModel else { return }
         let info = [
             placeDetailView.titleLabel: sectionModel.header.title,
             placeDetailView.categoryLabel: sectionModel.header.category,
