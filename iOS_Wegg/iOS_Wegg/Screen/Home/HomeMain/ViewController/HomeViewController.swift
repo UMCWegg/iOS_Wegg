@@ -13,6 +13,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
     private let apiManager = APIManager()
     private let todoService = TodoService()
     private var timer: Timer?
+    private var planId: Int? // 장소 인증시 필요 - 작성자: 이재원
 
     override func loadView() {
         self.view = homeView
@@ -73,6 +74,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
                 
                 // API 응답 로그 출력
                 print("✅ API 응답: \(weeklyRenderResponse)")
+                planId = weeklyRenderResponse.result.planId
 
                 // 🥚 WeeklyEggView 업데이트
                 DispatchQueue.main.async {
@@ -268,6 +270,9 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, ToDoListViewDe
             action: #selector(photoAuthTapped),
             for: .touchUpInside
         )
+        homeView.authView.onPlaceVerificationTapped = { [weak self] in
+            self?.navigateToPlaceVerificationView()
+        }
     }
 
     /// 사진 인증 버튼을 눌렀을 때 `CameraViewController`로 이동
@@ -304,5 +309,25 @@ extension Collection {
     /// Returns the element at the specified index if it is within bounds, otherwise nil.
     subscript (safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
+    }
+}
+
+extension HomeViewController {
+    /// 장소 인증 화면으로 이동 - 작성자: 이재원
+    func navigateToPlaceVerificationView() {
+        guard let planId = planId else {
+            print("planId in nil")
+            return
+        }
+        let placeVerificationVC = PlaceVerificationViewController(
+            mapManager: NaverMapManager(),
+            planId: planId
+        )
+        homeView.authView.isHidden = true
+        homeView.scrollView.isScrollEnabled = false // 스크롤 비활성화
+        homeView.setNeedsUpdateConstraints()
+        
+        placeVerificationVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(placeVerificationVC, animated: true)
     }
 }

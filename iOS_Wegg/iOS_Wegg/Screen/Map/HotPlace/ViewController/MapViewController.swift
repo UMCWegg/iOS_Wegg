@@ -59,7 +59,7 @@ class MapViewController:
             mapManager: mapManager
         )
         self.floatingPanel = FloatingPanelController()
-        self.hotPlaceSheetVC = HotPlaceSheetViewController(mapVC: nil)
+        self.hotPlaceSheetVC = HotPlaceSheetViewController(mapVC: nil, apiManager: apiManager)
         
         super.init(nibName: nil, bundle: nil)
         // 각각의 ViewController에 `MapViewController`를 주입
@@ -207,10 +207,9 @@ class MapViewController:
                 )
                 imageName = "list_brown_icon"
             } else if let detail = place as? HotplaceDetailInfoResponse.Detail {
-                // TODO: 추후 서버에서 보낸 값으로 변경
                 coordinate = Coordinate(
-                    latitude: 37.60635,
-                    longitude: 127.04425
+                    latitude: detail.latitude,
+                    longitude: detail.longitude
                 )
                 imageName = "yellow_wegg_icon"
             } else {
@@ -269,7 +268,7 @@ class MapViewController:
                 items: hotplace.postList.map { post in
                     HotPlaceImageModel(imageName: post.imageUrl)
                 },
-                details: nil // 현재 API에서 추가적인 상세 정보 없음
+                details: HotPlaceDetailModel(phoneNumber: hotplace.phone)
             )
         }
     }
@@ -283,7 +282,7 @@ class MapViewController:
                 header: HotPlaceHeaderModel(
                     title: detail.placeName,
                     category: detail.placeLabel,
-                    address: detail.roadAddress, // 주소 추가
+                    address: detail.roadAddress,
                     verificationCount: "인증 \(detail.authCount)",
                     saveCount: "저장 \(detail.saveCount)"
                 ),

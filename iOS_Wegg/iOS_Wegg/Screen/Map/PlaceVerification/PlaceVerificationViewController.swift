@@ -22,7 +22,7 @@ class PlaceVerificationViewController: UIViewController {
     /// `MapManagerProtocol`을 주입하여 지도 관리
     /// - Parameter mapManager: 지도 관련 기능을 담당하는 프로토콜
     /// - Parameter planId: 일정의 ID
-    init(mapManager: MapManagerProtocol, planId: Int = 80) { // TODO: 추후 planId 기본값 제거
+    init(mapManager: MapManagerProtocol, planId: Int) { // TODO: 추후 planId 기본값 제거
         self.mapManager = mapManager
         self.planId = planId
         super.init(nibName: nil, bundle: nil)
@@ -44,7 +44,6 @@ class PlaceVerificationViewController: UIViewController {
     /// 화면이 로드될 때 쿠키를 설정하고 장소 인증 요청 실행
     override func viewDidLoad() {
         super.viewDidLoad()
-        apiManager.setCookie(value: CookieStorage.cookie)
         checkPlaceVerificationInfo()
     }
     
@@ -106,7 +105,7 @@ class PlaceVerificationViewController: UIViewController {
                     latitude: response.result.latitude,
                     longitude: response.result.longitude
                 )
-                
+                print("response: \(response)")
                 // 가져온 장소 정보를 기반으로 현재 위치 검증 실행
                 verifyUserLocation(with: placeLocation, placeName: placeName)
             } catch {
