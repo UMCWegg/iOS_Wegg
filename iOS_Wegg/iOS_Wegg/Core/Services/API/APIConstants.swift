@@ -81,4 +81,8 @@ struct APIConstants {
     struct WeeklyRenderURL {
         static let weeklyRenderURL = "/home/week"
     }
+    
+    struct MonthlyRenderURL {
+        static let monthlyRenderURL = "/home/month"
+    }
 }
