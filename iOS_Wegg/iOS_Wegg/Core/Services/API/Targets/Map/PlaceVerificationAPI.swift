@@ -9,7 +9,10 @@ import Foundation
 import Moya
 
 enum PlaceVerificationAPI {
-    case checkPlaceVerification(planId: Int)
+    /// 장소 인증 화면에 필요한 API
+    case getkPlaceVerification(planId: Int)
+    /// 실제 장소 인증을 수행하는 API
+//    case checkPlaceVerification(planId: Int)
 }
 
 extension PlaceVerificationAPI: TargetType {
@@ -22,21 +25,21 @@ extension PlaceVerificationAPI: TargetType {
     
     var path: String {
         switch self {
-        case .checkPlaceVerification(let planId):
+        case .getkPlaceVerification(let planId):
             return "/plans/\(planId)/check-info"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .checkPlaceVerification:
+        case .getkPlaceVerification:
             return .get
         }
     }
     
     var task: Task {
         switch self {
-        case .checkPlaceVerification:
+        case .getkPlaceVerification:
             return .requestPlain
         }
     }

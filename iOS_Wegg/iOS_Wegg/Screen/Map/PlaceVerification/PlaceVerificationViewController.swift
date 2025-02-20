@@ -93,8 +93,8 @@ class PlaceVerificationViewController: UIViewController {
     private func checkPlaceVerification() {
         Task {
             do {
-                let response: PlaceVerificationCheckResponse = try await apiManager.request(
-                    target: PlaceVerificationAPI.checkPlaceVerification(planId: 1)
+                let response: FetchPlaceVerificationResponse = try await apiManager.request(
+                    target: PlaceVerificationAPI.getkPlaceVerification(planId: 78)
                 )
                 let placeName = response.result.placeName
                 let placeLocation = Coordinate(

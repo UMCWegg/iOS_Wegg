@@ -1,5 +1,5 @@
 //
-//  PlaceVerificationCheckResponse.swift
+//  FetchPlaceVerificationResponse.swift
 //  iOS_Wegg
 //
 //  Created by jaewon Lee on 2/20/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PlaceVerificationCheckResponse: Decodable {
+struct FetchPlaceVerificationResponse: Decodable {
     let isSuccess: Bool
     let code: String
     let message: String
