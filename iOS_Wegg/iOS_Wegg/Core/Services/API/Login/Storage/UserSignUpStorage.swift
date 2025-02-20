@@ -68,7 +68,7 @@ extension UserSignUpStorage.SignUpData {
             reason: reason ?? UserReason.formHabits,
             phone: phone ?? "",
             alarm: alarm ?? false,
-            contact: contact?.map { Contact(phone: $0.phone) } ?? [],
+            contact: contact?.map { Contact(phone: $0.phone) } ?? nil,
             socialType: socialType == .email ? nil : socialType,
             accessToken: socialType == .email ? nil : accessToken
         )
