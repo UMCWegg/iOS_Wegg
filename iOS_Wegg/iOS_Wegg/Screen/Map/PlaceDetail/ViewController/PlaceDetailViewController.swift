@@ -63,25 +63,35 @@ class PlaceDetailViewController: UIViewController {
         }
     }
     
-    /// 장소 저장 API 호출 함수
-    private func saveHotPlace(addressId: Int) {
-        Task {
-            do {
-                let response: SavePlaceResponse = try await apiManager.request(
-                    target: HotPlacesAPI.savePlace(addressId: addressId)
-                )
-                print("response: \(response)")
-            } catch {
-                print("❌ 실패: \(error)")
-            }
+    /// 장소 저장 API 호출 함수 (성공 여부 반환)
+    private func saveHotPlace(addressId: Int) async -> Bool {
+        do {
+            let response: SavePlaceResponse = try await apiManager.request(
+                target: HotPlacesAPI.savePlace(addressId: addressId)
+            )
+            return true
+        } catch {
+            print("❌ 실패: \(error)")
+            return false
         }
     }
 }
 
 extension PlaceDetailViewController: PlaceDetailViewGestureDelegate {
+    // 장소 저장
     func didTapFavoriteStar() {
-        print("didTapFavoriteStar")
-        saveHotPlace(addressId: 1)
+        guard let sectionModel = sectionModel else { return }
+        
+        Task {
+            let isSuccess = await saveHotPlace(addressId: sectionModel.addressId)
+            
+            guard isSuccess else { return }
+            
+            DispatchQueue.main.async {
+                self.placeDetailView.saveIconImageView.isHidden = false
+                self.placeDetailView.favoriteStarImageView.isHidden = true
+            }
+        }
     }
     
     func didTapPlaceCreateButton() {
