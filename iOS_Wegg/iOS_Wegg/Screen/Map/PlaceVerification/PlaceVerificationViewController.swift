@@ -36,10 +36,6 @@ class PlaceVerificationViewController: UIViewController {
         checkPlaceVerification()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     private func setupOverlayView() {
         placeVerificationOverlayView.setupOverlayConstraints(in: view)
         placeVerificationOverlayView.delegate = self
