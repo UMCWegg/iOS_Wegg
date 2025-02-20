@@ -13,6 +13,7 @@ class PlaceDetailViewController: UIViewController {
     private var collectionHandler: PlaceDetailCollectionHandler?
     private var sectionModel: HotPlaceSectionModel?
     lazy var placeDetailView = PlaceDetailView()
+    private let apiManager = APIManager()
     
     init(sectionModel: HotPlaceSectionModel) { // 생성자에서 의존성 주입
         self.sectionModel = sectionModel

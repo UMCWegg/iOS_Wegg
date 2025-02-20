@@ -268,7 +268,7 @@ class MapViewController:
                 items: hotplace.postList.map { post in
                     HotPlaceImageModel(imageName: post.imageUrl)
                 },
-                details: nil // 현재 API에서 추가적인 상세 정보 없음
+                details: HotPlaceDetailModel(phoneNumber: hotplace.phone)
             )
         }
     }
@@ -282,7 +282,7 @@ class MapViewController:
                 header: HotPlaceHeaderModel(
                     title: detail.placeName,
                     category: detail.placeLabel,
-                    address: detail.roadAddress, // 주소 추가
+                    address: detail.roadAddress,
                     verificationCount: "인증 \(detail.authCount)",
                     saveCount: "저장 \(detail.saveCount)"
                 ),
