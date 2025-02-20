@@ -91,6 +91,8 @@ struct APIConstants {
     
     struct NotificationURL {
         static let notificationURL = "/notifications"
-        static let markAsReadURL = "/{notification_id}" // 알림 읽기 API 경로
+        static func markAsReadURL(notificationId: Int) -> String {
+            return "/notifications/\(notificationId)"
+        }
     }
 }
