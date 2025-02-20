@@ -141,6 +141,8 @@ class ContactFriendCell: UITableViewCell {
         case .success:
             break
         }
+        
+        followButton.isEnabled = false
     }
     
     func configure(with friend: ContactFriend) {

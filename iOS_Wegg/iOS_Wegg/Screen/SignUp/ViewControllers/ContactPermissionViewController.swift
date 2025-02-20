@@ -54,7 +54,9 @@ class ContactPermissionViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func nextButtonTapped() {
+        contactPermissionView.nextButton.isEnabled = false
         let store = CNContactStore()
+        
         store.requestAccess(for: .contacts) { [weak self] granted, error in
             guard let self = self else { return }
             
@@ -67,6 +69,7 @@ class ContactPermissionViewController: UIViewController {
                             data.contact = contacts.map { Contact(phone: $0) }
                         }
                         await self.signUp()
+                        self.contactPermissionView.nextButton.isEnabled = true
                     } catch {
                         print("Error fetching contacts: \(error)")
                         self.proceedWithoutContacts()
@@ -92,8 +95,17 @@ class ContactPermissionViewController: UIViewController {
             do {
                 try store.enumerateContacts(with: request) { contact, stop in
                     if let phoneNumber = contact.phoneNumbers.first?.value.stringValue {
-                        let formattedNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
-                        phoneNumbers.append(formattedNumber)
+                        // 전화번호 형식 정리
+                        let cleanNumber = phoneNumber
+                            .replacingOccurrences(of: "(", with: "")
+                            .replacingOccurrences(of: ")", with: "")
+                            .replacingOccurrences(of: " ", with: "")
+                            .replacingOccurrences(of: "-", with: "")
+                        
+                        // 한국 전화번호 형식(01로 시작)만 필터링
+                        if cleanNumber.hasPrefix("01") {
+                            phoneNumbers.append(cleanNumber)
+                        }
                     }
                 }
                 continuation.resume()
@@ -157,6 +169,16 @@ class ContactPermissionViewController: UIViewController {
             self.contactFriends = contactFriends
             contactPermissionView.contentBox.isHidden = false
             contactPermissionView.tableView.reloadData()
+            
+            contactPermissionView.nextButton.removeTarget(
+                self,
+                action: #selector(nextButtonTapped),
+                for: .touchUpInside)
+            contactPermissionView.nextButton.addTarget(
+                self,
+                action: #selector(proceedToNextScreen),
+                for: .touchUpInside)
+            contactPermissionView.nextButton.isEnabled = true
         } else {
             moveToMainScreen()
         }
@@ -167,38 +189,54 @@ class ContactPermissionViewController: UIViewController {
         navigationController?.pushViewController(signUpCompleteVC, animated: true)
     }
     
+    @objc private func proceedToNextScreen() {
+        moveToMainScreen()
+    }
+    
     private func handleFollow(friendId: Int, state: ContactFriendCell.FollowState) {
         Task {
             do {
-                let response: BaseResponse<FollowResponse>
-                
-                switch state {
-                case .pending:
-                    response = try await followService.follow(followeeId: friendId)
-                    if response.result.followStatus == "SUCCEEDED" {
+                // 해당 셀 찾기
+                if let index = contactFriends.firstIndex(where: { $0.friendID == friendId }),
+                   let cell = contactPermissionView.tableView
+                    .cellForRow(at: IndexPath(row: index, section: 0)) as? ContactFriendCell {
+                    
+                    let response: BaseResponse<FollowResponse>
+                    
+                    if state == .pending {
+                        response = try await followService.follow(followeeId: friendId)
+                        
                         await MainActor.run {
-                            if let index = contactFriends
-                                .firstIndex(where: { $0.friendID == friendId }),
-                               let cell = contactPermissionView.tableView
-                                .cellForRow(at: IndexPath(row: index, section: 0))
-                                 as? ContactFriendCell {
+                            if response.result.followStatus == "SUCCEEDED" {
                                 cell.setState(.success)
+                            } else {
+                                cell.setState(.follow) // 원래 상태로 복구
                             }
                         }
+                    } else {
+                        response = try await followService.unfollow(followeeId: friendId)
+                        
+                        await MainActor.run {
+                            cell.setState(.follow)
+                        }
                     }
-                case .follow:
-                    response = try await followService.unfollow(followeeId: friendId)
-                default:
-                    break
+                    
+                    // 버튼 다시 활성화
+                    await MainActor.run {
+                        cell.followButton.isEnabled = true
+                    }
                 }
             } catch {
                 print("Follow operation failed: \(error)")
-                // 실패 시 버튼 상태 원복
+                
+                // 실패 시 원래 상태로 복원
                 await MainActor.run {
-                    if let index = contactFriends.firstIndex(where: { $0.friendID == friendId }),
+                    if let index = contactFriends
+                        .firstIndex(where: { $0.friendID == friendId }),
                        let cell = contactPermissionView.tableView
                         .cellForRow(at: IndexPath(row: index, section: 0)) as? ContactFriendCell {
                         cell.setState(state == .pending ? .follow : .pending)
+                        cell.followButton.isEnabled = true
                     }
                 }
             }

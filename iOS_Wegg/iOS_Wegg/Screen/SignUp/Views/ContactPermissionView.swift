@@ -116,9 +116,5 @@ class ContactPermissionView: UIView {
             make.bottom.equalTo(nextButton.snp.top).offset(-26)
             make.leading.trailing.equalToSuperview().inset(17)
         }
-        
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
     }
 }

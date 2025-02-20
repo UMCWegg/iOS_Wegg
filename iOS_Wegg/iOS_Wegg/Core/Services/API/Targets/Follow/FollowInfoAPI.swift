@@ -37,7 +37,9 @@ extension FollowInfoAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .follow(let followeeId), .unfollow(let followeeId):
+        case .follow(let followeeId):
+            return .requestJSONEncodable(Followee(followeeID: followeeId))
+        case .unfollow(let followeeId):
             return .requestJSONEncodable(Followee(followeeID: followeeId))
         }
     }
