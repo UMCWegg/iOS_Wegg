@@ -191,7 +191,9 @@ class NaverMapManager:
     
     /// 지도의 카메라 기준으로 경계값 가져옴
     func getVisibleBounds(
-        sortBy: String?
+        sortBy: String?,
+        page: Int,
+        size: Int
     ) -> HotPlaceRequest {
         guard let mapView = mapView else {
             fatalError("NaverMapManager: 지도 로드 실패")
@@ -199,15 +201,15 @@ class NaverMapManager:
         let bounds = mapView.contentBounds
         let southWest = bounds.southWest // 남서쪽 좌표
         let northEast = bounds.northEast // 북동쪽 좌표
-        print("southWest: \(southWest)")
-        print("northEast: \(northEast)")
         
         return HotPlaceRequest(
             minX: southWest.lng,
             maxX: northEast.lng,
             minY: southWest.lat,
             maxY: northEast.lat,
-            sortBy: sortBy ?? "distance"
+            sortBy: sortBy ?? "distance",
+            page: page,
+            size: 3
         )
     }
     

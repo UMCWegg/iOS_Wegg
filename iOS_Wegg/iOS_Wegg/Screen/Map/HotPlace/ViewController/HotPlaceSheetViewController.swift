@@ -299,3 +299,18 @@ extension HotPlaceSheetViewController {
         }
     }
 }
+
+extension HotPlaceSheetViewController: UIScrollViewDelegate {
+    // 무한 스크롤
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let mapVC = mapVC else { return }
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let frameHeight = scrollView.frame.size.height
+
+        // 스크롤이 끝에 도달하면 다음 페이지 로드
+        if offsetY > contentHeight - frameHeight * 1.5 {
+            mapVC.fetchHotPlacesFromVisibleBounds(page: mapVC.currentPage)
+        }
+    }
+}

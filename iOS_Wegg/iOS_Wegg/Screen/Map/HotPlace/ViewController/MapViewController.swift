@@ -234,24 +234,36 @@ class MapViewController:
     
     // MARK: - API 관련 함수
     
+    var currentPage = 0
+    private let pageSize = 15
+    
     /// 화면 경계값 안에 존재하는 모든 핫플레이스 호출 및 UI 업데이트
-    func fetchHotPlacesFromVisibleBounds(sortBy: String = "distance") {
+    func fetchHotPlacesFromVisibleBounds(
+        sortBy: String = "distance",
+        page: Int? = nil
+    ) {
         // 지도 경계 좌표 가져오기
-        let request = mapManager.getVisibleBounds(sortBy: sortBy)
+        let request = mapManager.getVisibleBounds(
+            sortBy: sortBy,
+            page: page ?? currentPage,
+            size: pageSize
+        )
         
         Task {
             do {
                 let response: HotPlacesResponse = try await apiManager.request(
                     target: HotPlacesAPI.getHotPlaces(request: request)
                 )
-                hotplaceList = response.result.hotPlaceList
+                hotplaceList.append(contentsOf: response.result.hotPlaceList)
                 let section = convertToSectionModel(from: hotplaceList)
+                
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     self.setupMarkers(from: self.hotplaceList)
                     if self.selectedPlaceDetailInfo.isEmpty {
                         self.hotPlaceSheetVC.updateHotPlaceList(section)
                     }
+                    self.currentPage += 1 // 다음 페이지를 위한 업데이트
                 }
             } catch {
                 print("❌ 실패: \(error)")
