@@ -59,7 +59,7 @@ class MapViewController:
             mapManager: mapManager
         )
         self.floatingPanel = FloatingPanelController()
-        self.hotPlaceSheetVC = HotPlaceSheetViewController(mapVC: nil)
+        self.hotPlaceSheetVC = HotPlaceSheetViewController(mapVC: nil, apiManager: apiManager)
         
         super.init(nibName: nil, bundle: nil)
         // 각각의 ViewController에 `MapViewController`를 주입
