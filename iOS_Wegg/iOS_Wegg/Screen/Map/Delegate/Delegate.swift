@@ -25,6 +25,8 @@ protocol MapOverlayGestureDelegate: AnyObject {
     
     /// 뒤로 가기 버튼을 탭했을 때 호출
     func didTapPlaceDetailBackButton()
+    
+    func didTapReloadButton()
 }
 
 protocol PlaceDetailViewGestureDelegate: AnyObject {

@@ -339,6 +339,11 @@ extension MapViewController:
         mapManager.requestCurrentLocation()
     }
     
+    func didTapReloadButton() {
+        removeAllMarkers()
+        fetchHotPlacesFromVisibleBounds()
+    }
+    
     func didTapPlaceSearchButton() {
         guard let mapSearchVC = mapSearchVC else { return }
         // 검색 버튼 탭한 경우 뒤로 가기 버튼 비활성화
