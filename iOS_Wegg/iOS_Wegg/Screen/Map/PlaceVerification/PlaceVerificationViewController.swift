@@ -13,13 +13,15 @@ class PlaceVerificationViewController: UIViewController {
     private lazy var placeVerificationOverlayView = PlaceVerificationOverlayView()
     private let apiManager = APIManager()
     
-    private var checkVerificationResult: Bool?
-    private var currentLocation: Coordinate?
-    private var planId: Int
+    private var checkVerificationResult: Bool? // 인증 가능 여부 저장
+    private var currentLocation: Coordinate? // 현재 위치 정보 저장
+    private var planId: Int // 일정 ID 저장
     
     // MARK: - Init
     
     /// `MapManagerProtocol`을 주입하여 지도 관리
+    /// - Parameter mapManager: 지도 관련 기능을 담당하는 프로토콜
+    /// - Parameter planId: 일정의 ID
     init(mapManager: MapManagerProtocol, planId: Int = 80) { // TODO: 추후 planId 기본값 제거
         self.mapManager = mapManager
         self.planId = planId
@@ -34,7 +36,7 @@ class PlaceVerificationViewController: UIViewController {
     
     /// 화면이 나타나기 전에 지도 및 UI 초기화
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         mapManager.setupMap(in: view)
         setupOverlayView()
     }
@@ -48,7 +50,7 @@ class PlaceVerificationViewController: UIViewController {
     
     // MARK: - UI Setup
     
-    /// 인증 오버레이 뷰를 설정하고 제스처 델리게이트를 할당
+    /// 인증 오버레이 뷰를 설정하고 델리게이트 연결
     private func setupOverlayView() {
         placeVerificationOverlayView.setupOverlayConstraints(in: view)
         placeVerificationOverlayView.delegate = self
@@ -78,7 +80,7 @@ class PlaceVerificationViewController: UIViewController {
             self.placeVerificationOverlayView.layoutIfNeeded()
             convertedImage = self.placeVerificationOverlayView.placeVerificationInfoView.toImage()
             
-            // 크기가 설정되어 화면에 나타나는 placeVerificationInfoView를 투명하게 설정
+            // 화면에 표시되는 placeVerificationInfoView를 투명하게 처리
             self.placeVerificationOverlayView.placeVerificationInfoView.alpha = 0
             
             if let image = convertedImage {
@@ -105,6 +107,7 @@ class PlaceVerificationViewController: UIViewController {
                     longitude: response.result.longitude
                 )
                 
+                // 가져온 장소 정보를 기반으로 현재 위치 검증 실행
                 verifyUserLocation(with: placeLocation, placeName: placeName)
             } catch {
                 print("PlaceVerificationCheckResponse 오류: \(error)")
@@ -119,7 +122,7 @@ class PlaceVerificationViewController: UIViewController {
     private func verifyUserLocation(with placeLocation: Coordinate, placeName: String) {
         mapManager.getCurrentLocation { [weak self] coordinate in
             guard let self = self,
-                let coordinate = coordinate else { return }
+                  let coordinate = coordinate else { return }
             currentLocation = coordinate
 
             // 현재 위치와 등록된 장소 위치 비교
@@ -152,7 +155,7 @@ class PlaceVerificationViewController: UIViewController {
 
 extension PlaceVerificationViewController: PlaceVerificationOverlayViewDelegate {
     
-    /// 인증하기 버튼을 누르면 인증 결과를 확인하고 메인 화면으로 이동
+    /// 인증하기 버튼을 누르면 인증 결과를 확인하고 서버에 인증 요청을 보낸 후 메인 화면으로 이동
     func didTapVerificationButton() {
         guard let verifyLocation = checkVerificationResult else { return }
         guard let currentLocation = currentLocation else {
@@ -170,7 +173,7 @@ extension PlaceVerificationViewController: PlaceVerificationOverlayViewDelegate 
         }
         
         if verifyLocation {
-            let requst = CheckPlaceVerificationRequest(
+            let request = CheckPlaceVerificationRequest(
                 lat: currentLocation.latitude,
                 lon: currentLocation.longitude
             )
@@ -180,9 +183,10 @@ extension PlaceVerificationViewController: PlaceVerificationOverlayViewDelegate 
                     let res: CheckPlaceVerificationResponse = try await self.apiManager.request(
                         target: PlaceVerificationAPI.checkPlaceVerification(
                             planId: planId,
-                            request: requst
+                            request: request
                         )
                     )
+                    // 인증 성공 메시지 출력
                     showAlert(title: res.message, action: confirmAction)
                 } catch {
                     print("CheckPlaceVerificationResponse 오류: \(error)")
