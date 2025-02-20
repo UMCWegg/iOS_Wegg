@@ -25,10 +25,10 @@ class ContactFriendCell: UITableViewCell {
         }
     }
     
-    private var friendID: Int?
+    private var friendID: Int = 0
+    var followStateChanged: ((Int, FollowState) -> Void)?
     
     private var currentState: FollowState = .follow
-    var followButtonTapped: (() -> Void)?
     
     let profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -134,12 +134,13 @@ class ContactFriendCell: UITableViewCell {
         switch currentState {
         case .follow:
             setState(.pending)
+            followStateChanged?(friendID, .pending)
         case .pending:
             setState(.follow)
+            followStateChanged?(friendID, .follow)
         case .success:
             break
         }
-        followButtonTapped?()
     }
     
     func configure(with friend: ContactFriend) {
@@ -149,7 +150,8 @@ class ContactFriendCell: UITableViewCell {
         
         if let imageUrlString = friend.profileImage,
            let imageUrl = URL(string: imageUrlString) {
-            let task = URLSession.shared.dataTask(with: imageUrl) { [weak self] data, response, error in
+            let task = URLSession.shared.dataTask(with: imageUrl)
+            { [weak self] data, response, error in
                 guard let self = self,
                       let data = data,
                       let image = UIImage(data: data) else { return }

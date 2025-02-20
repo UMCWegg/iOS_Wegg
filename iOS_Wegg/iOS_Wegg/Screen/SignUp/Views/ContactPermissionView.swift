@@ -33,7 +33,7 @@ class ContactPermissionView: UIView {
     }
     
     private let mainStackView = UIStackView().then {
-        $0.axis = .vertical
+        $0.axis = .horizontal
         $0.alignment = .center
     }
     
@@ -43,7 +43,7 @@ class ContactPermissionView: UIView {
     }
     
     private let appLogo = UIImageView().then {
-        $0.image = UIImage(named: "wegg_text")
+        $0.image = UIImage(named: "weggy")
         $0.contentMode = .scaleAspectFit
     }
     
@@ -91,6 +91,11 @@ class ContactPermissionView: UIView {
     }
     
     private func setupConstraints() {
+        appLogo.snp.makeConstraints { make in
+            make.width.equalTo(96)
+            make.height.equalTo(46)
+        }
+        
         mainStackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(safeAreaLayoutGuide).offset(20)

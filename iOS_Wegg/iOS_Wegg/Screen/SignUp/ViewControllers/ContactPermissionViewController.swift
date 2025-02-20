@@ -21,6 +21,7 @@ class ContactPermissionViewController: UIViewController {
     private var contacts: [CNContact] = []
     private var contactFriends: [ContactFriend] = []
     private let authService = AuthService.shared
+    private let followService = FollowService.shared
     
     // MARK: - Lifecycle
     
@@ -55,49 +56,53 @@ class ContactPermissionViewController: UIViewController {
     @objc private func nextButtonTapped() {
         let store = CNContactStore()
         store.requestAccess(for: .contacts) { [weak self] granted, error in
-            DispatchQueue.main.async {
-                if granted {
-                    self?.fetchContacts()
-                } else {
-                    self?.proceedWithoutContacts()
+            guard let self = self else { return }
+            
+            if granted {
+                // 연락처 접근이 허용된 경우
+                Task { @MainActor in
+                    do {
+                        let contacts = try await self.fetchAllContacts()
+                        UserSignUpStorage.shared.update { data in
+                            data.contact = contacts.map { Contact(phone: $0) }
+                        }
+                        await self.signUp()
+                    } catch {
+                        print("Error fetching contacts: \(error)")
+                        self.proceedWithoutContacts()
+                    }
+                }
+            } else {
+                // 연락처 접근이 거부된 경우
+                DispatchQueue.main.async {
+                    self.proceedWithoutContacts()
                 }
             }
         }
     }
     
-    private func fetchContacts() {
+    private func fetchAllContacts() async throws -> [String] {
         let store = CNContactStore()
-        let keysToFetch = [
-            CNContactPhoneNumbersKey as CNKeyDescriptor
-        ]
+        let keysToFetch = [CNContactPhoneNumbersKey as CNKeyDescriptor]
+        let request = CNContactFetchRequest(keysToFetch: keysToFetch)
+        var phoneNumbers: [String] = []
         
-        do {
-            let containers = try store.containers(matching: nil)
-            var phoneNumbers: [String] = []
-            
-            try containers.forEach { container in
-                let predicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
-                let contacts = try store.unifiedContacts(matching: predicate, keysToFetch: keysToFetch)
-                
-                contacts.forEach { contact in
+        try await withCheckedThrowingContinuation
+        { (continuation: CheckedContinuation<Void, Error>) in
+            do {
+                try store.enumerateContacts(with: request) { contact, stop in
                     if let phoneNumber = contact.phoneNumbers.first?.value.stringValue {
-                        // 전화번호 형식 통일 (하이픈 제거)
                         let formattedNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
                         phoneNumbers.append(formattedNumber)
                     }
                 }
+                continuation.resume()
+            } catch {
+                continuation.resume(throwing: error)
             }
-            
-            UserSignUpStorage.shared.update { data in
-                data.contact = phoneNumbers.map { Contact(phone: $0) }
-            }
-            
-            signUp()
-            
-        } catch {
-            print("Error fetching contacts: \(error)")
-            proceedWithoutContacts()
         }
+        
+        return phoneNumbers
     }
     
     private func proceedWithoutContacts() {
@@ -162,25 +167,46 @@ class ContactPermissionViewController: UIViewController {
         navigationController?.pushViewController(signUpCompleteVC, animated: true)
     }
     
-    private func follow(friendId: Int) {
-        // 팔로우 API 호출을 위한 빈 구조체 생성
-        struct FollowRequest: Encodable {
-            let followeeId: Int
-        }
-        
+    private func handleFollow(friendId: Int, state: ContactFriendCell.FollowState) {
         Task {
             do {
-                let request = FollowRequest(followeeId: friendId)
-                // API 호출 구현 필요
+                let response: BaseResponse<FollowResponse>
+                
+                switch state {
+                case .pending:
+                    response = try await followService.follow(followeeId: friendId)
+                    if response.result.followStatus == "SUCCEEDED" {
+                        await MainActor.run {
+                            if let index = contactFriends
+                                .firstIndex(where: { $0.friendID == friendId }),
+                               let cell = contactPermissionView.tableView
+                                .cellForRow(at: IndexPath(row: index, section: 0))
+                                 as? ContactFriendCell {
+                                cell.setState(.success)
+                            }
+                        }
+                    }
+                case .follow:
+                    response = try await followService.unfollow(followeeId: friendId)
+                default:
+                    break
+                }
             } catch {
-                print("Follow failed: \(error)")
+                print("Follow operation failed: \(error)")
+                // 실패 시 버튼 상태 원복
+                await MainActor.run {
+                    if let index = contactFriends.firstIndex(where: { $0.friendID == friendId }),
+                       let cell = contactPermissionView.tableView
+                        .cellForRow(at: IndexPath(row: index, section: 0)) as? ContactFriendCell {
+                        cell.setState(state == .pending ? .follow : .pending)
+                    }
+                }
             }
         }
     }
 }
 
 extension ContactPermissionViewController: UITableViewDelegate, UITableViewDataSource {
-    
     
     // MARK: - UITableViewDataSource
     
@@ -197,8 +223,8 @@ extension ContactPermissionViewController: UITableViewDelegate, UITableViewDataS
         let friend = contactFriends[indexPath.row]
         cell.configure(with: friend)
         
-        cell.followButtonTapped = { [weak self] in
-            self?.follow(friendId: friend.friendID)
+        cell.followStateChanged = { [weak self] friendId, state in
+            self?.handleFollow(friendId: friendId, state: state)
         }
         
         return cell

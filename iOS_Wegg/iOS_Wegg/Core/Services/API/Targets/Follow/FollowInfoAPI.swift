@@ -1,5 +1,5 @@
 //
-//  FollowAPI.swift
+//  FollowInfoAPI.swift
 //  iOS_Wegg
 //
 //  Created by 이건수 on 2025.02.21.
@@ -9,12 +9,12 @@ import Foundation
 
 import Moya
 
-enum FollowAPI {
+enum FollowInfoAPI {
     case follow(followeeId: Int)
     case unfollow(followeeId: Int)
 }
 
-extension FollowAPI: TargetType {
+extension FollowInfoAPI: TargetType {
     var baseURL: URL {
         guard let url = URL(string: APIConstants.baseURL) else {
             fatalError("❌ 잘못된 Base URL: \(APIConstants.baseURL)")
@@ -29,7 +29,7 @@ extension FollowAPI: TargetType {
     var method: Moya.Method {
         switch self {
         case .follow:
-            return .patch
+            return .post
         case .unfollow:
             return .delete
         }
