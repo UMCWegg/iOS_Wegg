@@ -126,7 +126,7 @@ class PhoneNumberVerificationView: UIView {
         }
         
         timerLabel.snp.makeConstraints { make in
-            make.top.equalTo(verificationTextField.snp.bottom).offset(5)
+            make.top.equalTo(resendButton.snp.bottom).offset(5)
             make.centerX.equalToSuperview()
         }
     }

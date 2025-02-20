@@ -53,7 +53,7 @@ class NickNameInputViewController: UIViewController {
         
         Task {
             do {
-                let response: BaseResponse<IDCheckResult>
+                let response: BaseResponse<IDValidationResponse>
                 = try await authService.checkAccountId(accountId)
                 await MainActor.run {
                     handleValidationResponse(response.result)
@@ -71,7 +71,7 @@ class NickNameInputViewController: UIViewController {
     
     // MARK: - Helper Functions
     
-    private func handleValidationResponse(_ result: IDCheckResult) {
+    private func handleValidationResponse(_ result: IDValidationResponse) {
         // 결과 메시지 표시
         showValidationMessage(result.message, isValid: result.valid)
         

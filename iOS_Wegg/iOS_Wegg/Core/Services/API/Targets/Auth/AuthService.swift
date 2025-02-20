@@ -42,7 +42,7 @@ final class AuthService {
         try await apiManager.request(target: AuthAPI.verificationNum(request: request))
     }
     
-    func checkAccountId(_ id: String) async throws -> BaseResponse<IDCheckResult> {
+    func checkAccountId(_ id: String) async throws -> BaseResponse<IDValidationResponse> {
         try await apiManager.request(target: AuthAPI.idCheck(id: id))
     }
     

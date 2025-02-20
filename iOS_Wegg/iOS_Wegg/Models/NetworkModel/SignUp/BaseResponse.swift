@@ -14,6 +14,11 @@ struct BaseResponse<T: Decodable>: Decodable {
 
 struct IDCheckResult: Decodable {
     let message: String
+    let duplicate: Bool
+}
+
+struct IDValidationResponse: Decodable {
+    let message: String
     let valid: Bool
 }
 
