@@ -16,6 +16,7 @@ struct HotPlaceSectionModel {
 struct HotPlaceHeaderModel {
     let title: String
     let category: String
+    let address: String?
     let verificationCount: String
     let saveCount: String
 }
@@ -26,8 +27,6 @@ struct HotPlaceImageModel {
 
 struct HotPlaceDetailModel {
     let phoneNumber: String
-    let openingInfo: String
-    let websiteURL: String
 }
 
 extension HotPlaceSectionModel {
@@ -36,6 +35,7 @@ extension HotPlaceSectionModel {
             header: .init(
                 title: "스타벅스 신용산점",
                 category: "카페",
+                address: "서울특별시 성북구",
                 verificationCount: "인증 99+",
                 saveCount: "저장 34"
             ),
@@ -46,6 +46,7 @@ extension HotPlaceSectionModel {
             header: .init(
                 title: "스타벅스 신용산점",
                 category: "카페",
+                address: "서울특별시 성북구",
                 verificationCount: "인증 99+",
                 saveCount: "저장 34"
             ),
@@ -56,6 +57,7 @@ extension HotPlaceSectionModel {
             header: .init(
                 title: "스타벅스 신용산점",
                 category: "카페",
+                address: "서울특별시 성북구",
                 verificationCount: "인증 99+",
                 saveCount: "저장 34"
             ),
@@ -66,6 +68,7 @@ extension HotPlaceSectionModel {
             header: .init(
                 title: "스타벅스 신용산점",
                 category: "카페",
+                address: "서울특별시 성북구",
                 verificationCount: "인증 99+",
                 saveCount: "저장 34"
             ),
