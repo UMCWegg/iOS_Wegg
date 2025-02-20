@@ -86,9 +86,13 @@
 				PostDetail/Views/EmojiPopupView.swift,
 				PostDetail/Views/PlusEmojiView.swift,
 				PostDetail/Views/PostDetailView.swift,
+				Search/Cell/SearchResultCellTableViewCell.swift,
 				Search/ViewController/SearchViewController.swift,
+				Search/Views/SearchBarView.swift,
+				Search/Views/SearchResultView.swift,
 				Search/Views/SearchView.swift,
 				ViewController/BrowseViewController.swift,
+				Views/BrowseSearchView.swift,
 				Views/BrowseView.swift,
 				Views/CollectionView/BrowseCell.swift,
 				Views/CollectionView/BrowseSectionHeaderView.swift,
@@ -204,6 +208,11 @@
 			path = SettingsModel;
 			sourceTree = "<group>";
 		};
+		FF8910C52D669A2A0069D109 /* SearchModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SearchModel;
+			sourceTree = "<group>";
+		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Map;
@@ -293,6 +302,7 @@
 		0E98EA242D2F8AE8006F25EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FF8910C52D669A2A0069D109 /* SearchModel */,
 				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
 				0E68CBB32D5DB2E700CFDA8D /* NetworkModel */,
 				FFC8DBF32D50E3970094B687 /* HotPlaceModel */,
@@ -425,6 +435,7 @@
 				FF3CBFAF2D41070000006955 /* PostModel */,
 				FF3CC3402D4B41FD00006955 /* EmojiModel */,
 				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
+				FF8910C52D669A2A0069D109 /* SearchModel */,
 				FFC8E52F2D5605100094B687 /* Map */,
 			);
 			name = iOS_Wegg;

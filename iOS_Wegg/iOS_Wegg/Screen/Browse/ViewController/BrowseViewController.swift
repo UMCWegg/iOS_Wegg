@@ -8,7 +8,8 @@
 import UIKit
 import Then
 
-class BrowseViewController: UIViewController {
+class BrowseViewController: UIViewController, UISearchBarDelegate {
+    
     // MARK: - Properties
     
     /// 둘러보기 커스텀 뷰
@@ -42,6 +43,7 @@ class BrowseViewController: UIViewController {
         setupCollectionView()
         fetchBrowsePosts() // BrowseVC 탭 최초 API 호출
         setupRefreshControl()
+        setupActions()
         browseView.browseCollectionView.delegate = self
     }
     
@@ -58,6 +60,17 @@ class BrowseViewController: UIViewController {
     }
     
     // MARK: - Methods
+    
+    /// 검색창 클릭시 화면 전환 로직
+    private func setupActions() {
+        browseView.browseSearchView.searchBar.delegate = self
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        let searchViewController = SearchViewController()
+        navigationController?.pushViewController(searchViewController, animated: true)
+        return false
+    }
     
     /// CollectionView 초기 설정하기
     private func setupCollectionView() {
