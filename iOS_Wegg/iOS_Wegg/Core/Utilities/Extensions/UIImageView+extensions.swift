@@ -28,7 +28,7 @@ extension UIImageView {
             self.image = UIImage(named: placeholder)
             return
         }
-
+        
         let cacheOption: [KingfisherOptionsInfoItem] = cacheMemoryOnly ? [.cacheMemoryOnly] : []
         
         let modifier = AnyModifier { request in
