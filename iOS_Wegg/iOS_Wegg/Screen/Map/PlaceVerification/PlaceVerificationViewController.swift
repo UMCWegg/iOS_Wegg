@@ -148,6 +148,22 @@ class PlaceVerificationViewController: UIViewController {
             }
         }
     }
+    
+    /// 인증 상태 수정 API
+    private func editScheduleStatus(planStatus: ScheduleStatus, planId: Int) {
+        let request = EditScheduleStatusRequest(planStatus: planStatus)
+        
+        Task {
+            do {
+                let response: EditScheduleStatusResponse = try await apiManager.request(
+                    target: ScheduleAPI.editScheduleStatus(planId: planId, request: request)
+                )
+                print(response.result)
+            } catch {
+                print("OnOffScheduleResponse 오류: \(error)")
+            }
+        }
+    }
 }
 
 // MARK: - Delegate
@@ -187,6 +203,7 @@ extension PlaceVerificationViewController: PlaceVerificationOverlayViewDelegate 
                     )
                     // 인증 성공 메시지 출력
                     showAlert(title: res.message, action: confirmAction)
+                    editScheduleStatus(planStatus: .succeeded, planId: planId)
                 } catch {
                     print("CheckPlaceVerificationResponse 오류: \(error)")
                 }
