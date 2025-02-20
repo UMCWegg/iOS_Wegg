@@ -44,14 +44,16 @@ class GetAlertPermissionViewController: UIViewController {
                 UserSignUpStorage.shared.update { data in
                     data.alarm = granted
                 }
-                self?.nextButtonTapped()
+                
+                let signUpCompleteViewController = SignUpCompleteViewController()
+                self?.navigationController?
+                    .pushViewController(signUpCompleteViewController, animated: true)
             }
         }
     }
     
     @objc private func nextButtonTapped() {
-        let signUpCompleteViewController = SignUpCompleteViewController()
-        navigationController?.pushViewController(signUpCompleteViewController, animated: true)
+        requestNotificationPermission()
     }
     
 }
