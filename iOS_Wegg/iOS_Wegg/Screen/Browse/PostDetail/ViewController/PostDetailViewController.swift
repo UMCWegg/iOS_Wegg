@@ -40,9 +40,64 @@ class PostDetailViewController: UIViewController {
         emojiButtonAction()
         handlePlusEmojiSelection()
         commentButtonAction()
+        setupEmojiSelection() // ✅ 이모지 선택 시 API 호출하도록 설정
+        print("✅ 현재 postId: \(postDetailModel.postId)") // ✅ postId 로그 확인
     }
     
     // MARK: - Methods
+    
+    private func setupEmojiSelection() {
+        postDetailView.onEmojiSelected = { [weak self] selectedEmoji in
+            guard let self = self else { return }
+            
+            // ✅ 확장자 제거 후 대문자로 변환
+            let formattedEmoji = selectedEmoji
+                .replacingOccurrences(of: ".png", with: "") // ✅ ".png" 제거
+                .uppercased() // ✅ 대문자로 변환
+            
+            print("✅ 이모지 선택됨: \(selectedEmoji), API 호출 시작 (postId: \(postDetailModel.postId))")
+            // 변환된 값 확인
+            print("📡 API 요청: postId = \(postDetailModel.postId), emojiType = \(formattedEmoji)")
+
+            Task {
+                do {
+                    let response = try await self.postDetailService.postEmoji(
+                        postId: self.postDetailModel.postId,
+                        emojiType: formattedEmoji // ✅ 수정된 값 전달
+                    )
+
+                    guard response.isSuccess else {
+                        print("❌ 이모지 등록 실패: \(response.message)")
+                        return
+                    }
+
+                    print("✅ 이모지 등록 성공: \(response.result)")
+
+                    // ✅ 최신 이모지 UI 업데이트
+                    await self.fetchUpdatedEmojis()
+                    
+                } catch {
+                    print("❌ 이모지 등록 API 호출 실패: \(error)")
+                }
+            }
+        }
+    }
+    
+    /// ✅ 최신 이모지 데이터를 다시 불러오는 메서드
+    func fetchUpdatedEmojis() async {
+        do {
+            let (_, updatedEmojis) = try await postDetailService.fetchCommentsAndEmojis(
+                postId: postDetailModel.postId)
+            
+            DispatchQueue.main.async {
+                if let commentVC = self.presentedViewController as? CommentViewController {
+                    commentVC.updateEmojiUI(updatedEmojis) // ✅ 최신 이모지 UI 업데이트
+                }
+            }
+        } catch {
+            print("❌ 최신 이모지 불러오기 실패: \(error)")
+        }
+    }
     
     /// UI를 구성하고 데이터를 뷰에 반영
     private func configureUI() {

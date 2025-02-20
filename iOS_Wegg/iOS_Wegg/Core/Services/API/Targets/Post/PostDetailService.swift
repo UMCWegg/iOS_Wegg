@@ -34,9 +34,15 @@ class PostDetailService {
     }
     
     /// 📌 이모지 등록 (서버 응답 활용)
-    func postEmoji(postId: Int) async throws -> BaseResponse<String> {
-        return try await apiManager.request(target: PostDetailAPI.postEmoji(postId: postId))
-    }
+        func postEmoji(postId: Int, emojiType: String) async throws -> BaseResponse<String> {
+            let request = EmojiRequest(type: emojiType) // ✅ 서버가 기대하는 형식으로 변환
+
+            print("📡 API 요청: postId = \(postId), emojiType = \(emojiType)") // ✅ 로그 추가
+            
+            return try await apiManager.request(
+                target: PostDetailAPI.postEmoji(postId: postId, request: request) // ✅ request 추가
+            )
+        }
     
     /// 📌 댓글 등록 (서버 응답 활용)
     func postComment(

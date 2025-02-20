@@ -41,7 +41,7 @@ class CommentViewController: UIViewController {
         setupActions()
         setupTableView()
         
-        updateEmojiUI()
+        updateEmojiUI(emojis)
         // 초기 이모지 설정 테스트
         /*commentView.updateEmojiImages(with: ["blush", "cry", "pray"])*/
     }
@@ -49,7 +49,8 @@ class CommentViewController: UIViewController {
     // MARK: - Methods
     
     /// ✅ 이모지 UI 업데이트
-    private func updateEmojiUI() {
+    func updateEmojiUI(_ newEmojis: EmojiResult) {
+        self.emojis = newEmojis // ✅ 최신 이모지 데이터 갱신
         let emojiTypes = emojis.emojiCounts
         // 개수가 1 이상인 이모지만 필터링하여 업데이트
             .filter { $0.count > 0 } // swiftlint:disable:this empty_count

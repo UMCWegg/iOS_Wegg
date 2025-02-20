@@ -9,5 +9,5 @@ import Foundation
 
 /// 이모지 등록을 위한 요청 모델
 struct EmojiRequest: Encodable {
-    let postId: Int // 이모지를 등록할 게시물 ID
+    let type: String // 서버에서 기대하는 "type" 값
 }

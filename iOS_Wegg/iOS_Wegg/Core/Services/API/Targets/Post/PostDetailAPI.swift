@@ -11,7 +11,7 @@ import Foundation
 enum PostDetailAPI {
     case getComments(postId: Int, page: Int, size: Int) // 댓글 조회
     case getEmojis(postId: Int) // 이모지 조회
-    case postEmoji(postId: Int) // 이모지 등록
+    case postEmoji(postId: Int, request: EmojiRequest) // 이모지 등록
     case postComment(request: CommentRequest) // 댓글 등록
 }
 
@@ -30,7 +30,7 @@ extension PostDetailAPI: TargetType {
             return "/posts/\(postId)/comments"
         case .getEmojis(let postId):
             return "/posts/\(postId)/emoji"
-        case .postEmoji(let postId):
+        case .postEmoji(let postId, _):
             return "/posts/\(postId)/emoji"
         case .postComment:
             return "/posts/comment"
@@ -56,8 +56,8 @@ extension PostDetailAPI: TargetType {
         case .getEmojis:
             return .requestPlain // Body 없이 요청
             
-        case .postEmoji:
-            return .requestPlain // Body 없이 요청
+        case .postEmoji(_, let request):
+            return .requestJSONEncodable(request)
         
         case .postComment(let request):
             return .requestJSONEncodable(request)
