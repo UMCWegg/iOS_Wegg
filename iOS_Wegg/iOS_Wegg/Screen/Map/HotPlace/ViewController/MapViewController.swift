@@ -207,10 +207,9 @@ class MapViewController:
                 )
                 imageName = "list_brown_icon"
             } else if let detail = place as? HotplaceDetailInfoResponse.Detail {
-                // TODO: 추후 서버에서 보낸 값으로 변경
                 coordinate = Coordinate(
-                    latitude: 37.60635,
-                    longitude: 127.04425
+                    latitude: detail.latitude,
+                    longitude: detail.longitude
                 )
                 imageName = "yellow_wegg_icon"
             } else {

@@ -20,6 +20,9 @@ struct HotplaceDetailInfoResponse: Decodable {
     struct Detail: Decodable {
         let addressId: Int
         let placeName: String
+        let latitude: Double
+        let longitude: Double
+        let savedStatus: Bool
         let authPeople: Int
         let authCount: Int
         let saveCount: Int
