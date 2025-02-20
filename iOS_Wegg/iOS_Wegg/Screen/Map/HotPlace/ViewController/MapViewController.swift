@@ -252,6 +252,19 @@ class MapViewController:
         }
     }
     
+    private func saveHotPlace(addressId: Int) {
+        Task {
+            do {
+                let response: SavePlaceResponse = try await apiManager.request(
+                    target: HotPlacesAPI.savePlace(addressId: addressId)
+                )
+                print("response: \(response)")
+            } catch {
+                print("❌ 실패: \(error)")
+            }
+        }
+    }
+    
     /// `HotPlacesResponse.HotPlace` 데이터를 `HotPlaceSectionModel`로 변환하는 함수
     private func convertToSectionModel(
         from hotplaces: [HotPlacesResponse.HotPlace]

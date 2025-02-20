@@ -12,6 +12,7 @@ enum HotPlacesAPI {
     case getHotPlaces(request: HotPlaceRequest)
     case searchHotPlaces(request: SearchHotplaceRequest)
     case getPlaceDetailInfo(request: HotplaceDetailInfoRequest)
+    case savePlace(addressId: Int)
 }
 
 extension HotPlacesAPI: TargetType {
@@ -30,6 +31,8 @@ extension HotPlacesAPI: TargetType {
             return "/maps/hotplaces/search"
         case .getPlaceDetailInfo:
             return APIConstants.Map.detailInfoURL
+        case .savePlace(let addressId):
+            return "/maps/addresses/\(addressId)/bookmark"
         }
     }
     
@@ -37,6 +40,8 @@ extension HotPlacesAPI: TargetType {
         switch self {
         case .getHotPlaces, .searchHotPlaces, .getPlaceDetailInfo:
             return .get
+        case .savePlace:
+            return .post
         }
     }
     
@@ -71,6 +76,8 @@ extension HotPlacesAPI: TargetType {
                 ],
                 encoding: URLEncoding.queryString
             )
+        case .savePlace:
+            return .requestPlain
         }
     }
     
