@@ -8,7 +8,7 @@
 import Foundation
 
 struct HotPlaceSectionModel {
-    let header: HotPlaceHeaderModel
+    var header: HotPlaceHeaderModel
     let items: [HotPlaceImageModel]
     var details: HotPlaceDetailModel?
 }

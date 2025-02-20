@@ -13,6 +13,7 @@ class PlaceDetailViewController: UIViewController {
     private var collectionHandler: PlaceDetailCollectionHandler?
     private var sectionModel: HotPlaceSectionModel?
     lazy var placeDetailView = PlaceDetailView()
+    private let apiManager = APIManager()
     
     init(sectionModel: HotPlaceSectionModel) { // 생성자에서 의존성 주입
         self.sectionModel = sectionModel
@@ -47,16 +48,18 @@ class PlaceDetailViewController: UIViewController {
     @MainActor
     public func updateUI() {
         guard let sectionModel = sectionModel else { return }
-        let info = [
-            placeDetailView.titleLabel: sectionModel.header.title,
-            placeDetailView.categoryLabel: sectionModel.header.category,
-            placeDetailView.addressLabel: sectionModel.header.address,
-            placeDetailView.verificationCount: sectionModel.header.verificationCount,
-            placeDetailView.saveCount: sectionModel.header.saveCount,
-            placeDetailView.phoneNumberLabel: sectionModel.details?.phoneNumber
-        ]
-        
-        info.forEach { $0.key.text = $0.value }
+        DispatchQueue.main.async {
+            let info = [
+                self.placeDetailView.titleLabel: sectionModel.header.title,
+                self.placeDetailView.categoryLabel: sectionModel.header.category,
+                self.placeDetailView.addressLabel: sectionModel.header.address,
+                self.placeDetailView.verificationCount: sectionModel.header.verificationCount,
+                self.placeDetailView.saveCount: sectionModel.header.saveCount,
+                self.placeDetailView.phoneNumberLabel: sectionModel.details?.phoneNumber
+            ]
+            
+            info.forEach { $0.key.text = $0.value }
+        }
     }
 }
 

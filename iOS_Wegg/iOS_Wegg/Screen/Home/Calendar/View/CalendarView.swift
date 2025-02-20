@@ -133,39 +133,41 @@ class CalendarView: UIView {
         }
         
         followerLabel.snp.makeConstraints {
-            $0.trailing.equalTo(profileIcon.snp.leading).offset(-40)
+            $0.trailing.equalTo(profileIcon.snp.leading).offset(-20)
             $0.centerY.equalTo(profileIcon)
         }
         
         followingLabel.snp.makeConstraints {
-            $0.leading.equalTo(profileIcon.snp.trailing).offset(40)
+            $0.leading.equalTo(profileIcon.snp.trailing).offset(20)
             $0.centerY.equalTo(profileIcon)
         }
         
         monthLabel.snp.makeConstraints {
-            $0.top.equalTo(profileLabel.snp.bottom).offset(20)
+            $0.top.equalTo(profileLabel.snp.bottom).offset(30)
             $0.centerX.equalToSuperview()
         }
         
         previousButton.snp.makeConstraints {
             $0.centerY.equalTo(monthLabel)
-            $0.trailing.equalTo(monthLabel.snp.leading).offset(-20)
+            $0.trailing.equalTo(monthLabel.snp.leading).offset(-15)
+            $0.width.height.equalTo(24)
         }
         
         nextButton.snp.makeConstraints {
             $0.centerY.equalTo(monthLabel)
-            $0.leading.equalTo(monthLabel.snp.trailing).offset(20)
+            $0.leading.equalTo(monthLabel.snp.trailing).offset(15)
+            $0.width.height.equalTo(24)
         }
         
         toggleButton.snp.makeConstraints {
             $0.centerY.equalTo(monthLabel)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.width.equalTo(60)
+            $0.width.equalTo(70)
             $0.height.equalTo(32)
         }
         
         weekdayStackView.snp.makeConstraints {
-            $0.top.equalTo(monthLabel.snp.bottom).offset(15)
+            $0.top.equalTo(monthLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(20)
         }
@@ -173,7 +175,7 @@ class CalendarView: UIView {
         calendarCollectionView.snp.makeConstraints {
             $0.top.equalTo(weekdayStackView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(10)
-            $0.bottom.equalTo(safeAreaLayoutGuide).offset(-10)
+            $0.bottom.equalTo(safeAreaLayoutGuide).offset(-20)
         }
         
         studyTimeView.snp.makeConstraints {

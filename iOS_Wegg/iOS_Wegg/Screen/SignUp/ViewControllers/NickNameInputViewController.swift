@@ -14,7 +14,6 @@ class NickNameInputViewController: UIViewController {
     var nameText: String?
     private let nickNameInputView = NickNameInputView()
     private let authService = AuthService.shared
-    private var isDuplicateChecked = false
     
     // MARK: - Lifecycle
     
@@ -27,7 +26,6 @@ class NickNameInputViewController: UIViewController {
         view.backgroundColor = .white
         setupActions()
         setupNameText()
-        setupTextField()
     }
     
     // MARK: - Setup
@@ -47,39 +45,22 @@ class NickNameInputViewController: UIViewController {
             nickNameInputView.nameText = nameText
         }
     }
-    
-    private func setupTextField() {
-        nickNameInputView.nickNameTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange(_:)),
-            for: .editingChanged
-        )
-    }
+
     // MARK: - Actions
-    
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-        // 텍스트필드 값이 변경되면 중복 체크 상태 초기화
-        isDuplicateChecked = false
-    }
     
     @objc private func nextButtonTapped() {
         guard let accountId = nickNameInputView.nickNameTextField.text else { return }
         
         Task {
             do {
-                let response = try await authService.checkAccountId(accountId)
-                
-                if response.result.duplicate {
-                    // 중복된 아이디인 경우
-                    showDuplicateError()
-                } else {
-                    // 사용 가능한 아이디인 경우
-                    isDuplicateChecked = true
-                    proceedToNextScreen(with: accountId)
+                let response: BaseResponse<IDValidationResponse>
+                = try await authService.checkAccountId(accountId)
+                await MainActor.run {
+                    handleValidationResponse(response.result)
                 }
             } catch {
-                print("❌ 아이디 중복 확인 실패: \(error)")
-                showAlert(message: "아이디 중복 확인에 실패했습니다")
+                print("❌ 아이디 검증 실패: \(error)")
+                showAlert(message: "아이디 검증에 실패했습니다")
             }
         }
     }
@@ -90,36 +71,40 @@ class NickNameInputViewController: UIViewController {
     
     // MARK: - Helper Functions
     
-    private func showDuplicateError() {
-        isDuplicateChecked = false
+    private func handleValidationResponse(_ result: IDValidationResponse) {
+        // 결과 메시지 표시
+        showValidationMessage(result.message, isValid: result.valid)
         
-        let duplicateLabel = UILabel().then {
-            $0.text = "이미 사용 중인 아이디에요"
+        // 유효한 경우 다음 화면으로 이동
+        if result.valid {
+            UserSignUpStorage.shared.update { data in
+                data.accountId = nickNameInputView.nickNameTextField.text
+            }
+            
+            let occupationInputVC = OccupationInputViewController()
+            occupationInputVC.nameText = nameText
+            navigationController?.pushViewController(occupationInputVC, animated: true)
+        }
+    }
+    
+    private func showValidationMessage(_ message: String, isValid: Bool) {
+        let messageLabel = UILabel().then {
+            $0.text = message
             $0.font = .notoSans(.regular, size: 13)
-            $0.textColor = .red
+            $0.textColor = isValid ? .green : .red
         }
         
-        view.addSubview(duplicateLabel)
+        view.addSubview(messageLabel)
         
-        duplicateLabel.snp.makeConstraints { make in
+        messageLabel.snp.makeConstraints { make in
             make.top.equalTo(nickNameInputView.nickNameTextField.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
         }
         
-        // 3초 후 에러 메시지 제거
+        // 3초 후 메시지 제거
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            duplicateLabel.removeFromSuperview()
+            messageLabel.removeFromSuperview()
         }
-    }
-    
-    private func proceedToNextScreen(with accountId: String) {
-        UserSignUpStorage.shared.update { data in
-            data.accountId = accountId
-        }
-        
-        let occupationInputVC = OccupationInputViewController()
-        occupationInputVC.nameText = nameText
-        navigationController?.pushViewController(occupationInputVC, animated: true)
     }
     
     private func showAlert(message: String) {
