@@ -11,11 +11,33 @@ class HotPlaceCollectionLayout {
     /// 컬렉션뷰가 가지는 레이아웃 지정
     static func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (section, _) -> NSCollectionLayoutSection? in
-            guard section < HotPlaceSectionModel.sampleSections.count else {
-                return nil
+            guard !HotPlaceSectionModel.sampleSections.isEmpty else {
+                return self.createDefaultSection() // 데이터가 없을 때 기본 섹션 반환
             }
+            
+            guard section < HotPlaceSectionModel.sampleSections.count else {
+                return self.createDefaultSection() // 유효한 섹션이 아닐 경우 기본 섹션 반환
+            }
+            
             return createPlaceSection()
         }
+    }
+    
+    /// 기본 섹션 정의하는 함수
+    private static func createDefaultSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(1) // 기본적으로 작은 빈 섹션 제공
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(1)
+        )
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        return NSCollectionLayoutSection(group: group)
     }
     
     // MARK: 컬렉션뷰 섹션 생성

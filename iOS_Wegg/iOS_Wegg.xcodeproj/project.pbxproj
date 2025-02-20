@@ -73,9 +73,13 @@
 				PostDetail/Views/EmojiPopupView.swift,
 				PostDetail/Views/PlusEmojiView.swift,
 				PostDetail/Views/PostDetailView.swift,
+				Search/Cell/SearchResultCellTableViewCell.swift,
 				Search/ViewController/SearchViewController.swift,
+				Search/Views/SearchBarView.swift,
+				Search/Views/SearchResultView.swift,
 				Search/Views/SearchView.swift,
 				ViewController/BrowseViewController.swift,
+				Views/BrowseSearchView.swift,
 				Views/BrowseView.swift,
 				Views/CollectionView/BrowseCell.swift,
 			);
@@ -165,6 +169,31 @@
 			path = Label;
 			sourceTree = "<group>";
 		};
+		FF3CBBE92D3E387E00006955 /* BrowseItem */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BrowseItem;
+			sourceTree = "<group>";
+		};
+		FF3CBFAF2D41070000006955 /* PostModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PostModel;
+			sourceTree = "<group>";
+		};
+		FF3CC3402D4B41FD00006955 /* EmojiModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EmojiModel;
+			sourceTree = "<group>";
+		};
+		FF883B662D6616AF00FDC0C0 /* SettingsModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SettingsModel;
+			sourceTree = "<group>";
+		};
+		FF8910C52D669A2A0069D109 /* SearchModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SearchModel;
+			sourceTree = "<group>";
+		};
 		FFC8E52F2D5605100094B687 /* Map */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Map;
@@ -222,6 +251,31 @@
 				DE001E912D3BDF71003A273F /* Button */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		0E98EA232D2F8AE8006F25EF /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				0E98EA322D2F8F8F006F25EF /* Services */,
+				0E98EA3C2D2F976E006F25EF /* Secrets */,
+				0E98EA3F2D2F979A006F25EF /* Utilities */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		0E98EA242D2F8AE8006F25EF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FF8910C52D669A2A0069D109 /* SearchModel */,
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
+				0E68CBB32D5DB2E700CFDA8D /* NetworkModel */,
+				FFC8DBF32D50E3970094B687 /* HotPlaceModel */,
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				0E98EA392D2F94AE006F25EF /* Protocol */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		0E98EA252D2F8AE8006F25EF /* Resources */ = {
@@ -325,6 +379,11 @@
 				DE85E27B2D4623BB0055C78C /* My */,
 				DE85E2802D4623BB0055C78C /* SignUp */,
 				DEEB72322D4D211C001C3880 /* Label */,
+				FF3CBBE92D3E387E00006955 /* BrowseItem */,
+				FF3CBFAF2D41070000006955 /* PostModel */,
+				FF3CC3402D4B41FD00006955 /* EmojiModel */,
+				FF883B662D6616AF00FDC0C0 /* SettingsModel */,
+				FF8910C52D669A2A0069D109 /* SearchModel */,
 				FFC8E52F2D5605100094B687 /* Map */,
 			);
 			name = iOS_Wegg;
