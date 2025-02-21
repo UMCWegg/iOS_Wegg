@@ -10,3 +10,4 @@ import Foundation
 struct MarkAsReadRequest: Codable {
     let readStatus: String
 }
+

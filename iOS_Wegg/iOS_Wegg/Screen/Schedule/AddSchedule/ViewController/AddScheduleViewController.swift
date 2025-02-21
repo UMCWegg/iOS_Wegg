@@ -106,8 +106,6 @@ class AddScheduleViewController: UIViewController {
     ) {
         guard let apiManager = apiManager else { return }
         
-        apiManager.setCookie(value: CookieStorage.cookie)
-        
         // 지도 경계 좌표 가져오기
         let request = ScheduleSearchRequest(
             keyword: keyword,

@@ -107,7 +107,7 @@ class ProfileEditView: UIView {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(10)
+            make.top.equalToSuperview().offset(80)
             make.centerX.equalToSuperview()
         }
         

@@ -27,5 +27,5 @@ struct GetNoti: Codable {
     let content: String
     let url: String
     let readStatus: String
-    let imageUrl: String
+    let imageUrl: String?
 }

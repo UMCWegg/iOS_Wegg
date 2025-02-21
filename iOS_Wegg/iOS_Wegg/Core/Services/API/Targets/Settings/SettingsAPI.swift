@@ -10,7 +10,8 @@ import Foundation
 import Moya
 
 enum SettingsAPI {
-   case updateProfile(name: String, accountId: String, profileImage: Data?)
+    case updateProfile(name: String, accountId: String, profileImage: Data?)
+    case updateSettings(settings: SettingsUpdateRequest)
 }
 
 extension SettingsAPI: TargetType {
@@ -25,12 +26,14 @@ extension SettingsAPI: TargetType {
        switch self {
        case .updateProfile:
            return APIConstants.User.updateProfile
+       case .updateSettings:
+           return "/mypage/settings"
        }
    }
    
    var method: Moya.Method {
        switch self {
-       case .updateProfile:
+       case .updateProfile, .updateSettings:
            return .patch
        }
    }
@@ -61,10 +64,18 @@ extension SettingsAPI: TargetType {
            }
            
            return .uploadMultipart(formData)
+       case .updateSettings(let settings):
+           return .requestJSONEncodable(settings)
        }
+
    }
    
-   var headers: [String: String]? {
-       return ["Content-Type": "multipart/form-data"]
-   }
+    var headers: [String: String]? {
+        switch self {
+        case .updateProfile:
+            return ["Content-Type": "multipart/form-data"]
+        case .updateSettings:
+            return ["Content-Type": "application/json"]
+        }
+    }
 }

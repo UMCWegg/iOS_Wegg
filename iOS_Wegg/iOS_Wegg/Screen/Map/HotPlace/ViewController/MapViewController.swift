@@ -93,7 +93,7 @@ class MapViewController:
         setupOverlayView()
         setupFloatingPanel()
         // 쿠키를 직접 저장
-        apiManager.setCookie(value: CookieStorage.cookie)
+//        apiManager.setCookie(value: CookieStorage.cookie)
     }
     
     /// 지도가 메모리에 완전히 로드된 직후 API 호출

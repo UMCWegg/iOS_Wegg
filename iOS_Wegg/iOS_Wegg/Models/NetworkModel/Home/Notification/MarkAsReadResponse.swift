@@ -2,7 +2,7 @@
 //  MarkAsReadResponse.swift
 //  iOS_Wegg
 //
-//  Created by KKM on 2/21/25.
+//  Created by 송승윤 on 2/21/25.
 //
 
 import Foundation

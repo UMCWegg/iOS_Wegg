@@ -30,7 +30,6 @@ class MapSearchViewController: UIViewController {
         super.viewDidLoad()
         
         view = mapSearchView
-        apiManager.setCookie(value: CookieStorage.cookie)
         setupTableHandler()
     }
     

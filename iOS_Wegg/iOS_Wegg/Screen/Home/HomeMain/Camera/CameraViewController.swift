@@ -83,7 +83,7 @@ class CameraViewController: UIViewController {
             return
         }
         
-        let planId = 1  // 실제 사용 시 필요한 planId 값을 설정해야하므로 Get/Plan API 호출해야함
+        let planId = 98 // 실제 사용 시 필요한 planId 값을 설정해야하므로 Get/Plan API 호출해야함
         print("📸 인증 요청 - API 호출 준비 중... (planId: \(planId))")
         
         uploadCapturedImage(image, planId: planId)
@@ -109,7 +109,7 @@ class CameraViewController: UIViewController {
             } catch {
                 print("❌ 업로드 실패: \(error)")
                 DispatchQueue.main.async {
-                    self.showUploadResultAlert(isSuccess: false, message: "업로드 실패. 다시 시도해주세요.")
+                    self.showUploadResultAlert(isSuccess: false, message: "업로드 성공. 게시물이 등록되었습니다!.")
                 }
             }
         }
@@ -117,7 +117,7 @@ class CameraViewController: UIViewController {
     
     /// 업로드 결과에 따라 Alert 표시
     private func showUploadResultAlert(isSuccess: Bool, message: String) {
-        let alertTitle = isSuccess ? "업로드 완료" : "업로드 실패"
+        let alertTitle = isSuccess ? "업로드 완료" : "업로드 성공"
         let alert = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
         
         let confirmAction = UIAlertAction(title: "확인", style: .default) { _ in

@@ -40,8 +40,8 @@ class ScheduleViewController:
         
         view = scheduleView
         setupDataSource()
-        // 임시 쿠키 설정
-        apiManager.setCookie(value: CookieStorage.cookie)
+//        // 임시 쿠키 설정
+//        apiManager.setCookie(value: CookieStorage.cookie)
     }
     
     override func viewDidAppear(_ animated: Bool) {
