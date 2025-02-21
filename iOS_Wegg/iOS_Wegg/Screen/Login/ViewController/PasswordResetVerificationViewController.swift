@@ -27,6 +27,7 @@ class PasswordResetVerificationViewController: UIViewController {
         setupActions()
         setupEmailLabel()
         setupTimer()
+        addKeyboardDismissGesture()
     }
     
     // MARK: - Setup
