@@ -26,6 +26,7 @@ class PhoneNumberVerificationViewController: UIViewController {
         view.backgroundColor = .white
         setupActions()
         setupSubLabel()
+        addKeyboardDismissGesture()
     }
     
     // MARK: - Setup
