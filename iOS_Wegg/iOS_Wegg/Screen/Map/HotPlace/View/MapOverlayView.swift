@@ -70,6 +70,13 @@ class MapOverlayView: UIView {
             return placeDetailBackButton
         }
         
+        if let reloadButton = reloadPlaceButton.hitTest(
+            convert(point, to: reloadPlaceButton),
+            with: event
+        ) {
+            return reloadButton
+        }
+        
         // 지도 외의 터치 이벤트는 nil을 반환
         return nil
     }
@@ -90,6 +97,10 @@ class MapOverlayView: UIView {
         gestureDelegate?.didTapPlaceDetailBackButton()
     }
     
+    @objc private func handleReloadPlaceButton() {
+        gestureDelegate?.didTapReloadButton()
+    }
+    
     // MARK: - Property
     
     /// `MapSearchView`에서 검색 결과 반환시 보여줄 검색바
@@ -103,7 +114,10 @@ class MapOverlayView: UIView {
         $0.image?.withRenderingMode(.alwaysTemplate)
         $0.tintColor = .secondary
     }
+    
     lazy var placeSearchButton = createImageView(imageName: "map_search_icon")
+    
+    private lazy var reloadPlaceButton = createImageView(imageName: "reload_icon")
     private lazy var currentLocationImageButton = createImageView(
         imageName: "current_position_icon"
     )
@@ -163,6 +177,12 @@ private extension MapOverlayView {
             action: #selector(handlePlaceDetailBackButton)
         )
         placeDetailBackButton.addGestureRecognizer(placeDetailBackButtonTapGesture)
+        
+        let reloadPlaceButtonTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handleReloadPlaceButton)
+        )
+        reloadPlaceButton.addGestureRecognizer(reloadPlaceButtonTapGesture)
     }
     
     func addComponents() {
@@ -170,6 +190,7 @@ private extension MapOverlayView {
             placeDetailBackButton,
             placeSearchButton,
             placeSearchBar,
+            reloadPlaceButton,
             currentLocationImageButton
         ].forEach {
             addSubview($0)
@@ -215,6 +236,14 @@ private extension MapOverlayView {
             make.bottom.equalToSuperview().offset(
                 -MapViewLayout.initialBottomSheetHeight + MapViewLayout.CurrentLocation.bottomOffset
             )
+            make.width.height.equalTo(
+                MapViewLayout.CurrentLocation.widthAndHeight
+            )
+        }
+        
+        reloadPlaceButton.snp.makeConstraints { make in
+            make.bottom.equalTo(currentLocationImageButton.snp.top).offset(-10)
+            make.trailing.equalToSuperview().offset(-13)
             make.width.height.equalTo(
                 MapViewLayout.CurrentLocation.widthAndHeight
             )

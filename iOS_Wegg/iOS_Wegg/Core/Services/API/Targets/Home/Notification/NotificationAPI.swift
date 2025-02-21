@@ -10,7 +10,7 @@ import Moya
 
 enum NotificationAPI {
     case notification // 알림 목록 가져오기
-    case markAsRead(notificationId: Int) // 알림 읽음 표시하기
+    case markAsRead(notificationId: Int, readStatus: String) // 알림 읽음 표시하기
 }
 
 extension NotificationAPI: TargetType {
@@ -25,10 +25,8 @@ extension NotificationAPI: TargetType {
         switch self {
         case .notification:
             return APIConstants.NotificationURL.notificationURL
-        case .markAsRead(let notificationId):
-            return APIConstants.NotificationURL.markAsReadURL.replacingOccurrences(
-                of: "{notification_id}", with: "\(notificationId)"
-            )
+        case .markAsRead(let notificationId, _):
+            return APIConstants.NotificationURL.markAsReadURL(notificationId: notificationId)
         }
     }
 
@@ -43,8 +41,11 @@ extension NotificationAPI: TargetType {
 
     var task: Moya.Task {
         switch self {
-        case .notification, .markAsRead:
+        case .notification:
             return .requestPlain
+        case .markAsRead(_, let readStatus):
+            let request = MarkAsReadRequest(readStatus: readStatus)
+            return .requestJSONEncodable(request)
         }
     }
 

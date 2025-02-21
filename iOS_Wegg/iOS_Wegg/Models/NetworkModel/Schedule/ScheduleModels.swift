@@ -8,13 +8,29 @@
 import Foundation
 
 struct CookieStorage {
-    static let cookie: String = "85A12AD62550CDCAE821CA71288B3EFC"
+    static let cookie: String = "513A80E2EF170FB58D4EF1F0AEFA1EF5"
 }
 
 /// 일정 상태를 나타내는 Enum
-enum ScheduleStatus: String, Encodable {
-    case yet = "YET"
-    case done = "DONE"
+enum ScheduleStatus: String, Codable {
+    case yet = "YET"           // 계획 시작 전
+    case started = "STARTED"   // 계획 시작(장소 인증한 후)
+    case succeeded = "SUCCEEDED" // 계획 성공
+    case failed = "FAILED"     // 계획 실패
+
+    /// 상태에 따른 설명 반환
+    var description: String {
+        switch self {
+        case .yet:
+            return "계획 시작 전"
+        case .started:
+            return "계획 시작(장소인증한 후)"
+        case .succeeded:
+            return "계획 성공"
+        case .failed:
+            return "계획 실패"
+        }
+    }
 }
 
 // 지각 상태 Enum

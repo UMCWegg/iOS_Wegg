@@ -10,7 +10,8 @@ import UIKit
 class SearchViewController: UIViewController {
     // MARK: - Property
     private var searchView: SearchView = SearchView()
-    private var recentSearches: [User] = []
+    private var recentSearches: [UserSearchResult] = [] // ✅ 타입 변경 (User → UserSearchResult)
+    private let userService = UserService() // ✅ API 호출을 위한 서비스
     
     // MARK: - Init
     override func viewDidLoad() {
@@ -43,21 +44,33 @@ class SearchViewController: UIViewController {
     @objc private func didTapBack() {
         navigationController?.popViewController(animated: true)
     }
+    
+    /// ✅ 사용자 검색 API 호출
+        private func searchUsers(keyword: String) {
+            Task {
+                do {
+                    let users = try await userService.searchUser(keyword: keyword)
+                    
+                    DispatchQueue.main.async {
+                        self.recentSearches = users // ✅ 결과 데이터 저장
+                        self.searchView.searchResultView.tableView.reloadData() // ✅ UI 업데이트
+                    }
+                } catch {
+                    print("❌ 사용자 검색 실패: \(error)")
+                }
+            }
+        }
 }
 
-// MARK: - UISearchBarDelegate
-
-/// search버튼 클릭시 키보드를 내리고 테이블뷰에 데이터 로드하여 추가하기
+/// search 버튼 클릭 시 API 호출하여 사용자 검색 결과 표시
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // 🔹 키보드 내리기
         searchBar.resignFirstResponder()
         guard let text = searchBar.text, !text.isEmpty else { return }
-        let user = User(
-            profileImage: UIImage(named: "profile_placeholder") ?? UIImage(),
-            username: text)
-        recentSearches.append(user)
-        searchView.searchResultView.tableView.reloadData()
+
+        print("🔍 사용자 검색 요청: \(text)") // ✅ 디버깅 로그 추가
+        searchUsers(keyword: text) // ✅ API 호출
     }
 }
 
@@ -80,8 +93,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedUser = recentSearches[indexPath.row]
-        /* 밑에 로직은 사용자 눌렀을시 화면전환 되도록 설계
-         let calendarVC = CalendarViewController(username: selectedUser.username)
-         navigationController?.pushViewController(calendarVC, animated: true)*/
+        print("✅ 선택된 사용자: \(selectedUser.accountId)")
+        /* 화면 전환 로직 추가 가능
+         let calendarVC = CalendarViewController(username: selectedUser.accountId)
+         navigationController?.pushViewController(calendarVC, animated: true) */
     }
 }

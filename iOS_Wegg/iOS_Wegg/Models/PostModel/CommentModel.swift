@@ -19,19 +19,19 @@ struct CommentModel {
         return [
             CommentModel(
                 userName: "증윤",
-                profileImage: UIImage(named: "profile1"),
+                profileImage: UIImage(named: "profile_placeholder"),
                 commentText: "Wegg입니다."),
             CommentModel(
                 userName: "리버",
-                profileImage: UIImage(named: "profile1"),
+                profileImage: UIImage(named: "profile_placeholder"),
                 commentText: "Wegg입니다."),
             CommentModel(
                 userName: "하키",
-                profileImage: UIImage(named: "profile1"),
+                profileImage: UIImage(named: "profile_placeholder"),
                 commentText: "Wegg입니다."),
             CommentModel(
                 userName: "베텔",
-                profileImage: UIImage(named: "profile1"),
+                profileImage: UIImage(named: "profile_placeholder"),
                 commentText: "Wegg입니다.")
         ]
     }
