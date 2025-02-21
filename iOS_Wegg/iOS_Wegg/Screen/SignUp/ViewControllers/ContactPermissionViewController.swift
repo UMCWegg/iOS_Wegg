@@ -165,22 +165,79 @@ class ContactPermissionViewController: UIViewController {
     private func handleSignUpSuccess(_ response: SignUpResponse) {
         UserDefaultsManager.shared.saveUserID(Int(response.result.userID))
         
-        if let contactFriends = response.result.contactFriends, !contactFriends.isEmpty {
-            self.contactFriends = contactFriends
-            contactPermissionView.contentBox.isHidden = false
-            contactPermissionView.tableView.reloadData()
+        loginAfterSignup { [weak self] success in
+            guard let self = self else { return }
             
-            contactPermissionView.nextButton.removeTarget(
-                self,
-                action: #selector(nextButtonTapped),
-                for: .touchUpInside)
-            contactPermissionView.nextButton.addTarget(
-                self,
-                action: #selector(proceedToNextScreen),
-                for: .touchUpInside)
-            contactPermissionView.nextButton.isEnabled = true
-        } else {
-            moveToMainScreen()
+            if success {
+                // 로그인 성공(쿠키 설정됨) 후 연락처 친구 표시
+                if let contactFriends = response.result.contactFriends, !contactFriends.isEmpty {
+                    self.contactFriends = contactFriends
+                    
+                    DispatchQueue.main.async {
+                        self.contactPermissionView.contentBox.isHidden = false
+                        self.contactPermissionView.tableView.reloadData()
+                        
+                        self.contactPermissionView.nextButton.removeTarget(
+                            self,
+                            action: #selector(self.nextButtonTapped),
+                            for: .touchUpInside)
+                        self.contactPermissionView.nextButton.addTarget(
+                            self,
+                            action: #selector(self.proceedToNextScreen),
+                            for: .touchUpInside)
+                        self.contactPermissionView.nextButton.isEnabled = true
+                    }
+                } else {
+                    self.moveToMainScreen()
+                }
+            } else {
+                // 로그인 실패해도 회원가입 완료 화면으로 이동
+                self.moveToMainScreen()
+            }
+        }
+    }
+    
+    private func loginAfterSignup(completion: @escaping (Bool) -> Void) {
+        guard let signUpData = UserSignUpStorage.shared.get() else {
+            completion(false)
+            return
+        }
+        
+        Task {
+            do {
+                // 명시적으로 타입을 선언
+                let loginResponse: LoginResponse
+                
+                // 이메일 로그인과 소셜 로그인을 분리하지 않고 하나의 LoginRequest로 처리
+                let loginRequest = LoginRequest(
+                    email: signUpData.email ?? "",
+                    password: signUpData.password,
+                    socialType: signUpData.socialType,
+                    accessToken: signUpData.socialType == .email ? nil : signUpData.accessToken
+                )
+                
+                // 로그인 방식에 따라 적절한 API 호출
+                if signUpData.socialType == .email {
+                    loginResponse = try await authService.login(request: loginRequest)
+                } else {
+                    loginResponse = try await authService.socialLogin(request: loginRequest)
+                }
+                
+                // 결과 처리
+                await MainActor.run {
+                    if loginResponse.isSuccess, let result = loginResponse.result {
+                        UserDefaultsManager.shared.saveUserID(result.userID)
+                        print("✅ 회원가입 후 로그인 성공 - 쿠키가 설정되었습니다")
+                        completion(true)
+                    } else {
+                        print("❌ 회원가입 후 로그인 실패: \(loginResponse.message)")
+                        completion(false)
+                    }
+                }
+            } catch {
+                print("❌ 회원가입 후 로그인 오류: \(error)")
+                completion(false)
+            }
         }
     }
     
