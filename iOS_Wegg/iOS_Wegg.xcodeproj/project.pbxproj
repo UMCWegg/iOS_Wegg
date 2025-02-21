@@ -527,9 +527,10 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D3H79AF44W;
+				DEVELOPMENT_TEAM = 6H8Y6F23HB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Wegg;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSContactsUsageDescription = "연락처를 통해 Wegg를 사용하고 있는 친구들을 찾고 연결하기 위해 연락처 접근 권한이 필요합니다.";
@@ -565,9 +566,10 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D3H79AF44W;
+				DEVELOPMENT_TEAM = 6H8Y6F23HB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOS_Wegg/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Wegg;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSContactsUsageDescription = "연락처를 통해 Wegg를 사용하고 있는 친구들을 찾고 연결하기 위해 연락처 접근 권한이 필요합니다.";
