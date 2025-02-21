@@ -103,6 +103,8 @@ class SettingsView: UIView {
             divideLine4,
             divideLine5
         ].forEach { addSubview($0) }
+        
+        updateProfileInfo()
     }
     
     private func setupConstraints() {
