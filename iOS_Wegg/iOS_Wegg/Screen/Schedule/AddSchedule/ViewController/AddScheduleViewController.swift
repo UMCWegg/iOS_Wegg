@@ -22,16 +22,16 @@ class AddScheduleViewController: UIViewController {
     private var selectedFinishTime: String?
     private var selectedLateTime: LateStatus?
     private var editMode: Bool
-    private var planId: Int?
+    private var scheduleModel: ScheduleModel?
     var selectedFormmatedDates: [String] = [] // yyyy-MM-dd 형식의 날짜 배열
     
     init(
         mapManager: MapManagerProtocol,
-        planId: Int? = nil,
+        scheduleModel: ScheduleModel? = nil,
         editMode: Bool = false
     ) {
         self.mapManager = mapManager
-        self.planId = planId
+        self.scheduleModel = scheduleModel
         self.editMode = editMode
         super.init(nibName: nil, bundle: nil)
     }
@@ -139,7 +139,13 @@ class AddScheduleViewController: UIViewController {
 extension AddScheduleViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        addScheduleView.toggleSearchResultList(false)
+        if editMode {
+            // 수정모드인 경우에는 장소 변경 불가능 하기에 장소 검색 기능 제한
+            addScheduleView.toggleSearchResultList(true)
+        } else {
+            // 일정 추가 모드인 경우에만 검색 가능
+            addScheduleView.toggleSearchResultList(false)
+        }
     }
     
     /// 검색 내용 리턴
@@ -151,20 +157,25 @@ extension AddScheduleViewController: UISearchBarDelegate {
     /// 검색 내용 변화 리턴
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // 실시간 검색
-        addScheduleView.toggleSearchResultList(false)
-        guard let mapManager = mapManager else { return }
-        // 현재 위치 기반 장소 검색
-        mapManager.getCurrentLocation { [weak self] coordinate in
-            guard let currentLocation = coordinate else { return }
-            if !searchText.isEmpty {
-                // REFACT: API 호출 중복 개선하기 - 작성자: 이재원
-                self?.fetchSearchPlace(
-                    keyword: searchText,
-                    at: currentLocation
-                )
-            } else {
-                self?.addScheduleSearchTableHandler.updateSearchResults([])
-                self?.addScheduleView.toggleSearchResultList(true)
+        // 수정모드인 경우에는 장소 변경 불가능 하기에 장소 검색 기능 제한
+        if editMode {
+            searchBar.text = ""
+        } else {
+            addScheduleView.toggleSearchResultList(false)
+            guard let mapManager = mapManager else { return }
+            // 현재 위치 기반 장소 검색
+            mapManager.getCurrentLocation { [weak self] coordinate in
+                guard let currentLocation = coordinate else { return }
+                if !searchText.isEmpty {
+                    // REFACT: API 호출 중복 개선하기 - 작성자: 이재원
+                    self?.fetchSearchPlace(
+                        keyword: searchText,
+                        at: currentLocation
+                    )
+                } else {
+                    self?.addScheduleSearchTableHandler.updateSearchResults([])
+                    self?.addScheduleView.toggleSearchResultList(true)
+                }
             }
         }
         
@@ -213,7 +224,7 @@ extension AddScheduleViewController: UISearchBarDelegate {
     
     private func editScedule() {
         guard let apiManager = apiManager,
-              let planId = planId,
+              let planId = scheduleModel?.id,
               let selectedStartTime = selectedStartTime,
               let selectedFinishTime = selectedFinishTime else { return }
         
@@ -254,16 +265,18 @@ extension AddScheduleViewController:
     }
     
     func didTapCalendarButton() {
-        let scheduleCalendarVC = ScheduleCalendarViewController()
-        scheduleCalendarVC.parentVC = self
-        if let sheet = scheduleCalendarVC.sheetPresentationController {
-            sheet.detents = [
-                .custom(resolver: { context in
-                // 화면 최대 높이의 66%
-                return context.maximumDetentValue * 0.64
-            })]
+        if !editMode {
+            let scheduleCalendarVC = ScheduleCalendarViewController()
+            scheduleCalendarVC.parentVC = self
+            if let sheet = scheduleCalendarVC.sheetPresentationController {
+                sheet.detents = [
+                    .custom(resolver: { context in
+                    // 화면 최대 높이의 66%
+                    return context.maximumDetentValue * 0.64
+                })]
+            }
+            present(scheduleCalendarVC, animated: true)
         }
-        present(scheduleCalendarVC, animated: true)
     }
     
     func didSelectStartTime() {
