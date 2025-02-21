@@ -51,31 +51,23 @@ class PhoneNumberInputViewController: UIViewController {
             return
         }
         
-       //Task {
-       //    do {
-       //        let response = try await authService.verifyPhone(phone)
-       //        if response.isSuccess {
-       //            UserSignUpStorage.shared.update { data in
-       //                data.phone = phone
-       //            }
-       //
-       //            let verificationVC = PhoneNumberVerificationViewController()
-       //            verificationVC.phoneNumber = phone
-       //            navigationController?.pushViewController(verificationVC, animated: true)
-       //        }
-       //    } catch {
-       //        print("❌ 전화번호 인증 요청 실패: \(error)")
-       //        showAlert(message: "전화번호 인증 요청에 실패했습니다")
-       //    }
-       //}
-        
-        UserSignUpStorage.shared.update { data in
-            data.phone = phone
-        }
-        
-        let verificationVC = PhoneNumberVerificationViewController()
-        verificationVC.phoneNumber = phone
-        navigationController?.pushViewController(verificationVC, animated: true)
+       Task {
+           do {
+               let response = try await authService.verifyPhone(phone)
+               if response.isSuccess {
+                   UserSignUpStorage.shared.update { data in
+                       data.phone = phone
+                   }
+       
+                   let verificationVC = PhoneNumberVerificationViewController()
+                   verificationVC.phoneNumber = phone
+                   navigationController?.pushViewController(verificationVC, animated: true)
+               }
+           } catch {
+               print("❌ 전화번호 인증 요청 실패: \(error)")
+               showAlert(message: "전화번호 인증 요청에 실패했습니다")
+           }
+       }
     }
     
     @objc private func backButtonTapped() {
