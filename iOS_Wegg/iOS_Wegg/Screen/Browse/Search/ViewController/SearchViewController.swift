@@ -17,6 +17,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view = searchView
+        view.backgroundColor = .white
         setupNavigationBar()
         setupTableView()
     }
