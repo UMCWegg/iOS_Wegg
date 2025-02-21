@@ -40,8 +40,8 @@ class ScheduleViewController:
         
         view = scheduleView
         setupDataSource()
-        // 임시 쿠키 설정
-        apiManager.setCookie(value: CookieStorage.cookie)
+//        // 임시 쿠키 설정
+//        apiManager.setCookie(value: CookieStorage.cookie)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -240,6 +240,29 @@ extension ScheduleViewController: UITableViewDelegate {
         deleteAction.backgroundColor = .systemRed // 삭제 버튼 색상
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let mapManager = mapManager else { return }
+        let scheduleModel = scheduleList[indexPath.row]
+        let addScheduleVC = AddScheduleViewController(
+            mapManager: mapManager,
+            scheduleModel: scheduleModel,
+            editMode: true
+        )
+        // 수정 모드인 경우 장소와 날짜 제공한 형태로 시작
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            addScheduleVC.addScheduleView.updateDateLabel(
+                isHidden: false,
+                date: scheduleModel.date
+            )
+            addScheduleVC.addScheduleView.updateSearchResultLabel(
+                scheduleModel.placeName,
+                isHidden: false
+            )
+        }
+        navigationController?.pushViewController(addScheduleVC, animated: true)
     }
     
     // 각 셀의 높이를 설정하는 메서드
