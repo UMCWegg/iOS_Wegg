@@ -16,12 +16,18 @@ final class SettingsService {
    func updateProfile(name: String,
                       accountId: String,
                       profileImage: Data?) async throws -> BaseResponse<EmptyResponse> {
-       return try await apiManager.request(
-           target: SettingsAPI.updateProfile(
-               name: name,
-               accountId: accountId,
-               profileImage: profileImage
-           )
-       )
-   }
+        return try await apiManager.request(
+            target: SettingsAPI.updateProfile(
+                name: name,
+                accountId: accountId,
+                profileImage: profileImage
+            )
+        )
+    }
+    
+    func updateSettings(settings: SettingsUpdateRequest) async throws -> BaseResponse<String> {
+        return try await apiManager.request(
+            target: SettingsAPI.updateSettings(settings: settings)
+        )
+    }
 }

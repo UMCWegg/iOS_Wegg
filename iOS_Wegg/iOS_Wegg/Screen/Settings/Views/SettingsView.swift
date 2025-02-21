@@ -103,12 +103,14 @@ class SettingsView: UIView {
             divideLine4,
             divideLine5
         ].forEach { addSubview($0) }
+        
+        updateProfileInfo()
     }
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(safeAreaLayoutGuide).offset(10)
+            make.top.equalToSuperview().offset(80)
         }
         
         setupProfileConstraints()

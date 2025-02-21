@@ -24,6 +24,7 @@ class PasswordResetEmailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupActions()
+        addKeyboardDismissGesture()
     }
     
     // MARK: - Setup

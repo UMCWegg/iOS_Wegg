@@ -1,10 +1,3 @@
-//
-//  ProfileEditViewController.swift
-//  iOS_Wegg
-//
-//  Created by 이건수 on 2025.02.18.
-//
-
 import UIKit
 
 class ProfileEditViewController: UIViewController {
@@ -13,6 +6,7 @@ class ProfileEditViewController: UIViewController {
     
     private let profileEditView = ProfileEditView()
     private let imagePicker = UIImagePickerController()
+    private var isImageChanged = false // 이미지 변경 여부 추적
     
     // MARK: - Lifecycle
     
@@ -51,6 +45,8 @@ class ProfileEditViewController: UIViewController {
         if let imageData = SettingsStorage.shared.getProfileImage(),
            let image = UIImage(data: imageData) {
             profileEditView.profileImageView.image = image
+        } else {
+            profileEditView.profileImageView.image = UIImage(named: "settings_wegg")
         }
     }
     
@@ -67,14 +63,26 @@ class ProfileEditViewController: UIViewController {
     }
     
     @objc private func saveButtonTapped() {
-        guard let name = profileEditView.nameTextField.text,
-              let accountId = profileEditView.idTextField.text else { return }
+        guard let name = profileEditView.nameTextField.text, !name.isEmpty,
+              let accountId = profileEditView.idTextField.text, !accountId.isEmpty else {
+            showAlert(message: "이름과 아이디를 모두 입력해주세요.")
+            return
+        }
         
-        // 이미지가 기본 이미지가 아닐 경우에만 전송
+        // 로딩 인디케이터 표시
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = view.center
+        activityIndicator.startAnimating()
+        view.addSubview(activityIndicator)
+        view.isUserInteractionEnabled = false
+        
+        // 이미지 데이터 준비
         let imageData: Data?
-        = profileEditView.profileImageView.image == UIImage(named: "settings_wegg")
-            ? nil
-            : profileEditView.profileImageView.image?.jpegData(compressionQuality: 0.8)
+        if isImageChanged {
+            imageData = profileEditView.profileImageView.image?.jpegData(compressionQuality: 0.8)
+        } else {
+            imageData = nil  // 이미지가 변경되지 않았으면 nil 전송 (서버에서 기존 이미지 유지)
+        }
         
         Task {
             do {
@@ -84,18 +92,36 @@ class ProfileEditViewController: UIViewController {
                     profileImage: imageData
                 )
                 
-                if response.isSuccess {
-                    // 로컬 저장소 업데이트
-                    SettingsStorage.shared.saveProfileName(name)
-                    SettingsStorage.shared.saveProfileId(accountId)
-                    if let imageData = imageData {
-                        SettingsStorage.shared.saveProfileImage(imageData)
-                    }
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    activityIndicator.removeFromSuperview()
+                    self.view.isUserInteractionEnabled = true
                     
-                    navigationController?.popViewController(animated: true)
+                    if response.isSuccess {
+                        // 로컬 저장소 업데이트
+                        SettingsStorage.shared.saveProfileName(name)
+                        SettingsStorage.shared.saveProfileId(accountId)
+                        if let imageData = imageData, self.isImageChanged {
+                            SettingsStorage.shared.saveProfileImage(imageData)
+                        }
+                        
+                        // 성공 알림 표시
+                        self.showAlert(message: "프로필이 업데이트되었습니다.", completion: {
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                    } else {
+                        // 실패 알림 표시
+                        self.showAlert(message: response.message ?? "프로필 업데이트에 실패했습니다.")
+                    }
                 }
             } catch {
-                print("프로필 업데이트 실패: \(error)")
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    activityIndicator.removeFromSuperview()
+                    self.view.isUserInteractionEnabled = true
+                    print("프로필 업데이트 실패: \(error)")
+                    self.showAlert(message: "네트워크 오류: \(error.localizedDescription)")
+                }
             }
         }
     }
@@ -114,6 +140,8 @@ class ProfileEditViewController: UIViewController {
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 self.imagePicker.sourceType = .camera
                 self.present(self.imagePicker, animated: true)
+            } else {
+                self.showAlert(message: "카메라에 접근할 수 없습니다.")
             }
         }
         
@@ -121,8 +149,25 @@ class ProfileEditViewController: UIViewController {
         
         [library, camera, cancel].forEach { alert.addAction($0) }
         
+        // iPad에서 액션시트 표시를 위한 처리
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = profileEditView.cameraButton
+            popoverController.sourceRect = profileEditView.cameraButton.bounds
+        }
+        
         present(alert, animated: true)
     }
+    
+    // 알림 표시 헬퍼 메서드
+    private func showAlert(message: String, completion: (() -> Void)? = nil) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+            completion?()
+        }
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+
 }
 
 // MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
@@ -135,6 +180,7 @@ extension ProfileEditViewController: UIImagePickerControllerDelegate,
     ) {
         if let image = info[.editedImage] as? UIImage {
             profileEditView.profileImageView.image = image
+            isImageChanged = true // 이미지가 변경되었음을 표시
         }
         dismiss(animated: true)
     }
