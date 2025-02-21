@@ -8,13 +8,30 @@
 import UIKit
 
 class SettingBackButton: UIButton {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+   
+   // MARK: - Init
+   
+   override init(frame: CGRect) {
+       super.init(frame: frame)
+       setupButton()
+   }
+   
+   required init?(coder: NSCoder) {
+       super.init(coder: coder)
+       setupButton()
+   }
+   
+   // MARK: - Setup
+   
+   private func setupButton() {
+       setImage(UIImage(systemName: "chevron.left"), for: .normal)
+       tintColor = .secondary
+       contentMode = .scaleAspectFit
+       
+       translatesAutoresizingMaskIntoConstraints = false
+       NSLayoutConstraint.activate([
+           widthAnchor.constraint(equalToConstant: 10),
+           heightAnchor.constraint(equalToConstant: 20)
+       ])
+   }
 }
