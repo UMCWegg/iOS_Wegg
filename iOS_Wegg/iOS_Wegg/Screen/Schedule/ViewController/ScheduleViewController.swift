@@ -242,6 +242,16 @@ extension ScheduleViewController: UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let mapManager = mapManager else { return }
+        let addScheduleVC = AddScheduleViewController(
+            mapManager: mapManager,
+            planId: scheduleList[indexPath.row].id,
+            editMode: true
+        )
+        navigationController?.pushViewController(addScheduleVC, animated: true)
+    }
+    
     // 각 셀의 높이를 설정하는 메서드
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 138 // 셀 높이를 138로 고정

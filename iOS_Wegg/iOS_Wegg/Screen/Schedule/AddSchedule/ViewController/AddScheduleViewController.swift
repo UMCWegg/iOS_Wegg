@@ -21,10 +21,18 @@ class AddScheduleViewController: UIViewController {
     private var selectedStartTime: String?
     private var selectedFinishTime: String?
     private var selectedLateTime: LateStatus?
+    private var editMode: Bool
+    private var planId: Int?
     var selectedFormmatedDates: [String] = [] // yyyy-MM-dd 형식의 날짜 배열
     
-    init(mapManager: MapManagerProtocol) {
+    init(
+        mapManager: MapManagerProtocol,
+        planId: Int? = nil,
+        editMode: Bool = false
+    ) {
         self.mapManager = mapManager
+        self.planId = planId
+        self.editMode = editMode
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -161,20 +169,13 @@ extension AddScheduleViewController: UISearchBarDelegate {
         }
         
     }
-}
-
-extension AddScheduleViewController:
-    AddScheduleGestureDelegate,
-    ScheduleDetailSettingViewDelegate {
     
-    func didTapSaveButton() {
+    private func addSchedule() {
         guard let apiManager = apiManager,
             let selectedStartTime = selectedStartTime,
             let selectedFinishTime = selectedFinishTime,
             let selectedPlace = selectedPlace else { return }
         
-        // 쿠키를 직접 저장
-        apiManager.setCookie(value: CookieStorage.cookie)
         let request = AddScheduleRequest(
             status: .yet,
             planDates: selectedFormmatedDates,
@@ -208,7 +209,44 @@ extension AddScheduleViewController:
                 print("❌ ScheduleAddResponse 실패: \(error)")
             }
         }
+    }
+    
+    private func editScedule() {
+        guard let apiManager = apiManager,
+              let planId = planId,
+              let selectedStartTime = selectedStartTime,
+              let selectedFinishTime = selectedFinishTime else { return }
         
+        let request = EditScheduleRequest(
+            startTime: selectedStartTime,
+            finishTime: selectedFinishTime,
+            lateTime: selectedLateTime ?? .onTime
+        )
+        Task {
+            do {
+                let _: EditScheduleResponse = try await apiManager.request(
+                    target: ScheduleAPI.editSchedule(
+                        planId: planId,
+                        request: request
+                    ))
+                navigationController?.popViewController(animated: true)
+            } catch {
+                print("editScehdule Error: \(error)")
+            }
+        }
+    }
+}
+
+extension AddScheduleViewController:
+    AddScheduleGestureDelegate,
+    ScheduleDetailSettingViewDelegate {
+    
+    func didTapSaveButton() {
+        if editMode {
+            editScedule()
+        } else {
+            addSchedule()
+        }
     }
     
     func didTapCancelButton() {
