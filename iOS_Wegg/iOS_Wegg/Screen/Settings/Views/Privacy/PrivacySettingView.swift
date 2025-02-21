@@ -33,6 +33,8 @@ class PrivacySettingView: UIView {
     private let containerView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1 // 테두리 추가
+        $0.layer.borderColor = UIColor.brown.cgColor // 테두리 색상
     }
     
     private let dividerLine = UIView().then { $0.backgroundColor = .gray.withAlphaComponent(0.3) }

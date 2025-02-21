@@ -17,6 +17,12 @@ struct PointProduct {
     let price: Int
 }
 
+// PointProductCell.swift 개선
+import UIKit
+
+import Then
+import SnapKit
+
 class PointProductCell: UITableViewCell {
     
     // MARK: - Properties
@@ -42,6 +48,7 @@ class PointProductCell: UITableViewCell {
     private let priceLabel = UILabel().then {
         $0.font = UIFont.notoSans(.regular, size: 14)
         $0.textColor = .darkGray
+        $0.textAlignment = .left // 왼쪽 정렬로 변경
     }
     
     // MARK: - Init
@@ -92,6 +99,7 @@ class PointProductCell: UITableViewCell {
             make.leading.equalTo(titleLabel)
             make.top.equalTo(titleLabel.snp.bottom).offset(5)
             make.bottom.equalToSuperview().offset(-15)
+            make.trailing.lessThanOrEqualToSuperview().offset(-15) // 오른쪽 여백 확보
         }
     }
     

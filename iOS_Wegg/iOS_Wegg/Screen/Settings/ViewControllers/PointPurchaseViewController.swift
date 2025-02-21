@@ -1,10 +1,3 @@
-//
-//  PointPurchaseViewController.swift
-//  iOS_Wegg
-//
-//  Created by 이건수 on 2025.02.21.
-//
-
 import UIKit
 import StoreKit
 
@@ -21,6 +14,13 @@ class PointPurchaseViewController: UIViewController {
         PointProduct(id: "com.wegg.point.100", title: "100 포인트", price: 2500)
     ]
     
+    // 현재 보유 포인트
+    private var currentPoints: Int = 0 {
+        didSet {
+            updatePointLabel()
+        }
+    }
+    
     // MARK: - Lifecycle
     
     override func loadView() {
@@ -32,7 +32,7 @@ class PointPurchaseViewController: UIViewController {
         setupNavigationBar()
         setupTableView()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .yellowBg
     }
     
     // MARK: - Setup
@@ -54,7 +54,11 @@ class PointPurchaseViewController: UIViewController {
             forCellReuseIdentifier: "PointProductCell")
         
         // 현재 보유 포인트 표시
-        pointPurchaseView.pointLabel.text = "보유 포인트: 24 P"
+        updatePointLabel()
+    }
+    
+    private func updatePointLabel() {
+        pointPurchaseView.pointLabel.text = "보유 포인트: \(currentPoints) P"
     }
     
     // MARK: - Actions
@@ -82,9 +86,11 @@ class PointPurchaseViewController: UIViewController {
     }
     
     private func processPurchase(_ product: PointProduct) {
-        // 구매 처리 로직
-        // StoreKit 연동 코드가, 이번에는 간단하게 성공 알림만 표시
+        // 실제 구매 대신 바로 포인트 추가
+        let pointValue = Int(product.title.components(separatedBy: " ")[0]) ?? 0
+        self.currentPoints += pointValue
         
+        // 구매 성공 알림
         let alertController = UIAlertController(
             title: "구매 성공",
             message: "\(product.title)를 구매했습니다.",

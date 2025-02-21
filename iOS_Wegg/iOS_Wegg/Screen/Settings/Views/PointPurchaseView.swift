@@ -48,7 +48,7 @@ class PointPurchaseView: UIView {
     // MARK: - Setup
     
     private func setupUI() {
-        backgroundColor = .white
+        backgroundColor = .yellowBg
         
         [
             pointLabel,
@@ -69,4 +69,5 @@ class PointPurchaseView: UIView {
             make.bottom.equalTo(safeAreaLayoutGuide).offset(-20)
         }
     }
+
 }

@@ -190,7 +190,7 @@ class NotificationDetailView: UIView {
             make.bottom.equalToSuperview()
         }
         
-        // 주파수 라벨
+        // 주파수 섹션은 여기서 설정하지만, 알 깨기 알림일 때는 isHidden을 통해 숨겨짐
         frequencyLabel.snp.makeConstraints { make in
             make.top.equalTo(modeSectionView.snp.bottom).offset(30)
             make.leading.equalToSuperview().offset(20)
@@ -200,6 +200,7 @@ class NotificationDetailView: UIView {
         frequencySectionView.snp.makeConstraints { make in
             make.top.equalTo(frequencyLabel.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(15)
+            // 알 깨기 알림일 때는 이 부분이 숨겨지므로 bottom 제약 조건을 설정하지 않음
         }
         
         singleCell.snp.makeConstraints { make in

@@ -108,7 +108,7 @@ class SettingsView: UIView {
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(safeAreaLayoutGuide).offset(10)
+            make.top.equalToSuperview().offset(80)
         }
         
         setupProfileConstraints()

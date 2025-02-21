@@ -5,6 +5,7 @@
 //  Created by 이건수 on 2025.02.21.
 //
 
+// NotificationSettingView.swift 개선
 import UIKit
 
 import Then
@@ -21,8 +22,8 @@ class NotificationSettingView: UIView {
     let randomNotificationCell = SettingDisclosureCell()
     let eggBreakNotificationCell = SettingDisclosureCell()
     
-    private let dividerLine1 = UIView().then { $0.backgroundColor = .gray.withAlphaComponent(0.3) }
-    private let dividerLine2 = UIView().then { $0.backgroundColor = .gray.withAlphaComponent(0.3) }
+    private let dividerLine1 = UIView().then { $0.backgroundColor = .clear }
+    private let dividerLine2 = UIView().then { $0.backgroundColor = .clear }
     
     // MARK: - Init
     
@@ -39,7 +40,7 @@ class NotificationSettingView: UIView {
     // MARK: - Setup
     
     private func setupUI() {
-        backgroundColor = .white
+        backgroundColor = .yellowBg
         
         [
             friendPostToggle,
@@ -53,45 +54,46 @@ class NotificationSettingView: UIView {
     }
     
     private func setupConstraints() {
+        // 모든 셀에 leading, trailing 여백 21pt 적용
         friendPostToggle.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(20)
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(21)
             make.height.equalTo(50)
         }
         
         commentToggle.snp.makeConstraints { make in
-            make.top.equalTo(friendPostToggle.snp.bottom)
-            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(friendPostToggle.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(21)
             make.height.equalTo(50)
         }
         
         dividerLine1.snp.makeConstraints { make in
             make.top.equalTo(commentToggle.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(21)
             make.height.equalTo(1)
         }
         
         locationNotificationCell.snp.makeConstraints { make in
             make.top.equalTo(dividerLine1.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(21)
             make.height.equalTo(50)
         }
         
         dividerLine2.snp.makeConstraints { make in
-            make.top.equalTo(locationNotificationCell.snp.bottom)
-            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(locationNotificationCell.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(21)
             make.height.equalTo(1)
         }
         
         randomNotificationCell.snp.makeConstraints { make in
             make.top.equalTo(dividerLine2.snp.bottom)
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(21)
             make.height.equalTo(50)
         }
         
         eggBreakNotificationCell.snp.makeConstraints { make in
-            make.top.equalTo(randomNotificationCell.snp.bottom)
-            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(randomNotificationCell.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(21)
             make.height.equalTo(50)
         }
     }

@@ -29,11 +29,6 @@ class FeatureSettingViewController: UIViewController {
         view.backgroundColor = .yellowBg
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        loadSettings() // 설정 변경사항 반영
-    }
-    
     // MARK: - Setup
     
     private func setupNavigationBar() {
@@ -54,9 +49,9 @@ class FeatureSettingViewController: UIViewController {
             self?.updateRandomSetting(isOn: isOn)
         }
         
-        featureSettingView.eggBreakButton.addTarget(
+        featureSettingView.eggBreakCell.addTarget(
             self,
-            action: #selector(eggBreakButtonTapped),
+            action: #selector(eggBreakCellTapped),
             for: .touchUpInside
         )
     }
@@ -66,16 +61,13 @@ class FeatureSettingViewController: UIViewController {
         let locationEnabled = settingsStorage.getFeatureEnabled(for: "location") ?? true
         let randomEnabled = settingsStorage.getFeatureEnabled(for: "random") ?? true
         let eggBreakEnabled = settingsStorage.getFeatureEnabled(for: "eggBreak") ?? true
+        let marketingAgree = settingsStorage.getUserMarketingAgree() ?? false
         
         // UI 업데이트
         featureSettingView.locationToggle.configure(with: "장소 인증 기능", isOn: locationEnabled)
         featureSettingView.randomToggle.configure(with: "랜덤 인증 기능", isOn: randomEnabled)
-        
-        // 알 깨기 상태 표시
-        let eggBreakStatus = eggBreakEnabled ? "끔" : "꺼짐"
-        featureSettingView.eggBreakButton.setTitle("알 깨기 기능      \(eggBreakStatus)", for: .normal)
-        featureSettingView.eggBreakButton
-            .setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        featureSettingView.eggBreakCell
+            .configure(with: "알 깨기 기능", detail: eggBreakEnabled ? "켬" : "꺼짐")
         
         // 경고 메시지 표시 (기능을 꺼둘 경우)
         updateWarningMessage(locationEnabled, randomEnabled)
@@ -99,11 +91,6 @@ class FeatureSettingViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc private func eggBreakButtonTapped() {
-        let eggBreakVC = EggBreakSettingViewController()
-        navigationController?.pushViewController(eggBreakVC, animated: true)
-    }
-    
     private func updateLocationSetting(isOn: Bool) {
         settingsStorage.saveFeatureEnabled(isOn, for: "location")
         let randomEnabled = settingsStorage.getFeatureEnabled(for: "random") ?? true
@@ -115,6 +102,16 @@ class FeatureSettingViewController: UIViewController {
         settingsStorage.saveFeatureEnabled(isOn, for: "random")
         let locationEnabled = settingsStorage.getFeatureEnabled(for: "location") ?? true
         updateWarningMessage(locationEnabled, isOn)
+        syncSettingsWithServer()
+    }
+    
+    private func updateEggBreakSetting(isOn: Bool) {
+        settingsStorage.saveFeatureEnabled(isOn, for: "eggBreak")
+        syncSettingsWithServer()
+    }
+    
+    private func updateMarketingAgree(isOn: Bool) {
+        settingsStorage.saveUserMarketingAgree(isOn)
         syncSettingsWithServer()
     }
     
@@ -133,5 +130,10 @@ class FeatureSettingViewController: UIViewController {
                 print("❌ 기능 설정 업데이트 오류: \(error)")
             }
         }
+    }
+    
+    @objc private func eggBreakCellTapped() {
+        let eggBreakVC = EggBreakSettingViewController()
+        navigationController?.pushViewController(eggBreakVC, animated: true)
     }
 }
