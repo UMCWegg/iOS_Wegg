@@ -8,5 +8,6 @@
 import Foundation
 
 struct CheckPlaceVerificationResponse: Decodable {
+    let success: Bool
     let message: String
 }

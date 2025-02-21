@@ -26,6 +26,7 @@ class NickNameInputViewController: UIViewController {
         view.backgroundColor = .white
         setupActions()
         setupNameText()
+        addKeyboardDismissGesture()
     }
     
     // MARK: - Setup

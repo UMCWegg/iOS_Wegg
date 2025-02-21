@@ -25,6 +25,7 @@ class OccupationInputViewController: UIViewController {
         view.backgroundColor = .white
         setupActions()
         setupNameText()
+        addKeyboardDismissGesture()
         
         handleOccupationSelection(UserOccupation.employee.displayName)
     }

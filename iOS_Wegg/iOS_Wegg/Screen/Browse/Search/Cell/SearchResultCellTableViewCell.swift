@@ -34,6 +34,11 @@ class SearchResultCell: UITableViewCell {
     }
     
     // MARK: - Methods
+    /// ✅ `UserSearchResult`를 받아 UI 업데이트
+        func configure(with user: UserSearchResult) {
+            usernameLabel.text = user.accountId // ✅ accountId를 username으로 표시
+            profileImageView.setImage(from: user.profileImage, placeholder: "profile_placeholder")
+        }
     
     private func setupView() {
         contentView.addSubview(profileImageView)

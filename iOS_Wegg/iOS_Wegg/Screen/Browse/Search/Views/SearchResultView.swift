@@ -12,6 +12,7 @@ class SearchResultView: UIView {
     /// 테이블 뷰 선언
     let tableView = UITableView().then {
         $0.register(SearchResultCell.self, forCellReuseIdentifier: SearchResultCell.identifier)
+        $0.backgroundColor = .white // ✅ 테이블 뷰 배경색을 흰색으로 설정
     }
     
     /// 검색 필터 밑의 최근 검색어 라벨
