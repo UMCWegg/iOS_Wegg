@@ -41,6 +41,14 @@ class PlaceDetailView: UIView {
     
     lazy var yellowIconImageView = makeImageView("yellow_wegg_icon")
     lazy var favoriteStarImageView = makeImageView("star")
+    lazy var saveIconImageView = UIImageView().then {
+        let image = UIImage(systemName: "star.fill")?.withRenderingMode(.alwaysTemplate)
+        $0.image = image
+        $0.backgroundColor = .primary
+        $0.tintColor = .primary
+        $0.isHidden = true
+        $0.isUserInteractionEnabled = false
+    }
 
     // 아이콘 이미지 뷰 배열을 한 번에 생성
     private lazy var iconImageViews: [UIImageView] = [
@@ -217,11 +225,26 @@ class PlaceDetailView: UIView {
     // MARK: - Action Handler
     
     @objc private func favoriteStarButtonTapped() {
-        gestureDelegate?.didTapFavoriteStar()
+        gestureDelegate?.didTapSavePlaceButton()
     }
     
     @objc private func placeCreateButtonTapped() {
         gestureDelegate?.didTapPlaceCreateButton()
+    }
+    
+    @objc private func saveIconButtonTapped() {
+        gestureDelegate?.didTapDeletePlaceButton()
+    }
+    
+    @MainActor
+    public func toggleSaveStatus(isSaved: Bool) {
+        if isSaved {
+            saveIconImageView.isHidden = false
+            favoriteStarImageView.isHidden = true
+        } else {
+            saveIconImageView.isHidden = true
+            favoriteStarImageView.isHidden = false
+        }
     }
 }
 
@@ -245,6 +268,13 @@ private extension PlaceDetailView {
         )
         favoriteStarImageView.isUserInteractionEnabled = true
         favoriteStarImageView.addGestureRecognizer(starTapGesture)
+        
+        let deleteStarTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(saveIconButtonTapped)
+        )
+        saveIconImageView.isUserInteractionEnabled = true
+        saveIconImageView.addGestureRecognizer(deleteStarTapGesture)
         
         placeCreateButton.addTarget(
             self,
@@ -280,6 +310,7 @@ private extension PlaceDetailView {
             statusStack,
             studyImageCollectionView,
             favoriteStarImageView,
+            saveIconImageView,
             addressStack,
             phoneStack,
             openingInfoStack,
@@ -357,6 +388,11 @@ private extension PlaceDetailView {
         }
         
         favoriteStarImageView.snp.makeConstraints { make in
+            make.top.equalTo(styledVisitorTextStack.snp.bottom).offset(10)
+            make.trailing.lessThanOrEqualToSuperview().inset(21)
+        }
+        
+        saveIconImageView.snp.makeConstraints { make in
             make.top.equalTo(styledVisitorTextStack.snp.bottom).offset(10)
             make.trailing.lessThanOrEqualToSuperview().inset(21)
         }

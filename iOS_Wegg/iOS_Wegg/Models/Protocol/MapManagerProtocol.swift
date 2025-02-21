@@ -86,8 +86,14 @@ protocol MapManagerProtocol {
     
     /// 현재 지도 화면에서 보이는 영역의 경계값을 가져온다.
     /// - Parameter sortBy: 정렬 기준 (`"distance"` 또는 `"popularity"`, 기본값은 거리순)
+    ///     - page: 페이지
+    ///     - size: 요청당 받아올 데이터 개수
     /// - Returns: `HotPlaceRequest` (서버 API 요청을 위한 데이터 모델)
-    func getVisibleBounds(sortBy: String?) -> HotPlaceRequest
+    func getVisibleBounds(
+        sortBy: String?,
+        page: Int,
+        size: Int
+    ) -> HotPlaceRequest
     
     // MARK: - 위치 정보 관리
     

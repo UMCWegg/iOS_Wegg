@@ -13,4 +13,6 @@ struct HotPlaceRequest: Encodable {
     let minY: Double
     let maxY: Double
     let sortBy: String
+    let page: Int
+    let size: Int
 }

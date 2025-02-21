@@ -25,11 +25,16 @@ protocol MapOverlayGestureDelegate: AnyObject {
     
     /// 뒤로 가기 버튼을 탭했을 때 호출
     func didTapPlaceDetailBackButton()
+    
+    func didTapReloadButton()
 }
 
 protocol PlaceDetailViewGestureDelegate: AnyObject {
-    /// 즐겨찾기 버튼(별)을 탭했을 때 호출.
-    func didTapFavoriteStar()
+    /// 즐겨찾기 저장
+    func didTapSavePlaceButton()
+    
+    /// 즐겨찾기 삭제
+    func didTapDeletePlaceButton()
     
     /// "이 장소로 알 생성하기" 버튼을 탭했을 때 호출.
     func didTapPlaceCreateButton()

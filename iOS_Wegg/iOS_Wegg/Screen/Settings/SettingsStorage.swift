@@ -63,18 +63,15 @@ final class SettingsStorage {
     
     // MARK: - Notification Settings
     
-    func saveNotificationSetting(_ setting: NotificationSetting, for type: String) {
-        if let encoded = try? JSONEncoder().encode(setting) {
-            defaults.set(encoded, forKey: "\(Keys.notificationType)_\(type)")
-        }
+    func saveNotificationEnabled(_ enabled: Bool, for type: String) {
+        defaults.set(enabled, forKey: "notification_enabled_\(type)")
     }
     
-    func getNotificationSetting(for type: String) -> NotificationSetting? {
-        guard let data = defaults.data(forKey: "\(Keys.notificationType)_\(type)"),
-              let setting = try? JSONDecoder().decode(NotificationSetting.self, from: data) else {
-            return nil
+    func getNotificationEnabled(for type: String) -> Bool? {
+        if defaults.object(forKey: "notification_enabled_\(type)") != nil {
+            return defaults.bool(forKey: "notification_enabled_\(type)")
         }
-        return setting
+        return nil
     }
     
     // MARK: - Feature Settings
@@ -113,6 +110,93 @@ final class SettingsStorage {
     
     func isSoundEnabled() -> Bool {
         return defaults.bool(forKey: Keys.soundEnabled)
+    }
+    
+    // 알림 설정 문자열로 변환
+    func getAlarmSettingString(for type: String) -> String {
+        guard let setting = getNotificationSetting(for: type) else {
+            return type == "eggBreak" ? "SOUND_SINGLE" : "SOUND_SINGLE"
+        }
+        
+        // 무음일 경우 MUTE_SINGLE 리턴
+        if !setting.isEnabled {
+            return "MUTE_SINGLE"
+        }
+        
+        let typeStr: String
+        switch setting.type {
+        case .mute, .muteSingle, .muteContinuous:
+            typeStr = "MUTE"
+        case .vibrate, .vibrateSingle, .vibrateContinuous:
+            typeStr = "VIBRATE"
+        case .sound, .soundSingle, .soundContinuous:
+            typeStr = "SOUND"
+        case .both, .bothSingle, .bothContinuous:
+            typeStr = "BOTH"
+        }
+        
+        // 알 깨기의 경우 주파수가 없으므로 항상 SINGLE
+        if type == "eggBreak" {
+            return "\(typeStr)_SINGLE"
+        }
+        
+        // 주파수 추가
+        let frequencyStr = setting.frequency == .continuous ? "CONTINUOUS" : "SINGLE"
+        return "\(typeStr)_\(frequencyStr)"
+    }
+    
+    // 세팅 업데이트 요청 객체 생성
+    func createSettingsUpdateRequest() -> SettingsUpdateRequest {
+        return SettingsUpdateRequest(
+            postAlarm: getNotificationEnabled(for: "friendPost") ?? true,
+            commentAlarm: getNotificationEnabled(for: "comment") ?? true,
+            placeAlarm: getAlarmSettingString(for: "location"),
+            randomAlarm: getAlarmSettingString(for: "random"),
+            eggAlarm: getAlarmSettingString(for: "eggBreak"),
+            marketingAgree: getUserMarketingAgree() ?? false,
+            placeCheck: getFeatureEnabled(for: "location") ?? true,
+            randomCheck: getFeatureEnabled(for: "random") ?? true,
+            breakAllow: getFeatureEnabled(for: "eggBreak") ?? true,
+            accountVisibility: getProfileVisibility().rawValue
+        )
+    }
+    
+    func saveNotificationSetting(_ setting: NotificationSetting, for type: String) {
+        if let encoded = try? JSONEncoder().encode(setting) {
+            defaults.set(encoded, forKey: "\(Keys.notificationType)_\(type)")
+        }
+    }
+
+    func getNotificationSetting(for type: String) -> NotificationSetting? {
+        guard let data = defaults.data(forKey: "\(Keys.notificationType)_\(type)"),
+              let setting = try? JSONDecoder().decode(NotificationSetting.self, from: data) else {
+            return nil
+        }
+        return setting
+    }
+    
+    // 기능 활성화 상태 저장/불러오기
+    func saveFeatureEnabled(_ enabled: Bool, for type: String) {
+        defaults.set(enabled, forKey: "feature_enabled_\(type)")
+    }
+
+    func getFeatureEnabled(for type: String) -> Bool? {
+        if defaults.object(forKey: "feature_enabled_\(type)") != nil {
+            return defaults.bool(forKey: "feature_enabled_\(type)")
+        }
+        return nil
+    }
+
+    // 마케팅 정보 수신 동의 저장/불러오기
+    func saveUserMarketingAgree(_ agree: Bool) {
+        defaults.set(agree, forKey: "marketing_agree")
+    }
+
+    func getUserMarketingAgree() -> Bool? {
+        if defaults.object(forKey: "marketing_agree") != nil {
+            return defaults.bool(forKey: "marketing_agree")
+        }
+        return nil
     }
     
     // MARK: - Reset

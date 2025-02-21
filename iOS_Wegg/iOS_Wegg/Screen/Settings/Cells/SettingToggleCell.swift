@@ -14,7 +14,7 @@ class SettingToggleCell: SettingBaseCell {
     
     // MARK: - Properties
     
-    private let toggleSwitch = UISwitch().then {
+    let toggleSwitch = UISwitch().then {
         $0.onTintColor = .primary
     }
     

@@ -79,23 +79,23 @@ class SettingsViewController: UIViewController {
     }
     
     @objc private func alarmSettingButtonTapped() {
-       // let alarmSettingVC = AlarmSettingViewController()
-       // navigationController?.pushViewController(alarmSettingVC, animated: true)
+       let alarmSettingVC = NotificationSettingViewController()
+       navigationController?.pushViewController(alarmSettingVC, animated: true)
     }
     
     @objc private func featureSettingButtonTapped() {
-       // let featureSettingVC = FeatureSettingViewController()
-       // navigationController?.pushViewController(featureSettingVC, animated: true)
+       let featureSettingVC = FeatureSettingViewController()
+       navigationController?.pushViewController(featureSettingVC, animated: true)
     }
     
     @objc private func privacySettingButtonTapped() {
-       // let privacySettingVC = PrivacySettingViewController()
-       // navigationController?.pushViewController(privacySettingVC, animated: true)
+       let privacySettingVC = PrivacySettingViewController()
+       navigationController?.pushViewController(privacySettingVC, animated: true)
     }
     
     @objc private func pointPurchaseButtonTapped() {
-      // let pointPurchaseVC = PointPurchaseViewController()
-      // navigationController?.pushViewController(pointPurchaseVC, animated: true)
+        let pointPurchaseVC = PointPurchaseViewController()
+        navigationController?.pushViewController(pointPurchaseVC, animated: true)
     }
     
     @objc private func refreshButtonTapped() {
