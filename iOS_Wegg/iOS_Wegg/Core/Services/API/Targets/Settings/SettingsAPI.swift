@@ -27,7 +27,7 @@ extension SettingsAPI: TargetType {
        case .updateProfile:
            return APIConstants.User.updateProfile
        case .updateSettings:
-           return "/mypage/settings"
+           return "/mypage/setting"
        }
    }
    

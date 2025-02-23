@@ -110,7 +110,7 @@ final class LoginManager {
                 object: nil
             )
         } else {
-            // 로그인 실패시 회원가입 확인 알림
+            // 로그인 실패시 회원가입 확인 알림32
             NotificationCenter.default.post(
                 name: NSNotification.Name("ShowSignUpAlert"),
                 object: nil

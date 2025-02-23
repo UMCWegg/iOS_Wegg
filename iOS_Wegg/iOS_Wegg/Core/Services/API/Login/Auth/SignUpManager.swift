@@ -13,5 +13,5 @@ final class SignUpManager {
     
     func signUp(data: UserSignUpStorage.SignUpData) async throws -> SignUpResponse {
         return try await authService.signUp(request: data.toSignUpRequest())
-    }
+    }2
 }
